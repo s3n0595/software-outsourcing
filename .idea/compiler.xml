@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="portal-management9094" />
+        <module name="project-bean" />
+        <module name="business-management9093" />
+        <module name="system-management9091" />
+        <module name="system-configuration9092" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
