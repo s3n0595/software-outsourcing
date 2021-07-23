@@ -7,12 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="portal-management9094" />
         <module name="project-bean" />
         <module name="business-management9093" />
         <module name="system-management9091" />
-        <module name="system-configuration9092" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="portal-management9094" target="8" />
+      <module name="system-configuration9092" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

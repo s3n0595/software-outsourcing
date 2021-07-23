@@ -11,9 +11,7 @@
   <modules>
     <module>project-bean</module>
     <module>system-management9091</module>
-    <module>system-configuration9092</module>
     <module>business-management9093</module>
-    <module>portal-management9094</module>
   </modules>
 
   <properties>
