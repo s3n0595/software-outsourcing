@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ServiceType {
 
-  private long serviceTypeId;
+  private int serviceTypeId;
   private String serviceTypeName;
 
 

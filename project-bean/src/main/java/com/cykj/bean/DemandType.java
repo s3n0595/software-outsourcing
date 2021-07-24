@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DemandType {
 
-  private long demandTypeId;
+  private int demandTypeId;
   private String demandTypeName;
 
 

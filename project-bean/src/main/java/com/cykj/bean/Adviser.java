@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Adviser {
 
-  private long adviserId;
+  private int adviserId;
   private String providerId;
-  private long serviceTypeId;
+  private int serviceTypeId;
   private String auditStatus;
 
 }

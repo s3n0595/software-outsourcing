@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Jurisdiction {
 
-  private long jurisdictionId;
-  private long roleId;
-  private long menuId;
+  private int jurisdictionId;
+  private int roleId;
+  private int menuId;
 
 
 

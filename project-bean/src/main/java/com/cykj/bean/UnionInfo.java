@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UnionInfo {
 
-  private long unionId;
+  private int unionId;
   private String unionName;
   private String allProviderId;
   private String applicationTime;

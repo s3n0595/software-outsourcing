@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ExposeStory {
 
-  private long exposeStoryId;
+  private int exposeStoryId;
   private String exposeStoryTitle;
   private String exposeStoryContent;
 

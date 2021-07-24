@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CapitalFlow {
 
-  private long capitalFlowId;
+  private int capitalFlowId;
   private String tradeType;
   private String tradeContent;
-  private String tradecapital;
+  private String tradeCapital;
   private String tradeTime;
 
 

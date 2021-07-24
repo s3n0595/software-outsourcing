@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Menu {
 
-  private long menuId;
+  private int menuId;
   private String menuName;
   private String menuPath;
-  private long parentId;
+  private int parentId;
 
 
 }
