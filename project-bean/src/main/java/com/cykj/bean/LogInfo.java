@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LogInfo {
 
-  private long logId;
+  private int logId;
   private String operation;
   private String time;
-  private long userId;
+  private int userId;
 
 
 

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProviderInfo {
 
-  private long providerId;
+  private int providerId;
   private String providerName;
   private String providerProfile;
   private String credit;

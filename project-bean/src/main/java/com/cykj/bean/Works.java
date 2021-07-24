@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Works {
 
-  private long worksId;
-  private long providerId;
+  private int worksId;
+  private int providerId;
   private String worksDescribe;
   private String annexPath;
   private String worksPrice;

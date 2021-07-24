@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProviderAccount {
 
-  private long providerId;
+  private int providerId;
   private String providerName;
   private String phoneNumber;
   private String password;

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Parameter {
 
-  private long parameterId;
+  private int parameterId;
   private String menuName;
-  private long parentId;
+  private int parentId;
 
 
 

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TradeRecord {
 
-  private long tradeRecordId;
-  private long employerId;
-  private long providerId;
+  private int tradeRecordId;
+  private int employerId;
+  private int providerId;
   private String tradeTime;
   private String tradePrice;
   private String tradeStatus;
