@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     onSubmit(formName) {
-      this.$axios.get("/login",{
+      this.$axios.post("/login",{
         params:{
           // "action":"login",
           "username":this.form.username,

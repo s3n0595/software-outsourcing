@@ -1,12 +1,11 @@
 package com.cykj.controller;
 
-import com.cykj.service.EmployerService;
+import com.cykj.bean.EmployerAccount;
+import com.cykj.service.impl.EmployerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.HashMap;
 
 /**
  * @author guoquansen
@@ -16,14 +15,13 @@ import java.util.HashMap;
 public class RegisterController {
 
     @Autowired
-    private EmployerService employerService;
+    private EmployerServiceImpl employerService;
 
-    @RequestMapping("/employerReg")
+    @PostMapping ("/employerReg")
     @ResponseBody
-    public String addEmployer(){
-        HashMap<String, Object> employerMap = new HashMap<>();
-
-
+    public String addEmployer(EmployerAccount employerAccount){
+        System.out.println("employerAccount = " + employerAccount);
+        employerService.addUser(employerAccount);
         return "addEmployer";
     }
 

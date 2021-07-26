@@ -1,48 +1,51 @@
 <template>
 
-  <el-container>
-    <el-header>Header</el-header>
-    <el-main>
-      <h3>注册雇主账号</h3>
-      <el-form
-        ref="registerForm"
-        :model="data"
-        style="width:500px"
-        label-position="center"
-        label-width="80px"
-        label-suffix=":"
-        :rules="rules"
-        status-icon
-        hide-required-asterisk
-      >
-        <el-form-item prop="employerName" :validate-status="status">
-          <el-input clearable v-model="data.employerName" placeholder="用户名（即个性后缀，注册后无法修改）" ></el-input>
-        </el-form-item>
-        <el-form-item prop="phoneNumber">
-          <el-input clearable v-model="data.phoneNumber" placeholder="手机号" type="text"></el-input>
-        </el-form-item>
-        <el-form-item prop="code">
-          <el-input clearable v-model="data.code" placeholder="请输入手机验证码" type="text"></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input clearable v-model="data.password" placeholder="请输入密码" type="password"></el-input>
-        </el-form-item>
-        <el-form-item prop="re_password">
-          <el-input clearable v-model="data.re_password" placeholder="请确认密码" type="password"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-checkbox v-model="checked">我同意遵守
-            <router-link to="/userAgreement">《用户服务协议》</router-link>
-          </el-checkbox>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" v-on:click="onSubmit('registerForm')">注册</el-button>
-        </el-form-item>
+  <div>
+    <el-container>
+      <el-header>Header</el-header>
+      <el-main>
+        <h3>注册雇主账号</h3>
+        <el-form
+          ref="registerForm"
+          :model="data"
+          style="width:500px"
+          label-position="center"
+          label-width="80px"
+          label-suffix=":"
+          :rules="rules"
+          status-icon
+          hide-required-asterisk
+        >
+          <el-form-item prop="employerName" :validate-status="status">
+            <el-input clearable v-model="data.employerName" placeholder="用户名（即个性后缀，注册后无法修改）" type="text" ></el-input>
+          </el-form-item>
+          <el-form-item prop="phoneNumber">
+            <el-input clearable v-model="data.phoneNumber" placeholder="手机号" type="text"></el-input>
+          </el-form-item>
+          <el-form-item prop="code">
+            <el-input clearable v-model="data.code" placeholder="请输入手机验证码" type="text"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input clearable v-model="data.password" placeholder="请输入密码" type="password"></el-input>
+          </el-form-item>
+          <el-form-item prop="re_password">
+            <el-input clearable v-model="data.re_password" placeholder="请确认密码" type="password"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-checkbox v-model="checked">我同意遵守
+              <router-link to="/userAgreement">《用户服务协议》</router-link>
+            </el-checkbox>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" v-on:click="onSubmit('registerForm')">注册</el-button>
+          </el-form-item>
 
-      </el-form>
-    </el-main>
-    <el-footer>Footer</el-footer>
-  </el-container>
+        </el-form>
+      </el-main>
+      <el-footer>Footer</el-footer>
+    </el-container>
+  </div>
+
 
 </template>
 
@@ -133,22 +136,20 @@ export default {
       }
     },
     onSubmit(formName) {
-      this.$axios.get("/admin/login",{
-        params:{
-          // "action":"login",
-          "employerName":this.form.employerName,
-          "phoneNumber":this.form.phoneNumber,
-          "code":this.form.code,
-          "password":this.form.password
-        }
-
-      }).then(response=>{
+      this.$axios.post("/employerReg",
+        this.$qs.stringify({
+            // "action":"login",
+            "employerName":this.data.employerName,
+            "phoneNumber":this.data.phoneNumber,
+            "employerPassword":this.data.password
+        }),
+      ).then(response=>{
         console.log(response);
         // 为表单绑定验证功能
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
-            this.$router.push("/backman");
+            this.$router.push("/");
           } else {
             this.dialogVisible = true;
             return false;
