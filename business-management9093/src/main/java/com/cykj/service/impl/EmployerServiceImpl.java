@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.EmployerAccount;
 import com.cykj.mapper.EmployerMapper;
 import com.cykj.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;

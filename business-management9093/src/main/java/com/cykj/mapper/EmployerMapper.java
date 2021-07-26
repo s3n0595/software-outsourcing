@@ -1,5 +1,6 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.EmployerAccount;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
