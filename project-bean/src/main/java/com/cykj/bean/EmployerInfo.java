@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmployerInfo {
 
-  private int employerId;
-  private String employerName;
+  private int employerInfoId;
   private String employerProfile;
   private String credit;
   private String balance;
   private String headPath;
+  private long employerId;
 
 
 

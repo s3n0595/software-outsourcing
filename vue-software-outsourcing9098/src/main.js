@@ -1,15 +1,29 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
+import VueRouter from 'vue-router'
 import router from './router'
+import Axios from 'axios'
 
-Vue.config.productionTip = false
+Vue.prototype.$axios = Axios;
 
-/* eslint-disable no-new */
+Axios.defaults.baseURL = 'api';
+
+// 导入 ElementUI
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+import App from './App'
+// import Axios from "axios";
+
+// 安装路由
+Vue.use(VueRouter);
+
+// 安装 ElementUI
+Vue.use(ElementUI);
+
 new Vue({
   el: '#app',
+  // 启用路由
   router,
-  components: { App },
-  template: '<App/>'
-})
+  // 启用 ElementUI
+  render: h => h(App)
+});
