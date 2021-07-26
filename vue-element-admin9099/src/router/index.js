@@ -76,13 +76,13 @@ export default new Router({
                     // markdown组件
                     path: '/markdown',
                     component: resolve => require(['../components/page/Markdown.vue'], resolve),
-                    meta: { title: 'markdown编辑器' }    
+                    meta: { title: 'markdown编辑器' }
                 },
                 {
                     // 图片上传组件
                     path: '/upload',
                     component: resolve => require(['../components/page/Upload.vue'], resolve),
-                    meta: { title: '文件上传' }   
+                    meta: { title: '文件上传' }
                 },
                 {
                     // vue-schart组件
@@ -127,6 +127,11 @@ export default new Router({
                     path: '/usermanager',
                     component: resolve => require(['../components/page/sysmanager/usermanager.vue'], resolve),
                     meta: { title: '用户管理' }
+                },
+                {
+                    path: '/menumanager',
+                    component: resolve => require(['../components/page/menumanager/usermanager'], resolve),
+                    meta: { title: '菜单管理'}
                 }
             ]
         },

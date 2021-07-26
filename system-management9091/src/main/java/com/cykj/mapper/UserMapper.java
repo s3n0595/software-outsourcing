@@ -12,8 +12,7 @@ import java.util.List;
  * @date: 2021/7/23 4:43 下午
  * @desc:
  */
-@Mapper
-@Repository
+
 public interface UserMapper {
     public List<User> queryall();
 }
