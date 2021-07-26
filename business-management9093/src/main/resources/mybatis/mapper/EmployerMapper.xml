@@ -4,5 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.mapper">
 
+    <insert id="addUser" parameterType="map">
+        insert employerAccount(employerName,phoneNumber,password)
+            values(#{employerName},#{phoneNumber},#{password})
+    </insert>
 </mapper>
-
