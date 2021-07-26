@@ -127,11 +127,6 @@ export default new Router({
                     path: '/usermanager',
                     component: resolve => require(['../components/page/sysmanager/usermanager.vue'], resolve),
                     meta: { title: '用户管理' }
-                },
-                {
-                    path: '/menumanager',
-                    component: resolve => require(['../components/page/menumanager/usermanager'], resolve),
-                    meta: { title: '菜单管理'}
                 }
             ]
         },

@@ -32,7 +32,8 @@
         </el-form-item>
         <el-form-item>
           <el-checkbox v-model="checked">我同意遵守
-            <router-link to="/userAgreement"《用户服务协议》</el-checkbox>
+            <router-link to="/userAgreement">《用户服务协议》</router-link>
+          </el-checkbox>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="onSubmit('registerForm')">注册</el-button>
