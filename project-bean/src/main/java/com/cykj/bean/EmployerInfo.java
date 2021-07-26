@@ -14,7 +14,7 @@ public class EmployerInfo {
   private String credit;
   private String balance;
   private String headPath;
-  private long employerId;
+  private int employerId;
 
 
 
