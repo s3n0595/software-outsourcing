@@ -13,8 +13,7 @@ public class UnionInfo {
   private String unionName;
   private String allProviderId;
   private String applicationTime;
-  private String auditStatus;
-
+  private int auditStatus;
 
 
 }

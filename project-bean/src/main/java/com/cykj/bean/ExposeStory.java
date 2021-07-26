@@ -12,7 +12,7 @@ public class ExposeStory {
   private int exposeStoryId;
   private String exposeStoryTitle;
   private String exposeStoryContent;
-
+  private int auditState;
 
 
 }

@@ -12,7 +12,7 @@ public class CapitalFlow {
   private int capitalFlowId;
   private String tradeType;
   private String tradeContent;
-  private String tradeCapital;
+  private double tradeCapital;
   private String tradeTime;
 
 

@@ -14,5 +14,4 @@ public class Jurisdiction {
   private int menuId;
 
 
-
 }

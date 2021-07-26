@@ -13,9 +13,8 @@ public class TradeRecord {
   private int employerId;
   private int providerId;
   private String tradeTime;
-  private String tradePrice;
-  private String tradeStatus;
-
+  private double tradePrice;
+  private int tradeStatus;
 
 
 }

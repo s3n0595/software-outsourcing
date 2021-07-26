@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 public class EmployerInfo {
 
   private int employerInfoId;
+  private int employerId;
+  private String employerName;
   private String employerProfile;
   private String credit;
-  private String balance;
+  private double balance;
   private String headPath;
-  private int employerId;
-
 
 
 }

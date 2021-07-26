@@ -14,9 +14,8 @@ public class TenderRecord {
   private int tenderId;
   private String unionStatus;
   private String existTime;
-  private String price;
+  private double price;
   private String projectTime;
-
 
 
 }

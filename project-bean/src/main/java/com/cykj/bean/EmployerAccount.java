@@ -10,10 +10,8 @@ import lombok.NoArgsConstructor;
 public class EmployerAccount {
 
   private int employerId;
-  private String employerName;
   private String phoneNumber;
-  private String password;
-
+  private String employerPassword;
 
 
 }

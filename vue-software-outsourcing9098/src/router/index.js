@@ -5,6 +5,7 @@ import Index from "../views";
 import Register from "../views/Register";
 import EmployerReg from "../views/EmployerReg";
 import ProviderReg from "../views/ProviderReg";
+import UserAgreement from "../views/UserAgreement";
 
 Vue.use(Router)
 
@@ -40,6 +41,12 @@ export default new Router({
       path:'/providerReg',
       name:'ProviderReg',
       component:ProviderReg
+    },
+    {
+      //用户服务协议
+      path:'/userAgreement',
+      name:'UserAgreement',
+      component:UserAgreement
     }
 
   ]

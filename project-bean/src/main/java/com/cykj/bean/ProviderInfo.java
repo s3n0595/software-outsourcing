@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProviderInfo {
 
+  private int providerInfoId;
   private int providerId;
   private String providerName;
   private String providerProfile;
   private String credit;
-  private String balance;
+  private double balance;
   private String headPath;
-
 
 
 }

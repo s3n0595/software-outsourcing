@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 public class Adviser {
 
   private int adviserId;
-  private String providerId;
+  private int providerId;
   private int serviceTypeId;
-  private String auditStatus;
+  private int auditStatus;
+
+
 
 }

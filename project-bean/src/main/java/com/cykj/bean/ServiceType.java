@@ -13,5 +13,4 @@ public class ServiceType {
   private String serviceTypeName;
 
 
-
 }

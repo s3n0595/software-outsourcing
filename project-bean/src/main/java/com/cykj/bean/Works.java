@@ -13,9 +13,9 @@ public class Works {
   private int providerId;
   private String worksDescribe;
   private String annexPath;
-  private String worksPrice;
+  private double worksPrice;
   private String releaseTime;
-  private String auditStatus;
+  private int auditStatus;
 
 
 }

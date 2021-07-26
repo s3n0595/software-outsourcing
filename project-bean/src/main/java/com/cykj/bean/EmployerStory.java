@@ -12,6 +12,7 @@ public class EmployerStory {
   private int employerStoryId;
   private String employerStoryTitle;
   private String employerStoryContent;
+  private int auditState;
 
 
 }
