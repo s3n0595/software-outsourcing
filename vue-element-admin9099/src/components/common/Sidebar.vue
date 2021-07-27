@@ -160,6 +160,17 @@ export default {
               title: "404页面"
             }
           ]
+        },
+        {
+          icon: "el-icon-lx-calendar",
+          index: "10",
+          title: "用户管理",
+          subs: [
+            {
+              index: "providerManage",
+              title: "服务商管理"
+            }
+          ]
         }
       ]
     };

@@ -1,9 +1,16 @@
  module.exports = {
-    baseUrl: './',
+    baseUrl: '',
     productionSourceMap: false,
     devServer: {
         port:9099,
         proxy: {
+            '/business':{
+                target:'http://localhost:9093/',
+                changeOrigin:true,
+                pathRewrite:{
+                    '/business': ''
+                }
+            },
             '/api':{
                 target:'http://jsonplaceholder.typicode.com',
                 changeOrigin:true,
