@@ -2,7 +2,8 @@ package com.cykj.mapper;
 
 import com.cykj.bean.ProviderAccount;
 import org.apache.ibatis.annotations.Mapper;
-
+import java.util.List;
+import com.cykj.bean.ProviderInfo;
 /**
  * @author guoquansen
  * @date 2021/7/27 10:14 下午
@@ -18,4 +19,6 @@ public interface ProviderMapper {
 
     //查询登陆服务商账号
     int queryProviderAccByLog(ProviderAccount providerAccount);
+
+	List<ProviderInfo> queryAll();
 }

@@ -2,6 +2,8 @@ package com.cykj.service;
 
 import com.cykj.bean.ProviderAccount;
 
+import java.util.Map;
+
 /**
  * @author guoquansen
  * @date 2021/7/27 10:14 下午
@@ -17,4 +19,5 @@ public interface ProviderService {
     //查询登陆服务商账号
     int queryProviderAccByLog(ProviderAccount providerAccount);
 
+    Map<String, Object> queryAll();
 }
