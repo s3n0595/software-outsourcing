@@ -7,6 +7,10 @@ import com.cykj.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author guoquansen
  * @date 2021/7/27 10:14 下午
@@ -30,9 +34,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public int queryProviderAccByLog(ProviderAccount providerAccount) {
         return providerMapper.queryProviderAccByLog(providerAccount);
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+    }
 
 /**
  * @version 1.0
@@ -40,10 +42,6 @@ import java.util.Map;
  * @date: 2021/7/27 10:09
  * @desc:
  */
-@Service
-public class ProviderServiceImpl implements ProviderService {
-	@Autowired
-    private ProviderMapper providerMapper;
 
 	@Override
     public Map<String, Object> queryAll() {
