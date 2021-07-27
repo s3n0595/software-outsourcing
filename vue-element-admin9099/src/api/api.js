@@ -3,6 +3,9 @@ let baseUrl = '';
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})
 }
+export const getProviderList = params=>{
+    return axios.get('business/provider/list',{params:params})
+}
 export const getSysmenu = ()=>{
     return axios.get('../../menu.json')
 }
