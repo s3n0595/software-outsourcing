@@ -16,7 +16,7 @@
     <select id="queryProviderAccByLog" resultType="int">
         select count(*) from providerAccount where phoneNumber = #{phoneNumber} and providerPassword = #{providerPassword}
     </select>
-</mapper>
+
     <select id="queryAll" resultType="com.cykj.bean.ProviderInfo">
         select * from providerInfo
     </select>
