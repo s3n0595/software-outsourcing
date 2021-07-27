@@ -36,14 +36,14 @@ public class ProviderServiceImpl implements ProviderService {
         return providerMapper.queryProviderAccByLog(providerAccount);
     }
 
-/**
- * @version 1.0
- * @author: yitong
- * @date: 2021/7/27 10:09
- * @desc:
- */
+    /**
+     * @version 1.0
+     * @author: yitong
+     * @date: 2021/7/27 10:09
+     * @desc:
+     */
 
-	@Override
+    @Override
     public Map<String, Object> queryAll() {
         List<ProviderInfo> providerList = providerMapper.queryAll();
 //        System.out.println(providerList);
@@ -53,3 +53,5 @@ public class ProviderServiceImpl implements ProviderService {
         return results;
     }
 }
+
+
