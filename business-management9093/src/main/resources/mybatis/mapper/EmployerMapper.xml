@@ -8,6 +8,14 @@
         insert employerAccount(employerName,phoneNumber,employerPassword)
             values(#{employerName},#{phoneNumber},#{employerPassword})
     </insert>
+
+    <select id="queryEmployerAccByTel" resultType="int">
+        select count(*) from employerAccount where phoneNumber = #{phoneNumber}
+    </select>
+
+    <select id="queryEmployerAccByLog" resultType="int">
+        select count(*) from employerAccount where phoneNumber = #{phoneNumber} and employerPassword = #{employerPassword}
+    </select>
 </mapper>
 
 

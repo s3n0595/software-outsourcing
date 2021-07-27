@@ -20,4 +20,16 @@ public class EmployerServiceImpl implements EmployerService {
     public int addUser(EmployerAccount employerAccount) {
         return employerMapper.addUser(employerAccount);
     }
+
+    @Override
+    public int queryEmployerAccByTel(String phoneNumber) {
+        return employerMapper.queryEmployerAccByTel(phoneNumber);
+    }
+
+    @Override
+    public int queryEmployerAccByLog(EmployerAccount employerAccount) {
+        return employerMapper.queryEmployerAccByLog(employerAccount);
+    }
+
+
 }

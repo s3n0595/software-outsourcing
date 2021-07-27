@@ -10,4 +10,10 @@ public interface EmployerService {
 
     //增加用户
     int addUser(EmployerAccount employerAccount);
+
+    //查询注册雇主
+    int queryEmployerAccByTel(String phoneNumber);
+
+    //查询登陆雇主
+    int queryEmployerAccByLog(EmployerAccount employerAccount);
 }

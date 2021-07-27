@@ -6,6 +6,8 @@ import Register from "../views/Register";
 import EmployerReg from "../views/EmployerReg";
 import ProviderReg from "../views/ProviderReg";
 import UserAgreement from "../views/UserAgreement";
+import EmployerLog from "../views/EmployerLog";
+import ProviderLog from "../views/ProviderLog";
 
 Vue.use(Router)
 
@@ -47,6 +49,18 @@ export default new Router({
       path:'/userAgreement',
       name:'UserAgreement',
       component:UserAgreement
+    },
+    {
+      //登陆雇主账号
+      path:'/employerLog',
+      name:'EmployerLog',
+      component:EmployerLog
+    },
+    {
+      //登陆服务商账号
+      path:'/providerLog',
+      name:'ProviderLog',
+      component:ProviderLog
     }
 
   ]

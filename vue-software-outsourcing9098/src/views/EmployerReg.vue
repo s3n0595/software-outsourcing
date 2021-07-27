@@ -1,22 +1,20 @@
 <template>
 
-  <div>
     <el-container>
       <el-header>Header</el-header>
-      <el-main>
+      <el-main style="margin: 0 auto">
         <h3>注册雇主账号</h3>
         <el-form
           ref="registerForm"
           :model="data"
-          style="width:500px"
+          style="width:300px"
           label-position="center"
-          label-width="80px"
           label-suffix=":"
           :rules="rules"
           status-icon
           hide-required-asterisk
         >
-          <el-form-item prop="employerName" :validate-status="status">
+          <el-form-item prop="employerName" >
             <el-input clearable v-model="data.employerName" placeholder="用户名（即个性后缀，注册后无法修改）" type="text" ></el-input>
           </el-form-item>
           <el-form-item prop="phoneNumber">
@@ -31,20 +29,19 @@
           <el-form-item prop="re_password">
             <el-input clearable v-model="data.re_password" placeholder="请确认密码" type="password"></el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item style="text-align: left">
             <el-checkbox v-model="checked">我同意遵守
               <router-link to="/userAgreement">《用户服务协议》</router-link>
             </el-checkbox>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-on:click="onSubmit('registerForm')">注册</el-button>
+            <el-button type="primary" @click="onSubmit('registerForm')" style="width: 300px">注册</el-button>
           </el-form-item>
 
         </el-form>
       </el-main>
       <el-footer>Footer</el-footer>
     </el-container>
-  </div>
 
 
 </template>
@@ -62,7 +59,7 @@ export default {
           callback()
         }
       }
-    }
+    };
     //用户名校验器
     const usernameValidator = (rule, value, callback) => {
       if (/^[a-zA-Z]\w{5,17}$/.test(value)) {
@@ -87,7 +84,7 @@ export default {
       }
     }
     return {
-      status: '',
+      checked: '',
       data: {
         employerName: '',
         password: '',
@@ -97,29 +94,26 @@ export default {
       // 所有校验规则
       rules: {
         employerName: [ // 用户名验证
-          { required: true, trigger: 'change', message: '用户名必须填写' },
-          // { min: 3, max: 12, trigger: 'change', message: '用户名长度不能小于3'},
+          { required: true, trigger: 'blur', message: '用户名必须填写' },
+          // { min: 3, max: 12, trigger: 'blur', message: '用户名长度不能小于3'},
           { validator: usernameValidator, trigger: 'blur' },
-          { validator: validatorMethod(3, '用户名长度不能小于3'), trigger: 'change' }
+          { validator: validatorMethod(3, '用户名长度不能小于3'), trigger: 'blur' }
         ],
         password: [ // 密码验证
-          { required: true, trigger: 'change', message: '密码不能为空' },
-          { validator: validatorMethod(8, '密码长度不能小于8'), trigger: 'change' }
+          { required: true, trigger: 'blur', message: '密码不能为空' },
+          { validator: validatorMethod(8, '密码长度不能小于8'), trigger: 'blur' }
         ],
         re_password: [ // 重复密码验证
-          { required: true, trigger: 'change', message: '请再一次输入密码' },
+          { required: true, trigger: 'blur', message: '请再一次输入密码' },
           { validator: comfirmPassword, trigger: 'blur' }
         ],
         phoneNumber: [ // 手机号验证
-          { required: true, trigger: 'change', message: '手机号不能为空' },
-          { min: 11, max: 11, trigger: 'change', message: '请输入11位手机号码' },
+          { required: true, trigger: 'blur', message: '手机号不能为空' },
+          { min: 11, max: 11, trigger: 'blur', message: '请输入11位手机号码' },
           { validator: phoneValidator, trigger: 'blur' }
         ]
       }
     }
-  },
-  components: {
-
   },
   methods: {
     validateName (e) {
@@ -136,14 +130,12 @@ export default {
       }
     },
     onSubmit(formName) {
-      this.$axios.post("/employerReg",
+      this.$axios.post("/register/employer",
         this.$qs.stringify({
-            // "action":"login",
             "employerName":this.data.employerName,
             "phoneNumber":this.data.phoneNumber,
             "employerPassword":this.data.password
-        }),
-      ).then(response=>{
+        })).then(response=>{
         console.log(response);
         // 为表单绑定验证功能
         this.$refs[formName].validate((valid) => {
