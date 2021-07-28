@@ -13,6 +13,16 @@ public class UserInfo {
   private String userName;
   private String userAccount;
   private String userPassword;
+  // 角色id
+  private int roleId;
+  // 登录次数
+  private int loginNumber;
+  // 最近一次登录时间
+  private String loginDate;
+  // 创建者
+  private String creator;
+  // 状态
+  private int state;
 
 
 }
