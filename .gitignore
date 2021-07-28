@@ -1,2 +1,6 @@
 # Project exclude paths
 /vue-element-admin9099/dist/
+/business-management9093/target
+/project-bean/target
+/system-management9091/target
+
