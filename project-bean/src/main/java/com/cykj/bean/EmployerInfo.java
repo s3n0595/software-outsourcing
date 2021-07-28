@@ -15,6 +15,7 @@ public class EmployerInfo {
   private String credit;
   private double balance;
   private String headPath;
+  private String email;
 
 
 

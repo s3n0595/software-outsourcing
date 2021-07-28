@@ -13,6 +13,7 @@ public class EmployerAccount {
   private String employerName;
   private String phoneNumber;
   private String employerPassword;
+  private EmployerInfo employerInfo;
 
 
 
