@@ -15,7 +15,7 @@
           :disabled="this.delData.length===0"
         >批量删除</el-button>
         <el-input v-model="searchInfo" placeholder="请输入用户名查询" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="search" @click="getUsers">搜索</el-button>
+        <el-button type="primary" icon="search" @click="empList">搜索</el-button>
 <!--        <el-button type="primary" @click="addUserVisible=true">新建用户</el-button>-->
       </div>
       <el-table
@@ -56,7 +56,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             layout="total, prev, pager, next, sizes, jumper"
-            :total="emps.length"
+            :total="total"
             :page-size="pageSize"
             :page-sizes="[5,10,15]"
         ></el-pagination>
@@ -241,12 +241,12 @@ export default {
       });
     },
     handleCurrentChange:function (cPage){
-      console.log("改变页码"+cPage);
       this.pageNo=cPage;
+      this.empList();
     },
     handleSizeChange:function (val){
-      console.log("------"+val);
       this.pageSize=val;
+      this.empList();
     },
     handleSelectionChange(delData) {
       this.delData = delData;
@@ -279,7 +279,7 @@ export default {
             message: res.data,
             type: "success"
           });
-          this.getUsers();
+          this.empList();
         });
       });
     },
@@ -369,10 +369,17 @@ export default {
     //获取雇主列表信息
     empList(){
       this.isShowloading=true;
-      getEmpList().then(res=>{
+      let params =
+          {
+            searchInfo:this.searchInfo.trim(),
+            pageNo:this.pageNo,
+            pageSize:this.pageSize,
+          }
+      getEmpList(params).then(res=>{
         console.log(res);
         this.isShowloading=false;
-        this.emps=res.data;
+        this.emps=res.data.emps;
+        this.total=res.data.count;
       })
     }
   },

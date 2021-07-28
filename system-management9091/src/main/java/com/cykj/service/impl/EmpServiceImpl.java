@@ -15,9 +15,15 @@ public class EmpServiceImpl implements EmpService {
     @Autowired
     private EmpMapper empMapper;
     @Override
-    public List<EmployerAccount> emplist() {
-       List<EmployerAccount> emps=empMapper.emplist();
+    public List<EmployerAccount> emplist(Integer pageNo,Integer pageSize,String searchInfo) {
+       List<EmployerAccount> emps=empMapper.emplist(pageNo,pageSize,searchInfo);
        return emps;
+    }
+
+    @Override
+    public int countEmp(String searchInfo) {
+        int count=empMapper.countEmp(searchInfo);
+        return count;
     }
 
     @Transactional(rollbackFor = Exception.class)
