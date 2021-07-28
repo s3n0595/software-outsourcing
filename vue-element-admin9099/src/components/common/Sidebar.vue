@@ -10,14 +10,21 @@
       unique-opened
       router
     >
+<!--  开始遍历菜单-->
       <template v-for="item in items">
+<!--    判断是否有二级菜单-->
+<!--    存在二级菜单-->
         <template v-if="item.subs">
+<!--      先显示出以级菜单-->
           <el-submenu :index="item.index" :key="item.index">
             <template slot="title">
               <i :class="item.icon"></i>
               <span slot="title">{{ item.title }}</span>
             </template>
+<!--        遍历二级菜单-->
             <template v-for="subItem in item.subs">
+<!--          判断二级菜单下是否存在三级菜单-->
+<!--          存在-->
               <el-submenu v-if="subItem.subs" :index="subItem.index" :key="subItem.index">
                 <template slot="title">{{ subItem.title }}</template>
                 <el-menu-item
@@ -26,10 +33,12 @@
                   :index="threeItem.index"
                 >{{ threeItem.title }}</el-menu-item>
               </el-submenu>
+<!--          不存在-->
               <el-menu-item v-else :index="subItem.index" :key="subItem.index">{{ subItem.title }}</el-menu-item>
             </template>
           </el-submenu>
         </template>
+<!--    不存在二级菜单-->
         <template v-else>
           <el-menu-item :index="item.index" :key="item.index">
             <i :class="item.icon"></i>
@@ -47,6 +56,7 @@ import {getSysmenu} from '../../api/api'
 export default {
   data() {
     return {
+      // 是否收起菜单
       collapse: false,
       menuItems: [],
       items: [
@@ -182,11 +192,23 @@ export default {
               title: "服务商管理"
             }
           ]
+        },
+        {
+          icon: "el-icon-lx-settings",
+          index: "11",
+          title: "系统管理",
+          subs: [
+            {
+              index: "userInfoManage",
+              title: "用户管理"
+            }
+          ]
         }
       ]
     };
   },
   methods: {
+    // 动态获取菜单
     getMenuData(menuName) {
       let menuData = [];
       getSysmenu().then(
