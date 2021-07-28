@@ -36,8 +36,18 @@ public class ProviderServiceImpl implements ProviderService {
         return providerMapper.queryProviderAccByLog(providerAccount);
     }
 
+    @Override
+    public ProviderAccount queryProviderIdName(String phoneNum) {
+        return providerMapper.queryProviderIdName(phoneNum);
+    }
 
-/**
+    @Override
+    public int addProviderInfo(int providerId) {
+        return providerMapper.addProviderInfo(providerId);
+    }
+
+
+    /**
  * @version 1.0
  * @author: yitong
  * @date: 2021/7/27 10:09

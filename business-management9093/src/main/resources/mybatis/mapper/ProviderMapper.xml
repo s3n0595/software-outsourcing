@@ -17,6 +17,14 @@
         select count(*) from providerAccount where phoneNumber = #{phoneNumber} and providerPassword = #{providerPassword}
     </select>
 
+    <select id="queryProviderIdName" resultType="com.cykj.bean.ProviderAccount">
+        select providerId,providerName from providerAccount where phoneNumber = #{phoneNumber}
+    </select>
+
+    <insert id="addProviderInfo" parameterType="com.cykj.bean.ProviderAccount">
+        insert providerInfo(providerId) values(#{providerId})
+    </insert>
+
     <select id="queryAll" resultType="com.cykj.bean.ProviderInfo">
         select * from providerInfo
     </select>

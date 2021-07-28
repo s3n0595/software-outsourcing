@@ -31,5 +31,15 @@ public class EmployerServiceImpl implements EmployerService {
         return employerMapper.queryEmployerAccByLog(employerAccount);
     }
 
+    @Override
+    public EmployerAccount queryEmployerIdName(String phoneNum) {
+        return employerMapper.queryEmployerIdName(phoneNum);
+    }
+
+    @Override
+    public int addEmployerInfo(int employerId) {
+        return employerMapper.addEmployerInfo(employerId);
+    }
+
 
 }

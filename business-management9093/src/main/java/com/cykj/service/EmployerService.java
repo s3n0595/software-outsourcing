@@ -16,4 +16,10 @@ public interface EmployerService {
 
     //查询登陆雇主
     int queryEmployerAccByLog(EmployerAccount employerAccount);
+
+    //查找注册雇主ID姓名
+    EmployerAccount queryEmployerIdName(String phoneNum);
+
+    //增加雇主个人信息
+    int addEmployerInfo(int employerId);
 }

@@ -37,7 +37,13 @@ public class RegisterController {
             return new CommonResult(444,"雇主账号注册失败",null);
         } else {
             employerService.addUser(employerAccount);
-            return new CommonResult(200,"雇主账号注册成功",i);
+            EmployerAccount queryEmployerIdName = employerService.queryEmployerIdName(employerAccount.getPhoneNumber());
+            int addEmployerInfo = employerService.addEmployerInfo(queryEmployerIdName.getEmployerId());
+            if (addEmployerInfo > 0) {
+                return new CommonResult(200,"雇主信息写入成功",addEmployerInfo);
+            } else {
+                return new CommonResult(444,"雇主信息写入失败",null);
+            }
         }
     }
 
@@ -52,7 +58,13 @@ public class RegisterController {
             return new CommonResult(444,"服务商账号注册失败",null);
         } else {
             providerService.addProvider(providerAccount);
-            return new CommonResult(200,"服务商账号注册成功",i);
+            ProviderAccount queryProviderIdName = providerService.queryProviderIdName(providerAccount.getPhoneNumber());
+            int addProviderInfo = providerService.addProviderInfo(queryProviderIdName.getProviderId());
+            if (addProviderInfo > 0) {
+                return new CommonResult(200,"服务商信息写入成功",addProviderInfo);
+            } else {
+                return new CommonResult(444,"服务商信息写入失败",null);
+            }
         }
     }
 
