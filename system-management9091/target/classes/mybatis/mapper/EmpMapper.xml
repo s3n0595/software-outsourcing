@@ -7,7 +7,11 @@
         SELECT t1.employerId,t1.employerName,t1.phoneNumber,
                t2.employerInfoId,t2.email,t2.credit,t2.balance,t2.headPath
         FROM employerAccount t1 join employerInfo t2
-            on(t1.employerId=t2.employerId);
+            on(t1.employerId=t2.employerId)
+        <if test="searchInfo !=null">
+            WHERE t1.employerName like concat('%',#{searchInfo},'%')
+        </if>
+        limit ${(pageNo-1)*pageSize},#{pageSize};
     </select>
     <resultMap id="empAllList" type="com.cykj.bean.EmployerAccount">
         <id column="employerId" property="employerId"/>
@@ -21,6 +25,14 @@
             <result column="headPath" property="headPath" />
         </association>
     </resultMap>
+
+    <select id="countEmp" resultType="int">
+        SELECT COUNT(*) FROM employerAccount t1,employerInfo t2
+        WHERE t1.employerId=t2.employerId
+        <if test="searchInfo !=null">
+            and t1.employerName like concat('%',#{searchInfo},'%')
+        </if>
+    </select>
 
     <update id="editEmp" parameterType="com.cykj.bean.EmployerAccount">
         update employerAccount set employerName=#{employerName},phoneNumber=#{phoneNumber} where employerId=#{employerId}

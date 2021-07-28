@@ -6,7 +6,9 @@ import com.cykj.service.impl.EmpServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //雇主管理
 @RestController
@@ -16,9 +18,13 @@ public class EmpController {
     private EmpServiceImpl empService;
     //获取雇主列表
     @GetMapping("/list")
-    public List<EmployerAccount> showList(){
-        List<EmployerAccount> emps= empService.emplist();
-        return emps;
+    public Map<String,Object> showList(Integer pageNo, Integer pageSize, String searchInfo){
+        List<EmployerAccount> emps= empService.emplist(pageNo,pageSize,searchInfo);
+        int count=empService.countEmp(searchInfo);
+        HashMap<String,Object> map=new HashMap();
+        map.put("emps",emps);
+        map.put("count",count);
+        return map;
     }
 
     //修改雇主信息
