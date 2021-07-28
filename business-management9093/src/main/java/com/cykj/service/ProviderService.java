@@ -19,5 +19,11 @@ public interface ProviderService {
     //查询登陆服务商账号
     int queryProviderAccByLog(ProviderAccount providerAccount);
 
+    //查找注册服务商ID姓名
+    ProviderAccount queryProviderIdName(String phoneNum);
+
+    //增加服务商个人信息
+    int addProviderInfo(int providerId);
+
     Map<String, Object> queryAll();
 }

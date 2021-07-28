@@ -1,5 +1,6 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.EmployerAccount;
 import com.cykj.bean.ProviderAccount;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
@@ -19,6 +20,12 @@ public interface ProviderMapper {
 
     //查询登陆服务商账号
     int queryProviderAccByLog(ProviderAccount providerAccount);
+
+    //查找注册服务商ID姓名
+    ProviderAccount queryProviderIdName(String phoneNum);
+
+    //增加服务商个人信息
+    int addProviderInfo(int providerId);
 
 	List<ProviderInfo> queryAll();
 }
