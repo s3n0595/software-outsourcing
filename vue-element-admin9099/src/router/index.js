@@ -129,9 +129,19 @@ export default new Router({
                     meta: { title: '用户管理' }
                 },
                 {
+                    path: '/menumanager',
+                    component: resolve => require(['../components/page/menumanager/usermanager'], resolve),
+                    meta: { title: '菜单管理'}
+                },
+                {
                     path: '/providerManage',
                     component: resolve => require(['../components/page/userManage/ProviderManage.vue'], resolve),
                     meta: { title: '服务商管理' }
+                },
+                {
+                    path: '/employer',
+                    component: resolve => require(['../components/page/sysmanager/empmanager'], resolve),
+                    meta: { title: '雇主管理' }
                 }
             ]
         },

@@ -12,10 +12,17 @@
                 }
             },
             '/api':{
-                target:'http://jsonplaceholder.typicode.com',
+                target:'http://localhost:9099/',
                 changeOrigin:true,
                 pathRewrite:{
                     '/api':''
+                }
+            },
+            '/test':{
+                target:'http://localhost:9091/',
+                changeOrigin:true,
+                pathRewrite:{
+                    '/test':''
                 }
             },
             '/testApi':{
