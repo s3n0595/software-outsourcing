@@ -1,8 +1,8 @@
 import axios from 'axios';
 let baseUrl = 'test';
 //获取雇主列表
-export const getEmpList= ()=>{
-    return axios.get(`${baseUrl}/employer/list`)
+export const getEmpList=params=>{
+    return axios.get(`${baseUrl}/employer/list`,{params:params})
 }
 export const getEditemp=params=>{
     return axios.get(`${baseUrl}/employer/edit`,{params:params})
