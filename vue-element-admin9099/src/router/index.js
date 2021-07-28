@@ -4,6 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 export default new Router({
+    mode:"history",
     routes: [
         {
             path: '/',
@@ -129,9 +130,9 @@ export default new Router({
                     meta: { title: '用户管理' }
                 },
                 {
-                    path: '/menumanager',
-                    component: resolve => require(['../components/page/menumanager/usermanager'], resolve),
-                    meta: { title: '菜单管理'}
+                    path: '/employer',
+                    component: resolve => require(['../components/page/sysmanager/empmanager'], resolve),
+                    meta: { title: '雇主管理' }
                 }
             ]
         },

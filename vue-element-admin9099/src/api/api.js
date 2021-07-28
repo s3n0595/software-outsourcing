@@ -1,5 +1,24 @@
 import axios from 'axios';
-let baseUrl = '';
+let baseUrl = 'test';
+//获取雇主列表
+export const getEmpList= ()=>{
+    return axios.get(`${baseUrl}/employer/list`)
+}
+export const getEditemp=params=>{
+    return axios.get(`${baseUrl}/employer/edit`,{params:params})
+}
+export const getDeleteOne = params=>{
+    return axios.get(`${baseUrl}/employer/DeleteOne`,{params:params})
+}
+export const getDeleEmp = params=>{
+    return axios.get(`${baseUrl}/employer/DeleteAll`,{params:params})
+}
+export const getSelEmpList = params=>{
+    return axios.get(`${baseUrl}/employer/selEmpList`,{params:params})
+}
+
+
+
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})
 }
@@ -18,9 +37,6 @@ export const getAddUser = params=>{
     return axios.get(`${baseUrl}/user/addUser`,{
         params:params
     })
-}
-export const getDeleteOne = params=>{
-    return axios.get(`${baseUrl}/user/DeleteOne`,{params:params})
 }
 export const testApi = ()=>{
     return axios.get("/testApi/getkeywhereisddata?CITY_NAME=全省&S_id=B08I00136&callback=")
