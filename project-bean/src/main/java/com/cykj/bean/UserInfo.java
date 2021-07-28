@@ -24,5 +24,4 @@ public class UserInfo {
   // 状态
   private int state;
 
-
 }
