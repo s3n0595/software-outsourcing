@@ -17,7 +17,11 @@ export const getSelEmpList = params=>{
     return axios.get(`${baseUrl}/employer/selEmpList`,{params:params})
 }
 
-
+// 用户管理
+// 获取用户列表
+export const getUserInfoList = params=>{
+    return axios.get(`${baseUrl}/userinfo/getUserList`,{params:params})
+}
 
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})

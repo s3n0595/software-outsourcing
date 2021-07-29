@@ -137,6 +137,11 @@ export default new Router({
                     path: '/employer',
                     component: resolve => require(['../components/page/sysmanager/empmanager'], resolve),
                     meta: { title: '雇主管理' }
+                },
+                {
+                    path: '/userInfoManage',
+                    component: resolve => require(['../components/page/userManage/UserInfoManage.vue'],resolve),
+                    meta: {title: '用户管理'}
                 }
             ]
         },

@@ -7,24 +7,25 @@
     </div>
     <div class="container">
       <div class="handle-box">
+<!--    批量删除按钮-->
         <el-button
-          type="primary"
-          icon="delete"
-          class="handle-del mr10"
-          @click="delAll"
-          :disabled="this.delData.length===0"
+            type="primary"
+            icon="delete"
+            class="handle-del mr10"
+            @click="delAll"
+            :disabled="this.delData.length===0"
         >批量删除</el-button>
         <el-input v-model="searchInfo" placeholder="筛选关键词" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="search" @click="getUsers">搜索</el-button>
         <el-button type="primary" @click="addUserVisible=true">新建用户</el-button>
       </div>
       <el-table
-        :data="users"
-        border
-        class="table"
-        ref="multipleTable"
-        @selection-change="handleSelectionChange"
-        v-loading="isShowloading"
+          :data="users"
+          border
+          class="table"
+          ref="multipleTable"
+          @selection-change="handleSelectionChange"
+          v-loading="isShowloading"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column prop="orderNum" label="序号" sortable width="150"></el-table-column>
@@ -37,35 +38,35 @@
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button
-              type="text"
-              icon="el-icon-edit"
-              @click="handleEdit(scope.$index, scope.row)"
+                type="text"
+                icon="el-icon-edit"
+                @click="handleEdit(scope.$index, scope.row)"
             >编辑</el-button>
             <el-button
-              type="text"
-              icon="el-icon-delete"
-              class="red"
-              @click="handleDelete(scope.$index, scope.row)"
+                type="text"
+                icon="el-icon-delete"
+                class="red"
+                @click="handleDelete(scope.$index, scope.row)"
             >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
         <el-pagination
-          background
-          @current-change="currentChange"
-          layout="prev, pager, next"
-          :total="total"
-          :page-size="pageSize"
+            background
+            @current-change="currentChange"
+            layout="prev, pager, next, total"
+            :total="total"
+            :page-size="pageSize"
         ></el-pagination>
       </div>
       <!-- 编辑框 -->
       <el-dialog
-        title="修改信息"
-        :visible.sync="editUserVisible"
-        ref="editUserForm"
-        :before-close="confirmClose"
-        v-dialogDrag
+          title="修改信息"
+          :visible.sync="editUserVisible"
+          ref="editUserForm"
+          :before-close="confirmClose"
+          v-dialogDrag
       >
         <el-form :model="userForm" :rules="editRule" ref="editUserForm">
           <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
@@ -114,33 +115,21 @@ import {
   getEditUser,
   getAddUser,
   getDeleteOne,
-  testApi
+  testApi,
+  getUserInfoList,
 } from "../../../api/api";
 export default {
   data() {
     return {
       url:"",
       searchInfo: "",
-      users: [{
-        orderNum: 1,
-        username: 123,
-        rolename: 123,
-        isable: 123,
-        loginTime: 123,
-        loginDate: 123,
-        creater: 123
-      },{
-        orderNum: 2,
-        username: 123,
-        rolename: 123,
-        isable: 123,
-        loginTime: 123,
-        loginDate: 123,
-        creater: 123
-      }],
-      total: 0,
+      users: '',
+      // 总条数
+      total: 2,
       pageNo: 1,
-      pageSize: 20,
+      // 每页的页数
+      pageSize: 1,
+      //是否启动加载动画
       isShowloading: false,
       delData: [], //删除的数据
       editUserVisible: false, //是否显示编辑
@@ -191,11 +180,14 @@ export default {
         this.isShowloading = false;
       });
     },
+    // 当前页数发送改变
     currentChange(val) {
       this.pageNo = val;
       this.getUsers();
     },
+    // 当选择项发送变化时，执行一下方法
     handleSelectionChange(delData) {
+      console.log(delData);
       this.delData = delData;
     },
     saveUser() {
@@ -230,10 +222,12 @@ export default {
         });
       });
     },
+    // 编辑
     handleEdit(index, row) {
       this.editUserVisible = true;
       this.userForm = Object.assign({}, row);
     },
+    // 删除
     handleDelete(index, row) {
       let params = {
         userid: row.userid
@@ -257,16 +251,16 @@ export default {
         if (valid) {
           let params = this.userForm;
           getEditUser(params)
-            .then(res => {
-              this.$message({
-                type: "success",
-                message: res.data.msg
-              });
-              this.getUsers();
-              this.editUserVisible = false;
-              this.userForm = {};
-            })
-            .bind(this);
+              .then(res => {
+                this.$message({
+                  type: "success",
+                  message: res.data.msg
+                });
+                this.getUsers();
+                this.editUserVisible = false;
+                this.userForm = {};
+              })
+              .bind(this);
         }
       });
     },
@@ -291,6 +285,9 @@ export default {
   mounted() {
     //this.getUsers();
     this.testFn();
+    getUserInfoList().then(res=>{
+      console.log(res.data);
+    })
   }
 };
 </script>
@@ -322,4 +319,5 @@ export default {
   margin-right: 10px;
 }
 </style>
+
 
