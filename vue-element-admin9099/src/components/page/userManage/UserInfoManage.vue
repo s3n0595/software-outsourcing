@@ -20,7 +20,7 @@
         <el-button type="primary" @click="addUserVisible=true">新建用户</el-button>
       </div>
       <el-table
-          :data="users"
+          :data="tableDataList"
           border
           class="table"
           ref="multipleTable"
@@ -28,14 +28,15 @@
           v-loading="isShowloading"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="orderNum" label="序号" sortable width="150"></el-table-column>
-        <el-table-column prop="username" label="用户名" width="120"></el-table-column>
-        <el-table-column prop="rolename" label="角色名称"></el-table-column>
-        <el-table-column prop="isable" label="状态" :formatter="formatterState"></el-table-column>
-        <el-table-column prop="loginTime" label="登录次数"></el-table-column>
-        <el-table-column prop="loginDate" label="登录时间"></el-table-column>
-        <el-table-column prop="creater" label="创建者"></el-table-column>
+        <el-table-column type="index" label="序号" sortable width="150"></el-table-column>
+        <el-table-column prop="userName" label="用户名" width="120"></el-table-column>
+        <el-table-column prop="role.roleName" label="角色名称"></el-table-column>
+        <el-table-column prop="state" label="状态" :formatter="formatterState"></el-table-column>
+        <el-table-column prop="loginNumber" label="登录次数"></el-table-column>
+        <el-table-column prop="loginDate" label="最近登录时间"></el-table-column>
+        <el-table-column prop="creator" label="创建者"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
+<!--      slot-scope="scope" 可以获取到父组件传递的参数，将这些参数使用到子组件插槽里-->
           <template slot-scope="scope">
             <el-button
                 type="text"
@@ -55,9 +56,11 @@
         <el-pagination
             background
             @current-change="currentChange"
-            layout="prev, pager, next, total"
+            @size-change="handleSizeChange"
+            layout="total, prev, pager, next, sizes, jumper"
             :total="total"
             :page-size="pageSize"
+            :page-sizes="[5,10,15]"
         ></el-pagination>
       </div>
       <!-- 编辑框 -->
@@ -117,28 +120,32 @@ import {
   getDeleteOne,
   testApi,
   getUserInfoList,
+  deleteUserInfoList,
 } from "../../../api/api";
 export default {
   data() {
     return {
       url:"",
+      // 搜索关键字
       searchInfo: "",
+      // 用户列表
       users: '',
       // 总条数
-      total: 2,
+      total: '',
+      // 当前页数
       pageNo: 1,
-      // 每页的页数
-      pageSize: 1,
-      //是否启动加载动画
+      // 每页的条数
+      pageSize: 5,
+      // 是否启动加载动画
       isShowloading: false,
-      delData: [], //删除的数据
+      // 选中的数据
+      delData: [],
       editUserVisible: false, //是否显示编辑
       addUserVisible: false, //新建用户框
       userForm: {}, //编辑数据
       addUserForm: {
         username: "",
         rolename: "",
-        isable: "0"
       }, //添加用户数据
       addUserRule: {
         username: [
@@ -164,9 +171,17 @@ export default {
       formLabelWidth: "120px"
     };
   },
+  // 计算属性
+  computed:{
+    // 动态获取分页data
+    tableDataList(){
+      return this.users.slice((this.pageNo-1)*this.pageSize,this.pageNo*this.pageSize);
+    }
+  },
   methods: {
-    formatterState(row, cloumn) {
-      return row.isable == "1" ? "正常" : "禁用";
+    // 判断状态
+    formatterState(row) {
+      return row.state == "1" ? "正常" : "禁用";
     },
     getUsers() {
       this.isShowloading = true;
@@ -182,12 +197,18 @@ export default {
     },
     // 当前页数发送改变
     currentChange(val) {
+      console.log("当前页"+val);
       this.pageNo = val;
-      this.getUsers();
     },
+    // 每页显示条数
+    handleSizeChange(val){
+      console.log("每页条数更改为"+val);
+      this.pageSize = val;
+    },
+
     // 当选择项发送变化时，执行一下方法
     handleSelectionChange(delData) {
-      console.log(delData);
+      // 将复选框选中的结果集合赋值给delData
       this.delData = delData;
     },
     saveUser() {
@@ -203,22 +224,41 @@ export default {
         this.getUsers();
       });
     },
+    // 批量删除
     delAll() {
       this.$confirm("确认删除该用户吗?", "提示", {
         type: "warning"
       }).then(() => {
         this.isShowloading = true;
-        let delIds = this.delData.map(item => item.userid).toString();
+        let delIds = this.delData.map(item => item.userId);
+        // axios传递数组 在数组后加入''
         let params = {
-          delIds: delIds
+          userIds: delIds + '',
         };
-        getDeleUser(params).then(res => {
+        deleteUserInfoList(params).then(res => {
           this.isShowloading = false;
           this.$message({
             message: "删除成功",
             type: "success"
           });
-          this.getUsers();
+          this.getUserList();
+        });
+      });
+    },
+    // 删除按钮
+    handleDelete(index, row) {
+      let userIds = {
+        userIds: row.userId
+      };
+      this.$confirm("确认删除该用户？", "提示", {
+        type: "warning"
+      }).then(() => {
+        deleteUserInfoList(userIds).then(res => {
+          this.$message({
+            type: "success",
+            message: "删除成功"
+          });
+          this.getUserList();
         });
       });
     },
@@ -227,23 +267,16 @@ export default {
       this.editUserVisible = true;
       this.userForm = Object.assign({}, row);
     },
-    // 删除
-    handleDelete(index, row) {
-      let params = {
-        userid: row.userid
-      };
-      this.$confirm("确认删除该用户？", "提示", {
-        type: "warning"
-      }).then(() => {
-        getDeleteOne(params).then(res => {
-          this.$message({
-            type: "success",
-            message: "删除成功"
-          });
-          this.getUsers();
-        });
-      });
+    // 获取用户列表
+    getUserList(){
+      this.isShowloading=true;
+      getUserInfoList().then(res=>{
+        this.users = res.data;
+        this.total = this.users.length;
+        this.isShowloading=false;
+      })
     },
+
     editUser() {
       debugger
       this.$refs['editUserForm'].validate((valid) => {
@@ -272,22 +305,20 @@ export default {
         done();
       });
     },
-    testFn(){
-      this.url = '/ms/table/list';
-      this.$axios.get(this.url).then(res=>{
-        console.log(res)
-      })
-      testApi().then(res=>{
-        console.log(res)
-      })
-    }
+    // testFn(){
+    //   this.url = '/ms/table/list';
+    //   this.$axios.get(this.url).then(res=>{
+    //     console.log(res)
+    //   })
+    //   testApi().then(res=>{
+    //     console.log(res)
+    //   })
+    // },
   },
   mounted() {
-    //this.getUsers();
-    this.testFn();
-    getUserInfoList().then(res=>{
-      console.log(res.data);
-    })
+    // this.getUsers();
+    // this.testFn();
+    this.getUserList();
   }
 };
 </script>

@@ -22,6 +22,10 @@ export const getSelEmpList = params=>{
 export const getUserInfoList = params=>{
     return axios.get(`${baseUrl}/userinfo/getUserList`,{params:params})
 }
+// 删除用户列表
+export const deleteUserInfoList = parms=>{
+    return axios.get(`${baseUrl}/userinfo/deleteUserList`,{params:parms})
+}
 
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})

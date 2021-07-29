@@ -23,5 +23,6 @@ public class UserInfo {
   private String creator;
   // 状态
   private int state;
+  private Role role;
 
 }
