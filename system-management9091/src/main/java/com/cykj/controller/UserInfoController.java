@@ -32,4 +32,13 @@ public class UserInfoController {
         return userList;
     }
 
+    //删除用户
+    @GetMapping("/deleteUserList")
+    public String deleteUserList(int[] userIds){
+        for (Integer userId : userIds) {
+            userInfoService.deleteUserList(userId);
+        }
+        return "删除成功";
+    }
+
 }

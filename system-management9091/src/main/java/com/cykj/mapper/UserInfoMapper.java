@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.UserInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.List;
 public interface UserInfoMapper {
     // 获取用户列表
     List<UserInfo> getUserList();
+    // 根据userId删除用户
+    int deleteUserList(@Param("userId") int userId);
 }

@@ -3,7 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.mapper.UserInfoMapper">
-    <select id="getUserList" resultType="com.cykj.bean.UserInfo">
-        select * from userInfo;
+    <select id="getUserList" resultMap="getUserLists">
+        select t1.userId,t1.userName,t1.loginNumber,t1.loginDate,t1.creator,t1.state,
+               t2.roleName
+        from userInfo t1 join role t2
+            on t1.roleId = t2.roleId;
     </select>
+    <resultMap id="getUserLists" type="com.cykj.bean.UserInfo">
+        <id column="userId" property="userId"></id>
+        <result column="userName" property="userName"></result>
+        <result column="loginNumber" property="loginNumber"></result>
+        <result column="loginDate" property="loginDate"></result>
+        <result column="creator" property="creator"></result>
+        <result column="state" property="state"></result>
+        <association property="role" javaType="com.cykj.bean.Role">
+            <result column="roleName" property="roleName"></result>
+        </association>
+    </resultMap>
+
+    <delete id="deleteUserList">
+        delete from userInfo where userId = #{userId};
+    </delete>
 </mapper>
