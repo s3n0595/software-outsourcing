@@ -18,13 +18,6 @@
                     '/api':''
                 }
             },
-            '/test':{
-                target:'http://localhost:9091/',
-                changeOrigin:true,
-                pathRewrite:{
-                    '/test':''
-                }
-            },
             '/testApi':{
                 target:'http://111.8.20.247:89/api/apph5api',
                 changeOrigin:true,
