@@ -22,4 +22,10 @@ public interface EmployerService {
 
     //增加雇主个人信息
     int addEmployerInfo(int employerId);
+
+    //增加雇主个人信息到雇主故事表
+    int addEmployerStory(int employerId);
+
+    //增加雇主个人信息到曝光台
+    int addEmployerExpose(int employerId);
 }

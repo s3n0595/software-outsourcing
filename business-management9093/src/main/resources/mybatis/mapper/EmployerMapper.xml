@@ -24,6 +24,14 @@
     <insert id="addEmployerInfo" parameterType="com.cykj.bean.EmployerAccount">
         insert employerInfo(employerId) values(#{employerId})
     </insert>
+
+    <insert id="addEmployerStory" parameterType="com.cykj.bean.ProviderAccount">
+        insert employerStory(employerId) values(#{employerId})
+    </insert>
+
+    <insert id="addEmployerExpose" parameterType="com.cykj.bean.ProviderAccount">
+        insert exposeStory(employerId) values(#{employerId})
+    </insert>
 </mapper>
 
 

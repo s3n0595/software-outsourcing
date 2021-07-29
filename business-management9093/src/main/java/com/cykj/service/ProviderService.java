@@ -25,5 +25,8 @@ public interface ProviderService {
     //增加服务商个人信息
     int addProviderInfo(int providerId);
 
+    //增加服务商信息到曝光台
+    int addProviderExpose(int providerId);
+
     Map<String, Object> queryAll();
 }

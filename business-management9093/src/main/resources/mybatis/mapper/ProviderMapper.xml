@@ -28,6 +28,10 @@
     <select id="queryAll" resultType="com.cykj.bean.ProviderInfo">
         select * from providerInfo
     </select>
+
+    <insert id="addProviderExpose" parameterType="com.cykj.bean.ProviderAccount">
+        insert exposeStory(providerId) values(#{providerId})
+    </insert>
 </mapper>
 
 

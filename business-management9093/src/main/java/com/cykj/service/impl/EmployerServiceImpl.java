@@ -41,5 +41,15 @@ public class EmployerServiceImpl implements EmployerService {
         return employerMapper.addEmployerInfo(employerId);
     }
 
+    @Override
+    public int addEmployerStory(int employerId) {
+        return employerMapper.addEmployerStory(employerId);
+    }
+
+    @Override
+    public int addEmployerExpose(int employerId) {
+        return employerMapper.addEmployerExpose(employerId);
+    }
+
 
 }

@@ -13,6 +13,8 @@ public class ExposeStory {
   private String exposeStoryTitle;
   private String exposeStoryContent;
   private int auditState;
+  private int employerId;
+  private int providerId;
 
 
 }

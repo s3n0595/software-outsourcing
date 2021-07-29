@@ -46,6 +46,11 @@ public class ProviderServiceImpl implements ProviderService {
         return providerMapper.addProviderInfo(providerId);
     }
 
+    @Override
+    public int addProviderExpose(int providerId) {
+        return providerMapper.addProviderExpose(providerId);
+    }
+
 
     /**
  * @version 1.0

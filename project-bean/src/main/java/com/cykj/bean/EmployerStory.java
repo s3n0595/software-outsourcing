@@ -13,6 +13,7 @@ public class EmployerStory {
   private String employerStoryTitle;
   private String employerStoryContent;
   private int auditState;
+  private int employerId;
 
 
 }

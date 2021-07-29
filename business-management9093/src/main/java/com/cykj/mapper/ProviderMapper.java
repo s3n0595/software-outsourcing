@@ -27,5 +27,8 @@ public interface ProviderMapper {
     //增加服务商个人信息
     int addProviderInfo(int providerId);
 
+    //增加服务商信息到曝光台
+    int addProviderExpose(int providerId);
+
 	List<ProviderInfo> queryAll();
 }

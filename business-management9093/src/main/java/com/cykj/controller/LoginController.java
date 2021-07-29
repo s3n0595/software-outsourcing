@@ -31,7 +31,8 @@ public class LoginController {
         log.info("***雇主登陆***");
         int i = employerService.queryEmployerAccByLog(employerAccount);
         if (i > 0) {
-            return new CommonResult(200,"雇主"+employerAccount.getEmployerName()+"登陆成功",i);
+
+            return new CommonResult(200,"雇主"+employerAccount.getPhoneNumber()+"登陆成功",i);
         } else {
             return new CommonResult(444,"雇主账号或密码错误",null);
         }
