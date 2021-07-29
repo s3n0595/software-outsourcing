@@ -23,4 +23,9 @@ public class UserInfoServiceImp implements UserInfoService {
     public List<UserInfo> getUserList() {
         return userInfoMapper.getUserList();
     }
+
+    @Override
+    public int deleteUserList(int userId) {
+        return userInfoMapper.deleteUserList(userId);
+    }
 }

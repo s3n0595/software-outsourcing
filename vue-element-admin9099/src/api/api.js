@@ -1,5 +1,5 @@
 import axios from 'axios';
-let baseUrl = 'test';
+let baseUrl = 'business';
 //获取雇主列表
 export const getEmpList=params=>{
     return axios.get(`${baseUrl}/employer/list`,{params:params})
@@ -22,13 +22,19 @@ export const getSelEmpList = params=>{
 export const getUserInfoList = params=>{
     return axios.get(`${baseUrl}/userinfo/getUserList`,{params:params})
 }
+// 删除用户列表
+export const deleteUserInfoList = parms=>{
+    return axios.get(`${baseUrl}/userinfo/deleteUserList`,{params:parms})
+}
 
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})
 }
 export const getProviderList = params=>{
-    return axios.get('business/provider/list',{params:params})
+    return axios.get(`${baseUrl}/provider/list`,{params:params})
 }
+
+
 export const getSysmenu = ()=>{
     return axios.get('../../menu.json')
 }
