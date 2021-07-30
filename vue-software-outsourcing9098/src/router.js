@@ -10,18 +10,6 @@ let kejianrouter = new Router({
       component: () => import('./views/Home.vue')
     },
     {
-      //登陆选择
-      path: '/loginChoose',
-      name: 'loginChoose',
-      component: () => import('./views/LoginChoose')
-    },
-    {
-      //雇主登陆
-      path: '/employerLog',
-      name: "EmployerLog",
-      component: () => import('./views/EmployerLog')
-    },
-    {
       path: '/news',
       name: 'news',
       component: () => import('./views/News.vue'),
