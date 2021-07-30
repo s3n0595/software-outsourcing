@@ -12,6 +12,7 @@ public class ProviderInfo {
   private int providerInfoId;
   private int providerId;
   private String providerProfile;
+  private String email;
   private String credit;
   private double balance;
   private String headPath;

@@ -1,12 +1,15 @@
 import axios from 'axios';
-let baseUrl = '';
+let baseUrl = 'business';
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})
 }
 export const getProviderList = params=>{
-    return axios.get('business/provider/list',{params:params})
+    return axios.get(`${baseUrl}/provider/list`,{params:params})
 }
-export const getSysmenu = ()=>{
+export const editProvider = params=>{
+    return axios.get(`${baseUrl}/provider/edit`,{params:params})
+}
+export const gdetSysmenu = ()=>{
     return axios.get('../../menu.json')
 }
 export const getDeleUser = params=>{

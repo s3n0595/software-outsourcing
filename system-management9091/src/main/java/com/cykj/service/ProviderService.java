@@ -1,5 +1,8 @@
 package com.cykj.service;
 
+import com.cykj.bean.ProviderAccount;
+import com.cykj.bean.ProviderInfo;
+
 import java.util.Map;
 
 /**
@@ -9,5 +12,6 @@ import java.util.Map;
  * @desc:
  */
 public interface ProviderService {
-	Map<String, Object> queryAll();
+	Map<String, Object> queryProvider(int page, String searchInfo, int pageSize);
+	boolean editProvider(ProviderAccount providerAccount, ProviderInfo providerInfo);
 }
