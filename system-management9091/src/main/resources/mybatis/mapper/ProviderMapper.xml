@@ -4,9 +4,33 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.mapper.ProviderMapper">
 
-    <select id="queryAll" resultType="com.cykj.bean.ProviderInfo">
-        select * from providerInfo
+    <select id="queryProvider" resultType="java.util.Map">
+        select *
+        from providerInfo t1, providerAccount t2
+        where t1.providerId = t2.providerId
+        <if test="searchInfo != null">
+            and t1.providerProfile like concat(#{searchInfo}, '%')
+        </if>
+        limit ${(page - 1) * pageSize}, #{pageSize}
     </select>
+    <select id="countProvider" resultType="int">
+        select count(*)
+        from providerInfo t1, providerAccount t2
+        where t1.providerId = t2.providerId
+        <if test="searchInfo != null">
+            and t1.providerProfile like concat(#{searchInfo}, '%')
+        </if>
+    </select>
+    <update id="editProviderAccount" parameterType="com.cykj.bean.ProviderAccount">
+        update providerAccount
+        set phoneNumber = #{phoneNumber}, providerName = #{providerName}
+        where providerId = #{providerId}
+    </update>
+    <update id="editProviderInfo" parameterType="com.cykj.bean.ProviderInfo">
+        update providerInfo
+        set providerProfile = #{providerProfile}, email = #{email}
+        where providerId = #{providerId}
+    </update>
 </mapper>
 
 

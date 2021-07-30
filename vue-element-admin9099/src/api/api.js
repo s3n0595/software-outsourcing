@@ -33,7 +33,9 @@ export const getUserList = params=>{
 export const getProviderList = params=>{
     return axios.get(`${baseUrl}/provider/list`,{params:params})
 }
-
+export const editProvider = params=>{
+    return axios.get(`${baseUrl}/provider/edit`,{params:params})
+}
 
 export const getSysmenu = ()=>{
     return axios.get('../../menu.json')
@@ -50,6 +52,9 @@ export const getAddUser = params=>{
     return axios.get(`${baseUrl}/user/addUser`,{
         params:params
     })
+}
+export const getDeleteOne = params=>{
+    return axios.get(`${baseUrl}/user/DeleteOne`,{params:params})
 }
 export const testApi = ()=>{
     return axios.get("/testApi/getkeywhereisddata?CITY_NAME=全省&S_id=B08I00136&callback=")

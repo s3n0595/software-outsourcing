@@ -1,5 +1,7 @@
 package com.cykj.controller;
 
+import com.cykj.bean.ProviderAccount;
+import com.cykj.bean.ProviderInfo;
 import com.cykj.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.websocket.server.PathParam;
 import java.util.Map;
 
 /**
@@ -23,10 +26,23 @@ public class ProviderController {
 
     @GetMapping("/list")
     @ResponseBody
-    public Map<String, Object> providerList(int page, String info){
-        System.out.println(page);
-        System.out.println("info : " + info);
-        System.out.println(providerService.queryAll());
-        return providerService.queryAll();
+    public Map<String, Object> providerList(int page, String searchInfo,int pageSize){
+        System.out.println("==================================");
+        System.out.println("*********请求服务商列表参数*********");
+        System.out.println("当前页 ： " + page);
+        System.out.println("查询条件 : " + searchInfo);
+        System.out.println("每页条数 : " + pageSize);
+        System.out.println("==================================");
+        return providerService.queryProvider(page, searchInfo, pageSize);
+    }
+    @GetMapping("/edit")
+    @ResponseBody
+    public boolean editProvider(ProviderAccount providerAccount, ProviderInfo providerInfo){
+        System.out.println("==================================");
+        System.out.println("*********请求服务商列表参数*********");
+        System.out.println("服务商账号字段 ： " + providerAccount);
+        System.out.println("服务商信息字段 ：" + providerInfo);
+        System.out.println("==================================");
+        return providerService.editProvider(providerAccount, providerInfo);
     }
 }

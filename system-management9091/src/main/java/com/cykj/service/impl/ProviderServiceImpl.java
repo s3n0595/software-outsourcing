@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.ProviderAccount;
 import com.cykj.bean.ProviderInfo;
 import com.cykj.mapper.ProviderMapper;
 import com.cykj.service.ProviderService;
@@ -22,12 +23,17 @@ public class ProviderServiceImpl implements ProviderService {
     private ProviderMapper providerMapper;
 
 	@Override
-    public Map<String, Object> queryAll() {
-        List<ProviderInfo> providerList = providerMapper.queryAll();
-//        System.out.println(providerList);
+    public Map<String, Object> queryProvider(int page, String searchInfo, int pageSize) {
         Map<String, Object> results = new HashMap<String, Object>();
-        results.put("list", providerList);
-        results.put("total", providerList.size());
+        results.put("list", providerMapper.queryProvider(page, searchInfo, pageSize));
+        results.put("total", providerMapper.countProvider(searchInfo));
         return results;
     }
+
+	@Override
+	public boolean editProvider(ProviderAccount providerAccount, ProviderInfo providerInfo) {
+		providerMapper.editProviderAccount(providerAccount);
+		providerMapper.editProviderInfo(providerInfo);
+		return true;
+	}
 }

@@ -30,6 +30,8 @@
         <el-table-column prop="providerId" label="序号" sortable></el-table-column>
         <el-table-column prop="providerName" label="服务商名称"></el-table-column>
         <el-table-column prop="providerProfile" label="服务商简介"></el-table-column>
+        <el-table-column prop="phoneNumber" label="电话号码"></el-table-column>
+        <el-table-column prop="email" label="邮箱地址"></el-table-column>
         <el-table-column prop="credit" label="信用"></el-table-column>
         <el-table-column prop="balance" label="余额"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
@@ -68,8 +70,17 @@
         v-dialogDrag
       >
         <el-form :model="userForm" :rules="editRule" ref="editUserForm">
-          <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
-            <el-input v-model="userForm.username" autocomplete="off"></el-input>
+          <el-form-item label="服务商名称" :label-width="formLabelWidth" prop="providerName">
+            <el-input v-model="userForm.providerName" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="服务商简介" :label-width="formLabelWidth" prop="providerProfile">
+            <el-input v-model="userForm.providerProfile" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="电话号码" :label-width="formLabelWidth" prop="phoneNumber">
+            <el-input v-model="userForm.phoneNumber" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+            <el-input v-model="userForm.email" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="状态" :label-width="formLabelWidth">
             <el-radio v-model="userForm.isable" label="1">正常</el-radio>
@@ -109,13 +120,11 @@
 </template>
 <script>
 import {
-  getUserList,
   getDeleUser,
-  getEditUser,
   getAddUser,
   getDeleteOne,
-  getProviderList,
-  testApi
+  editProvider,
+  getProviderList
 } from "../../../api/api";
 export default {
   data() {
@@ -166,13 +175,13 @@ export default {
     },
     getUsers() {
       this.isShowloading = true;
+      console.log(this.searchInfo);
       let params = {
         searchInfo: this.searchInfo.trim(),
-        page: this.pageNo
+        page: this.pageNo,
+        pageSize: this.pageSize
       };
-      console.log("======")
       getProviderList(params).then(res => {
-        console.log(res);
         this.users = res.data.list;
         this.total = res.data.total;
         this.isShowloading = false;
@@ -242,13 +251,12 @@ export default {
       });
     },
     editUser() {
-      debugger
       this.$refs['editUserForm'].validate((valid) => {
-        debugger
         if (valid) {
           let params = this.userForm;
-          getEditUser(params)
+          editProvider(params)
             .then(res => {
+              console.log(res);
               this.$message({
                 type: "success",
                 message: res.data.msg
@@ -281,7 +289,6 @@ export default {
   },
   mounted() {
     this.getUsers();
-    // this.testFn();
   }
 };
 </script>
