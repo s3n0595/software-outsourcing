@@ -3,8 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.mapper.UserInfoMapper">
+<!--获取用户列表-->
     <select id="getUserList" resultMap="getUserLists">
-        select t1.userId,t1.userName,t1.loginNumber,t1.loginDate,t1.creator,t1.state,
+        select t1.userId,t1.userName,t1.loginNumber,t1.roleId,t1.loginDate,t1.creator,t1.state,
                t2.roleName
         from userInfo t1 join role t2
             on t1.roleId = t2.roleId;
@@ -13,6 +14,7 @@
         <id column="userId" property="userId"></id>
         <result column="userName" property="userName"></result>
         <result column="loginNumber" property="loginNumber"></result>
+        <result column="roleId" property="roleId"></result>
         <result column="loginDate" property="loginDate"></result>
         <result column="creator" property="creator"></result>
         <result column="state" property="state"></result>
@@ -20,8 +22,40 @@
             <result column="roleName" property="roleName"></result>
         </association>
     </resultMap>
-
+<!--关键词    -->
+    <select id="getSearchUser" resultMap="getSearchUsers">
+        select t1.userId,t1.userName,t1.loginNumber,t1.roleId,t1.loginDate,t1.creator,t1.state,
+               t2.roleName
+        from userInfo t1 join role t2
+        on t1.roleId = t2.roleId
+        where t1.userName like concat('%',#{userName},'%');
+    </select>
+    <resultMap id="getSearchUsers" type="com.cykj.bean.UserInfo">
+        <id column="userId" property="userId"></id>
+        <result column="userName" property="userName"></result>
+        <result column="loginNumber" property="loginNumber"></result>
+        <result column="roleId" property="roleId"></result>
+        <result column="loginDate" property="loginDate"></result>
+        <result column="creator" property="creator"></result>
+        <result column="state" property="state"></result>
+        <association property="role" javaType="com.cykj.bean.Role">
+            <result column="roleName" property="roleName"></result>
+        </association>
+    </resultMap>
+<!--删除用户-->
     <delete id="deleteUserList">
         delete from userInfo where userId = #{userId};
     </delete>
+<!--添加用户-->
+    <insert id="addUserInfo" parameterType="com.cykj.bean.UserInfo">
+        insert into userInfo(userName, userAccount, userPassword, roleId, state) values (#{userName}, #{userAccount}, #{userPassword}, #{roleId}, #{state});
+    </insert>
+<!--修改状态-->
+    <update id="updateState">
+        update userInfo set state = #{state} where userId = #{userId};
+    </update>
+<!--修改用户信息-->
+    <update id="updateUserInfo">
+        update userInfo set roleId = #{roleId},userName = #{userName} where userId = #{userId};
+    </update>
 </mapper>

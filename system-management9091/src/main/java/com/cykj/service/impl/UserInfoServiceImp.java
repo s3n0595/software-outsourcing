@@ -25,7 +25,27 @@ public class UserInfoServiceImp implements UserInfoService {
     }
 
     @Override
+    public List<UserInfo> getSearchUser(String userName) {
+        return userInfoMapper.getSearchUser(userName);
+    }
+
+    @Override
     public int deleteUserList(int userId) {
         return userInfoMapper.deleteUserList(userId);
+    }
+
+    @Override
+    public int addUserInfo(UserInfo userInfo) {
+        return userInfoMapper.addUserInfo(userInfo);
+    }
+
+    @Override
+    public int updateState(int userId,int state) {
+        return userInfoMapper.updateState(userId,state);
+    }
+
+    @Override
+    public int updateUserInfo(int userId, String userName,int roleId) {
+        return userInfoMapper.updateUserInfo(userId,userName,roleId);
     }
 }

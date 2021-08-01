@@ -22,9 +22,24 @@ export const getSelEmpList = params=>{
 export const getUserInfoList = params=>{
     return axios.get(`${baseUrl}/userinfo/getUserList`,{params:params})
 }
+export const getSearchUser = params=>{
+    return axios.get(`${baseUrl}/userinfo/getSearchUser`,{params:params})
+}
 // 删除用户列表
-export const deleteUserInfoList = parms=>{
-    return axios.get(`${baseUrl}/userinfo/deleteUserList`,{params:parms})
+export const deleteUserInfoList = params=>{
+    return axios.get(`${baseUrl}/userinfo/deleteUserList`,{params:params})
+}
+// 添加用户
+export const addUserInfo = params=>{
+    return axios.get(`${baseUrl}/userinfo/addUserInfo`,{params:params})
+}
+//修改状态
+export const updateState = params=>{
+    return axios.get(`${baseUrl}/userinfo/updateState`,{params:params})
+}
+//
+export const updateUserInfo = params=>{
+    return axios.get(`${baseUrl}/userinfo/updateUserInfo`,{params:params})
 }
 
 export const getUserList = params=>{

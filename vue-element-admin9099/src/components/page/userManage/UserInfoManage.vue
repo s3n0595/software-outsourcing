@@ -15,8 +15,8 @@
             @click="delAll"
             :disabled="this.delData.length===0"
         >批量删除</el-button>
-        <el-input v-model="searchInfo" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="search" @click="getUsers">搜索</el-button>
+        <el-input v-model="searchInfo" placeholder="请输入用户名关键词" class="handle-input mr10"></el-input>
+        <el-button type="primary" icon="search" @click="getSearchUsers">搜索</el-button>
         <el-button type="primary" @click="addUserVisible=true">新建用户</el-button>
       </div>
       <el-table
@@ -31,7 +31,22 @@
         <el-table-column type="index" label="序号" sortable width="150"></el-table-column>
         <el-table-column prop="userName" label="用户名" width="120"></el-table-column>
         <el-table-column prop="role.roleName" label="角色名称"></el-table-column>
-        <el-table-column prop="state" label="状态" :formatter="formatterState"></el-table-column>
+<!--        <el-table-column prop="state" label="状态" :formatter="formatterState"></el-table-column>-->
+        <el-table-column prop="state" label="状态" align="center" width="180">
+          <template slot-scope="scope" >
+              <el-switch
+                  v-model="scope.row.state"
+                  :active-value="1"
+                  :inactive-value="0"
+                  active-text="启用"
+                  inactive-text="禁用"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  @change="editState(scope.row.userId,scope.row.state)"
+              >
+              </el-switch>
+          </template>
+        </el-table-column>
         <el-table-column prop="loginNumber" label="登录次数"></el-table-column>
         <el-table-column prop="loginDate" label="最近登录时间"></el-table-column>
         <el-table-column prop="creator" label="创建者"></el-table-column>
@@ -67,17 +82,18 @@
       <el-dialog
           title="修改信息"
           :visible.sync="editUserVisible"
-          ref="editUserForm"
           :before-close="confirmClose"
           v-dialogDrag
       >
         <el-form :model="userForm" :rules="editRule" ref="editUserForm">
-          <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
-            <el-input v-model="userForm.username" autocomplete="off"></el-input>
+          <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName">
+            <el-input v-model="userForm.userName" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="状态" :label-width="formLabelWidth">
-            <el-radio v-model="userForm.isable" label="1">正常</el-radio>
-            <el-radio v-model="userForm.isable" label="0">禁用</el-radio>
+          <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleId">
+            <el-select v-model="userForm.roleId">
+              <el-option label="管理员" :value="2"></el-option>
+              <el-option label="系统管理员" :value="1"></el-option>
+            </el-select>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -86,21 +102,29 @@
         </div>
       </el-dialog>
       <!-- 新建用户 -->
-      <el-dialog title="新建用户" :visible.sync="addUserVisible" ref="addUserForm" v-dialogDrag>
-        <el-form :model="addUserForm" :rules="addUserRule">
-          <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
-            <el-input v-model="addUserForm.username" autocomplete="off"></el-input>
+<!--  :visible:隐藏属性  .sync: 同步绑定   v-dialogDrag:拖拽-->
+      <el-dialog title="新建用户" :visible.sync="addUserVisible" v-dialogDrag>
+<!--    :rules:自定义规则-->
+        <el-form :model="addUserForm" :rules="addUserRule" ref="addUserForm">
+<!--      label-width这个属性然后配合label-position可以设置标签对齐方式-->
+          <el-form-item label="用户名称" :label-width="formLabelWidth" prop="userName">
+            <el-input v-model="addUserForm.userName" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="角色名称" :label-width="formLabelWidth" prop="rolename">
-            <el-select v-model="addUserForm.rolename">
-              <el-option label="admin" value="admin"></el-option>
-              <el-option label="管理员" value="管理员"></el-option>
-              <el-option label="超级管理员" value="超级管理员"></el-option>
+          <el-form-item label="用户账号" :label-width="formLabelWidth" prop="userAccount">
+            <el-input v-model="addUserForm.userAccount" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="用户密码" :label-width="formLabelWidth" prop="userPassword">
+            <el-input v-model="addUserForm.userPassword" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleId">
+            <el-select v-model="addUserForm.roleId">
+              <el-option label="管理员" value="2"></el-option>
+              <el-option label="系统管理员" value="1"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="状态" :label-width="formLabelWidth">
-            <el-radio v-model="addUserForm.isable" label="1">正常</el-radio>
-            <el-radio v-model="addUserForm.isable" label="0">禁用</el-radio>
+            <el-radio v-model="addUserForm.state" label="1">正常</el-radio>
+            <el-radio v-model="addUserForm.state" label="0">禁用</el-radio>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -113,14 +137,12 @@
 </template>
 <script>
 import {
-  getUserList,
-  getDeleUser,
-  getEditUser,
-  getAddUser,
-  getDeleteOne,
-  testApi,
   getUserInfoList,
   deleteUserInfoList,
+  addUserInfo,
+  updateState,
+  updateUserInfo,
+  getSearchUser,
 } from "../../../api/api";
 export default {
   data() {
@@ -140,33 +162,53 @@ export default {
       isShowloading: false,
       // 选中的数据
       delData: [],
-      editUserVisible: false, //是否显示编辑
-      addUserVisible: false, //新建用户框
-      userForm: {}, //编辑数据
+      // 是否显示编辑
+      editUserVisible: false,
+      // 新建用户框
+      addUserVisible: false,
+      // 编辑数据
+      userForm: {},
+      // 添加用户的数据
       addUserForm: {
-        username: "",
-        rolename: "",
-      }, //添加用户数据
+        userName: "",
+        userAccount: "",
+        userPassword: "",
+        roleId: "",
+        state: "1",
+      },
+      // 新增用户自定义规则
       addUserRule: {
-        username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+        userName: [
+          {required: true, message: "请输入用户名", trigger: "blur" },
+          {max: 10, message: "不能超过10位",trigger: "blur" },
+          {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
         ],
-        rolename: [
+        userAccount: [
+          {required: true, message: "请设置账号", trigger: "blur"},
+          {max: 11, message: "不能超过11位",trigger: "blur" },
+          {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+        ],
+        userPassword: [
+          {required: true, message: "请设置密码", trigger: "blur"},
+          {max: 11, message: "不能超过11位",trigger: "blur" },
+          {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+        ],
+        roleId: [
           {
+            // pattern:匹配验证
             required: true,
             message: "请选择角色",
-            trigger: "change"
-          }
-        ]
-      },
-      editRule: {
-        username: [
-          {
-            required: true,
-            message: "请输入姓名",
             trigger: "blur"
           }
-        ]
+        ],
+      },
+      // 修改用户规则
+      editRule: {
+        userName: [
+          {required: true, message: "请输入用户名", trigger: "blur" },
+          {max: 10, message: "不能超过10位",trigger: "blur" },
+          {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+        ],
       },
       formLabelWidth: "120px"
     };
@@ -176,24 +218,21 @@ export default {
     // 动态获取分页data
     tableDataList(){
       return this.users.slice((this.pageNo-1)*this.pageSize,this.pageNo*this.pageSize);
-    }
+    },
   },
   methods: {
-    // 判断状态
-    formatterState(row) {
-      return row.state == "1" ? "正常" : "禁用";
-    },
-    getUsers() {
-      this.isShowloading = true;
+    editState(userId,state){
       let params = {
-        searchInfo: this.searchInfo.trim(),
-        page: this.pageNo
-      };
-      getUserList(params).then(res => {
-        this.users = res.data.users;
-        this.total = res.data.total;
-        this.isShowloading = false;
-      });
+        userId: userId,
+        state: state,
+      }
+      updateState(params).then(res=>{
+        this.$message({
+          message: "修改成功",
+          type: "success",
+        });
+        this.getUserList();
+      })
     },
     // 当前页数发送改变
     currentChange(val) {
@@ -205,24 +244,41 @@ export default {
       console.log("每页条数更改为"+val);
       this.pageSize = val;
     },
-
     // 当选择项发送变化时，执行一下方法
     handleSelectionChange(delData) {
       // 将复选框选中的结果集合赋值给delData
       this.delData = delData;
     },
+    // 添加用户按钮
     saveUser() {
-      let params = Object.assign({}, this.addUserForm);
-      params.username = params.username.trim();
-      getAddUser(params).then(res => {
-        this.$message({
-          message: "添加成功",
-          type: "success"
-        });
-        this.addUserVisible = false;
-        this.addUserForm = {};
-        this.getUsers();
-      });
+      //validate:表单验证,返回validate结果
+      this.$refs['addUserForm'].validate((validate)=>{
+        if (validate){
+          let params = {
+            userName: this.addUserForm.userName,
+            userAccount: this.addUserForm.userAccount,
+            userPassword: this.addUserForm.userPassword,
+            roleId: this.addUserForm.roleId,
+            state: this.addUserForm.state,
+          };
+          this.addUserVisible = false;
+          addUserInfo(params).then(res=>{
+            if ("添加成功" == res.data){
+              this.$message({
+                message: "添加成功",
+                type: "success",
+              });
+              this.getUserList();
+            }else {
+              this.$message({
+                message: "添加失败",
+                type: "error",
+              });
+            }
+          });
+          this.addUserForm = {};
+        }
+      })
     },
     // 批量删除
     delAll() {
@@ -262,10 +318,44 @@ export default {
         });
       });
     },
-    // 编辑
+    // 编辑按钮
     handleEdit(index, row) {
       this.editUserVisible = true;
+      // 获取选中数据
       this.userForm = Object.assign({}, row);
+    },
+    // 编辑用户
+    editUser() {
+      this.$refs['editUserForm'].validate((valid) => {
+        if (valid) {
+          let params = {
+            userId: this.userForm.userId,
+            userName: this.userForm.userName,
+            roleId: this.userForm.roleId,
+          };
+          updateUserInfo(params).then(res => {
+                this.$message({
+                  type: "success",
+                  message: "修改成功"
+                });
+                this.getUserList();
+
+              });
+          this.editUserVisible = false;
+        }
+      });
+    },
+    // 用户名关键词搜索
+    getSearchUsers(){
+      this.isShowloading=true;
+      let params = {
+        userName: this.searchInfo,
+      }
+      getSearchUser(params).then(res=>{
+        this.users = res.data;
+        this.total = this.users.length;
+        this.isShowloading=false;
+      })
     },
     // 获取用户列表
     getUserList(){
@@ -276,53 +366,22 @@ export default {
         this.isShowloading=false;
       })
     },
-
-    editUser() {
-      debugger
-      this.$refs['editUserForm'].validate((valid) => {
-        debugger
-        if (valid) {
-          let params = this.userForm;
-          getEditUser(params)
-              .then(res => {
-                this.$message({
-                  type: "success",
-                  message: res.data.msg
-                });
-                this.getUsers();
-                this.editUserVisible = false;
-                this.userForm = {};
-              })
-              .bind(this);
-        }
-      });
-    },
+    // 关闭提示
     confirmClose(done) {
       this.$confirm("确认关闭将丢失已编辑内容？", "提示", {
         type: "warning"
       }).then(() => {
-        this.userForm = {};
+        // this.userForm = {};
         done();
       });
     },
-    // testFn(){
-    //   this.url = '/ms/table/list';
-    //   this.$axios.get(this.url).then(res=>{
-    //     console.log(res)
-    //   })
-    //   testApi().then(res=>{
-    //     console.log(res)
-    //   })
-    // },
   },
   mounted() {
-    // this.getUsers();
-    // this.testFn();
     this.getUserList();
   }
 };
 </script>
-<style scoped>
+<style>
 .handle-box {
   margin-bottom: 20px;
 }
@@ -348,6 +407,22 @@ export default {
 }
 .mr10 {
   margin-right: 10px;
+}
+.el-switch__core:after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  border-radius: 100%;
+  transition: all .3s;
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+}
+
+.el-switch.is-checked .el-switch__core:after {
+  left: 100%;
+  margin-left: -17px;
 }
 </style>
 
