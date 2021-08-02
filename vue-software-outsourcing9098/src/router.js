@@ -45,9 +45,33 @@ let kejianrouter = new Router({
       component: () => import('./views/Download.vue')
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('./views/Login.vue')
+      path: '/adminLogin',
+      name: 'adminLogin',
+      component: () => import('./views/AdminLogin.vue')
+    },
+    {
+      //雇主注册
+      path: '/employerRegister',
+      name: 'employerRegister',
+      component: () => import('./views/EmployerReg.vue')
+    },
+    {
+      //雇主登陆
+      path: '/employerLogin',
+      name: 'employerLogin',
+      component: () => import('./views/EmployerLog.vue')
+    },
+    {
+      //服务商注册
+      path: '/providerRegister',
+      name: 'providerRegister',
+      component: () => import('./views/ProviderReg.vue')
+    },
+    {
+      //服务商登陆
+      path: '/providerLogin',
+      name: 'providerLogin',
+      component: () => import('./views/ProviderLog.vue')
     },
     {
       path: '/admin',

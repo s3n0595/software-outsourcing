@@ -123,13 +123,13 @@ export default {
     }
   },
   mounted() {
-    this.$http
+    this.$axios
       .all([
-        this.$http.get("Cases/GetCasesAll"),
-        this.$http.get(`News?type=1&num=3`)
+        this.$axios.get("Cases/GetCasesAll"),
+        this.$axios.get(`News?type=1&num=3`)
       ])
       .then(
-        this.$http.spread((responseCases, responseNews) => {
+        this.$axios.spread((responseCases, responseNews) => {
           this.caseList = responseCases.data;
           this.newsList = responseNews.data;
           this.loading = false;
@@ -334,3 +334,5 @@ export default {
   order: 1;
 }
 </style>
+
+

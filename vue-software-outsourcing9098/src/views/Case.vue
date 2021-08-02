@@ -1,6 +1,6 @@
 <template>
   <div class="case">
-    <banner img="../assets/img/bgtop.jpg" title="精典案例" />
+    <banner  title="精典案例" />
     <div class="case-section" v-loading="loading">
       <div class="case-section-content">
         <div class="case-section-content-list" v-for="(cas,index) in caseList" :key="index">
@@ -37,7 +37,7 @@ export default {
   },
   mounted() {
     window.console.log("case");
-    this.$http
+    this.$axios
       .get("Cases/GetCasesAll")
       .then(response => {
         //console.log(response);
