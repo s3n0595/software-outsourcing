@@ -1,38 +1,32 @@
 <template>
 
-  <el-container>
-    <el-header>Header</el-header>
-    <el-main style="margin: 0 auto">
-      <h3>登陆服务商账号</h3>
-      <el-form
+  <div>
+    <h3 style="margin: 3% auto;text-align: center">登陆服务商账号</h3>
+    <el-form
         ref="logForm"
         :model="data"
-        style="width:300px"
+        style="width:300px;margin: 0 auto"
         label-position="center"
         label-suffix=":"
         :rules="rules"
         status-icon
         hide-required-asterisk
-      >
-        <el-form-item prop="phoneNumber">
-          <el-input clearable type="text" v-model="data.phoneNumber" placeholder="手机号"></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input clearable type="password" v-model="data.password" placeholder="请输入密码" ></el-input>
-        </el-form-item>
-        <el-form-item style="text-align: left">
-          <el-checkbox v-model="checked">记住我
-          </el-checkbox>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('logForm')" style="width: 300px">登陆</el-button>
-        </el-form-item>
-      </el-form>
-
-    </el-main>
-    <el-footer>Footer</el-footer>
-  </el-container>
-
+    >
+      <el-form-item prop="phoneNumber">
+        <el-input clearable type="text" v-model="data.phoneNumber" placeholder="手机号"></el-input>
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input clearable type="password" v-model="data.password" placeholder="请输入密码" ></el-input>
+      </el-form-item>
+      <el-form-item style="text-align: left">
+        <el-checkbox v-model="checked">记住我
+        </el-checkbox>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('logForm')" style="width: 300px">登陆</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 
 </template>
 
@@ -71,21 +65,24 @@ export default {
     };
   },
   methods: {
+    // eslint-disable-next-line no-unused-vars
     submitForm(formName) {
       this.$axios.post("/login/provider",
         this.$qs.stringify({
           "phoneNumber":this.data.phoneNumber,
           "providerPassword":this.data.password
         })).then(reponse => {
+        // eslint-disable-next-line no-console
         console.log(reponse);
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$router.push("/");
-          } else {
-            return false;
-          }
-        });
+        const res = reponse.data
+        if (res.code !== 200) {
+          this.$message.error("手机号已注册")
+        } else {
+          this.$message.success("注册成功")
+          this.$router.push("/")
+        }
       }).catch(error => {
+        // eslint-disable-next-line no-console
         console.log(error)
       });
       // this.$refs[formName].validate((valid) => {

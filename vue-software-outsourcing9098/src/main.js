@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
+import qs from 'qs'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -34,8 +35,11 @@ Vue.config.productionTip = false
 axios.defaults.timeout = 5000
 //设置api地址
 //全局定义axios
-axios.defaults.baseURL = 'http://shkjgw.shkjem.com/api/'
-Vue.prototype.$http = axios
+axios.defaults.baseURL = 'http://localhost:9093'
+Vue.prototype.$axios = axios
+
+//qs
+Vue.prototype.$qs = qs;
 
 // 图片服务器地址
 Vue.prototype.imgserver = 'http://shkjgw.shkjem.com/'

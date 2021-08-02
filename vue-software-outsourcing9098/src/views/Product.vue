@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <banner img="../assets/img/bgtop.jpg" title="产品中心" />
+    <banner title="产品中心" />
     <div class="product-content" v-loading="loading">
       <div class="p-video">
         <video-player

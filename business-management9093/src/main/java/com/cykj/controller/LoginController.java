@@ -8,6 +8,7 @@ import com.cykj.service.ProviderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/login")
 @Slf4j
+@CrossOrigin
 public class LoginController {
 
     @Autowired
@@ -34,7 +36,7 @@ public class LoginController {
 
             return new CommonResult(200,"雇主"+employerAccount.getPhoneNumber()+"登陆成功",i);
         } else {
-            return new CommonResult(444,"雇主账号或密码错误",null);
+            return new CommonResult(400,"雇主账号或密码错误",null);
         }
 
     }
@@ -47,7 +49,7 @@ public class LoginController {
         if (i > 0) {
             return new CommonResult(200,"服务商"+providerAccount.getProviderName()+"登陆成功",i);
         } else {
-            return new CommonResult(444,"服务商账号或密码错误",null);
+            return new CommonResult(400,"服务商账号或密码错误",null);
         }
     }
 
