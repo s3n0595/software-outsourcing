@@ -27,8 +27,8 @@
         data: function(){
             return {
                 ruleForm: {
-                    username: 'admin',
-                    password: '123123'
+                    username: '',
+                    password: ''
                 },
                 rules: {
                     username: [
@@ -44,6 +44,19 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                    //   this.$axios.post("/login/admin",
+                    //       this.$qs.stringify({
+                    //     "userName":this.ruleForm.username,
+                    //     "userPassword":this.ruleForm.password
+                    //   })).then(response => {
+                    //     const code = response.data.code
+                    //     if (code ===200) {
+                    //       this.$message.success("登陆成功")
+                    //       this.$router.push('/')
+                    //     } else {
+                    //       this.$message.error("账号或密码错误")
+                    //     }
+                    //   })
                         localStorage.setItem('ms_username',this.ruleForm.username);
                         this.$router.push('/');
                     } else {

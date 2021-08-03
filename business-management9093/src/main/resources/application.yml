@@ -18,4 +18,8 @@ spring:
     url: jdbc:mysql://47.100.194.127:3306/oneStopService?useSSL=false&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
 

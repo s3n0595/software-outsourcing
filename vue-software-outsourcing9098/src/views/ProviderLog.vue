@@ -56,10 +56,10 @@ export default {
       },
       rules: {
         phoneNumber: [
-          { validator: validatephoneNum, trigger: 'blur' }
+          {required: true, validator: validatephoneNum, trigger: 'blur' }
         ],
         password: [
-          { validator: validatePass, trigger: 'blur' }
+          {require: true, validator: validatePass, trigger: 'blur' }
         ],
       }
     };
@@ -67,32 +67,33 @@ export default {
   methods: {
     // eslint-disable-next-line no-unused-vars
     submitForm(formName) {
-      this.$axios.post("/login/provider",
-        this.$qs.stringify({
-          "phoneNumber":this.data.phoneNumber,
-          "providerPassword":this.data.password
-        })).then(reponse => {
-        // eslint-disable-next-line no-console
-        console.log(reponse);
-        const res = reponse.data
-        if (res.code !== 200) {
-          this.$message.error("手机号已注册")
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // alert('submit!');
+          this.$axios.post("/login/provider",
+              this.$qs.stringify({
+                "phoneNumber":this.data.phoneNumber,
+                "providerPassword":this.data.password
+              })).then(reponse => {
+            // eslint-disable-next-line no-console
+            console.log(reponse);
+            const res = reponse.data
+            if (res.code !== 200) {
+              this.$message.error("账号或密码错误")
+            } else {
+              this.$message.success("登陆成功")
+              this.$router.push("/persionCenter")
+            }
+          }).catch(error => {
+            // eslint-disable-next-line no-console
+            console.log(error)
+          });
         } else {
-          this.$message.success("注册成功")
-          this.$router.push("/")
+          // eslint-disable-next-line no-console
+          console.log('error submit!!');
+          return false;
         }
-      }).catch(error => {
-        // eslint-disable-next-line no-console
-        console.log(error)
       });
-      // this.$refs[formName].validate((valid) => {
-      //   if (valid) {
-      //     alert('submit!');
-      //   } else {
-      //     console.log('error submit!!');
-      //     return false;
-      //   }
-      // });
     },
   }
 }

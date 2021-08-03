@@ -1,7 +1,7 @@
 <template>
 
   <div class="employerReg">
-    <h3 style="margin: 3% auto">注册雇主账号</h3>
+    <h3 style="margin: 2% auto">注册雇主账号</h3>
     <el-form
         ref="registerForm"
         :model="data"
@@ -11,7 +11,6 @@
         :rules="rules"
         status-icon
         hide-required-asterisk
-
     >
       <el-form-item prop="employerName" >
         <el-input clearable v-model="data.employerName" placeholder="用户名（即个性后缀，注册后无法修改）" type="text" ></el-input>
@@ -20,7 +19,10 @@
         <el-input clearable v-model="data.phoneNumber" placeholder="手机号" type="text"></el-input>
       </el-form-item>
       <el-form-item prop="code">
-        <el-input clearable v-model="data.code" placeholder="请输入手机验证码" type="text"></el-input>
+        <div class="code">
+          <el-input clearable type="text" maxlength="6" placeholder="请输入手机验证码" v-model="data.code"/>
+          <el-button class="btn-orange" :disabled="disabled" @click="getCode">{{valiBtn}}</el-button>
+        </div>
       </el-form-item>
       <el-form-item prop="password">
         <el-input clearable v-model="data.password" placeholder="请输入密码" type="password"></el-input>
@@ -28,15 +30,16 @@
       <el-form-item prop="re_password">
         <el-input clearable v-model="data.re_password" placeholder="请确认密码" type="password"></el-input>
       </el-form-item>
-      <el-form-item style="text-align: left">
-        <el-checkbox v-model="checked">我同意遵守
-          <router-link to="/userAgreement">《用户服务协议》</router-link>
-        </el-checkbox>
-      </el-form-item>
+<!--      <el-form-item style="text-align: left" prop="checked">-->
+<!--        <el-checkbox-group v-model="data.checked">-->
+<!--        <el-checkbox name="checked">我同意遵守-->
+<!--          《用户服务协议》-->
+<!--        </el-checkbox>-->
+<!--        </el-checkbox-group>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" @click="onSubmit('registerForm')" style="width: 300px">注册</el-button>
       </el-form-item>
-
     </el-form>
   </div>
 
@@ -64,6 +67,15 @@ export default {
         callback(new Error('用户名须以字母开头，且只能包含字母、数字、横线及下划线'))
       }
     }
+    //密码强弱验证
+    const passwordValidator = (rule, value, callback) => {
+      if (/^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\W_!@#$%^&*`~()-+=]+$)(?![a-z0-9]+$)(?![a-z\W_!@#$%^&*`~()-+=]+$)(?![0-9\W_!@#$%^&*`~()-+=]+$)[a-zA-Z0-9\W_!@#$%^&*`~()-+=]{8,30}$/
+          .test(value)) {
+        callback()
+      } else {
+        callback(new Error('密码至少包含大写字母，小写字母，数字，特殊字符中的三种，且长度为8到30位！'))
+      }
+    }
     // 确认密码校验器
     const comfirmPassword = (rule, value, callback) => {
       if (value !== this.data.password) {
@@ -80,12 +92,14 @@ export default {
       }
     }
     return {
-      checked: '',
+      // checked: '',
       data: {
         employerName: '',
         password: '',
         re_password: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        code: '',
+        // checked: [],
       },
       // 所有校验规则
       rules: {
@@ -97,7 +111,8 @@ export default {
         ],
         password: [ // 密码验证
           { required: true, trigger: 'blur', message: '密码不能为空' },
-          { validator: validatorMethod(8, '密码长度不能小于8'), trigger: 'blur' }
+          { validator: passwordValidator, trigger: 'blur' },
+          // { validator: validatorMethod(8, '密码长度不能小于8'), trigger: 'blur' }
         ],
         re_password: [ // 重复密码验证
           { required: true, trigger: 'blur', message: '请再一次输入密码' },
@@ -107,11 +122,69 @@ export default {
           { required: true, trigger: 'blur', message: '手机号不能为空' },
           { min: 11, max: 11, trigger: 'blur', message: '请输入11位手机号码' },
           { validator: phoneValidator, trigger: 'blur' }
-        ]
-      }
+        ],
+        code: [ //手机验证码
+          {required: true, message: '请输入验证码', trigger: 'blur' }
+        ],
+        // checked: [ //用户协议
+        //   {checked: 'array', require: true, message: '请勾选协议', trigger: 'change'},
+        // ]
+      },
+      valiBtn:'获取验证码',
+      disabled:false,
     }
   },
   methods: {
+    //获取验证码
+    //获取验证码 并只验证手机号 是否正确
+    getCode(){
+      this.$refs['registerForm'].validateField('phoneNumber', (err) =>{
+        if(err){
+          // eslint-disable-next-line no-console
+          console.log('未通过')
+          return;
+        }else{
+          // eslint-disable-next-line no-console
+          console.log('已通过')
+          this.$axios.post("/sendSms",
+            this.$qs.stringify({
+              "phoneNumber":this.data.phoneNumber,
+            })
+          ).then(response => {
+            // eslint-disable-next-line no-console
+            console.log(response)
+            const code = response.data.code;
+            if (code !== 200) {
+              this.$message.error("太频繁了，休息一下");
+
+            } else {
+              this.tackBtn();   //验证码倒数60秒
+              this.$message.success("验证码发送成功")
+            }
+            // eslint-disable-next-line no-console
+            console.log(response);
+          })
+        }
+      })
+    },
+    tackBtn(){       //验证码倒数60秒
+      let time = 60;
+      let timer = setInterval(() => {
+        window.sessionStorage.setItem("X_no_time",this.time);//存入本地
+        if(window.sessionStorage.getItem("X_no_time")<="0"){//等于0时清空
+          window.sessionStorage.removeItem('X_no_time');
+        }
+        if(time == 0){
+          clearInterval(timer);
+          this.valiBtn = '获取验证码';
+          this.disabled = false;
+        }else{
+          this.disabled = true;
+          this.valiBtn = time + '秒后重试';
+          time--;
+        }
+      }, 1000);
+    },
     validateName (e) {
       if (e.target.value.trim() !== '') { // 输入框为空不校验
         // status的四个值：error(失败)，success(成功)，validating(验证中)，null
@@ -127,31 +200,54 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     onSubmit(formName) {
-      this.$axios.post("/register/employer",
-        this.$qs.stringify({
-            "employerName":this.data.employerName,
-            "phoneNumber":this.data.phoneNumber,
-            "employerPassword":this.data.password
-        })).then(response=>{
-        // eslint-disable-next-line no-console
-        console.log(response);
-        const res = response.data
-        if (res.code !== 200) {
-          this.$message.error("手机号已注册")
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // alert('submit!');
+          this.$axios.post("/checkCode",
+              this.$qs.stringify({
+                "phoneNumber":this.data.phoneNumber,
+                "code":this.data.code
+          })).then(response=>{
+            // eslint-disable-next-line no-console
+            console.log(response)
+            const codeRes = response.data.code
+            if (codeRes === 200) {
+              this.$axios.post("/register/employer",
+                  this.$qs.stringify({
+                    "employerName":this.data.employerName,
+                    "phoneNumber":this.data.phoneNumber,
+                    "employerPassword":this.data.password
+                  })).then(response=>{
+                // eslint-disable-next-line no-console
+                console.log(response);
+                const res = response.data.code
+                if (res !== 200) {
+                  this.$message.error("手机号已注册")
+                } else {
+                  this.$message.success("注册成功")
+                  this.$router.push("/")
+                }
+              }).catch(error=>{
+                // eslint-disable-next-line no-console
+                console.log(error)
+              });
+            } else {
+              this.$message.error("验证码有误，请重新输入")
+            }
+          })
+
         } else {
-          this.$message.success("注册成功")
-          this.$router.push("/")
+          // eslint-disable-next-line no-console
+          console.log('error submit!!');
+          return false;
         }
-      }).catch(error=>{
-        // eslint-disable-next-line no-console
-        console.log(error)
       });
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .employerReg{
   width: 100%;
   height: 100%;
@@ -160,4 +256,21 @@ export default {
   /*margin: 0 auto;*/
   text-align: center;
 }
+.code{
+  .el-input {
+    width: 55%;
+    border-radius: 0px;
+    float: left;
+    display: inline-block;
+  }
+  .el-button {
+    width: 45%;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: 0px;
+    float: left;
+    display: inline-block;
+  }
+}
+
 </style>
