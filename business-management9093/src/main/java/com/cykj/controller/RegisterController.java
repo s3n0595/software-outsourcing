@@ -32,6 +32,9 @@ public class RegisterController {
     @PostMapping ("/employer")
     @ResponseBody
     public CommonResult addEmployer(EmployerAccount employerAccount){
+        if (employerAccount.getEmployerName() == null || employerAccount.getPhoneNumber() == null || employerAccount.getEmployerPassword() == null){
+            return new CommonResult(401,"注册信息不能为空",null);
+        }
         log.info("***雇主注册结果***"+employerAccount);
         int i = employerService.queryEmployerAccByTel(employerAccount.getPhoneNumber());
         log.info("***查询号码是否注册***"+i);
