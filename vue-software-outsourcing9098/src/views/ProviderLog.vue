@@ -79,7 +79,7 @@ export default {
           this.$message.error("手机号已注册")
         } else {
           this.$message.success("注册成功")
-          this.$router.push("/")
+          this.$router.push("/ProviderCenter")
         }
       }).catch(error => {
         // eslint-disable-next-line no-console

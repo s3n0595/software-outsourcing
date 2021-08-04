@@ -35,7 +35,7 @@ Vue.config.productionTip = false
 axios.defaults.timeout = 5000
 //设置api地址
 //全局定义axios
-axios.defaults.baseURL = 'http://localhost:9093'
+axios.defaults.baseURL = 'api'
 Vue.prototype.$axios = axios
 
 //qs

@@ -45,6 +45,11 @@ let kejianrouter = new Router({
       component: () => import('./views/Download.vue')
     },
     {
+      path: '/goodsList',
+      name: 'goodsList',
+      component: () => import('./views/GoodsList.vue')
+    },
+    {
       path: '/adminLogin',
       name: 'adminLogin',
       component: () => import('./views/AdminLogin.vue')
@@ -90,6 +95,19 @@ let kejianrouter = new Router({
           name: 'new',
           component: () => import('./views/Admin/News.vue')
         },
+      ]
+    },
+    {
+      // 服务商个人中心
+      path: '/providerCenter',
+      name: 'providerCenter',
+      component: () => import('./views/Provider/ProviderCenter.vue'),
+      children: [
+        {
+          path: '/providerCenter/PublishWorks',
+          name: 'PublishWorks',
+          component: () => import('./views/Provider/PublishWorks.vue')
+        }
       ]
     }
   ]

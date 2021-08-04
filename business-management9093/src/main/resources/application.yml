@@ -18,7 +18,10 @@ spring:
     url: jdbc:mysql://47.100.194.127:3306/oneStopService?useSSL=false&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
-
+  mvc:
+    static-path-pattern: /images/**
+  resources:
+    static-locations: classpath:/Provider/
 app:
   #appId
   appId: 2021000116673185
