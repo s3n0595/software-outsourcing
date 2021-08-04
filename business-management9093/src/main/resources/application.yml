@@ -38,7 +38,6 @@ app:
   notifyUrl: http://localhost:9093/app/successa
   #服务器同步通知页面路径，需要公网能访问到
   returnUrl: http://localhost:9093/app/success
-  #签名方式
   signType: RSA2
   #字符编码格式
   charset: utf-8

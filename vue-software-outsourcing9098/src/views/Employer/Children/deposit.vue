@@ -28,6 +28,24 @@
       </div>
     </el-card>
 
+    <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :close-on-click-modal='false'
+    >
+      <div style="margin-top: 15%;font-size: 20px;">
+      <span style="margin-left: 20%">如您已支付成功，请点击<span style="color: red">我已支付</span></span>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <div style="margin-top: 10%">
+    <el-button type="primary" @click="payment">我已支付</el-button>
+    <el-button  @click="dialogVisible = false" style="margin-right: 30%">取消</el-button>
+        </div>
+  </span>
+    </el-dialog>
+
+
   </div>
 
 </template>
@@ -37,31 +55,36 @@ export default {
   name: "deposit",
   data () {
     return {
+      dialogVisible: false,
       radio: '1',
       out_trade_no:'',
       total_amount:'',
-      subject:''
+      subject:'',
+      phoneNumber:''
     };
   },
   methods:{
     recharge(){
-      this.out_trade_no = this.getProjectNum() + Math.floor(Math.random() * 10000);//随机生成订单号
+      this.dialogVisible = true
+      this.out_trade_no = this.getProjectNum() + Math.floor(Math.random() * 100000);//随机生成订单号
       this.subject="开发宝余额充值"+this.total_amount+"元";
       this.$axios.post("/app/aliPay",this.$qs.stringify({
         "out_trade_no":this.out_trade_no,
         "total_amount":this.total_amount,
-        "subject":this.subject
+        "subject":this.subject,
+        "phoneNumber":"15759898731"
       })).then(response=>{
-        let divForm = document.getElementsByTagName('divform')
-        if (divForm.length) {
-          document.body.removeChild(divForm[0])
-        }
-        const div = document.createElement('divform')
-        div.innerHTML = response.data // res.data就是sb支付宝返回给你的form
-        document.body.appendChild(div)
-        // document.forms[0].setAttribute('target', '_blank') // 加了_blank可能出问题所以我注释了
-        document.getElementById('alipay_submit').submit()
-        console.log(response.data);
+          // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
+          let divForm = document.getElementsByTagName('divform')
+          if (divForm.length) {
+            document.body.removeChild(divForm[0])
+          }
+          const div=document.createElement('divform');
+          div.innerHTML=response.data; // data就是接口返回的form 表单字符串
+          document.body.appendChild(div);
+          document.forms[0].setAttribute('target', '_blank') // 新开窗口跳转
+          document.forms[0].submit();
+
       })
     },
     getProjectNum () {
@@ -81,6 +104,10 @@ export default {
         CurrentDate += '0' + Day
       }
       return CurrentDate
+    },
+    payment(){
+      this.dialogVisible = false
+      this.$router.push({ name: 'accountview'});
     }
   }
 }
