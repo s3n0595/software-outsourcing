@@ -18,7 +18,7 @@
     </select>
 
     <select id="queryEmployerIdName" resultType="com.cykj.bean.EmployerAccount">
-        select employerId,employerName from employerAccount where phoneNumber = #{phoneNumber}
+        select employerId,employerName,phoneNumber from employerAccount where phoneNumber = #{phoneNumber}
     </select>
 
     <insert id="addEmployerInfo" parameterType="com.cykj.bean.EmployerAccount">

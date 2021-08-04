@@ -84,6 +84,7 @@ export default {
               sessionStorage.setItem('provider',JSON.stringify(res.data))
               this.user = JSON.parse(sessionStorage.getItem('provider'))
               console.log(this.user)
+              console.log(this.user.phoneNumber)
               this.$message.success("登陆成功")
               this.$router.push("/providerCenter")
             }

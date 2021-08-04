@@ -18,7 +18,7 @@
     </select>
 
     <select id="queryProviderIdName" resultType="com.cykj.bean.ProviderAccount">
-        select providerId,providerName from providerAccount where phoneNumber = #{phoneNumber}
+        select providerId,providerName,phoneNumber from providerAccount where phoneNumber = #{phoneNumber}
     </select>
 
     <insert id="addProviderInfo" parameterType="com.cykj.bean.ProviderAccount">
