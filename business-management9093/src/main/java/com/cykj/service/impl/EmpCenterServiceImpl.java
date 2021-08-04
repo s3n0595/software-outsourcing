@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.Demand;
 import com.cykj.bean.DemandType;
 import com.cykj.mapper.EmpCenterMapper;
@@ -41,6 +42,18 @@ public class EmpCenterServiceImpl implements EmpCenterService {
     @Override
     public int delNeed(int did) {
         int i=empCenterMapper.delNeed(did);
+        return i;
+    }
+
+    @Override
+    public int addFlow(CapitalFlow capitalFlow) {
+        int i=empCenterMapper.addFlow(capitalFlow);
+        return i;
+    }
+
+    @Override
+    public int updFlow(CapitalFlow capitalFlow) {
+        int i=empCenterMapper.updFlow(capitalFlow);
         return i;
     }
 }

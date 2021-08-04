@@ -43,6 +43,15 @@
     <delete id="delNeed">
         delete from demand where demandId=#{demandId}
     </delete>
+
+    <insert id="addFlow" parameterType="com.cykj.bean.CapitalFlow">
+        insert capitalFlow(tradeType,phoneNumber,tradeContent,tradeCapital,tradeState,tradeNo)
+        values (#{tradeType},#{phoneNumber},#{tradeContent},#{tradeCapital},#{tradeState},#{tradeNo});
+    </insert>
+
+    <update id="updFlow" parameterType="com.cykj.bean.CapitalFlow">
+        update capitalFlow set tradeState=#{tradeState},tradeTime=#{tradeTime} where tradeNo=#{tradeNo}
+    </update>
 </mapper>
 
 
