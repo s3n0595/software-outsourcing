@@ -43,4 +43,9 @@ public class EmpCenterServiceImpl implements EmpCenterService {
         int i=empCenterMapper.delNeed(did);
         return i;
     }
+
+    @Override
+    public int updatePwd(int employerId, String employerPassword,String password) {
+        return empCenterMapper.updatePwd(employerId,employerPassword,password);
+    }
 }

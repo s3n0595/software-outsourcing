@@ -53,9 +53,9 @@ export const getAddUser = params=>{
         params:params
     })
 }
-export const getDeleteOne = params=>{
-    return axios.get(`${baseUrl}/user/DeleteOne`,{params:params})
-}
+// export const getDeleteOne = params=>{
+//     return axios.get(`${baseUrl}/user/DeleteOne`,{params:params})
+// }
 export const testApi = ()=>{
     return axios.get("/testApi/getkeywhereisddata?CITY_NAME=全省&S_id=B08I00136&callback=")
 }

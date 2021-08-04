@@ -10,6 +10,10 @@
     <select id="queryAllWorks" resultType="com.cykj.bean.Works">
         select * from works;
     </select>
+
+    <update id="updatePwd" parameterType="com.cykj.bean.ProviderPwd">
+        update providerAccount set providerPassword = #{password} where providerPassword = #{providerPassword} and providerId = #{providerId}
+    </update>
 </mapper>
 
 

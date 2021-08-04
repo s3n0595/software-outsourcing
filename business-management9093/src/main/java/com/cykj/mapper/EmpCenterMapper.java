@@ -15,5 +15,5 @@ public interface EmpCenterMapper {
     List<DemandType> ckList();//获取需求类型表
     int editNeed(Demand demand);//修改雇主需求信息
     int delNeed(@Param("demandId") int did);
-
+    int updatePwd(@Param("employerId") int employerId,@Param("employerPassword") String employerPassword,@Param("password") String password);
 }

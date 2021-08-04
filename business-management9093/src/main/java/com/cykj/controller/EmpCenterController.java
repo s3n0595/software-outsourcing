@@ -2,9 +2,9 @@ package com.cykj.controller;
 
 
 import com.alibaba.druid.sql.repository.SchemaObjectType;
-import com.cykj.bean.Demand;
-import com.cykj.bean.DemandType;
+import com.cykj.bean.*;
 import com.cykj.service.EmpCenterService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("empcenter")
 @CrossOrigin
+@Slf4j
 public class EmpCenterController {
     @Autowired
     private EmpCenterService empCenterService;
@@ -125,6 +126,18 @@ public class EmpCenterController {
             return "删除成功";
         }else{
             return "删除失败";
+        }
+    }
+
+    //修改雇主密码
+    @RequestMapping("updatePwd")
+    public CommonResult updatePwd(EmployerPwd employerPwd){
+        log.info("***雇主修改密码***");
+        int i = empCenterService.updatePwd(employerPwd.getEmployerId(), employerPwd.getEmployerPassword(),employerPwd.getPassword());
+        if (i > 0) {
+            return new CommonResult(200,"密码修改成功",null);
+        } else {
+            return new CommonResult(400,"密码修改失败",null);
         }
     }
 }

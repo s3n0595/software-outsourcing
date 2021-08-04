@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.Works;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.List;
 public interface WorksMapper {
 	int addWorks(Works works);
 	List<Works> queryAllWorks();
+	int updatePwd(@Param("providerId") int providerId, @Param("providerPassword") String providerPassword, @Param("password") String password);
+
 }

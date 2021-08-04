@@ -16,6 +16,10 @@
                 <i class="el-icon-star-off"></i>
                 <span slot="title" >账户信息</span>
               </el-menu-item>
+              <el-menu-item index="/employerCenter/updatePwd" style="height: 50px;">
+                <i class="el-icon-star-off"></i>
+                <span slot="title" >修改密码</span>
+              </el-menu-item>
               <el-menu-item index="/admin/user" style="height: 50px;">
                 <i class="el-icon-star-off"></i>
                 <span slot="title" >码市认证</span>

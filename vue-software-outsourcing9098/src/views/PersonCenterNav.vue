@@ -20,6 +20,10 @@
 
     <div class="header-right">
       <div class="header-user-con">
+        <!-- 用户头像 -->
+        <div class="user-avator">
+          <img src="../assets/img/img.jpg">
+        </div>
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" >
           <span class="el-dropdown-link">
@@ -27,9 +31,7 @@
             <i class="el-icon-caret-bottom"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <router-link to="/admin">
-              <el-dropdown-item>用户信息</el-dropdown-item>
-            </router-link>
+              <el-dropdown-item @click.native="personCenter">用户信息</el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -41,6 +43,7 @@
   </el-header>
 </template>
 
+
 <script>
 export default {
   data() {
@@ -50,44 +53,24 @@ export default {
       isShow: false
     };
   },
+
   methods: {
-    home(){
-      this.$router.push('/Home')
-    },
-    employerRegister(){
-      this.$router.push('/employerReg')
-    },
-    providerRegister(){
-      this.$router.push('/providerReg')
-    },
-    employerLogin(){
-      this.$router.push('/employerLog')
-    },
-    providerLogin(){
-      this.$router.push('/providerLog')
-    },
-    logout: function () {
-      var _this = this;
-      this.$confirm('确认退出吗?', '提示', {
-        //type: 'warning'
-      }).then(() => {
-        sessionStorage.removeItem('user');
-        _this.$router.push('/');
-      }).catch(() => {
-
-      });
-    },
-
-
     handleSelect(key) {
       this.isShow = this.defaultActive != key;
       window.console.log(this.isShow);
+    },
+    personCenter(){
+      this.user = JSON.parse(sessionStorage.getItem('user'))
+      console.log("用户id"+this.user.employerId)
+      this.$router.push('/employerCenter')
     }
-  }
+
+  },
+
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 * {
   padding: 0;
   margin: 0;
@@ -116,11 +99,10 @@ body {
   .logo {
     width: 280px;
     padding: 10px;
-    height: 60px;
 
     img {
-      width: 70%;
-      height: 40px;
+      width: 100%;
+      line-height: 60px;
     }
   }
 }
@@ -129,65 +111,93 @@ body {
   padding: 0 !important;
 }
 
-.footer {
+.user-avator {
+  margin-left: 20px;
+}
+.user-avator img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.header {
+  background-color: #23262e !important;
+  position: relative;
+  box-sizing: border-box;
   width: 100%;
-  height: 216px;
-  overflow: hidden;
-  background-color: #14679f;
-
-  &-content {
-    width: 1240px;
-    margin: 0 auto;
-    padding-top: 20px;
-    display: flex;
-    justify-content: space-between;
-
-    .content-nav {
-      display: flex;
-      justify-content: space-around;
-
-      li {
-        display: flex;
-        flex-direction: column;
-        padding: 0 20px;
-        //justify-content: center;
-        align-items: flex-start;
-
-        p {
-          font-size: 20px;
-          color: #d4edff;
-          padding: 10px 0;
-        }
-
-        span {
-          color: #f7f7f7;
-          font-weight: 300;
-          padding: 5px 0;
-        }
-      }
-    }
-
-    img {
-      width: 170px;
-      height: 170px;
-      padding: 10px;
-    }
-  }
-
-  .copyright {
-    height: 30px;
-    background: #125688;
-
-    span {
-      color: #fff;
-      line-height: 30px;
-    }
-  }
-
-  .header-right {
-    float: right;
-    padding-right: 50px;
-  }
+  height: 70px;
+  font-size: 22px;
+  color: #fff;
+}
+.collapse-btn {
+  float: left;
+  padding: 0 21px;
+  cursor: pointer;
+  line-height: 70px;
+}
+.header .logo {
+  float: left;
+  width: 250px;
+  line-height: 70px;
+}
+.header-right {
+  float: right;
+  padding-right: 50px;
+}
+.header-user-con {
+  display: flex;
+  height: 70px;
+  align-items: center;
+}
+.btn-fullscreen {
+  transform: rotate(45deg);
+  margin-right: 5px;
+  font-size: 24px;
+}
+.btn-bell,
+.btn-fullscreen {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.btn-bell-badge {
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: #f56c6c;
+  color: #fff;
+}
+.btn-bell .el-icon-bell {
+  color: #fff;
+}
+.user-name {
+  margin-left: 10px;
+}
+.user-avator {
+  margin-left: 20px;
+}
+.user-avator img {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.el-dropdown-link {
+  color: #000000;
+  cursor: pointer;
+}
+.el-dropdown-menu__item {
+  text-align: center;
+}
+.collapse-btn:hover{
+  background-color: #009688!important;
 }
 
 </style>

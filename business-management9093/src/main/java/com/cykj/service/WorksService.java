@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 import com.cykj.bean.Works;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
@@ -16,4 +17,6 @@ import java.util.List;
 public interface WorksService {
 	boolean publishWorks(MultipartFile file, Works works);
 	List<Works> queryAllWorks();
+	int updatePwd(int providerId, String providerPassword,String password);
+
 }
