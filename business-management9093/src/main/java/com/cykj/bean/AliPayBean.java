@@ -40,5 +40,7 @@ public class AliPayBean {
      * 产品编号
      */
     private String product_code = "FAST_INSTANT_TRADE_PAY";
+
+    private String phoneNumber;
 }
 

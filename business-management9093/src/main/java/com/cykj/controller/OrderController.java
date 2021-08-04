@@ -4,6 +4,9 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayConfig;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.cykj.bean.AliPayBean;
+import com.cykj.bean.CapitalFlow;
+import com.cykj.service.EmpCenterService;
+import com.cykj.service.EmployerService;
 import com.cykj.service.impl.PayServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +25,8 @@ import java.util.Map;
 public class OrderController {
     @Autowired
     private PayServiceImpl payService;
-
+    @Autowired
+    private EmpCenterService empCenterService;
     @RequestMapping("/index")
     public String abc(){
             return "index.html";
@@ -30,27 +34,26 @@ public class OrderController {
 
     @RequestMapping( "aliPay")
     public String alipay(AliPayBean aliPayBean) throws AlipayApiException {
+        CapitalFlow capitalFlow = new CapitalFlow();
+        capitalFlow.setTradeType("支付宝");
+        capitalFlow.setTradeContent(aliPayBean.getSubject());
+        capitalFlow.setTradeCapital(Double.parseDouble(aliPayBean.getTotal_amount()));
+        capitalFlow.setTradeNo(aliPayBean.getOut_trade_no());
+        capitalFlow.setPhoneNumber(aliPayBean.getPhoneNumber());
+        capitalFlow.setTradeState("ACQ.TRADE_STATUS_ERROR");
+        empCenterService.addFlow(capitalFlow);
         return payService.aliPay(aliPayBean);
-//        AliPayBean alipayBean = new AliPayBean();
-//        alipayBean.setOut_trade_no(outTradeNo);
-//        alipayBean.setSubject(subject);
-//        alipayBean.setTotal_amount(totalAmount);
-//        alipayBean.setBody(body);
-//        System.out.println("!"+payService.aliPay(alipayBean));
-//        return payService.aliPay(alipayBean);
     }
 
     @RequestMapping( "/success")
-    public String success(HttpServletRequest request)throws Exception{
-        String out_trade_no= request.getParameter("out_trade_no");
-        String total_amount= request.getParameter("total_amount");
+    public void success(HttpServletRequest request)throws Exception{
         String timestamp=new String(request.getParameter("timestamp").getBytes("ISO-8859-1"), "UTF-8");
-        System.out.println("订单号"+out_trade_no);
-        System.out.println("金额"+total_amount);
-        System.out.println("支付时间"+timestamp);
+        CapitalFlow capitalFlow=new CapitalFlow();
+        capitalFlow.setTradeNo(request.getParameter("out_trade_no"));
+        capitalFlow.setTradeTime(timestamp);
+        capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
+        empCenterService.updFlow(capitalFlow);
         System.out.println("支付成功！");
-        return "付款成功！";
-
     }
 
     @RequestMapping( "/successa")

@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 
+import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.Demand;
 import com.cykj.bean.DemandType;
 import org.apache.ibatis.annotations.Param;
@@ -14,4 +15,6 @@ public interface EmpCenterService {
     int editNeed(Demand demand);
     int delNeed( int did);
     int updatePwd(int employerId,String employerPassword,String password);
+    int addFlow(CapitalFlow capitalFlow);
+    int updFlow(CapitalFlow capitalFlow);
 }
