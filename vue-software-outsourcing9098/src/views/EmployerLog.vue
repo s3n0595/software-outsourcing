@@ -81,6 +81,9 @@ export default {
             if (res.code !== 200) {
               this.$message.error("账号或密码错误")
             } else {
+              sessionStorage.setItem('employer',JSON.stringify(res.data))
+              this.user = JSON.parse(sessionStorage.getItem('employer'))
+              console.log(this.user)
               this.$message.success("登陆成功")
               this.$router.push("/")
             }

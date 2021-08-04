@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+
 /**
  * @author guoquansen
  * @date 2021/7/24 8:37 下午
@@ -20,9 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 public class LoginController {
 
-    @Autowired
+    @Resource
     private EmployerService employerService;
-    @Autowired
+    @Resource
     private ProviderService providerService;
 
     @RequestMapping("/employer")
@@ -31,8 +33,8 @@ public class LoginController {
         log.info("***雇主登陆***");
         int i = employerService.queryEmployerAccByLog(employerAccount);
         if (i > 0) {
-
-            return new CommonResult(200,"雇主"+employerAccount.getPhoneNumber()+"登陆成功",i);
+            EmployerAccount employerIdName = employerService.queryEmployerIdName(employerAccount.getPhoneNumber());
+            return new CommonResult(200,"雇主"+employerAccount.getPhoneNumber()+"登陆成功",employerIdName);
         } else {
             return new CommonResult(400,"雇主账号或密码错误",null);
         }
@@ -45,7 +47,8 @@ public class LoginController {
         log.info("***服务商登陆***");
         int i = providerService.queryProviderAccByLog(providerAccount);
         if (i > 0) {
-            return new CommonResult(200,"服务商"+providerAccount.getProviderName()+"登陆成功",i);
+            ProviderAccount providerIdName = providerService.queryProviderIdName(providerAccount.getPhoneNumber());
+            return new CommonResult(200,"服务商"+providerAccount.getProviderName()+"登陆成功",providerIdName);
         } else {
             return new CommonResult(400,"服务商账号或密码错误",null);
         }
