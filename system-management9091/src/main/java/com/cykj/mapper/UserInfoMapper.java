@@ -18,4 +18,7 @@ public interface UserInfoMapper {
     List<UserInfo> getUserList();
     // 根据userId删除用户
     int deleteUserList(@Param("userId") int userId);
+    //修改用户密码
+    int updatePwd(@Param("userId") int userId,@Param("userPassword") String userPassword,@Param("password") String password);
+
 }

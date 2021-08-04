@@ -11,5 +11,8 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface LoginMapper {
 
-    int queryAdminByName(UserInfo userInfo);
+    int queryAdminByLog(UserInfo userInfo);
+
+    //查询用户信息
+    UserInfo queryUserInfo(UserInfo userInfo);
 }

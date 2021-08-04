@@ -28,4 +28,9 @@ public class UserInfoServiceImp implements UserInfoService {
     public int deleteUserList(int userId) {
         return userInfoMapper.deleteUserList(userId);
     }
+
+    @Override
+    public int updatePwd(int userId, String userPassword, String password) {
+        return userInfoMapper.updatePwd(userId,userPassword,password);
+    }
 }

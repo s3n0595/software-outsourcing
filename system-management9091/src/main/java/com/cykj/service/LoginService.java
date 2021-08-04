@@ -9,5 +9,7 @@ import org.springframework.stereotype.Service;
  */
 public interface LoginService {
 
-    int queryAdminByName(UserInfo userInfo);
+    int queryAdminByLog(UserInfo userInfo);
+
+    UserInfo queryUserInfo(UserInfo userInfo);
 }

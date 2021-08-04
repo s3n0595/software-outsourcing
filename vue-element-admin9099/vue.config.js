@@ -1,5 +1,5 @@
  module.exports = {
-    baseUrl: './',
+    publicPath: './',   // 根路径  ====》   baseUrl: '/',已废弃
     productionSourceMap: false,
     devServer: {
         port:9099,
