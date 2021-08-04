@@ -1,7 +1,10 @@
 package com.cykj.controller;
 
+import com.cykj.bean.CommonResult;
+import com.cykj.bean.ProviderPwd;
 import com.cykj.bean.Works;
 import com.cykj.service.WorksService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +27,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/work")
+@Slf4j
 public class WorksController {
 	@Autowired
     private WorksService worksService;
@@ -78,4 +82,18 @@ public class WorksController {
             e.printStackTrace();
         }
     }
+
+    @RequestMapping("/updatePwd")
+    @ResponseBody
+    public CommonResult updatePwd(ProviderPwd providerPwd){
+        log.info("***服务商修改密码***");
+        int i = worksService.updatePwd(providerPwd.getProviderId(), providerPwd.getProviderPassword(), providerPwd.getPassword());
+        if (i > 0) {
+            return new CommonResult(200,"服务商密码修改成功",null);
+        } else {
+            return new CommonResult(400,"服务商密码修改失败",null);
+        }
+    }
+
+
 }

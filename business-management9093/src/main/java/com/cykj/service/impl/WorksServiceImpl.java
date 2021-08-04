@@ -57,4 +57,9 @@ public class WorksServiceImpl implements WorksService {
 	public List<Works> queryAllWorks() {
 		return worksMapper.queryAllWorks();
 	}
+
+	@Override
+	public int updatePwd(int providerId, String providerPassword, String password) {
+		return worksMapper.updatePwd(providerId,providerPassword,password);
+	}
 }

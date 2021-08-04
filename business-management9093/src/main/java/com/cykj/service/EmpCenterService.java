@@ -13,4 +13,5 @@ public interface EmpCenterService {
     List<DemandType> ckList();
     int editNeed(Demand demand);
     int delNeed( int did);
+    int updatePwd(int employerId,String employerPassword,String password);
 }

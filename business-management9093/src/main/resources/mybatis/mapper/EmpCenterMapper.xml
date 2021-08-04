@@ -43,6 +43,10 @@
     <delete id="delNeed">
         delete from demand where demandId=#{demandId}
     </delete>
+
+    <update id="updatePwd" parameterType="com.cykj.bean.EmployerPwd">
+        update employerAccount set employerPassword = #{password} where employerPassword = #{employerPassword} and employerId = #{employerId}
+    </update>
 </mapper>
 
 

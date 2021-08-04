@@ -51,6 +51,7 @@ export default new Router({
       component: () => import('./views/ProviderLog.vue')
     },
     {
+      //雇主中心
       path: '/employerCenter',
       name: 'employerCenter',
       meta: {
@@ -73,6 +74,11 @@ export default new Router({
           name: 'deposit',
           component: () => import('./views/Employer/Children/deposit.vue'),
         },
+        {
+          path: '/employerCenter/updatePwd',
+          name: 'updatePwd',
+          component: () => import('./views/Employer/Children/updatePwd.vue'),
+        },
       ]
     },
     {
@@ -85,7 +91,12 @@ export default new Router({
           path: '/providerCenter/PublishWorks',
           name: 'PublishWorks',
           component: () => import('./views/Provider/PublishWorks.vue')
-        }
+        },
+        {
+          path: '/providerCenter/updatePwd',
+          name: 'updatePwd',
+          component: () => import('./views/Provider/updatePwd.vue'),
+        },
       ]
     }
 
