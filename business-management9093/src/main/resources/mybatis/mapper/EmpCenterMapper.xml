@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.EmpCenterMapper">
+    <insert id="addNeed" parameterType="com.cykj.bean.Demand">
+        insert demand(employerId,releaseTime,predictPrice,predictTime,demandTitle,demandTypeId,demandDescribe,annexPath)
+         values(#{employerId},#{releaseTime},#{predictPrice},#{predictTime},#{demandTitle},#{demandTypeId},#{demandDescribe},#{annexPath})
+    </insert>
+
+    <select id="nedds" resultMap="neddList">
+        select t1.*,t2.demandTypeName from demand t1,demandType t2
+        where employerId=#{employerId} AND t1.demandTypeId=t2.demandTypeId
+        order by demandId desc
+    </select>
+    <resultMap id="neddList" type="com.cykj.bean.Demand">
+        <id column="demandId" property="demandId"/>
+        <result column="employerId" property="employerId"/>
+        <result column="demandStatus" property="demandStatus"/>
+        <result column="releaseTime" property="releaseTime"/>
+        <result column="predictPrice" property="predictPrice"/>
+        <result column="predictTime" property="predictTime"/>
+        <result column="demandTitle" property="demandTitle"/>
+        <result column="demandTypeId" property="demandTypeId"/>
+        <result column="demandDescribe" property="demandDescribe"/>
+        <result column="annexPath" property="annexPath"/>
+        <result column="predictNumber" property="predictNumber"/>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName" />
+        </association>
+    </resultMap>
+
+    <select id="ckList" resultType="com.cykj.bean.DemandType">
+        select * from demandType
+    </select>
+
+    <update id="editNeed" parameterType="com.cykj.bean.Demand">
+        update demand set predictPrice=#{predictPrice},predictTime=#{predictTime},
+        demandTitle=#{demandTitle},demandTypeId=#{demandTypeId},demandDescribe=#{demandDescribe}
+        where demandId=#{demandId}
+    </update>
+
+    <delete id="delNeed">
+        delete from demand where demandId=#{demandId}
+    </delete>
+</mapper>
+
+

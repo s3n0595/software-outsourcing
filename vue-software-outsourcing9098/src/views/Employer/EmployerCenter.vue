@@ -49,7 +49,7 @@
             <div class="clearfix" style="font-size: 15px">
               <span>我的开发宝</span>
             </div>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/employerCenter/accountview" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title" >账户概览</span>
             </el-menu-item>

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +24,6 @@ public class Demand {
   private String demandDescribe;
   private String annexPath;
   private String predictNumber;
-
+  private DemandType demandType;
 
 }
