@@ -2,23 +2,20 @@
   <div class="news">
     <el-button type="primary" @click="openDialog()">新增需求</el-button>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="Id" label="序号" width="180"></el-table-column>
-      <el-table-column prop="Title" label="新闻标题" width="180"></el-table-column>
-      <el-table-column prop="Img" label="图片">
+      <el-table-column prop="demandId" label="序号" width="100"></el-table-column>
+      <el-table-column prop="demandTitle" label="项目名称" width="180"></el-table-column>
+      <el-table-column prop="predictTime" label="交付周期(天)" width="120"></el-table-column>
+      <el-table-column prop="predictPrice" label="项目预算(元)" width="120"></el-table-column>
+      <el-table-column prop="demandType.demandTypeName" label="项目类别" width="100"></el-table-column>
+
+      <el-table-column prop="demandDescribe" label="项目描述">
         <template slot-scope="scope">
-          <img style="width:100%" :src="imgserver + scope.row.Img" alt />
+          <p v-if="scope.row.demandDescribe.length > 100">{{scope.row.Content.substring(0,50)}} ...</p>
+          <p v-else>{{scope.row.demandDescribe}}</p>
         </template>
       </el-table-column>
-      <el-table-column prop="Content" label="新闻内容">
-        <template slot-scope="scope">
-          <p v-if="scope.row.Content.length > 100">{{scope.row.Content.substring(0,100)}} ...</p>
-          <p v-else>{{scope.row.Content}}</p>
-        </template>
-      </el-table-column>
-      <el-table-column prop="Type" label="新闻类别">
-        <template slot-scope="scope">{{scope.row.Type == 1 ? '公司新闻':'行业动态'}}</template>
-      </el-table-column>
-      <el-table-column label="操作">
+
+      <el-table-column  label="操作">
         <template slot-scope="scope">
           <el-button
               type="primary"
@@ -30,23 +27,29 @@
               icon="el-icon-delete"
               @click="handleDelete(scope.$index, scope.row)"
           ></el-button>
+          <el-button v-if="scope.row.annexPath!=null" :disabled="false"  icon="el-icon-download" type="primary" @click="downloadFile(scope.row.annexPath)"></el-button>
+          <el-button v-else :disabled="true"  icon="el-icon-download" type="primary" @click="downloadFile(scope.row.annexPath)"></el-button>
         </template>
       </el-table-column>
     </el-table>
-    <!--  -->
-    <el-dialog title="需求编辑" :visible.sync="dialogFormVisible">
+
+    <!--添加需求-->
+    <el-dialog title="发布需求" :visible.sync="dialogFormVisible">
       <el-form
           ref="needForm"
           :model="form"
       >
-        <el-form-item label="项目类型" label-width="190px">
-          <el-radio v-model="form.demandTypeId"  label="1" ><i class="el-icon-platform-eleme">&nbsp;&nbsp;Web 网站</i></el-radio>
-          <el-radio v-model="form.demandTypeId"  label="2"><i class="el-icon-mobile-phone">&nbsp;&nbsp;App 开发</i></el-radio>
-          <el-radio v-model="form.demandTypeId"  label="3"><i class="el-icon-connection">&nbsp;&nbsp;微信公众号</i></el-radio>
-          <el-radio v-model="form.demandTypeId"  label="4"><i class="el-icon-s-management">&nbsp;&nbsp;HTML5 应用</i></el-radio>
-          <el-radio v-model="form.demandTypeId"  label="5"><i class="el-icon-info">&nbsp;&nbsp;小程序</i></el-radio>
-          <el-radio v-model="form.demandTypeId"  label="6"><i class="el-icon-cherry">&nbsp;&nbsp;其他应用</i></el-radio>
+        <el-form-item label="项目类型" :label-width="formLabelWidth" >
+          <el-radio  v-model="form.demandTypeId" v-for="ck in checklist" :key="ck.demandTypeId"  :label="ck.demandTypeId" ><i v-bind:class="ck.icon">&nbsp;&nbsp;{{ck.demandTypeName}}</i></el-radio>
         </el-form-item>
+<!--        <el-form-item label="项目类型" label-width="190px">-->
+<!--          <el-radio v-model="form.demandTypeId"  label="1" ><i class="el-icon-platform-eleme">&nbsp;&nbsp;Web 网站</i></el-radio>-->
+<!--          <el-radio v-model="form.demandTypeId"  label="2"><i class="el-icon-mobile-phone">&nbsp;&nbsp;App 开发</i></el-radio>-->
+<!--          <el-radio v-model="form.demandTypeId"  label="3"><i class="el-icon-connection">&nbsp;&nbsp;微信公众号</i></el-radio>-->
+<!--          <el-radio v-model="form.demandTypeId"  label="4"><i class="el-icon-s-management">&nbsp;&nbsp;HTML5 应用</i></el-radio>-->
+<!--          <el-radio v-model="form.demandTypeId"  label="5"><i class="el-icon-info">&nbsp;&nbsp;小程序</i></el-radio>-->
+<!--          <el-radio v-model="form.demandTypeId"  label="6"><i class="el-icon-cherry">&nbsp;&nbsp;其他应用</i></el-radio>-->
+<!--        </el-form-item>-->
         <el-form-item label="项目名称" :label-width="formLabelWidth">
           <el-input v-model="form.demandTitle" autocomplete="off" style="margin-left: 25px;width: 550px"></el-input>
         </el-form-item>
@@ -57,23 +60,9 @@
           <el-input v-model="form.predictTime" autocomplete="off" style="width: 230px;"></el-input>&nbsp;&nbsp;&nbsp;天
         </el-form-item>
 
-<!--        <el-form-item label="需求图片" :label-width="formLabelWidth">-->
-<!--          <el-upload-->
-<!--              class="avatar-uploader"-->
-<!--              action="http://shkjgw.shkjem.com/api/UpLoad/UploadImage"-->
-<!--              :headers="headers"-->
-<!--              :show-file-list="false"-->
-<!--              :on-success="handleSuccess"-->
-<!--              style="margin-left: 25px;"-->
-<!--          >-->
-<!--            <img v-if="formData.Img" :src="imgserver+formData.Img" class="avatar" />-->
-<!--            <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
-<!--          </el-upload>-->
-<!--        </el-form-item>-->
-
 
         <el-form-item label="项目描述" :label-width="formLabelWidth">
-          <el-input type="textarea" :rows="10" v-model="formData.Content" autocomplete="off" style="margin-left: 25px;width: 550px;"></el-input>
+          <el-input type="textarea" :rows="10" v-model="form.demandDescribe" autocomplete="off" style="margin-left: 25px;width: 550px;"></el-input>
         </el-form-item>
 <!--        <el-form :model="form">-->
         <el-form-item label="相关文档" :label-width="formLabelWidth">
@@ -93,9 +82,9 @@
             <div slot="tip" class="el-upload__tip">只能上传xlsx(Excel2007)文件，且不超过10M</div>
           </el-upload>
         </el-form-item>
-          <el-form-item >
-            <el-button size="small" type="primary" @click="uploadFile('needForm')">立即上传</el-button>
-            <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-form-item style="margin-left:40%;">
+            <el-button size="small" type="primary" @click="uploadFile('needForm')">立即发布</el-button>
+            <el-button size="small" @click="dialogFormVisible = false">取消</el-button>
           </el-form-item>
 <!--        </el-form>-->
       </el-form>
@@ -103,6 +92,52 @@
 <!--        <el-button @click="dialogFormVisible = false">取 消</el-button>-->
 <!--        <el-button type="primary" @click="handleCreateOrModify()">确 定</el-button>-->
 <!--      </div>-->
+    </el-dialog>
+
+    <!--编辑-->
+    <el-dialog title="需求编辑" :visible.sync="editFormVisible">
+      <el-form
+          ref="editForm"
+          :model="editform"
+      >
+        <el-form-item label="项目类型" :label-width="formLabelWidth" >
+          <el-radio  v-model="editform.demandTypeId" v-for="ck in checklist" :key="ck.demandTypeId"  :label="ck.demandTypeId" ><i v-bind:class="ck.icon">&nbsp;&nbsp;{{ck.demandTypeName}}</i></el-radio>
+        </el-form-item>
+        <el-form-item label="项目名称" :label-width="formLabelWidth">
+          <el-input v-model="editform.demandTitle" autocomplete="off" style="margin-left: 25px;width: 550px"></el-input>
+        </el-form-item>
+        <el-form-item label="项目预算" :label-width="formLabelWidth">
+          <el-input v-model="editform.predictPrice" autocomplete="off" style="margin-left: 25px;width: 230px;"></el-input>&nbsp;&nbsp;&nbsp;元
+        </el-form-item>
+        <el-form-item label="期望交付周期" label-width="145px">
+          <el-input v-model="editform.predictTime" autocomplete="off" style="width: 230px;"></el-input>&nbsp;&nbsp;&nbsp;天
+        </el-form-item>
+
+        <el-form-item label="项目描述" :label-width="formLabelWidth">
+          <el-input type="textarea" :rows="10" v-model="editform.demandDescribe" autocomplete="off" style="margin-left: 25px;width: 550px;"></el-input>
+        </el-form-item>
+        <el-form-item label="相关文档" :label-width="formLabelWidth">
+          <el-upload
+              ref="editupload"
+              action="api/empcenter/editfile"
+              :limit=limitNum
+              :auto-upload="false"
+              :before-upload="beforeUploadFile"
+              :on-change="fileChange"
+              :on-exceed="exceedFile"
+              :on-success="handleSuccess"
+              :on-error="handleError"
+              :data="editform"
+              :file-list="editfileList">
+            <el-button size="small" plain>选择文件</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传xlsx(Excel2007)文件，且不超过10M</div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item style="margin-left:40%;">
+          <el-button size="small" type="primary" @click="edituploadFile(editform)">修改</el-button>
+          <el-button @click="editFormVisible = false">取消</el-button>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -116,6 +151,7 @@ export default {
       options: {},
       headers: {},
       tableData: [],
+      checklist:[],
       formData: {
         Id: 0,
         Title: "",
@@ -125,18 +161,32 @@ export default {
         CreateTime: new Date(),
       },
       dialogFormVisible: false,
+      editFormVisible:false,
       formLabelWidth: "120px",
       formLabelWidth1: "80px",
       loading: true,
       fileList: [],
+      editfileList:[
+        {name:'',url:''}
+      ],
       limitNum: 1,
       form: {
         demandTitle: "",
         predictPrice:"",
         predictTime:"",
         demandTypeId:"",
-        releaseTime:""
+        releaseTime:"",
+        demandDescribe:""
       },
+      editform:{
+        demandId:"",
+        demandTitle: "",
+        predictPrice:"",
+        predictTime:"",
+        demandTypeId:"",
+        releaseTime:"",
+        demandDescribe:""
+      }
     };
   },
   mounted() {
@@ -150,14 +200,8 @@ export default {
     this.headers = {
       Authorization: token
     };
+    this.selcheckList();
     this.loadData();
-    let params=this.$qs.stringify( {
-      employerId:"1",
-    })
-
-    Ceshi(params).then(res=>{
-      console.log("=======："+res.data)
-    })
   },
   methods: {
     // 文件超出个数限制时的钩子
@@ -208,20 +252,24 @@ export default {
         message: `文件上传失败`
       });
     },
-    uploadFile() {
+    uploadFile() {//提交文件、form表单
       this.$refs.upload.submit();
     },
-    //
-    // handleSuccess(response, file, fileList) {
-    //   window.console.log(response, file, fileList);
-    //   this.formData.Img = response;
-    // },
+    selcheckList(){
+      this.$axios.post("/empcenter/ckList").then(response =>{
+        this.checklist=response.data;
+      }).catch(e => {
+        this.$message({
+          message: "网络或程序异常！" + e,
+          type: "error"
+        });
+      });
+    },
     loadData() {
       this.loading = true;
-      this.$http
-          .get("News/GetNewsAll?type=0&num=10")
-          .then(response => {
-            // window.console.log(response);
+      this.$axios.post("/empcenter/needList",this.$qs.stringify({
+        "employerId":1,
+      })).then(response => {
             this.tableData = response.data;
             this.loading = false;
           })
@@ -232,6 +280,11 @@ export default {
             });
           });
     },
+
+    async downloadFile (name) {
+      window.location.href="http://127.0.0.1:9093/empcenter/download?name="+name;
+    },
+
     openDialog() {
       // 清除数据
       this.formData.Id = 0;
@@ -288,26 +341,50 @@ export default {
     },
     //编辑
     handleEdit(index, row) {
-      //index:第几行   row:这一行的数据
       window.console.log(index, row);
-      this.formData = row;
-      this.dialogFormVisible = true;
+      this.editform= row;
+      this.editfileList.name=row.annexPath;
+      this.editFormVisible = true;
     },
+    edituploadFile(){
+      this.$axios.post("/empcenter/editfile",
+          this.$qs.stringify({
+            demandId:this.editform.demandId,
+            demandTitle: this.editform.demandTitle,
+            predictPrice:this.editform.predictPrice,
+            predictTime:this.editform.predictTime,
+            demandTypeId:this.editform.demandTypeId,
+            demandDescribe:this.editform.demandDescribe
+          })).then(response=> {
+        this.$message({
+          message:response.data,
+          type: "success"
+        });
+        this.editFormVisible = false;
+        this.selcheckList();
+        this.loadData();
+      }).catch(e => {
+        this.$message({
+          message: "网络或程序异常！" + e,
+          type: "error"
+        });
+      });
+    },
+
     handleDelete(index, row) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      })
-          .then(() => {
+      }).then(() => {
             // 已确认删除
             // 调接口删除
             this.loading = true;
-            this.$http
-                .post(`News/DeleteNews?id=${row.Id}`, null, this.options)
-                .then(response => {
+            console.log();
+            this.$axios.post(`/empcenter/delfile`, this.$qs.stringify({
+              demandId:row.demandId
+            })).then(response => {
                   this.loading = false;
-                  window.console.log(response);
                   this.$message({
                     message: "删除成功！",
                     type: "success"
