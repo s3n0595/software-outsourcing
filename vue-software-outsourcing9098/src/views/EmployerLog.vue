@@ -83,9 +83,9 @@ export default {
             } else {
               sessionStorage.setItem('employer',JSON.stringify(res.data))
               this.user = JSON.parse(sessionStorage.getItem('employer'))
-              console.log(this.user)
+              console.log(this.user.employerId)
               this.$message.success("登陆成功")
-              this.$router.push("/")
+              this.$router.push("/employerCenter")
             }
           }).catch(error => {
             // eslint-disable-next-line no-console

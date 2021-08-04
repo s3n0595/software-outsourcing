@@ -1,81 +1,53 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Nav from "@/views/Nav";
+import Home from "@/views/Home";
+import EmployerReg from "@/views/EmployerReg";
 
 Vue.use(Router)
 
-let kejianrouter = new Router({
-  routes: [{
-    path: '/',
-    name: 'home',
-    component: () => import('./views/Home.vue')
-  },
+
+export default new Router({
+  routes: [
     {
-      path: '/news',
-      name: 'news',
-      component: () => import('./views/News.vue'),
+      path: '/',
+      redirect: {
+        name:'Home'
+      },
+      component: Nav,
+      children:[
+        {
+          path: '/Home',
+          name:'Home',
+          component: Home,
+        },
+
+      ]
     },
-    {
-      path: '/newsdetails/:id',
-      name: 'newsdetails',
-      component: () => import('./views/NewsDetails.vue'),
-    },
-    {
-      path: '/product',
-      name: 'product',
-      component: () => import('./views/Product.vue'),
-    },
-    {
-      path: '/case',
-      name: 'case',
-      component: () => import('./views/Case.vue')
-    },
-    {
-      path: '/casedetails/:id',
-      name: 'casedetails',
-      component: () => import('./views/CaseDetails.vue')
-    },
-    {
-      path: '/goin',
-      name: 'goin',
-      component: () => import('./views/GoIn.vue')
-    },
-    {
-      path: '/download',
-      name: 'download',
-      component: () => import('./views/Download.vue')
-    },
-    {
-      path: '/goodsList',
-      name: 'goodsList',
-      component: () => import('./views/GoodsList.vue')
-    },
-    {
-      path: '/adminLogin',
-      name: 'adminLogin',
-      component: () => import('./views/AdminLogin.vue')
-    },
+
+
     {
       //雇主注册
-      path: '/employerRegister',
-      name: 'employerRegister',
-      component: () => import('./views/EmployerReg.vue')
+      path: '/EmployerReg',
+      name: 'EmployerReg',
+      component: EmployerReg
     },
     {
       //雇主登陆
-      path: '/employerLogin',
-      name: 'employerLogin',
+      path: '/employerLog',
+      name: 'employerLog',
       component: () => import('./views/EmployerLog.vue')
     },
     {
       //服务商注册
-      path: '/providerRegister',
-      name: 'providerRegister',
+      path: '/providerReg',
+      name: 'providerReg',
       component: () => import('./views/ProviderReg.vue')
     },
     {
       //服务商登陆
-      path: '/providerLogin',
-      name: 'providerLogin',
+      path: '/providerLog',
+      name: 'providerLog',
       component: () => import('./views/ProviderLog.vue')
     },
     {
@@ -86,11 +58,11 @@ let kejianrouter = new Router({
       },
       component: () => import('./views/Employer/EmployerCenter.vue'),
       children: [
-          {
-        path: '/employerCenter/adddemand',
-        name: 'adddemand',
-        component: () => import('./views/Employer/Children/Adddemand.vue')
-          },
+        {
+          path: '/employerCenter/adddemand',
+          name: 'adddemand',
+          component: () => import('./views/Employer/Children/Adddemand.vue')
+        },
         {
           path: '/employerCenter/accountview',
           name: 'accountview',
@@ -118,10 +90,67 @@ let kejianrouter = new Router({
     }
 
 
-
-
   ]
 })
+
+
+// let kejianrouter = new Router({
+//   routes: [{
+//     path: '/',
+//     name: 'home',
+//     component: () => import('./views/Home.vue')
+//   },
+//     {
+//       path: '/news',
+//       name: 'news',
+//       component: () => import('./views/News.vue'),
+//     },
+//     {
+//       path: '/newsdetails/:id',
+//       name: 'newsdetails',
+//       component: () => import('./views/NewsDetails.vue'),
+//     },
+//     {
+//       path: '/product',
+//       name: 'product',
+//       component: () => import('./views/Product.vue'),
+//     },
+//     {
+//       path: '/case',
+//       name: 'case',
+//       component: () => import('./views/Case.vue')
+//     },
+//     {
+//       path: '/casedetails/:id',
+//       name: 'casedetails',
+//       component: () => import('./views/CaseDetails.vue')
+//     },
+//     {
+//       path: '/goin',
+//       name: 'goin',
+//       component: () => import('./views/GoIn.vue')
+//     },
+//     {
+//       path: '/download',
+//       name: 'download',
+//       component: () => import('./views/Download.vue')
+//     },
+//     {
+//       path: '/goodsList',
+//       name: 'goodsList',
+//       component: () => import('./views/GoodsList.vue')
+//     },
+//     {
+//       path: '/adminLogin',
+//       name: 'adminLogin',
+//       component: () => import('./views/AdminLogin.vue')
+//     },
+//
+//
+//
+//
+//   ]
+// })
 
 // 判断是否需要登录权限 以及是否登录
 // kejianrouter.beforeEach((to, from, next) => {
@@ -144,4 +173,4 @@ let kejianrouter = new Router({
 //   }
 // })
 
-export default kejianrouter
+// export default kejianrouter

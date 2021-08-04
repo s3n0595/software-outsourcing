@@ -85,7 +85,7 @@ export default {
               this.user = JSON.parse(sessionStorage.getItem('provider'))
               console.log(this.user)
               this.$message.success("登陆成功")
-              this.$router.push("/persionCenter")
+              this.$router.push("/providerCenter")
             }
           }).catch(error => {
             // eslint-disable-next-line no-console
