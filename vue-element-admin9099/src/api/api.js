@@ -33,15 +33,22 @@ export const deleteUserInfoList = params=>{
 export const addUserInfo = params=>{
     return axios.get(`${baseUrl}/userinfo/addUserInfo`,{params:params})
 }
-//修改状态
+// 修改状态
 export const updateState = params=>{
     return axios.get(`${baseUrl}/userinfo/updateState`,{params:params})
 }
-//
+// 修改用户信息
 export const updateUserInfo = params=>{
     return axios.get(`${baseUrl}/userinfo/updateUserInfo`,{params:params})
 }
-
+// 登录验证
+export const userInfoLogin = params =>{
+    return axios.get(`${baseUrl}/userinfo/userInfoLogin`,{params:params})
+}
+// 动态菜单
+export const getMenuData = params =>{
+    return axios.get(`${baseUrl}/userinfo/getMenuData`,{params: params})
+}
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})
 }

@@ -29,7 +29,7 @@
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
-            {{username}}
+            {{this.user.userName}}
             <i class="el-icon-caret-bottom"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -42,11 +42,11 @@
         </el-dropdown>
       </div>
     </div>
-    
+
   </div>
 </template>
 <script>
-import bus from "../common/bus";
+import bus from "@/components/common/bus";
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 export default {
@@ -54,15 +54,11 @@ export default {
     return {
       collapse: false,
       fullscreen: false,
-      name: "linxin",
+      user: '',
       message: 2
     };
   },
   computed: {
-    username() {
-      let username = localStorage.getItem("ms_username");
-      return username ? username : this.name;
-    },
     ...mapGetters('dailog',{
       isShow:'isShow'
     })
@@ -118,10 +114,15 @@ export default {
     }
   },
   mounted() {
+    // this.user = this.$store.getters.getUser;
+    this.user = JSON.parse(sessionStorage.getItem('user'));
     if (document.body.clientWidth < 1500) {
       this.collapseChage();
     }
-  }
+  },
+  beforeDestroy() {
+    // bus.$off('user');
+  },
 };
 </script>
 <style scoped>

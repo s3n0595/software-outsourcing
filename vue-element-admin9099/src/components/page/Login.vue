@@ -3,13 +3,14 @@
         <div class="ms-login">
             <div class="ms-title">后台管理系统</div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
-                <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username">
+                <el-form-item prop="userAccount">
+                    <el-input v-model="ruleForm.userAccount" placeholder="account">
                         <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
                     </el-input>
                 </el-form-item>
-                <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')">
+                <el-form-item prop="userPassword">
+<!--                @keyup.enter.native:回车事件-->
+                    <el-input type="password" placeholder="password" v-model="ruleForm.userPassword" @keyup.enter.native="submitForm('ruleForm')">
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
@@ -23,37 +24,65 @@
 </template>
 
 <script>
-    export default {
-        data: function(){
-            return {
-                ruleForm: {
-                    username: 'admin',
-                    password: '123123'
-                },
-                rules: {
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' }
-                    ],
-                    password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' }
-                    ]
-                }
-            }
-        },
-        methods: {
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        localStorage.setItem('ms_username',this.ruleForm.username);
-                        this.$router.push('/');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
+import {
+  userInfoLogin,
+} from "../../api/api"
+import bus from "@/components/common/bus";
+export default {
+    data: function(){
+        return {
+            user: '',
+            ruleForm: {
+                userAccount: '',
+                userPassword: '',
+            },
+            rules: {
+              userAccount: [
+                    {required: true, message: '请输入账号', trigger: 'blur' },
+                    {max: 11, message: "不能超过11位",trigger: "blur" },
+                    {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+                ],
+              userPassword: [
+                    { required: true, message: '请输入密码', trigger: 'blur' },
+                    {max: 11, message: "不能超过11位",trigger: "blur" },
+                    {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+                ]
             }
         }
-    }
+    },
+    methods: {
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    // localStorage.setItem('ms_username',this.ruleForm.username);
+                    // this.$router.push('/');
+                  let params = {
+                    userAccount: this.ruleForm.userAccount,
+                    userPassword: this.ruleForm.userPassword,
+                  }
+                  userInfoLogin(params).then(res=>{
+                    console.log(res.data);
+                    if ("" == res.data){
+                      this.$message({
+                        message: "登录失败，账号或密码错误！",
+                        type: "error",
+                      })
+                    }else {
+                      console.log("登录成功")
+                      localStorage.setItem('ms_username',this.ruleForm.username)
+                      sessionStorage.setItem('user',JSON.stringify(res.data));
+                      this.$router.push('/');
+                      // this.$router.push({path: '/',query: {user: res.data}});
+                    }
+                  })
+                }
+            });
+        }
+    },
+  // beforeDestroy() {
+  //   bus.$emit('user',this.user);
+  // }
+}
 </script>
 
 <style scoped>

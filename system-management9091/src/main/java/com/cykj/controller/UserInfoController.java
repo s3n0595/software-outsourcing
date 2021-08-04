@@ -1,6 +1,8 @@
 package com.cykj.controller;
 
+import com.cykj.bean.Menu;
 import com.cykj.bean.UserInfo;
+import com.cykj.service.impl.MenuServiceImp;
 import com.cykj.service.impl.UserInfoServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import java.util.List;
 public class UserInfoController {
     @Autowired
     private UserInfoServiceImp userInfoService;
+    @Autowired
+    private MenuServiceImp menuService;
     // 获取用户列表
     @GetMapping("/getUserList")
     public List<UserInfo> getUserList(){
@@ -30,13 +34,19 @@ public class UserInfoController {
         System.out.println(userList);
         return userList;
     }
-    // 获取用户列表
+    // 通过关键字获取用户列表
     @GetMapping("/getSearchUser")
     public List<UserInfo> getSearchUser(String userName){
         List<UserInfo> userList = userInfoService.getSearchUser(userName);
         System.out.println("关键字获取的列表");
         System.out.println(userList);
         return userList;
+    }
+    // 登录
+    @GetMapping("/userInfoLogin")
+    public UserInfo userInfoLogin(String userAccount,String userPassword){
+        System.out.println(userAccount+":"+userPassword);
+        return userInfoService.userInfoLogin(userAccount,userPassword);
     }
     // 删除用户
     @GetMapping("/deleteUserList")
@@ -82,6 +92,12 @@ public class UserInfoController {
             System.out.println("userId为:"+userId+"的用户,信息修改失败");
             return "修改失败";
         }
+    }
+    // 获取菜单列表
+    @GetMapping("/getMenuData")
+    public List<Menu> getMenuData(){
+        List<Menu> menuList = menuService.getMenuData();
+        return menuList;
     }
 
 

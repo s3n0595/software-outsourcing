@@ -42,6 +42,26 @@
             <result column="roleName" property="roleName"></result>
         </association>
     </resultMap>
+<!--用户登录-->
+    <select id="userInfoLogin" resultMap="userInfoLogins">
+        select t1.*,t2.roleName
+        from userInfo t1 join role t2 on t2.roleId = t1.roleId
+        where userAccount = #{userAccount} and userPassword = #{userPassword};
+    </select>
+    <resultMap id="userInfoLogins" type="com.cykj.bean.UserInfo">
+        <id column="userId" property="userId"></id>
+        <result column="userName" property="userName"></result>
+        <result column="userAccount" property="userAccount"></result>
+        <result column="userPassword" property="userPassword"></result>
+        <result column="loginNumber" property="loginNumber"></result>
+        <result column="roleId" property="roleId"></result>
+        <result column="loginDate" property="loginDate"></result>
+        <result column="creator" property="creator"></result>
+        <result column="state" property="state"></result>
+        <association property="role" javaType="com.cykj.bean.Role">
+            <result column="roleName" property="roleName"></result>
+        </association>
+    </resultMap>
 <!--删除用户-->
     <delete id="deleteUserList">
         delete from userInfo where userId = #{userId};

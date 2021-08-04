@@ -1,5 +1,6 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.Menu;
 import com.cykj.bean.UserInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,8 @@ public interface UserInfoMapper {
     List<UserInfo> getUserList();
     // 关键词搜索
     List<UserInfo> getSearchUser(@Param("userName") String userName);
+    // 用户登录
+    UserInfo userInfoLogin(@Param("userAccount") String userAccount,@Param("userPassword") String userPassword);
     // 根据userId删除用户
     int deleteUserList(@Param("userId") int userId);
     // 添加用户

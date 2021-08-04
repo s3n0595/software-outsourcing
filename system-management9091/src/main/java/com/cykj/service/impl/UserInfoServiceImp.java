@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.Menu;
 import com.cykj.bean.UserInfo;
 import com.cykj.mapper.UserInfoMapper;
 import com.cykj.service.UserInfoService;
@@ -27,6 +28,11 @@ public class UserInfoServiceImp implements UserInfoService {
     @Override
     public List<UserInfo> getSearchUser(String userName) {
         return userInfoMapper.getSearchUser(userName);
+    }
+
+    @Override
+    public UserInfo userInfoLogin(String userAccount, String userPassword) {
+        return userInfoMapper.userInfoLogin(userAccount,userPassword);
     }
 
     @Override

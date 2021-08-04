@@ -52,7 +52,7 @@
 
 <script>
 import bus from "../common/bus";
-import {getSysmenu} from '../../api/api'
+import {getSysmenu,getMenuData} from '../../api/api'
 export default {
   data() {
     return {
@@ -201,6 +201,10 @@ export default {
             {
               index: "userInfoManage",
               title: "用户管理"
+            },
+            {
+              index: "roleManage",
+              title: "角色管理"
             }
           ]
         }
@@ -208,6 +212,36 @@ export default {
     };
   },
   methods: {
+    // 动态获取菜单
+    getMenuDate(){
+      let user = JSON.parse(sessionStorage.getItem('user'));
+      let roleId = user.roleId;
+      getMenuData().then(res=>{
+        let menuData = res.data;
+        menuData.forEach((val,index)=>{
+          let i = this.items.length;
+          console.log(val);
+          if (roleId == val.roleId){
+            let systemItem = {};
+            systemItem.icon = val.menuIcon;
+            systemItem.index = i;
+            systemItem.title = val.menuName;
+            systemItem.subs = [];
+            menuData.forEach((val2,index2)=>{
+              if (val.menuId == val2.parentId){
+                let systemSubs = {};
+                systemSubs.index = val2.menuPath;
+                systemSubs.title = val2.menuName;
+                systemItem.subs.push(systemSubs);
+              }
+            });
+            console.log(systemItem);
+            this.items.push(systemItem);
+          }
+        });
+      })
+
+    },
     // 动态获取菜单
     getMenuData(menuName) {
       let menuData = [];
@@ -250,6 +284,7 @@ export default {
       this.collapse = msg;
     });
     this.getMenuData("系统管理");
+    this.getMenuDate();
   }
 };
 </script>

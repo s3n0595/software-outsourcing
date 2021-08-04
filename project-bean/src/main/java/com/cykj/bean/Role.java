@@ -11,5 +11,9 @@ public class Role {
 
   private int roleId;
   private String roleName;
+  // 角色描述
+  private String roleDescribe;
+  // 创建时间
+  private String roleDate;
 
 }

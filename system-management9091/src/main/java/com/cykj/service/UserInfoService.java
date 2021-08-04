@@ -1,5 +1,6 @@
 package com.cykj.service;
 
+import com.cykj.bean.Menu;
 import com.cykj.bean.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +17,8 @@ public interface UserInfoService {
     List<UserInfo> getUserList();
     // 关键词搜索
     List<UserInfo> getSearchUser(String userName);
+    // 用户登录
+    UserInfo userInfoLogin(String userAccount,String userPassword);
     // 根据userId删除用户
     int deleteUserList(int userId);
     // 添加用户
