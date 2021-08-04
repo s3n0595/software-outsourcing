@@ -11,7 +11,7 @@ public class DemandType {
 
   private int demandTypeId;
   private String demandTypeName;
-
+  private String icon;
 
 
 }

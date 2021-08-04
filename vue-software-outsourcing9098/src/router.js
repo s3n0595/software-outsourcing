@@ -80,15 +80,21 @@ let kejianrouter = new Router({
         requireAuth: true
       },
       component: () => import('./views/Employer/EmployerCenter.vue'),
-      children: [{
+      children: [
+          {
         path: '/employerCenter/adddemand',
         name: 'adddemand',
         component: () => import('./views/Employer/Children/Adddemand.vue')
-      },
+          },
         {
-          path: '/admin/news',
-          name: 'new',
-          component: () => import('./views/Admin/News.vue')
+          path: '/employerCenter/accountview',
+          name: 'accountview',
+          component: () => import('./views/Employer/Children/Accountpreview.vue'),
+        },
+        {
+          path: '/employerCenter/deposit',
+          name: 'deposit',
+          component: () => import('./views/Employer/Children/deposit.vue'),
         },
       ]
     }
