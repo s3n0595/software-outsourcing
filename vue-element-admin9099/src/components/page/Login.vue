@@ -67,13 +67,19 @@ export default {
                         message: "登录失败，账号或密码错误！",
                         type: "error",
                       })
-                    }else {
-                      console.log("登录成功")
-                      localStorage.setItem('ms_username',this.ruleForm.username)
-                      sessionStorage.setItem('user',JSON.stringify(res.data));
-                      this.$router.push('/');
-                      // this.$router.push({path: '/',query: {user: res.data}});
-                    }
+                    }else
+                      if (0 == res.data.state) {
+                        this.$message({
+                          message: "您登录的账号已被封禁，请联系管理员进行处理",
+                          type: "error",
+                        });
+                      }else {
+                        console.log("登录成功")
+                        localStorage.setItem('ms_username',this.ruleForm.username)
+                        sessionStorage.setItem('user',JSON.stringify(res.data));
+                        this.$router.push('/');
+                        // this.$router.push({path: '/',query: {user: res.data}});
+                      }
                   })
                 }
             });
