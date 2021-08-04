@@ -17,4 +17,8 @@ public interface UserInfoService {
 
     // 根据userId删除用户
     int deleteUserList(int userId);
+
+    //修改用户密码
+    int updatePwd(int userId,String userPassword,String password);
+
 }

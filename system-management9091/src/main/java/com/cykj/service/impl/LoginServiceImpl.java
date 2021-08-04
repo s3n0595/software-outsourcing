@@ -17,7 +17,12 @@ public class LoginServiceImpl implements LoginService {
     private LoginMapper loginMapper;
 
     @Override
-    public int queryAdminByName(UserInfo userInfo) {
-        return loginMapper.queryAdminByName(userInfo);
+    public int queryAdminByLog(UserInfo userInfo) {
+        return loginMapper.queryAdminByLog(userInfo);
+    }
+
+    @Override
+    public UserInfo queryUserInfo(UserInfo userInfo) {
+        return loginMapper.queryUserInfo(userInfo);
     }
 }

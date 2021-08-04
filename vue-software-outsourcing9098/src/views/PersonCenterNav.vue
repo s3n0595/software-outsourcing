@@ -63,6 +63,12 @@ export default {
       this.user = JSON.parse(sessionStorage.getItem('user'))
       console.log("用户id"+this.user.employerId)
       this.$router.push('/employerCenter')
+    },
+    logout(){
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("employer");
+      sessionStorage.removeItem("provider");
+      this.$router.push("/");
     }
 
   },

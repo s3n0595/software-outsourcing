@@ -25,13 +25,11 @@ public class LoginController {
     @ResponseBody
     public CommonResult adminLogin(UserInfo userInfo){
         log.info("***超级管理员登陆***");
-        log.info("***超级管理员登陆***");
-        log.info("***超级管理员登陆***");
-        log.info("***超级管理员登陆***");
-        log.info("***超级管理员登陆***");
-        int queryAdminByName = loginService.queryAdminByName(userInfo);
+        int queryAdminByName = loginService.queryAdminByLog(userInfo);
         if (queryAdminByName > 0) {
-            return new CommonResult(200,"admin登陆成功",null);
+            UserInfo info = loginService.queryUserInfo(userInfo);
+            log.info("****当前登陆账号的ID"+info.getUserId());
+            return new CommonResult(200,"admin登陆成功",info.getUserId());
         } else {
             return new CommonResult(400,"admin登陆失败",null);
         }

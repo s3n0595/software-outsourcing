@@ -24,4 +24,8 @@
     <delete id="deleteUserList">
         delete from userInfo where userId = #{userId};
     </delete>
+
+    <update id="updatePwd" parameterType="com.cykj.vo.UserInfoPwd">
+        update userInfo set userPassword = #{password} where userPassword = #{userPassword} and userId = #{userId}
+    </update>
 </mapper>
