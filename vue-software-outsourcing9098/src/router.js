@@ -36,6 +36,13 @@ export default new Router({
       name: 'worksdetails',
       component: () => import('./views/WorksDetails.vue')
     },
+      {
+      path: '/demandDetails/:demand',
+      name: 'demandDetails',
+      component: () => import('./views/Provider/DemandDetails.vue')
+    },
+
+
     {
       //雇主注册
       path: '/EmployerReg',

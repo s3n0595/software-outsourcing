@@ -29,7 +29,7 @@ public class WorksServiceImpl implements WorksService {
 	public boolean publishWorks(MultipartFile file, Works works) {
 		String realPath = null;
 		try {
-			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
+			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider/" + works.getProviderId();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -37,12 +37,13 @@ public class WorksServiceImpl implements WorksService {
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
-        works.setAnnexPath(realPath + "/" + file.getOriginalFilename());
+		System.out.println(realPath);
+        works.setAnnexPath(file.getOriginalFilename());
 		works.setAuditStatus(7);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		works.setReleaseTime(sdf.format(new Date()));
 		try {
-			file.transferTo(new File(works.getAnnexPath()));
+			file.transferTo(new File(realPath + '/' + works.getAnnexPath()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
