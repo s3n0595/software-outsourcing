@@ -124,7 +124,7 @@ export default {
         this.worksList = res.data;
     })
     let token = "Browser " + sessionStorage.getItem("token");
-    this.form.providerId = JSON.parse(sessionStorage.getItem("provider")).providerId;
+    this.form.providerId = JSON.parse(sessionStorage.getItem("user")).providerId;
     //window.console.log(token);
     this.options = {
       headers: {

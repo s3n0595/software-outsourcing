@@ -35,7 +35,7 @@ public class WorksServiceImpl implements WorksService {
 		}
 		File uploadDir = new File(realPath);
         if (!uploadDir.exists()) {
-            uploadDir.mkdir();
+            uploadDir.mkdirs();
         }
 		System.out.println(realPath);
         works.setAnnexPath(file.getOriginalFilename());
