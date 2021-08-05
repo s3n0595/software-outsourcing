@@ -104,7 +104,7 @@ export default {
     }
   },
   mounted() {
-    this.user = JSON.parse(sessionStorage.getItem('provider'));
+    this.user = JSON.parse(sessionStorage.getItem('user'));
   }
 }
 </script>

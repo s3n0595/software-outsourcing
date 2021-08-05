@@ -145,9 +145,14 @@ export default new Router({
                 },
                 {
                     path: '/roleManage',
-                    component: resolve => require(['../components/page/userManage/RoleManage'],resolve),
+                    component: resolve => require(['../components/page/userManage/RoleManage'], resolve),
                     meta: {title: '角色管理'}
-                }
+                },
+                {
+                    path: '/demandManage',
+                    component: resolve => require(['../components/page/businessManage/demandManage'], resolve),
+                    meta: {title: '需求管理'}
+                },
             ]
         },
         {

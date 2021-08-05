@@ -1,39 +1,51 @@
 <template>
 
-  <div>
-    <h3 style="margin: 3% auto;text-align: center">登陆雇主账号</h3>
-    <el-form
-        ref="logForm"
-        :model="data"
-        style="width:300px;margin: 0 auto"
-        label-position="center"
-        label-suffix=":"
-        :rules="rules"
-        status-icon
-        hide-required-asterisk
-    >
-      <el-form-item prop="phoneNumber">
-        <el-input clearable type="text" v-model="data.phoneNumber" placeholder="手机号"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input clearable type="password" v-model="data.password" placeholder="请输入密码" ></el-input>
-      </el-form-item>
-      <el-form-item style="text-align: left">
-        <el-checkbox v-model="data.checked">记住我
-        </el-checkbox>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('logForm')" style="width: 300px">登陆</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+  <el-container>
+    <el-header>
+      <LoginNav></LoginNav>
+      <el-divider></el-divider>
+    </el-header>
+    <el-main>
+      <div>
+        <h3 style="margin: 3% auto;text-align: center">登陆雇主账号</h3>
+        <el-form
+            ref="logForm"
+            :model="data"
+            style="width:300px;margin: 0 auto"
+            label-position="center"
+            label-suffix=":"
+            :rules="rules"
+            status-icon
+            hide-required-asterisk
+        >
+          <el-form-item prop="phoneNumber">
+            <el-input clearable type="text" v-model="data.phoneNumber" placeholder="手机号"></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input clearable type="password" v-model="data.password" placeholder="请输入密码" ></el-input>
+          </el-form-item>
+          <el-form-item style="text-align: left">
+            <el-checkbox v-model="data.checked">记住我
+            </el-checkbox>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('logForm')" style="width: 300px">登陆</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-main>
+  </el-container>
+
+
 
 </template>
 
 <script>
 
+import LoginNav from "@/views/Nav/LoginNav";
 export default {
   name: "EmployerLog",
+  components: {LoginNav},
   data() {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
@@ -81,9 +93,9 @@ export default {
             if (res.code !== 200) {
               this.$message.error("账号或密码错误")
             } else {
-              sessionStorage.setItem('employer',JSON.stringify(res.data))
-              this.user = JSON.parse(sessionStorage.getItem('employer'))
-              console.log(this.user.employerId)
+              sessionStorage.setItem('user',JSON.stringify(res.data))
+              this.user = JSON.parse(sessionStorage.getItem('user'))
+              console.log(this.user.role)
               this.$message.success("登陆成功")
               this.$router.push("/employerCenter")
             }
