@@ -96,6 +96,21 @@ export default {
           ]
         },
         {
+          icon: "el-icon-lx-goods",
+          index: "5",
+          title: "业务管理",
+          subs: [
+            {
+              index: "demandManage",
+              title: "需求管理"
+            },
+            {
+              index: "worksManage",
+              title: "作品管理"
+            },
+          ]
+        },
+        {
           icon: "el-icon-lx-cascades",
           index: "table",
           title: "基础表格"

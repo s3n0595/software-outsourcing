@@ -6,14 +6,14 @@
       <Nav></Nav>
     </el-header>
     <el-main>
-      <div class="home" v-loading="loading">
+      <div class="home">
         <swiper id="swiperBox" v-bind:options="swiperOption" ref="mySwiper">
           <swiper-slide class="swiper-slide slide-one">
             <div class="page">
-              <h3>传一之光</h3>
-              <p>Y Y D S</p>
+              <h3></h3>
+              <p></p>
             </div>
-            <p class="slogan">立人立己 达人达己</p>
+            <p class="slogan"> </p>
           </swiper-slide>
           <swiper-slide class="swiper-slide slide-two">
             <div class="page">
@@ -82,7 +82,7 @@
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import Nav from "@/views/Nav";
 export default {
-  name: "HelloWorld",
+  name: "home",
   components: {
     swiper,
     swiperSlide,
@@ -90,7 +90,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      // loading: true,
       caseList: [],
       newsList: [],
       swiperOption: {
@@ -136,24 +136,28 @@ export default {
       return this.$refs.mySwiper.swiper;
     }
   },
-  mounted() {
-    this.$axios
-      .all([
-        this.$axios.get("Cases/GetCasesAll"),
-        this.$axios.get(`News?type=1&num=3`)
-      ])
-      .then(
-        this.$axios.spread((responseCases, responseNews) => {
-          this.caseList = responseCases.data;
-          this.newsList = responseNews.data;
-          this.loading = false;
-        })
-      );
-  }
+  // mounted() {
+  //   this.$axios
+  //     .all([
+  //       this.$axios.get("Cases/GetCasesAll"),
+  //       this.$axios.get(`News?type=1&num=3`)
+  //     ])
+  //     .then(
+  //       this.$axios.spread((responseCases, responseNews) => {
+  //         this.caseList = responseCases.data;
+  //         this.newsList = responseNews.data;
+  //         this.loading = false;
+  //       })
+  //     );
+  // }
 };
 </script>
 
 <style lang="scss" scoped>
+.el-header,.el-main{
+  padding: 0;
+  margin: 0;
+}
 /* .el-header {
   position: absolute;
 } */

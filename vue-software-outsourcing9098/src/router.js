@@ -9,22 +9,17 @@ Vue.use(Router)
 
 
 export default new Router({
-  routes: [
+  routes: [{
+    path: '/',
+    name: 'home',
+    component: () => import('./views/Home.vue')
+  },
     {
-      path: '/',
-      redirect: {
-        name:'Home'
-      },
-      component: Nav,
-      children:[
-        {
-          path: '/Home',
-          name:'Home',
-          component: () => import('./views/Home.vue')
-        },
-
-      ]
+      path: '/home',
+      name: 'home',
+      component: Home
     },
+
 
     {
       path: '/goodsList',

@@ -81,10 +81,10 @@ export default {
             if (res.code !== 200) {
               this.$message.error("账号或密码错误")
             } else {
-              sessionStorage.setItem('provider',JSON.stringify(res.data))
-              this.user = JSON.parse(sessionStorage.getItem('provider'))
+              sessionStorage.setItem('user',JSON.stringify(res.data))
+              this.user = JSON.parse(sessionStorage.getItem('user'))
               console.log(this.user)
-              console.log(this.user.phoneNumber)
+              console.log(this.user.role)
               this.$message.success("登陆成功")
               this.$router.push("/providerCenter")
             }
