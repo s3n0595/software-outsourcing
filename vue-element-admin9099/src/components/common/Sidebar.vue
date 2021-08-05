@@ -197,15 +197,6 @@ export default {
             }
           ]
         },
-        // {
-        //   icon: "el-icon-lx-calendar",
-        //   index: "10",
-        //   title: "用户管理",
-        //   subs: [
-        //
-        //   ]
-        // },
-
       ]
     };
   },
