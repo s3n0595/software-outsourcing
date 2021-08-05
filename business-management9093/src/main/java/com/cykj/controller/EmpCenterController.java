@@ -1,10 +1,10 @@
 package com.cykj.controller;
 
 
-import com.alibaba.druid.sql.repository.SchemaObjectType;
-import com.cykj.bean.*;
+import com.cykj.bean.CommonResult;
 import com.cykj.bean.Demand;
 import com.cykj.bean.DemandType;
+import com.cykj.bean.EmployerPwd;
 import com.cykj.service.EmpCenterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
