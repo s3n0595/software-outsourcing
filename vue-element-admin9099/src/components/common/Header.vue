@@ -60,7 +60,8 @@ export default {
   },
   computed: {
     username() {
-      let username = localStorage.getItem("ms_username");
+      // let username = localStorage.getItem("ms_username");
+      let username = sessionStorage.getItem("ms_username")
       return username ? username : this.name;
     },
     ...mapGetters('dailog',{

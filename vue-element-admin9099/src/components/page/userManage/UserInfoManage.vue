@@ -129,9 +129,9 @@ export default {
       // 搜索关键字
       searchInfo: "",
       // 用户列表
-      users: '',
+      users: [],
       // 总条数
-      total: '',
+      total: 0,
       // 当前页数
       pageNo: 1,
       // 每页的条数

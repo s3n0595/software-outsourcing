@@ -135,7 +135,7 @@
 <script>
 import {
   getAddUser,
-  testApi,
+  // testApi,
 
   getEmpList,
   getEditemp,
@@ -357,15 +357,15 @@ export default {
         this.empList();
       });
     },
-    testFn(){
-      this.url = '/ms/table/list';
-      this.$axios.get(this.url).then(res=>{
-        console.log(res)
-      })
-      testApi().then(res=>{
-        console.log(res)
-      })
-    },
+    // testFn(){
+    //   this.url = '/ms/table/list';
+    //   this.$axios.get(this.url).then(res=>{
+    //     console.log(res)
+    //   })
+      // testApi().then(res=>{
+      //   console.log(res)
+      // })
+    // },
     //获取雇主列表信息
     empList(){
       this.isShowloading=true;
@@ -386,7 +386,7 @@ export default {
   mounted() {
     //this.getUsers();
     this.empList();
-    this.testFn();
+    // this.testFn();
   }
 };
 </script>

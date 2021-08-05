@@ -135,7 +135,7 @@ export default new Router({
                 },
                 {
                     path: '/employer',
-                    component: resolve => require(['../components/page/sysmanager/empmanager'], resolve),
+                    component: resolve => require(['../components/page/userManage/empmanager'], resolve),
                     meta: {title: '雇主管理'}
                 },
                 {
