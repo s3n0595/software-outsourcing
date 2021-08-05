@@ -29,6 +29,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "sass": "^1.36.0",
     "sass-loader": "^8.0.0",
+    "vue-directive-image-previewer": "^2.2.2",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {

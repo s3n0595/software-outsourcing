@@ -11,6 +11,7 @@
     >
       <el-menu-item @click.native="home">首页</el-menu-item>
       <el-menu-item @click.native="goodsList">找需求</el-menu-item>
+      <el-menu-item @click.native="worksList">作品广场</el-menu-item>
       <el-submenu index="login">
         <template slot="title">登陆</template>
         <el-menu-item @click="employerLogin">雇主登陆</el-menu-item>
@@ -42,6 +43,9 @@ export default {
     },
     goodsList(){
       this.$router.push('/goodsList')
+    },
+    worksList(){
+      this.$router.push('/worksList')
     },
     employerRegister(){
       this.$router.push('/employerReg')

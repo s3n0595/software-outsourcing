@@ -17,6 +17,10 @@ import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
 Vue.use(VideoPlayer)
 
+import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
+import 'vue-directive-image-previewer/dist/assets/style.css'
+Vue.use(VueDirectiveImagePreviewer)
+
 import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload, {
   //完全显示的时候加载
