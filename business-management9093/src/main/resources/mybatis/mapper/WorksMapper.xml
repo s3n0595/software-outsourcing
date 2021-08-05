@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.mapper.WorksMapper">
     <insert id="addWorks" parameterType="com.cykj.bean.Works">
-        insert into works
-        values (null,#{providerId},#{worksTitle},#{worksDescribe},#{annexPath},#{worksPrice},#{releaseTime},#{auditStatus},#{worksAddress});
+        insert into works (providerId,worksTitle,worksDescribe,annexPath,worksPrice,releaseTime,auditStatus,worksAddress)
+        values (#{providerId},#{worksTitle},#{worksDescribe},#{annexPath},#{worksPrice},#{releaseTime},#{auditStatus},#{worksAddress});
     </insert>
     <select id="queryAllWorks" resultType="com.cykj.bean.Works">
         select * from works;
