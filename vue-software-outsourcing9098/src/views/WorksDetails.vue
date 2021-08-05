@@ -14,11 +14,24 @@
                 <div style="margin-left: 5%;">
                 <p style="padding-top: 20px;">
                   <span style="font-size: 25px;">&nbsp;流量录制回放平台</span>
-                  <span style="margin-left: 15px;"> <el-tag type="info" effect="dark" >No.28394</el-tag></span>
+                  <span style="margin-left: 30px;" class="border">No.28394</span>
                 </p>
                 <p style="margin-top: 2%;">作品类型<el-tag style="margin-left: 2%">微信公众号</el-tag></p>
-                  <p style="margin-top: 2%;">金额<span>￥2000</span><span class="fenge"></span></p>
+                  <p style="margin-top: 2%;padding-bottom: 20px;">金额<span style="margin-left: 10px;">￥2000</span>
+                    <span class="fenge"></span>
+                    信用分<span style="margin-left: 10px;">80</span>
+                  </p>
                 </div>
+              </el-col>
+              <el-col :span="24" >
+                <p style="padding-top: 5px;margin-left: 5%;padding-bottom: 5px;">
+                  <span style="font-size: 20px;">需求方信息</span>
+                  <img src="../assets/img/bell.png" width="16px" height="16px" style=" vertical-align: -2px;margin-left: 30px;">
+                  <span class="ds">请谨慎甄别服务方信息，防止诈骗和非法项目</span>
+                </p>
+              </el-col>
+              <el-col :span="24" >
+                <div>aaa</div>
               </el-col>
             </div>
             </el-row>
@@ -109,19 +122,6 @@ export default {
   margin: auto;
   padding-top: 20px
 }
-
-#condition{
-  height: 200px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-  background-color: #ffffff
-}
-#sort{
-  height: 50px;
-  margin-top:30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-  background-color: #ffffff;
-
-}
 #list{
   margin-top:30px;
   height: auto;
@@ -135,23 +135,30 @@ export default {
 .goods:hover{
   background: #eff2f7;
 }
-.demo_line_01{
-  padding: 0 20px 0;
-  margin: 20px 0;
-  line-height: 1px;
-  border-left: 200px solid #ddd;
-  border-right: 200px solid #ddd;
-  text-align: center;
-}
 .fenge{
 
   padding:20px 6px 10px 6px;
 
-  margin-left: 6px;
+  margin-left: 10px;
 
   border-left: 1px solid 	#d0d0d0;
 
   font-size: 0;
 
+}
+.border{
+  border-radius: 3px;
+  background-color: #8796A8;
+  color: #fff;
+  font-size: 20px;
+  padding: 8px;
+  margin-left: 26px;
+  height: 25px;
+  line-height: 25px;
+}
+.ds{
+  color: #F5A623;
+  vertical-align: 2px;
+  padding-left: 6px;
 }
 </style>

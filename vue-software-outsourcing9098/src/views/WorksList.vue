@@ -69,7 +69,8 @@
             <el-row v-for="item in worksList" >
               <div class="goods">
                 <el-col :span="6">
-                  <img v-image-preview :src="'api/images/' + item.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">
+<!--                  v-image-preview-->
+                  <img  :src="'api/images/' + item.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">
                 </el-col>
                 <el-col :span="15">
                   <p style="padding-top: 20px;">
