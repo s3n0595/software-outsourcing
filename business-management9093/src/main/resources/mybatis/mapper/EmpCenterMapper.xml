@@ -49,13 +49,29 @@
     </update>
 
     <insert id="addFlow" parameterType="com.cykj.bean.CapitalFlow">
-        insert capitalFlow(tradeType,phoneNumber,tradeContent,tradeCapital,tradeState,tradeNo)
-        values (#{tradeType},#{phoneNumber},#{tradeContent},#{tradeCapital},#{tradeState},#{tradeNo});
+        insert capitalFlow(tradeType,phoneNumber,tradeContent,tradeCapital,tradeState,tradeNo,type)
+        values (#{tradeType},#{phoneNumber},#{tradeContent},#{tradeCapital},#{tradeState},#{tradeNo},#{type});
     </insert>
+
+    <select id="seleEmpphone" resultType="com.cykj.bean.CapitalFlow">
+        select phoneNumber,type from capitalFlow where tradeNo=#{tradeNo}
+    </select>
+
+    <select id="seleEmpId" resultType="int">
+        select employerId from employerAccount where phoneNumber=#{phoneNumber}
+    </select>
+
+    <update id="editEmpBalance">
+        update employerInfo set balance=balance+#{balance} where employerId=#{employerId}
+    </update>
 
     <update id="updFlow" parameterType="com.cykj.bean.CapitalFlow">
         update capitalFlow set tradeState=#{tradeState},tradeTime=#{tradeTime} where tradeNo=#{tradeNo}
     </update>
+
+    <select id="selempBalance" resultType="int">
+        select balance from employerInfo where employerId=#{employerId}
+    </select>
 </mapper>
 
 

@@ -60,7 +60,8 @@ export default {
       out_trade_no:'',
       total_amount:'',
       subject:'',
-      phoneNumber:''
+      phoneNumber:'',
+      user:''
     };
   },
   methods:{
@@ -72,7 +73,8 @@ export default {
         "out_trade_no":this.out_trade_no,
         "total_amount":this.total_amount,
         "subject":this.subject,
-        "phoneNumber":"15759898731"
+        "phoneNumber":this.user.phoneNumber,
+        "type":"雇主"
       })).then(response=>{
           // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
           let divForm = document.getElementsByTagName('divform')
@@ -109,6 +111,9 @@ export default {
       this.dialogVisible = false
       this.$router.push({ name: 'accountview'});
     }
+  },
+  mounted() {
+    this.user=JSON.parse(sessionStorage.getItem("employer"))
   }
 }
 </script>

@@ -16,5 +16,9 @@ public interface EmpCenterService {
     int delNeed( int did);
     int updatePwd(int employerId,String employerPassword,String password);
     int addFlow(CapitalFlow capitalFlow);
+    CapitalFlow seleEmpphone( String tradeNo);
+    int seleEmpId(String phoneNumber);
+    int editEmpBalance(int employerId,double balance);
     int updFlow(CapitalFlow capitalFlow);
+    int selempBalance(int eid);
 }

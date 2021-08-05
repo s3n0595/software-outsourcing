@@ -19,4 +19,5 @@ public class CapitalFlow {
   private String phoneNumber;
   private String tradeState;
   private String tradeNo;
+  private String type;
 }

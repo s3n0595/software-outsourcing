@@ -5,7 +5,7 @@
         <img src="../../../assets/img/dp.png" >
         <div >
           <div class="title"><span style="font-size: 20px;">开发宝余额</span></div>
-          <div class="je"><span style="font-size: 30px;color: #2894FF">0</span><span>元</span></div>
+          <div class="je"><span style="font-size: 30px;color: #2894FF">{{balance}}</span><span>元</span></div>
         </div>
       </div>
       <div style="padding-bottom: 50px;" class="text item">
@@ -23,13 +23,25 @@ export default {
   name: "Accountpreview",
   data() {
     return{
-
+      user:'',
+      balance:'',
     };
   },
   methods:{
+    selBalance(){
+      this.$axios.post("/empcenter/selbalance",this.$qs.stringify({
+        "employerId":this.user.employerId
+      })).then(response=>{
+        this.balance=response.data;
+      })
+    },
     goRecharge(){
       this.$router.push({ name: 'deposit'});
     }
+  },
+  mounted() {
+      this.user=JSON.parse(sessionStorage.getItem("employer"));
+      this.selBalance();
   }
 }
 </script>

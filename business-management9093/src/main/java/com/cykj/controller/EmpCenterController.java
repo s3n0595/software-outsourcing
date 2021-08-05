@@ -3,6 +3,8 @@ package com.cykj.controller;
 
 import com.alibaba.druid.sql.repository.SchemaObjectType;
 import com.cykj.bean.*;
+import com.cykj.bean.Demand;
+import com.cykj.bean.DemandType;
 import com.cykj.service.EmpCenterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,34 +50,36 @@ public class EmpCenterController {
     //雇主添加需求
     @RequestMapping("file")
     public String getDemandFile(MultipartFile file, Demand demand){
-        try {
-            String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
-            File fileDir = new File(realPath);
-            if (!fileDir.exists() && !fileDir.isDirectory()) {
-                fileDir.mkdirs();
-            }
-            String uuid = UUID.randomUUID().toString();
-            String filename = uuid + '_' + file.getOriginalFilename();;//uuid+文件名
-            File saveFile = new File(realPath, filename);
-            Date date = new Date();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-            String dateTime = df.format(date); // Formats a Date into a date/time string.
-            demand.setEmployerId(1);
-            demand.setReleaseTime(dateTime);
-            demand.setAnnexPath(filename);
-            int i = empCenterService.addNeed(demand);
-            if (i > 0) {
+        System.out.println("!!!!!!!!!!!!!:"+file);
+
+        if(file!=null){
+            try {
+                String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
+                File fileDir = new File(realPath);
+                if (!fileDir.exists() && !fileDir.isDirectory()) {
+                    fileDir.mkdirs();
+                }
+                String uuid = UUID.randomUUID().toString();
+                String filename = uuid + '_' + file.getOriginalFilename();;//uuid+文件名
+                File saveFile = new File(realPath, filename);
                 file.transferTo(saveFile);
-                return "发布成功";
-            } else {
-                return "发布失败";
+                demand.setAnnexPath(filename);
+            }catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }catch (IOException e) {
+                e.printStackTrace();
             }
-          }catch (FileNotFoundException e) {
-            e.printStackTrace();
-          }catch (IOException e) {
-            e.printStackTrace();
-         }
-        return "发布成功";
+        }
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String dateTime = df.format(date); // Formats a Date into a date/time string.
+        demand.setReleaseTime(dateTime);
+        int i = empCenterService.addNeed(demand);
+        if (i > 0) {
+            return "发布成功";
+        } else {
+            return "发布失败";
+        }
     }
     //雇主下载文件
     @RequestMapping("download")
@@ -139,5 +143,11 @@ public class EmpCenterController {
         } else {
             return new CommonResult(400,"密码修改失败",null);
         }
+    }
+    //查询账户余额
+    @RequestMapping("selbalance")
+    public int empBalance(@RequestParam("employerId") int employerId){
+        int i=empCenterService.selempBalance(employerId);
+        return i;
     }
 }
