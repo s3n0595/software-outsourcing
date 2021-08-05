@@ -31,7 +31,6 @@
         <el-table-column type="index" label="序号" sortable width="150"></el-table-column>
         <el-table-column prop="userName" label="用户名" width="120"></el-table-column>
         <el-table-column prop="role.roleName" label="角色名称"></el-table-column>
-<!--        <el-table-column prop="state" label="状态" :formatter="formatterState"></el-table-column>-->
         <el-table-column prop="state" label="状态" align="center" width="180">
           <template slot-scope="scope" >
               <el-switch
@@ -91,8 +90,9 @@
           </el-form-item>
           <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleId">
             <el-select v-model="userForm.roleId">
-              <el-option label="管理员" :value="2"></el-option>
-              <el-option label="系统管理员" :value="1"></el-option>
+              <template  v-for="role in this.roles">
+                <el-option :label="role.roleName" :value="role.roleId"></el-option>
+              </template>
             </el-select>
           </el-form-item>
         </el-form>
@@ -118,8 +118,9 @@
           </el-form-item>
           <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleId">
             <el-select v-model="addUserForm.roleId">
-              <el-option label="管理员" value="2"></el-option>
-              <el-option label="系统管理员" value="1"></el-option>
+              <template  v-for="role in this.roles">
+                <el-option :label="role.roleName" :value="role.roleId"></el-option>
+              </template>
             </el-select>
           </el-form-item>
           <el-form-item label="状态" :label-width="formLabelWidth">
@@ -143,6 +144,8 @@ import {
   updateState,
   updateUserInfo,
   getSearchUser,
+  getRoleList,
+  getDate,
 } from "../../../api/api";
 export default {
   data() {
@@ -152,6 +155,8 @@ export default {
       searchInfo: "",
       // 用户列表
       users: '',
+      // 角色列表
+      roles: '',
       // 总条数
       total: '',
       // 当前页数
@@ -366,6 +371,13 @@ export default {
         this.isShowloading=false;
       })
     },
+    // 获取角色列表
+    getRoleList(){
+      getRoleList().then(res=>{
+        this.roles = res.data;
+        console.log(this.roles)
+      })
+    },
     // 关闭提示
     confirmClose(done) {
       this.$confirm("确认关闭将丢失已编辑内容？", "提示", {
@@ -378,6 +390,7 @@ export default {
   },
   mounted() {
     this.getUserList();
+    this.getRoleList();
   }
 };
 </script>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.RoleMapper">
+
+    <select id="getRoleList" resultType="com.cykj.bean.Role">
+        select * from role;
+    </select>
+<!--关键字搜索    -->
+    <select id="getSearchRole" resultType="com.cykj.bean.Role">
+        select * from role where role.roleName like concat('%',#{roleName},'%');
+    </select>
+<!--添加新角色-->
+    <insert id="addRole" parameterType="com.cykj.bean.Role">
+        insert into role(roleName,roleDescribe,roleDate) values (#{roleName},#{roleDescribe},#{roleDate});
+    </insert>
+<!--删除角色    -->
+    <delete id="deleteRole">
+        delete from role where roleId = #{roleId};
+    </delete>
+</mapper>

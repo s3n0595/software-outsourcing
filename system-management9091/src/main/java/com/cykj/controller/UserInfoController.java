@@ -1,16 +1,15 @@
 package com.cykj.controller;
 
 import com.cykj.bean.Menu;
+import com.cykj.bean.Role;
 import com.cykj.bean.UserInfo;
 import com.cykj.service.impl.MenuServiceImp;
+import com.cykj.service.impl.RoleServiceImp;
 import com.cykj.service.impl.UserInfoServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 /**
@@ -26,20 +25,18 @@ public class UserInfoController {
     private UserInfoServiceImp userInfoService;
     @Autowired
     private MenuServiceImp menuService;
+    @Autowired
+    private RoleServiceImp roleService;
     // 获取用户列表
     @GetMapping("/getUserList")
     public List<UserInfo> getUserList(){
         List<UserInfo> userList = userInfoService.getUserList();
-        System.out.println("获取用户列表");
-        System.out.println(userList);
         return userList;
     }
     // 通过关键字获取用户列表
     @GetMapping("/getSearchUser")
     public List<UserInfo> getSearchUser(String userName){
         List<UserInfo> userList = userInfoService.getSearchUser(userName);
-        System.out.println("关键字获取的列表");
-        System.out.println(userList);
         return userList;
     }
     // 登录
@@ -98,6 +95,37 @@ public class UserInfoController {
     public List<Menu> getMenuData(){
         List<Menu> menuList = menuService.getMenuData();
         return menuList;
+    }
+    // 获取角色列表
+    @GetMapping("/getRoleList")
+    public List<Role> getRoleList(){
+        List<Role> roleList = roleService.getRoleList();
+        return roleList;
+    }
+    // 关键字获取角色
+    @GetMapping("/getSearchRole")
+    public List<Role> getSearchRole(String roleName){
+        List<Role> roles = roleService.getSearchRole(roleName);
+        return roles;
+    }
+    // 添加新角色
+    @GetMapping("/addRole")
+    public String getRole(Role role){
+        System.out.println(role);
+        int i = roleService.addRole(role);
+        if (1==i){
+            return "添加成功";
+        }else {
+            return "添加失败";
+        }
+    }
+    // 删除角色
+    @GetMapping("/deleteRole")
+    public String deleteRole(int[] roleIds){
+        for (int roleId : roleIds) {
+            roleService.deleteRole(roleId);
+        }
+        return "删除成功";
     }
 
 

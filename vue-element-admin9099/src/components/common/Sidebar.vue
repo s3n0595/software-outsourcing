@@ -193,21 +193,6 @@ export default {
             }
           ]
         },
-        {
-          icon: "el-icon-lx-settings",
-          index: "11",
-          title: "系统管理",
-          subs: [
-            {
-              index: "userInfoManage",
-              title: "用户管理"
-            },
-            {
-              index: "roleManage",
-              title: "角色管理"
-            }
-          ]
-        }
       ]
     };
   },
@@ -219,8 +204,7 @@ export default {
       getMenuData().then(res=>{
         let menuData = res.data;
         menuData.forEach((val,index)=>{
-          let i = this.items.length;
-          console.log(val);
+          let i = this.items.length+1;
           if (roleId == val.roleId){
             let systemItem = {};
             systemItem.icon = val.menuIcon;
@@ -235,43 +219,12 @@ export default {
                 systemItem.subs.push(systemSubs);
               }
             });
-            console.log(systemItem);
             this.items.push(systemItem);
           }
         });
       })
 
     },
-    // 动态获取菜单
-    getMenuData(menuName) {
-      let menuData = [];
-      getSysmenu().then(
-        function(data) {
-          let data1 = data.data.menuArr;
-          data1.forEach((val,index) => {
-            let i=8;
-            if(val.menuname==menuName){
-              let systemItem = {};
-              systemItem.icon = "el-icon-setting";
-              systemItem.idex=i;
-              systemItem.title=val.menuname;
-              systemItem.subs=[];
-              data1.forEach(value => {
-                if(value.parentid==val.id){
-                  let systemSubs = {};
-                  let menuurl = value.menuurl.split('/')[2];
-                  systemSubs.index = menuurl;
-                  systemSubs.title = value.menuname;
-                  systemItem.subs.push(systemSubs);
-                }
-              });
-              this.items.push(systemItem);
-            }
-            i++;
-          });
-        }.bind(this)
-      );
-    }
   },
   computed: {
     onRoutes() {
@@ -283,7 +236,6 @@ export default {
     bus.$on("collapse", msg => {
       this.collapse = msg;
     });
-    this.getMenuData("系统管理");
     this.getMenuDate();
   }
 };

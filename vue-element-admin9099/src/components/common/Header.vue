@@ -116,6 +116,7 @@ export default {
   mounted() {
     // this.user = this.$store.getters.getUser;
     this.user = JSON.parse(sessionStorage.getItem('user'));
+    // this.user = this.$route.query.user;
     if (document.body.clientWidth < 1500) {
       this.collapseChage();
     }

@@ -2,6 +2,9 @@
   <div>
     <el-row>
       <h4 style="padding:10px">基础可选择</h4>
+<!--  load:加载子树数据的方法，仅当 lazy 属性为true 时生效-->
+<!--  show-checkbox:节点是否可被选择-->
+<!--  @check-change:节点被选中状态发生改变的回调-->
       <el-tree :props="props" :load="loadNode" lazy show-checkbox @check-change="handleCheckChange"></el-tree>
     </el-row>
     <el-row>
@@ -10,6 +13,8 @@
     </el-row>
     <el-row>
       <h4 style="padding:10px">默认选中</h4>
+<!--  :default-expanded-keys="[2, 3]":默认展开节点的key数组-->
+<!--  :default-checked-keys="[5]":默认勾选的节点key数值集合-->
       <el-tree
         :data="data2"
         show-checkbox
@@ -28,12 +33,15 @@ export default {
   data() {
     return {
       props: {
+        // 节点对象属性
         label: "name",
+        // 子节点对象属性
         children: "zones"
       },
       props1: {
           label: 'name',
           children: 'zones',
+          // 叶子节点
           isLeaf: 'leaf'
         },
       count: 1,
@@ -79,6 +87,9 @@ export default {
     };
   },
   methods: {
+    // data:传递给 data 属性的数组中该节点所对应的对象
+    // checked:节点本身是否被选中
+    // indeterminate:节点的子树中是否有被选中的节点
     handleCheckChange(data, checked, indeterminate) {
       console.log(data, checked, indeterminate);
     },
@@ -86,8 +97,9 @@ export default {
       console.log(data);
     },
     loadNode1(node, resolve) {
+        // node.level === 0:树状图最开始显示的数据
         if (node.level === 0) {
-          return resolve([{ name: 'region' }]);
+          return resolve([{ name: 'region' },{ name: '123'}]);
         }
         if (node.level > 1) return resolve([]);
 
@@ -96,7 +108,7 @@ export default {
             name: 'leaf',
             leaf: true
           }, {
-            name: 'zone'
+            name: 'zone',
           }];
 
           resolve(data);
