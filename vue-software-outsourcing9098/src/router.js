@@ -31,8 +31,16 @@ export default new Router({
       name: 'goodsList',
       component: () => import('./views/GoodsList.vue')
     },
-
-
+    {
+      path: '/worksList',
+      name: 'worksList',
+      component: () => import('./views/WorksList.vue')
+    },
+    {
+      path: '/worksdetails',
+      name: 'worksdetails',
+      component: () => import('./views/WorksDetails.vue')
+    },
     {
       //雇主注册
       path: '/EmployerReg',
@@ -105,8 +113,7 @@ export default new Router({
           component: () => import('./views/Provider/updatePwd.vue'),
         },
       ]
-    }
-
+    },
 
   ]
 })
