@@ -1,10 +1,8 @@
 package com.cykj.controller;
 
-import com.cykj.bean.CommonResult;
-import com.cykj.bean.Menu;
-import com.cykj.bean.Role;
-import com.cykj.bean.UserInfo;
+import com.cykj.bean.*;
 import com.cykj.service.impl.MenuServiceImp;
+import com.cykj.service.impl.RoleMenuServiceImp;
 import com.cykj.service.impl.RoleServiceImp;
 import com.cykj.service.impl.UserInfoServiceImp;
 import com.cykj.vo.UserInfoPwd;
@@ -31,6 +29,8 @@ public class UserInfoController {
     private UserInfoServiceImp userInfoService;
     @Autowired
     private MenuServiceImp menuService;
+    @Autowired
+    private RoleMenuServiceImp roleMenuService;
     @Autowired
     private RoleServiceImp roleService;
     // 获取用户列表
@@ -103,12 +103,12 @@ public class UserInfoController {
             return "修改失败";
         }
     }
-    // 获取菜单列表
-    @GetMapping("/getMenuData")
+    // 动态获取菜单列表
+    @GetMapping("/getMenu")
     @ResponseBody
-    public List<Menu> getMenuData(){
-        List<Menu> menuList = menuService.getMenuData();
-        return menuList;
+    public  RoleMenu getMenu(int roleId){
+        RoleMenu roleMenu = roleMenuService.getMenu(roleId);
+        return roleMenu;
     }
     // 获取角色列表
     @GetMapping("/getRoleList")
@@ -145,8 +145,6 @@ public class UserInfoController {
         }
         return "删除成功";
     }
-
-
     //修改密码
     @RequestMapping("/updatePwd")
     @ResponseBody

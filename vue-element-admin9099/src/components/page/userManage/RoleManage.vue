@@ -95,15 +95,16 @@
           <el-form-item label="角色描述" :label-width="formLabelWidth" prop="roleDescribe">
             <el-input v-model="addRoleForm.roleDescribe" autocomplete="off"></el-input>
           </el-form-item>
-<!--          -->
-          <el-tree
-              :data="this.treeData"
-              node-key="id"
-              :props="props"
-              rel="tree"
-              show-checkbox
-              @check-change="handleCheckChange">
-          </el-tree>
+          <el-form-item label="配置菜单" :label-width="formLabelWidth" prop="menu">
+            <el-tree
+                :data="this.treeData"
+                node-key="id"
+                :props="props"
+                rel="tree"
+                show-checkbox
+                @check="currentChecked">
+            </el-tree>
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addUserVisible = false">取 消</el-button>
@@ -160,22 +161,7 @@ export default {
         label: 'name',
         children: 'zones',
       },
-      treeData: [
-        {
-          id:'1',
-          name:'1',
-          menu:{name:'菜单1'},
-          zones:[{
-            id:'2',
-            name: '1-1',
-            menu:{name:'菜单2'},
-          },{
-            id:'3',
-            name: '1-2',
-            menu:{name:'菜单3'},
-          }]
-        }
-      ],
+      treeData: [],
       // 新增角色自定义规则
       addRoleRule: {
         roleName: [
@@ -188,6 +174,9 @@ export default {
           {max: 11, message: "不能超过11位",trigger: "blur" },
           {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
         ],
+        menu: [
+          {required: true, message: "请选择菜单", trigger: "blur"},
+        ]
       },
       // 修改用户规则
       editRule: {
@@ -330,7 +319,7 @@ export default {
         this.isShowloading=false;
       })
     },
-    // 获取角色列表
+    // 获取角色列表以及对应的菜单
     getRoleList(){
       this.isShowloading=true;
       getRoleList().then(res=>{
@@ -339,8 +328,12 @@ export default {
         this.isShowloading=false;
       })
     },
+
     // 树复选框
     handleCheckChange(data,checked){
+      console.log(data,checked);
+    },
+    currentChecked(data,checked){
       console.log(data,checked);
     },
     // 获取菜单列表 并转为tree树
@@ -380,7 +373,7 @@ export default {
   },
   mounted() {
     this.getRoleList();
-    this.getMenuData();
+    // this.getMenuData();
   }
 };
 </script>

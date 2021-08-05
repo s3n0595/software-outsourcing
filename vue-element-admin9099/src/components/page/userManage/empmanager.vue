@@ -376,7 +376,6 @@ export default {
             pageSize:this.pageSize,
           }
       getEmpList(params).then(res=>{
-        console.log(res);
         this.isShowloading=false;
         this.emps=res.data.emps;
         this.total=res.data.count;

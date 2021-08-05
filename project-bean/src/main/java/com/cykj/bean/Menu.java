@@ -13,7 +13,6 @@ public class Menu {
   private String menuName;
   private String menuPath;
   private int parentId;
-  private int roleId;
   private String menuIcon;
 
 
