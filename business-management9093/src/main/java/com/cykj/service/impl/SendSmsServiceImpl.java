@@ -12,11 +12,13 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.cykj.bean.Sms;
 import com.cykj.service.SendSmsService;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +27,7 @@ import java.util.Map;
  */
 @Service
 @Data
+@Slf4j
 public class SendSmsServiceImpl implements SendSmsService {
 
     private static final Logger logger = LoggerFactory.getLogger(SendSmsServiceImpl.class);
@@ -35,10 +38,19 @@ public class SendSmsServiceImpl implements SendSmsService {
 //    private String accessKeySecret;
 
     @Override
-    public boolean sendSms(String phoneNumber, String code) {
+    public boolean sendSms(String phoneNumber, String code, List<Sms> smsList) {
 
-        Sms sms = new Sms();
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", sms.getAccessKeyId(), sms.getAccessKeySecret());
+        String accessKeyId = null;
+        String accessKeySecret = null;
+        String signName = null;
+        String templateCode = null;
+        for (Sms sms : smsList) {
+            accessKeyId = sms.getAccessKeyId();
+            accessKeySecret = sms.getAccessKeySecret();
+            signName = sms.getSignName();
+            templateCode = sms.getTemplateCode();
+        }
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
@@ -47,9 +59,9 @@ public class SendSmsServiceImpl implements SendSmsService {
         request.setVersion("2017-05-25");
         request.setAction("SendSms");
 //        request.putQueryParameter("RegionId", "cn-hangzhou");
-        request.putQueryParameter("SignName", sms.getSignName());
+        request.putQueryParameter("SignName", signName);
         request.putQueryParameter("PhoneNumbers", phoneNumber);
-        request.putQueryParameter("TemplateCode", sms.getTemplateCode());
+        request.putQueryParameter("TemplateCode", templateCode);
 
         Map<String, Object> params = new HashMap<>();
         params.put("code", code);

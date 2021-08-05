@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -42,14 +43,6 @@ public class SendSmsController {
     @ResponseBody
     public CommonResult sendSms(@RequestParam("phoneNumber") String phoneNumber) {
 
-        Sms sms = new Sms();
-        for (Sms querySm : smsService.querySms()) {
-            sms.setAccessKeyId(querySm.getAccessKeyId());
-            sms.setAccessKeySecret(querySm.getAccessKeySecret());
-            sms.setSignName(querySm.getSignName());
-            sms.setTemplateCode(querySm.getTemplateCode());
-        }
-
         log.info("手机号"+phoneNumber);
         // 获取到操作String的对象
         String code  = redisTemplate.opsForValue().get(phoneNumber);
@@ -66,7 +59,8 @@ public class SendSmsController {
             // 将phone当做key，将code当做value存进redis中，时间为5分钟
             redisTemplate.opsForValue().set(phoneNumber, code, 1440, TimeUnit.MINUTES);
             // 调用业务层接口 发送验证码
-            boolean sendSmsFlag = sendSmsService.sendSms(phoneNumber, code);
+            List<Sms> smsList = smsService.querySms();
+            boolean sendSmsFlag = sendSmsService.sendSms(phoneNumber, code, smsList);
             if (sendSmsFlag) {
                 // 发送成功之后往redis中存入该手机号以及验证码 并设置超时时间 5 分钟
                 log.info("验证码发送成功");
