@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Nav from "@/views/Nav";
 import Home from "@/views/Home";
 import EmployerReg from "@/views/EmployerReg";
+import GoodsList from "@/views/GoodsList";
 
 Vue.use(Router)
 
@@ -19,10 +20,16 @@ export default new Router({
         {
           path: '/Home',
           name:'Home',
-          component: Home,
+          component: () => import('./views/Home.vue')
         },
 
       ]
+    },
+
+    {
+      path: '/goodsList',
+      name: 'goodsList',
+      component: () => import('./views/GoodsList.vue')
     },
 
 

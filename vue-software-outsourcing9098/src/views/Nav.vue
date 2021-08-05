@@ -9,7 +9,8 @@
         mode="horizontal"
         @select="handleSelect"
     >
-      <el-menu-item @click="home">首页</el-menu-item>
+      <el-menu-item @click.native="home">首页</el-menu-item>
+      <el-menu-item @click.native="goodsList">找需求</el-menu-item>
       <el-submenu index="login">
         <template slot="title">登陆</template>
         <el-menu-item @click="employerLogin">雇主登陆</el-menu-item>
@@ -38,6 +39,9 @@ export default {
   methods: {
     home(){
       this.$router.push('/Home')
+    },
+    goodsList(){
+      this.$router.push('/goodsList')
     },
     employerRegister(){
       this.$router.push('/employerReg')
