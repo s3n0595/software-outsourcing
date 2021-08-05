@@ -2,9 +2,9 @@
   <div class="news">
     <el-button type="primary" @click="openDialog()">添加更多作品</el-button>
     <div v-for="item in worksList" style="margin: 20px;" @click="editWorks()">
-      <img :src="'api/images/'+getImg(item.annexPath)" alt="" style="width: 200px;height: 200px;border: 1px solid black;"/>
+      <img :src="'api/images/'+item.providerId+'/'+item.annexPath" alt="" style="width: 200px;height: 200px;border: 1px solid black;"/>
       <p style="margin: 20px"> {{item.worksTitle}} </p>
-      <a :href="'api/images/'+getImg(item.annexPath)" download="">{{getImg(item.annexPath)}}</a>
+      <a :href="'api/images/'+item.annexPath" download="">{{item.annexPath}}</a>
     </div>
 <!--    <el-table :data="tableData" border style="width: 100%" v-loading="loading">-->
 <!--      <el-table-column prop="Id" label="序号" width="180"></el-table-column>-->
@@ -41,6 +41,7 @@
     <!--  -->
     <el-dialog title="添加案例作品" :visible.sync="dialogFormVisible">
       <el-form ref="workForm" :model="form">
+        <el-input v-model="form.providerId" type="hidden"></el-input>
         <el-form-item label="作品图片" :label-width="formLabelWidth">
           <el-upload
             ref="upload"
@@ -52,6 +53,7 @@
             :data="form"
             :on-exceed="handleExceed"
             :on-change="uploadChange"
+            :on-success="uploadSuccess"
             :before-upload="handleBeforeUpload"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove">
@@ -110,6 +112,7 @@ export default {
         worksDescribe:"",
         worksPrice:"",
         worksAddress:"",
+        providerId:"",
       },
       worksList: [],
       baseURL: "",
@@ -121,6 +124,7 @@ export default {
         this.worksList = res.data;
     })
     let token = "Browser " + sessionStorage.getItem("token");
+    this.form.providerId = JSON.parse(sessionStorage.getItem("provider")).providerId;
     //window.console.log(token);
     this.options = {
       headers: {
@@ -174,14 +178,6 @@ export default {
     },
     uploadFile() {
       this.$refs.upload.submit();
-      this.dialogFormVisible = false;
-      this.form = {};
-      this.$refs.upload.clearFiles();
-      this.$axios.get('work/list').then(res =>{
-        console.log(res.data);
-        this.worksList = res.data;
-
-      })
       // this.$refs['uploadFile'].validate(valid =>{
       //   if(valid) {
       //     let params = this.form;
@@ -190,6 +186,16 @@ export default {
       //     })
       //   }
       // })
+    },
+    // 上传文件成功后的回调
+    uploadSuccess() {
+      this.dialogFormVisible = false;
+      this.form = {};
+      this.$refs.upload.clearFiles();
+      this.$axios.get('work/list').then(res =>{
+        console.log(res.data);
+        this.worksList = res.data;
+      })
     },
     getImg(path){
       // this.$axios.request({

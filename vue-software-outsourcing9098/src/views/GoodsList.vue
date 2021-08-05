@@ -42,8 +42,8 @@
 
           </div>
           <div id="list">
-            <el-row v-for="item in demandList">
-              <div class="goods">
+            <el-row v-for="item in demandList" >
+              <div class="goods" @click="viewDetails(item)">
                 <el-col :span="6">
                   <img :src="'api/images/' + item.annexPath" alt="" style="width: 80%;height: 80%;margin: 5%">
                 </el-col>
@@ -118,9 +118,10 @@ import Nav from "@/views/Nav";
                          this.demandList.push(res.data[i]);
                      }
                  }
-
-
             })
+          },
+          viewDetails(item) {
+            this.$router.push({name:"demandDetails",params:{"demand":item}});
           }
         },
         mounted() {

@@ -31,6 +31,11 @@ export default new Router({
       name: 'goodsList',
       component: () => import('./views/GoodsList.vue')
     },
+      {
+      path: '/demandDetails/:demand',
+      name: 'demandDetails',
+      component: () => import('./views/Provider/DemandDetails.vue')
+    },
 
 
     {
