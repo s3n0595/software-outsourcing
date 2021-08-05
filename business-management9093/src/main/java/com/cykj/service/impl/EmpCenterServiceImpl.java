@@ -52,8 +52,32 @@ public class EmpCenterServiceImpl implements EmpCenterService {
     }
 
     @Override
+    public CapitalFlow seleEmpphone(String tradeNo) {
+        CapitalFlow capitalFlow= empCenterMapper.seleEmpphone(tradeNo);
+        return capitalFlow;
+    }
+
+    @Override
+    public int seleEmpId(String phoneNumber) {
+        int employerId=empCenterMapper.seleEmpId(phoneNumber);
+        return employerId;
+    }
+
+    @Override
+    public int editEmpBalance(int employerId, double balance) {
+        int i=empCenterMapper.editEmpBalance(employerId,balance);
+        return i;
+    }
+
+    @Override
     public int updFlow(CapitalFlow capitalFlow) {
         int i=empCenterMapper.updFlow(capitalFlow);
+        return i;
+    }
+
+    @Override
+    public int selempBalance(int eid) {
+        int i=empCenterMapper.selempBalance(eid);
         return i;
     }
 }

@@ -15,5 +15,9 @@ public interface EmpCenterService {
     int editNeed(Demand demand);
     int delNeed( int did);
     int addFlow(CapitalFlow capitalFlow);
+    CapitalFlow seleEmpphone( String tradeNo);
+    int seleEmpId(String phoneNumber);
+    int editEmpBalance(int employerId,double balance);
     int updFlow(CapitalFlow capitalFlow);
+    int selempBalance(int eid);
 }

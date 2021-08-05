@@ -17,5 +17,9 @@ public interface EmpCenterMapper {
     int editNeed(Demand demand);//修改雇主需求信息
     int delNeed(@Param("demandId") int did);//删除需求
     int addFlow(CapitalFlow capitalFlow);//添加充值记录
+    CapitalFlow seleEmpphone(@Param("tradeNo") String tradeNo);//通过订单号查找充值对象
+    int seleEmpId(@Param("phoneNumber") String phoneNumber);//通过手机号查找雇主ID
     int updFlow(CapitalFlow capitalFlow);//修改充值记录
+    int editEmpBalance(@Param("employerId") int employerId,@Param("balance") double balance);
+    int selempBalance(@Param("employerId") int eid);//查询账户余额
 }

@@ -41,6 +41,7 @@ public class OrderController {
         capitalFlow.setTradeNo(aliPayBean.getOut_trade_no());
         capitalFlow.setPhoneNumber(aliPayBean.getPhoneNumber());
         capitalFlow.setTradeState("ACQ.TRADE_STATUS_ERROR");
+        capitalFlow.setType(aliPayBean.getType());
         empCenterService.addFlow(capitalFlow);
         return payService.aliPay(aliPayBean);
     }
@@ -48,8 +49,15 @@ public class OrderController {
     @RequestMapping( "/success")
     public void success(HttpServletRequest request)throws Exception{
         String timestamp=new String(request.getParameter("timestamp").getBytes("ISO-8859-1"), "UTF-8");
+        String out_trade_no=request.getParameter("out_trade_no");
+        String total_amount=request.getParameter("total_amount");
+        CapitalFlow cap= empCenterService.seleEmpphone(out_trade_no);
+        if(cap.getType().equals("雇主")){
+            int employerId=empCenterService.seleEmpId(cap.getPhoneNumber());
+            empCenterService.editEmpBalance(employerId, Double.parseDouble(total_amount));
+        }
         CapitalFlow capitalFlow=new CapitalFlow();
-        capitalFlow.setTradeNo(request.getParameter("out_trade_no"));
+        capitalFlow.setTradeNo(out_trade_no);
         capitalFlow.setTradeTime(timestamp);
         capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
         empCenterService.updFlow(capitalFlow);

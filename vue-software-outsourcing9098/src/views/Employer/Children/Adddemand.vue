@@ -42,14 +42,6 @@
         <el-form-item label="项目类型" :label-width="formLabelWidth" >
           <el-radio  v-model="form.demandTypeId" v-for="ck in checklist" :key="ck.demandTypeId"  :label="ck.demandTypeId" ><i v-bind:class="ck.icon">&nbsp;&nbsp;{{ck.demandTypeName}}</i></el-radio>
         </el-form-item>
-<!--        <el-form-item label="项目类型" label-width="190px">-->
-<!--          <el-radio v-model="form.demandTypeId"  label="1" ><i class="el-icon-platform-eleme">&nbsp;&nbsp;Web 网站</i></el-radio>-->
-<!--          <el-radio v-model="form.demandTypeId"  label="2"><i class="el-icon-mobile-phone">&nbsp;&nbsp;App 开发</i></el-radio>-->
-<!--          <el-radio v-model="form.demandTypeId"  label="3"><i class="el-icon-connection">&nbsp;&nbsp;微信公众号</i></el-radio>-->
-<!--          <el-radio v-model="form.demandTypeId"  label="4"><i class="el-icon-s-management">&nbsp;&nbsp;HTML5 应用</i></el-radio>-->
-<!--          <el-radio v-model="form.demandTypeId"  label="5"><i class="el-icon-info">&nbsp;&nbsp;小程序</i></el-radio>-->
-<!--          <el-radio v-model="form.demandTypeId"  label="6"><i class="el-icon-cherry">&nbsp;&nbsp;其他应用</i></el-radio>-->
-<!--        </el-form-item>-->
         <el-form-item label="项目名称" :label-width="formLabelWidth">
           <el-input v-model="form.demandTitle" autocomplete="off" style="margin-left: 25px;width: 550px"></el-input>
         </el-form-item>
@@ -64,7 +56,6 @@
         <el-form-item label="项目描述" :label-width="formLabelWidth">
           <el-input type="textarea" :rows="10" v-model="form.demandDescribe" autocomplete="off" style="margin-left: 25px;width: 550px;"></el-input>
         </el-form-item>
-<!--        <el-form :model="form">-->
         <el-form-item label="相关文档" :label-width="formLabelWidth">
           <el-upload
               ref="upload"
@@ -176,7 +167,8 @@ export default {
         predictTime:"",
         demandTypeId:"",
         releaseTime:"",
-        demandDescribe:""
+        demandDescribe:"",
+        employerId:""
       },
       editform:{
         demandId:"",
@@ -186,12 +178,12 @@ export default {
         demandTypeId:"",
         releaseTime:"",
         demandDescribe:""
-      }
+      },
+      user:""
     };
   },
   mounted() {
     let token = "Browser " + sessionStorage.getItem("token");
-    //window.console.log(token);
     this.options = {
       headers: {
         Authorization: token
@@ -200,8 +192,10 @@ export default {
     this.headers = {
       Authorization: token
     };
+    this.user=JSON.parse(sessionStorage.getItem('employer'));//获取登录储存的雇主
     this.selcheckList();
     this.loadData();
+
   },
   methods: {
     // 文件超出个数限制时的钩子
@@ -240,8 +234,9 @@ export default {
     },
     // 文件上传成功时的钩子
     handleSuccess(res, file, fileList) {
+      this.loadData();
       this.$notify.success({
-        title: '成功',
+        title: '发布成功',
         message: `文件上传成功`
       });
     },
@@ -253,7 +248,26 @@ export default {
       });
     },
     uploadFile() {//提交文件、form表单
-      this.$refs.upload.submit();
+      if(this.fileList.length<0){
+        this.$axios.post("/empcenter/file",this.$qs.stringify({
+          demandId:this.form.demandId,
+          demandTitle: this.form.demandTitle,
+          predictPrice:this.form.predictPrice,
+          predictTime:this.form.predictTime,
+          demandTypeId:this.form.demandTypeId,
+          demandDescribe:this.form.demandDescribe,
+          employerId:this.form.employerId
+        })).then(response=>{
+          this.$notify.error({
+            title: response.data,
+            message: '需求发布'
+          });
+        })
+      }else{
+        this.$refs.upload.submit();
+      }
+      this.dialogFormVisible=false;
+
     },
     selcheckList(){
       this.$axios.post("/empcenter/ckList").then(response =>{
@@ -268,7 +282,7 @@ export default {
     loadData() {
       this.loading = true;
       this.$axios.post("/empcenter/needList",this.$qs.stringify({
-        "employerId":1,
+        "employerId":this.user.employerId,
       })).then(response => {
             this.tableData = response.data;
             this.loading = false;
@@ -286,58 +300,16 @@ export default {
     },
 
     openDialog() {
+      this.form.employerId=this.user.employerId
       // 清除数据
-      this.formData.Id = 0;
-      this.formData.Title = "";
-      this.formData.Img = "";
-      this.formData.Type = 1;
-      this.formData.Content = "";
-      this.formData.CreateTime = new Date();
-
+      this.form.demandTitle = "";
+      this.form.predictPrice = "";
+      this.form.predictTime = "";
+      this.form.demandTypeId = "";
+      this.form.releaseTime="",
+      this.form.demandDescribe = "";
+      this.fileList=[];
       this.dialogFormVisible = true;
-    },
-    handleCreateOrModify() {
-      if (!this.formData.Id) {
-        this.loading = true;
-        this.$http
-            .post("News/CreateNews", this.formData, this.options)
-            .then(response => {
-              window.console.log(response);
-              this.loading = false;
-              this.$message({
-                message: "创建成功！",
-                type: "success"
-              });
-              this.dialogFormVisible = false;
-              this.loadData();
-            })
-            .catch(e => {
-              this.$message({
-                message: "网络或程序异常！" + e,
-                type: "error"
-              });
-            });
-      } else {
-        this.loading = true;
-        this.$http
-            .post("News/ModifiedNews", this.formData, this.options)
-            .then(response => {
-              this.loading = false;
-              window.console.log(response);
-              this.$message({
-                message: "修改成功！",
-                type: "success"
-              });
-              this.dialogFormVisible = false;
-              this.loadData();
-            })
-            .catch(e => {
-              this.$message({
-                message: "网络或程序异常！" + e,
-                type: "error"
-              });
-            });
-      }
     },
     //编辑
     handleEdit(index, row) {
