@@ -40,7 +40,7 @@ export default {
     }
   },
   mounted() {
-      this.user=JSON.parse(sessionStorage.getItem("employer"));
+      this.user=JSON.parse(sessionStorage.getItem("user"));
       this.selBalance();
   }
 }

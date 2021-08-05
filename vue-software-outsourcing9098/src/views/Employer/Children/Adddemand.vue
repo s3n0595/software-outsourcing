@@ -27,7 +27,7 @@
               icon="el-icon-delete"
               @click="handleDelete(scope.$index, scope.row)"
           ></el-button>
-          <el-button v-if="scope.row.annexPath!=null" :disabled="false"  icon="el-icon-download" type="primary" @click="downloadFile(scope.row.annexPath)"></el-button>
+          <el-button v-if="scope.row.annexPath!=null" :disabled="false"  icon="el-icon-download" type="primary" @click="xiazai(scope.row.annexPath)"></el-button>
           <el-button v-else :disabled="true"  icon="el-icon-download" type="primary" @click="downloadFile(scope.row.annexPath)"></el-button>
         </template>
       </el-table-column>
@@ -295,8 +295,10 @@ export default {
           });
     },
 
-    async downloadFile (name) {
-      window.location.href="http://127.0.0.1:9093/empcenter/download?name="+name;
+    xiazai(name){
+      const a = document.createElement('a');
+      a.href = "api/images/"+name;
+      a.click();
     },
 
     openDialog() {
