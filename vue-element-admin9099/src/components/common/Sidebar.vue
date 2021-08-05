@@ -52,7 +52,7 @@
 
 <script>
 import bus from "../common/bus";
-import {getSysmenu} from '../../api/api'
+import {getSysmenu,getMenuData} from '../../api/api'
 export default {
   data() {
     return {
@@ -211,35 +211,33 @@ export default {
   },
   methods: {
     // 动态获取菜单
-    getMenuData(menuName) {
-      let menuData = [];
-      getSysmenu().then(
-        function(data) {
-          let data1 = data.data.menuArr;
-          data1.forEach((val,index) => {
-            let i=8;
-            if(val.menuname==menuName){
-              let systemItem = {};
-              systemItem.icon = "el-icon-setting";
-              systemItem.idex=i;
-              systemItem.title=val.menuname;
-              systemItem.subs=[];
-              data1.forEach(value => {
-                if(value.parentid==val.id){
-                  let systemSubs = {};
-                  let menuurl = value.menuurl.split('/')[2];
-                  systemSubs.index = menuurl;
-                  systemSubs.title = value.menuname;
-                  systemItem.subs.push(systemSubs);
-                }
-              });
-              this.items.push(systemItem);
-            }
-            i++;
-          });
-        }.bind(this)
-      );
-    }
+    getMenuDate(){
+      let user = JSON.parse(sessionStorage.getItem('user'));
+      let roleId = user.roleId;
+      getMenuData().then(res=>{
+        let menuData = res.data;
+        menuData.forEach((val,index)=>{
+          let i = this.items.length+1;
+          if (roleId == val.roleId){
+            let systemItem = {};
+            systemItem.icon = val.menuIcon;
+            systemItem.index = i;
+            systemItem.title = val.menuName;
+            systemItem.subs = [];
+            menuData.forEach((val2,index2)=>{
+              if (val.menuId == val2.parentId){
+                let systemSubs = {};
+                systemSubs.index = val2.menuPath;
+                systemSubs.title = val2.menuName;
+                systemItem.subs.push(systemSubs);
+              }
+            });
+            this.items.push(systemItem);
+          }
+        });
+      })
+
+    },
   },
   computed: {
     onRoutes() {
@@ -251,7 +249,7 @@ export default {
     bus.$on("collapse", msg => {
       this.collapse = msg;
     });
-    this.getMenuData("系统管理");
+    this.getMenuDate();
   }
 };
 </script>

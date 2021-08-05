@@ -2,12 +2,12 @@
   <div>
     <div class="crumbs">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+        <el-breadcrumb-item>角色管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="handle-box">
-<!--    批量删除按钮-->
+        <!--    批量删除按钮-->
         <el-button
             type="primary"
             icon="delete"
@@ -15,9 +15,9 @@
             @click="delAll"
             :disabled="this.delData.length===0"
         >批量删除</el-button>
-        <el-input v-model="searchInfo" placeholder="请输入用户名关键词" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="search" @click="getSearchUsers">搜索</el-button>
-        <el-button type="primary" @click="addUserVisible=true">新建用户</el-button>
+        <el-input v-model="searchInfo" placeholder="请输入角色名关键词" class="handle-input mr10"></el-input>
+        <el-button type="primary" icon="search" @click="getSearchRoles">搜索</el-button>
+        <el-button type="primary" @click="addUserVisible=true">新建角色</el-button>
       </div>
       <el-table
           :data="tableDataList"
@@ -29,28 +29,11 @@
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column type="index" label="序号" sortable width="150"></el-table-column>
-        <el-table-column prop="userName" label="用户名" width="120"></el-table-column>
-        <el-table-column prop="role.roleName" label="角色名称"></el-table-column>
-        <el-table-column prop="state" label="状态" align="center" width="180">
-          <template slot-scope="scope" >
-              <el-switch
-                  v-model="scope.row.state"
-                  :active-value="1"
-                  :inactive-value="0"
-                  active-text="启用"
-                  inactive-text="禁用"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                  @change="editState(scope.row.userId,scope.row.state)"
-              >
-              </el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column prop="loginNumber" label="登录次数"></el-table-column>
-        <el-table-column prop="loginDate" label="最近登录时间"></el-table-column>
-        <el-table-column prop="creator" label="创建者"></el-table-column>
+        <el-table-column prop="roleName" label="角色名" width="120"></el-table-column>
+        <el-table-column prop="roleDescribe" label="角色描述"></el-table-column>
+        <el-table-column prop="roleDate" label="创建时间"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
-<!--      slot-scope="scope" 可以获取到父组件传递的参数，将这些参数使用到子组件插槽里-->
+          <!--      slot-scope="scope" 可以获取到父组件传递的参数，将这些参数使用到子组件插槽里-->
           <template slot-scope="scope">
             <el-button
                 type="text"
@@ -90,9 +73,8 @@
           </el-form-item>
           <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleId">
             <el-select v-model="userForm.roleId">
-              <template  v-for="role in this.roles">
-                <el-option :label="role.roleName" :value="role.roleId"></el-option>
-              </template>
+              <el-option label="管理员" :value="2"></el-option>
+              <el-option label="系统管理员" :value="1"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -101,36 +83,31 @@
           <el-button type="primary" @click.native="editUser">确 定</el-button>
         </div>
       </el-dialog>
-      <!-- 新建用户 -->
-<!--  :visible:隐藏属性  .sync: 同步绑定   v-dialogDrag:拖拽-->
-      <el-dialog title="新建用户" :visible.sync="addUserVisible" v-dialogDrag>
-<!--    :rules:自定义规则-->
-        <el-form :model="addUserForm" :rules="addUserRule" ref="addUserForm">
-<!--      label-width这个属性然后配合label-position可以设置标签对齐方式-->
-          <el-form-item label="用户名称" :label-width="formLabelWidth" prop="userName">
-            <el-input v-model="addUserForm.userName" autocomplete="off"></el-input>
+      <!-- 新建菜单 -->
+      <!--  :visible:隐藏属性  .sync: 同步绑定   v-dialogDrag:拖拽-->
+      <el-dialog title="新建角色" :visible.sync="addUserVisible" v-dialogDrag>
+        <!--    :rules:自定义规则-->
+        <el-form :model="addRoleForm" :rules="addRoleRule" ref="addRoleForm">
+          <!--      label-width这个属性然后配合label-position可以设置标签对齐方式-->
+          <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleName">
+            <el-input v-model="addRoleForm.roleName" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户账号" :label-width="formLabelWidth" prop="userAccount">
-            <el-input v-model="addUserForm.userAccount" autocomplete="off"></el-input>
+          <el-form-item label="角色描述" :label-width="formLabelWidth" prop="roleDescribe">
+            <el-input v-model="addRoleForm.roleDescribe" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户密码" :label-width="formLabelWidth" prop="userPassword">
-            <el-input v-model="addUserForm.userPassword" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleId">
-            <el-select v-model="addUserForm.roleId">
-              <template  v-for="role in this.roles">
-                <el-option :label="role.roleName" :value="role.roleId"></el-option>
-              </template>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="状态" :label-width="formLabelWidth">
-            <el-radio v-model="addUserForm.state" label="1">正常</el-radio>
-            <el-radio v-model="addUserForm.state" label="0">禁用</el-radio>
-          </el-form-item>
+<!--          -->
+          <el-tree
+              :data="this.treeData"
+              node-key="id"
+              :props="props"
+              rel="tree"
+              show-checkbox
+              @check-change="handleCheckChange">
+          </el-tree>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addUserVisible = false">取 消</el-button>
-          <el-button type="primary" @click="saveUser">确 定</el-button>
+          <el-button type="primary" @click="saveRole">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -138,14 +115,13 @@
 </template>
 <script>
 import {
-  getUserInfoList,
-  deleteUserInfoList,
-  addUserInfo,
-  updateState,
   updateUserInfo,
-  getSearchUser,
   getRoleList,
+  addRole,
   getDate,
+  deleteRole,
+  getSearchRole,
+  getMenuData,
 } from "../../../api/api";
 export default {
   data() {
@@ -153,9 +129,7 @@ export default {
       url:"",
       // 搜索关键字
       searchInfo: "",
-      // 用户列表
-      users: '',
-      // 角色列表
+      // 菜单列表
       roles: '',
       // 总条数
       total: '',
@@ -173,38 +147,46 @@ export default {
       addUserVisible: false,
       // 编辑数据
       userForm: {},
-      // 添加用户的数据
-      addUserForm: {
-        userName: "",
-        userAccount: "",
-        userPassword: "",
-        roleId: "",
-        state: "1",
+      // 添加角色的数据
+      addRoleForm: {
+        roleName: '',
+        roleDescribe: '',
+        roleDate: '',
       },
-      // 新增用户自定义规则
-      addUserRule: {
-        userName: [
-          {required: true, message: "请输入用户名", trigger: "blur" },
+      // 菜单集合
+      MenuData: '',
+      // 树模型
+      props: {
+        label: 'name',
+        children: 'zones',
+      },
+      treeData: [
+        {
+          id:'1',
+          name:'1',
+          menu:{name:'菜单1'},
+          zones:[{
+            id:'2',
+            name: '1-1',
+            menu:{name:'菜单2'},
+          },{
+            id:'3',
+            name: '1-2',
+            menu:{name:'菜单3'},
+          }]
+        }
+      ],
+      // 新增角色自定义规则
+      addRoleRule: {
+        roleName: [
+          {required: true, message: "请填写角色名", trigger: "blur" },
           {max: 10, message: "不能超过10位",trigger: "blur" },
           {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
         ],
-        userAccount: [
-          {required: true, message: "请设置账号", trigger: "blur"},
+        roleDescribe: [
+          {required: true, message: "请给角色添加描述", trigger: "blur"},
           {max: 11, message: "不能超过11位",trigger: "blur" },
           {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
-        ],
-        userPassword: [
-          {required: true, message: "请设置密码", trigger: "blur"},
-          {max: 11, message: "不能超过11位",trigger: "blur" },
-          {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
-        ],
-        roleId: [
-          {
-            // pattern:匹配验证
-            required: true,
-            message: "请选择角色",
-            trigger: "blur"
-          }
         ],
       },
       // 修改用户规则
@@ -222,23 +204,10 @@ export default {
   computed:{
     // 动态获取分页data
     tableDataList(){
-      return this.users.slice((this.pageNo-1)*this.pageSize,this.pageNo*this.pageSize);
+      return this.roles.slice((this.pageNo-1)*this.pageSize,this.pageNo*this.pageSize);
     },
   },
   methods: {
-    editState(userId,state){
-      let params = {
-        userId: userId,
-        state: state,
-      }
-      updateState(params).then(res=>{
-        this.$message({
-          message: "修改成功",
-          type: "success",
-        });
-        this.getUserList();
-      })
-    },
     // 当前页数发送改变
     currentChange(val) {
       console.log("当前页"+val);
@@ -255,25 +224,24 @@ export default {
       this.delData = delData;
     },
     // 添加用户按钮
-    saveUser() {
+    saveRole() {
       //validate:表单验证,返回validate结果
-      this.$refs['addUserForm'].validate((validate)=>{
+      this.$refs['addRoleForm'].validate((validate)=>{
         if (validate){
+          let roleDate = getDate();
           let params = {
-            userName: this.addUserForm.userName,
-            userAccount: this.addUserForm.userAccount,
-            userPassword: this.addUserForm.userPassword,
-            roleId: this.addUserForm.roleId,
-            state: this.addUserForm.state,
+            roleName: this.addRoleForm.roleName,
+            roleDescribe: this.addRoleForm.roleDescribe,
+            roleDate: roleDate,
           };
           this.addUserVisible = false;
-          addUserInfo(params).then(res=>{
+          addRole(params).then(res=>{
             if ("添加成功" == res.data){
               this.$message({
                 message: "添加成功",
                 type: "success",
               });
-              this.getUserList();
+              this.getRoleList();
             }else {
               this.$message({
                 message: "添加失败",
@@ -281,7 +249,7 @@ export default {
               });
             }
           });
-          this.addUserForm = {};
+          this.addRoleForm = {};
         }
       })
     },
@@ -291,35 +259,35 @@ export default {
         type: "warning"
       }).then(() => {
         this.isShowloading = true;
-        let delIds = this.delData.map(item => item.userId);
+        let delIds = this.delData.map(item => item.roleId);
         // axios传递数组 在数组后加入''
         let params = {
-          userIds: delIds + '',
+          roleIds: delIds + '',
         };
-        deleteUserInfoList(params).then(res => {
+        deleteRole(params).then(res => {
           this.isShowloading = false;
           this.$message({
             message: "删除成功",
             type: "success"
           });
-          this.getUserList();
+          this.getRoleList();
         });
       });
     },
     // 删除按钮
     handleDelete(index, row) {
-      let userIds = {
-        userIds: row.userId
+      let params = {
+        roleIds: row.roleId,
       };
       this.$confirm("确认删除该用户？", "提示", {
         type: "warning"
       }).then(() => {
-        deleteUserInfoList(userIds).then(res => {
+        deleteRole(params).then(res => {
           this.$message({
             type: "success",
             message: "删除成功"
           });
-          this.getUserList();
+          this.getRoleList();
         });
       });
     },
@@ -339,43 +307,65 @@ export default {
             roleId: this.userForm.roleId,
           };
           updateUserInfo(params).then(res => {
-                this.$message({
-                  type: "success",
-                  message: "修改成功"
-                });
-                this.getUserList();
+            this.$message({
+              type: "success",
+              message: "修改成功"
+            });
+            this.getUserList();
 
-              });
+          });
           this.editUserVisible = false;
         }
       });
     },
-    // 用户名关键词搜索
-    getSearchUsers(){
+    // 角色名关键词搜索
+    getSearchRoles(){
       this.isShowloading=true;
       let params = {
-        userName: this.searchInfo,
+        roleName: this.searchInfo,
       }
-      getSearchUser(params).then(res=>{
-        this.users = res.data;
-        this.total = this.users.length;
-        this.isShowloading=false;
-      })
-    },
-    // 获取用户列表
-    getUserList(){
-      this.isShowloading=true;
-      getUserInfoList().then(res=>{
-        this.users = res.data;
-        this.total = this.users.length;
+      getSearchRole(params).then(res=>{
+        this.roles = res.data;
+        this.total = this.roles.length;
         this.isShowloading=false;
       })
     },
     // 获取角色列表
     getRoleList(){
+      this.isShowloading=true;
       getRoleList().then(res=>{
         this.roles = res.data;
-        console.log(this.roles)
+        this.total = this.roles.length;
+        this.isShowloading=false;
+      })
+    },
+    // 树复选框
+    handleCheckChange(data,checked){
+      console.log(data,checked);
+    },
+    // 获取菜单列表 并转为tree树
+    getMenuData(){
+      getMenuData().then(res=>{
+        let MenuDate = res.data;
+        MenuDate.forEach((val1)=>{
+          if (0 === val1.parentId){
+            let systemItem = {};
+            systemItem.id = val1.menuId;
+            systemItem.name = val1.menuName;
+            systemItem.Menu = val1;
+            systemItem.zones = [];
+            MenuDate.forEach((val2)=>{
+              if (val1.menuId === val2.parentId){
+                let systemZones = {};
+                systemZones.id = val2.menuId;
+                systemZones.name = val2.menuName;
+                systemZones.menu = val2;
+                systemItem.zones.push(systemZones);
+              };
+            });
+            this.treeData.push(systemItem);
+          };
+        });
       })
     },
     // 关闭提示
@@ -389,8 +379,8 @@ export default {
     },
   },
   mounted() {
-    this.getUserList();
     this.getRoleList();
+    this.getMenuData();
   }
 };
 </script>

@@ -143,6 +143,12 @@ export default new Router({
                     component: resolve => require(['../components/page/userManage/UserInfoManage.vue'], resolve),
                     meta: {title: '用户管理'}
                 },
+                },
+                {
+                    path: '/roleManage',
+                    component: resolve => require(['../components/page/userManage/RoleManage'],resolve),
+                    meta: {title: '角色管理'}
+                }
             ]
         },
         {

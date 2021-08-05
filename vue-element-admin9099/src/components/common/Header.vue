@@ -46,7 +46,7 @@
   </div>
 </template>
 <script>
-import bus from "../common/bus";
+import bus from "@/components/common/bus";
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 export default {
@@ -54,7 +54,7 @@ export default {
     return {
       collapse: false,
       fullscreen: false,
-      name: "linxin",
+      user: '',
       message: 2
     };
   },
@@ -119,10 +119,16 @@ export default {
     }
   },
   mounted() {
+    // this.user = this.$store.getters.getUser;
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+    // this.user = this.$route.query.user;
     if (document.body.clientWidth < 1500) {
       this.collapseChage();
     }
-  }
+  },
+  beforeDestroy() {
+    // bus.$off('user');
+  },
 };
 </script>
 <style scoped>

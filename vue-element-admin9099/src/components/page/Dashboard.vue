@@ -119,7 +119,7 @@ export default {
   name: "dashboard",
   data() {
     return {
-      name: localStorage.getItem("ms_username"),
+      // name: localStorage.getItem("ms_username"),
       Echarts:null,
       /* todoList: [{
                         title: '今天要修复100个bug',
@@ -302,11 +302,11 @@ export default {
   components: {
     Schart
   },
-  computed: {
-    role() {
-      return this.name === "admin" ? "超级管理员" : "普通用户";
-    }
-  },
+  // computed: {
+  //   role() {
+  //     return this.name === "admin" ? "超级管理员" : "普通用户";
+  //   }
+  // },
   created() {
     this.handleListener();
     this.changeDate();
@@ -347,8 +347,8 @@ export default {
     }
   },
   mounted(){
-      this.showEcharts()
-  }
+      this.showEcharts();
+  },
 };
 </script>
 
