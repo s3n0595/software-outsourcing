@@ -52,7 +52,7 @@
 
 <script>
 import bus from "../common/bus";
-import {getSysmenu,getMenuData} from '../../api/api'
+import {getMenu} from '../../api/api'
 export default {
   data() {
     return {
@@ -73,7 +73,11 @@ export default {
             {
               index: "userInfoManage",
               title: "用户管理"
-            }
+            },
+            {
+              index: "roleManage",
+              title: "角色管理"
+            },
           ]
         },
         {
@@ -197,15 +201,6 @@ export default {
             }
           ]
         },
-        // {
-        //   icon: "el-icon-lx-calendar",
-        //   index: "10",
-        //   title: "用户管理",
-        //   subs: [
-        //
-        //   ]
-        // },
-
       ]
     };
   },
@@ -213,18 +208,20 @@ export default {
     // 动态获取菜单
     getMenuDate(){
       let user = JSON.parse(sessionStorage.getItem('user'));
-      let roleId = user.roleId;
-      getMenuData().then(res=>{
-        let menuData = res.data;
-        menuData.forEach((val,index)=>{
-          let i = this.items.length+1;
-          if (roleId == val.roleId){
+      let params = {
+        roleId: user.roleId,
+      }
+      getMenu(params).then(res=>{
+        let menuData = res.data.menuList;
+        menuData.forEach(val=>{
+          if (0 == val.parentId){
+            let i = this.items.length+1;
             let systemItem = {};
             systemItem.icon = val.menuIcon;
             systemItem.index = i;
             systemItem.title = val.menuName;
             systemItem.subs = [];
-            menuData.forEach((val2,index2)=>{
+            menuData.forEach(val2=>{
               if (val.menuId == val2.parentId){
                 let systemSubs = {};
                 systemSubs.index = val2.menuPath;
@@ -234,7 +231,7 @@ export default {
             });
             this.items.push(systemItem);
           }
-        });
+        })
       })
 
     },

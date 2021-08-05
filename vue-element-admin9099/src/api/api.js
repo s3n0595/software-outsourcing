@@ -1,82 +1,82 @@
 import axios from 'axios';
-let publicPath = 'business';
+let baseUrl = 'baseUrl';
 
 //获取雇主列表
 export const getEmpList=params=>{
-    return axios.get(`${publicPath}/employer/list`,{params:params})
+    return axios.get(`${baseUrl}/employer/list`,{params:params})
 }
 export const getEditemp=params=>{
-    return axios.get(`${publicPath}/employer/edit`,{params:params})
+    return axios.get(`${baseUrl}/employer/edit`,{params:params})
 }
 export const getDeleteOne = params=>{
-    return axios.get(`${publicPath}/employer/DeleteOne`,{params:params})
+    return axios.get(`${baseUrl}/employer/DeleteOne`,{params:params})
 }
 export const getDeleEmp = params=>{
-    return axios.get(`${publicPath}/employer/DeleteAll`,{params:params})
+    return axios.get(`${baseUrl}/employer/DeleteAll`,{params:params})
 }
 export const getSelEmpList = params=>{
-    return axios.get(`${publicPath}/employer/selEmpList`,{params:params})
+    return axios.get(`${baseUrl}/employer/selEmpList`,{params:params})
 }
 
 // 用户管理
 // 获取用户列表
 export const getUserInfoList = params=>{
-    return axios.get(`${publicPath}/userinfo/getUserList`,{params:params})
+    return axios.get(`${baseUrl}/userinfo/getUserList`,{params:params})
 }
 // 关键字查找
 export const getSearchUser = params=>{
-    return axios.get(`${publicPath}/userinfo/getSearchUser`,{params:params})
+    return axios.get(`${baseUrl}/userinfo/getSearchUser`,{params:params})
 }
 // 删除用户列表
 export const deleteUserInfoList = parms=>{
-    return axios.get(`${publicPath}/userinfo/deleteUserList`,{params:parms})
+    return axios.get(`${baseUrl}/userinfo/deleteUserList`,{params:parms})
 }
 // 添加用户
 export const addUserInfo = params=>{
-    return axios.get(`${publicPath}/userinfo/addUserInfo`,{params:params})
+    return axios.get(`${baseUrl}/userinfo/addUserInfo`,{params:params})
 }
 // 修改状态
 export const updateState = params=>{
-    return axios.get(`${publicPath}/userinfo/updateState`,{params:params})
+    return axios.get(`${baseUrl}/userinfo/updateState`,{params:params})
 }
 // 修改用户信息
 export const updateUserInfo = params=>{
-    return axios.get(`${publicPath}/userinfo/updateUserInfo`,{params:params})
+    return axios.get(`${baseUrl}/userinfo/updateUserInfo`,{params:params})
 }
 // 后台登录
 // 登录验证
 export const userInfoLogin = params =>{
-    return axios.get(`${publicPath}/userinfo/userInfoLogin`,{params:params})
+    return axios.get(`${baseUrl}/userinfo/userInfoLogin`,{params:params})
 }
-// 获取菜单列表
-export const getMenuData = params =>{
-    return axios.get(`${publicPath}/userinfo/getMenuData`,{params: params})
+// 登录后对应用户的动态菜单列表
+export const getMenu = params =>{
+    return axios.get(`${baseUrl}/userinfo/getMenu`,{params: params})
 }
 // 角色管理
 // 获取角色列表
 export const getRoleList = params =>{
-    return axios.get(`${publicPath}/userinfo/getRoleList`,{params: params});
+    return axios.get(`${baseUrl}/userinfo/getRoleList`,{params: params});
 }
 // 关键字查找
 export const getSearchRole = params=>{
-    return axios.get(`${publicPath}/userinfo/getSearchRole`,{params:params})
+    return axios.get(`${baseUrl}/userinfo/getSearchRole`,{params:params})
 }
 // 添加新角色
 export const addRole = params =>{
-    return axios.get(`${publicPath}/userinfo/addRole`,{params: params});
+    return axios.get(`${baseUrl}/userinfo/addRole`,{params: params});
 }
 // 删除角色
 export const deleteRole = params =>{
-    return axios.get(`${publicPath}/userinfo/deleteRole`,{params: params});
+    return axios.get(`${baseUrl}/userinfo/deleteRole`,{params: params});
 }
 export const getUserList = params=>{
-    return axios.get(`${publicPath}/user/list`,{params:params})
+    return axios.get(`${baseUrl}/user/list`,{params:params})
 }
 export const getProviderList = params=>{
-    return axios.get(`${publicPath}/provider/list`,{params:params})
+    return axios.get(`${baseUrl}/provider/list`,{params:params})
 }
 export const editProvider = params=>{
-    return axios.get(`${publicPath}/provider/edit`,{params:params})
+    return axios.get(`${baseUrl}/provider/edit`,{params:params})
 }
 
 export const getSysmenu = ()=>{
@@ -86,12 +86,12 @@ export const getDeleUser = params=>{
     return axios.get('user/deletUsers',{params:params});
 }
 export const getEditUser = params=>{
-    return axios.get(`${publicPath}/user/editUser`,{
+    return axios.get(`${baseUrl}/user/editUser`,{
         params:params
     })
 }
 export const getAddUser = params=>{
-    return axios.get(`${publicPath}/user/addUser`,{
+    return axios.get(`${baseUrl}/user/addUser`,{
         params:params
     })
 }

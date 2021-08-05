@@ -124,11 +124,6 @@ export default new Router({
                     meta: {title: '用户信息'}
                 },
                 {
-                    path: '/usermanager',
-                    component: resolve => require(['../components/page/sysmanager/usermanager.vue'], resolve),
-                    meta: {title: '用户管理'}
-                },
-                {
                     path: '/providerManage',
                     component: resolve => require(['../components/page/userManage/ProviderManage.vue'], resolve),
                     meta: {title: '服务商管理'}

@@ -1,14 +1,14 @@
  module.exports = {
-    publicPath: './',   // 根路径  ====》   baseUrl: '/',已废弃
+    baseUrl: './',   // 根路径  ====》   baseUrl: '/',已废弃
     productionSourceMap: false,
     devServer: {
         port:9099,
         proxy: {
-            '/business':{
+            '/baseUrl':{
                 target:'http://localhost:9091/',
                 changeOrigin:true,
                 pathRewrite:{
-                    '/business': ''
+                    '/baseUrl': ''
                 }
             },
             '/api':{
