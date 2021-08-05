@@ -54,6 +54,7 @@ export default {
             if (res.code === 200) {
               this.$message.success("登陆成功")
               sessionStorage.setItem('user',res.data);
+              sessionStorage.setItem('ms_username',this.ruleForm.username);
               // localStorage.setItem('ms_username', this.ruleForm.username);
               this.$router.push('/');
             } else {
