@@ -10,8 +10,10 @@ import com.cykj.service.impl.UserInfoServiceImp;
 import com.cykj.vo.UserInfoPwd;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -40,12 +42,14 @@ public class UserInfoController {
     }
     // 通过关键字获取用户列表
     @GetMapping("/getSearchUser")
+    @ResponseBody
     public List<UserInfo> getSearchUser(String userName){
         List<UserInfo> userList = userInfoService.getSearchUser(userName);
         return userList;
     }
     // 登录
     @GetMapping("/userInfoLogin")
+    @ResponseBody
     public UserInfo userInfoLogin(String userAccount,String userPassword){
         System.out.println(userAccount+":"+userPassword);
         return userInfoService.userInfoLogin(userAccount,userPassword);
@@ -61,6 +65,7 @@ public class UserInfoController {
     }
     // 添加用户
     @GetMapping("/addUserInfo")
+    @ResponseBody
     public String addUserInfo(UserInfo userInfo){
         System.out.println("添加用户");
         System.out.println(userInfo);
@@ -74,6 +79,7 @@ public class UserInfoController {
     }
     //修改状态
     @GetMapping("/updateState")
+    @ResponseBody
     public String updateState(int userId,int state){
         int i = userInfoService.updateState(userId,state);
         if (1 == i){
@@ -86,6 +92,7 @@ public class UserInfoController {
     }
     //修改用户信息
     @GetMapping("/updateUserInfo")
+    @ResponseBody
     public String updateUserInfo(int userId,String userName,int roleId){
         int i = userInfoService.updateUserInfo(userId,userName,roleId);
         if (1 == i){
@@ -98,24 +105,28 @@ public class UserInfoController {
     }
     // 获取菜单列表
     @GetMapping("/getMenuData")
+    @ResponseBody
     public List<Menu> getMenuData(){
         List<Menu> menuList = menuService.getMenuData();
         return menuList;
     }
     // 获取角色列表
     @GetMapping("/getRoleList")
+    @ResponseBody
     public List<Role> getRoleList(){
         List<Role> roleList = roleService.getRoleList();
         return roleList;
     }
     // 关键字获取角色
     @GetMapping("/getSearchRole")
+    @ResponseBody
     public List<Role> getSearchRole(String roleName){
         List<Role> roles = roleService.getSearchRole(roleName);
         return roles;
     }
     // 添加新角色
     @GetMapping("/addRole")
+    @ResponseBody
     public String getRole(Role role){
         System.out.println(role);
         int i = roleService.addRole(role);
@@ -127,6 +138,7 @@ public class UserInfoController {
     }
     // 删除角色
     @GetMapping("/deleteRole")
+    @ResponseBody
     public String deleteRole(int[] roleIds){
         for (int roleId : roleIds) {
             roleService.deleteRole(roleId);

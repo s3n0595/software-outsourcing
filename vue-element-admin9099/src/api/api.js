@@ -30,8 +30,6 @@ export const getSearchUser = params=>{
 // 删除用户列表
 export const deleteUserInfoList = parms=>{
     return axios.get(`${publicPath}/userinfo/deleteUserList`,{params:parms})
-export const deleteUserInfoList = params=>{
-    return axios.get(`${publicPath}/userinfo/deleteUserList`,{params:params})
 }
 // 添加用户
 export const addUserInfo = params=>{
