@@ -103,8 +103,7 @@ export default {
           .then(_ => {
             this.hideDailog();
             //this.$store.dispatch('dailog/hideDailog')
-          }).bind(this)
-          .catch(_ => {
+          }).catch(_ => {
           });
     },
 
