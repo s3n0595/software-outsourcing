@@ -45,7 +45,7 @@
             <el-row v-for="item in demandList" >
               <div class="goods" @click="viewDetails(item)">
                 <el-col :span="6">
-                  <img :src="'api/images/' + item.annexPath" alt="" style="width: 80%;height: 80%;margin: 5%">
+                  <img :src="'api/images/bg_00' + (item.demandId%5) +'.png'" alt="" style="width: 80%;height: 80%;margin: 5%">
                 </el-col>
                 <el-col :span="15">
                   <p>
