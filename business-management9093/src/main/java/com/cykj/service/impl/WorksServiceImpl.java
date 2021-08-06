@@ -29,7 +29,7 @@ public class WorksServiceImpl implements WorksService {
 	public boolean publishWorks(MultipartFile file, Works works) {
 		String realPath = null;
 		try {
-			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider/" + works.getProviderId();
+			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

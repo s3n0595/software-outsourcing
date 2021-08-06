@@ -198,6 +198,7 @@ export default {
       this.dialogFormVisible = false;
       this.form = {};
       this.$refs.upload.clearFiles();
+      this.form.providerId = JSON.parse(sessionStorage.getItem("user")).providerId;
       this.$axios.get('work/list').then(res =>{
         console.log(res.data);
         this.worksList = res.data;
