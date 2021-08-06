@@ -28,7 +28,8 @@
               @click="handleDelete(scope.$index, scope.row)"
           ></el-button>
           <el-button v-if="scope.row.annexPath!=null" :disabled="false"  icon="el-icon-download" type="primary" @click="xiazai(scope.row.annexPath)"></el-button>
-          <el-button v-else :disabled="true"  icon="el-icon-download" type="primary" @click="downloadFile(scope.row.annexPath)"></el-button>
+          <el-button v-else :disabled="true"  icon="el-icon-download" type="primary"></el-button>
+<!--          @click="downloadFile(scope.row.annexPath)"-->
         </template>
       </el-table-column>
     </el-table>
@@ -211,7 +212,8 @@ export default {
       console.log(file)
       this.form.file = file.raw
       console.log(this.form.file)
-      console.log(fileList)
+      this.fileList=fileList;
+      console.log("文件状态改变时候的长度："+fileList.length)
     },
     // 上传文件之前的钩子, 参数为上传的文件,若返回 false 或者返回 Promise 且被 reject，则停止上传
     beforeUploadFile(file) {
@@ -248,7 +250,7 @@ export default {
       });
     },
     uploadFile() {//提交文件、form表单
-      if(this.fileList.length<0){
+      if(this.fileList.length<=0){
         this.$axios.post("/empcenter/file",this.$qs.stringify({
           demandId:this.form.demandId,
           demandTitle: this.form.demandTitle,
@@ -258,11 +260,12 @@ export default {
           demandDescribe:this.form.demandDescribe,
           employerId:this.form.employerId
         })).then(response=>{
-          this.$notify.error({
+          this.$notify.success({
             title: response.data,
             message: '需求发布'
           });
         })
+        this.loadData();
       }else{
         this.$refs.upload.submit();
       }
@@ -295,12 +298,14 @@ export default {
           });
     },
 
+    async downloadFile (name) {
+      window.location.href="http://127.0.0.1:9093/empcenter/download?name="+name;
+    },
     xiazai(name){
       const a = document.createElement('a');
       a.href = "api/images/"+name;
       a.click();
     },
-
     openDialog() {
       this.form.employerId=this.user.employerId
       // 清除数据
