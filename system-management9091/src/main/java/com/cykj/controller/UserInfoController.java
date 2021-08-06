@@ -103,6 +103,12 @@ public class UserInfoController {
             return "修改失败";
         }
     }
+    // 登录后修改用户最后登录时间，登录次数
+    @GetMapping("/updateLoginDate")
+    @ResponseBody
+    public void updateLoginDate(int userId,int loginNumber,String loginDate){
+        userInfoService.updateLoginDate(userId,loginNumber,loginDate);
+    }
     // 动态获取菜单列表
     @GetMapping("/getMenu")
     @ResponseBody
@@ -110,6 +116,7 @@ public class UserInfoController {
         RoleMenu roleMenu = roleMenuService.getMenu(roleId);
         return roleMenu;
     }
+    //=================================角色管理=============================//
     // 获取角色列表
     @GetMapping("/getRoleList")
     @ResponseBody
@@ -127,14 +134,20 @@ public class UserInfoController {
     // 添加新角色
     @GetMapping("/addRole")
     @ResponseBody
-    public String getRole(Role role){
-        System.out.println(role);
-        int i = roleService.addRole(role);
-        if (1==i){
-            return "添加成功";
-        }else {
-            return "添加失败";
+    public String addRole(String roleName,String roleDescribe,String roleDate,int[] addRoleMenus){
+        // 先将角色添加 并查出添加后的roleId
+        roleService.addRole(roleName,roleDescribe,roleDate);
+        int roleId = roleService.getRoleId(roleName);
+        for (int menuId : addRoleMenus) {
+            roleMenuService.addRoleMenu(roleId,menuId);
         }
+//        int i = roleService.addRole(role);
+//        if (1==i){
+//            return "添加成功";
+//        }else {
+//            return "添加失败";
+//        }
+        return "123";
     }
     // 删除角色
     @GetMapping("/deleteRole")
@@ -144,6 +157,12 @@ public class UserInfoController {
             roleService.deleteRole(roleId);
         }
         return "删除成功";
+    }
+    //=================================角色管理=============================//
+    @GetMapping("/getMenuData")
+    @ResponseBody
+    public List<Menu> getMenuData(){
+        return menuService.getMenuData();
     }
     //修改密码
     @RequestMapping("/updatePwd")

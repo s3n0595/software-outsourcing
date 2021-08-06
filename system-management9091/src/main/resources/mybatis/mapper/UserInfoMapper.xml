@@ -82,4 +82,7 @@
     <update id="updateUserInfo">
         update userInfo set roleId = #{roleId},userName = #{userName} where userId = #{userId};
     </update>
+    <update id="updateLoginDate">
+        update userInfo set loginNumber = #{loginNumber},loginDate = #{loginDate} where userId = #{userId};
+    </update>
 </mapper>

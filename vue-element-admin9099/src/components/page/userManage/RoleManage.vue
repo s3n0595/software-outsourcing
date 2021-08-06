@@ -83,7 +83,7 @@
           <el-button type="primary" @click.native="editUser">确 定</el-button>
         </div>
       </el-dialog>
-      <!-- 新建菜单 -->
+      <!-- 新建角色 -->
       <!--  :visible:隐藏属性  .sync: 同步绑定   v-dialogDrag:拖拽-->
       <el-dialog title="新建角色" :visible.sync="addUserVisible" v-dialogDrag>
         <!--    :rules:自定义规则-->
@@ -100,7 +100,7 @@
                 :data="this.treeData"
                 node-key="id"
                 :props="props"
-                rel="tree"
+                ref="addTree"
                 show-checkbox
                 @check="currentChecked">
             </el-tree>
@@ -126,6 +126,15 @@ import {
 } from "../../../api/api";
 export default {
   data() {
+    // tree的rule规则
+    var validateMenu =(rule, value, callback)=>{
+      let arr = this.$refs.addTree.getCheckedKeys();
+      if (arr.length == 0 || !arr) {
+        callback(new Error("请选择菜单"));
+      } else {
+        callback();
+      }
+    }
     return {
       url:"",
       // 搜索关键字
@@ -154,6 +163,8 @@ export default {
         roleDescribe: '',
         roleDate: '',
       },
+      // 添加角色所选中的菜单id
+      addRoleMenes:[],
       // 菜单集合
       MenuData: '',
       // 树模型
@@ -175,7 +186,7 @@ export default {
           {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
         ],
         menu: [
-          {required: true, message: "请选择菜单", trigger: "blur"},
+          {required: true, validator: validateMenu, trigger: "blur"},
         ]
       },
       // 修改用户规则
@@ -222,6 +233,7 @@ export default {
             roleName: this.addRoleForm.roleName,
             roleDescribe: this.addRoleForm.roleDescribe,
             roleDate: roleDate,
+            addRoleMenus: this.addRoleMenes+'',
           };
           this.addUserVisible = false;
           addRole(params).then(res=>{
@@ -328,13 +340,19 @@ export default {
         this.isShowloading=false;
       })
     },
-
-    // 树复选框
-    handleCheckChange(data,checked){
-      console.log(data,checked);
-    },
+    // checked四个属性
+    // checkedKeys:选中id的集合，如果子节点全部选中，父节点自动添加进来
+    // checkedNodes:选中对象的集合
+    // halfCheckedKeys:选中父级id，如果子节点全部选中，该方法获取为空
+    // halfCheckedNodes:选中父级选中父级对象集合
     currentChecked(data,checked){
-      console.log(data,checked);
+      // 判断父级是否被选中
+      if (checked.halfCheckedKeys == ''){
+        this.addRoleMenes = checked.checkedKeys;
+      }else{
+        // concat:数据合并
+        this.addRoleMenes = checked.halfCheckedKeys.concat(checked.checkedKeys);
+      }
     },
     // 获取菜单列表 并转为tree树
     getMenuData(){
@@ -373,7 +391,7 @@ export default {
   },
   mounted() {
     this.getRoleList();
-    // this.getMenuData();
+    this.getMenuData();
   }
 };
 </script>

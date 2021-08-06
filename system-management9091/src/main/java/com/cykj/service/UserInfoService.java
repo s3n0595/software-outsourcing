@@ -31,4 +31,6 @@ public interface UserInfoService {
     int updateState(int userId,int state);
     // 修改用户信息
     int updateUserInfo(int userId,String userName,int roleId);
+    // 登录后修改用户最后登录时间，登录次数
+    int updateLoginDate(int userId,int loginNumber,String loginDate);
 }

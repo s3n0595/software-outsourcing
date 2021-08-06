@@ -18,4 +18,7 @@
             <result property="menuIcon" column="menuIcon"></result>
         </collection>
     </resultMap>
+    <insert id="addRoleMenu">
+        insert into role_menu(roleId, menuId) values(#{roleId},#{menuId});
+    </insert>
 </mapper>
