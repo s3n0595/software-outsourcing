@@ -29,8 +29,13 @@ public class RoleServiceImp implements RoleService {
     }
 
     @Override
-    public int addRole(Role role) {
-        return roleMapper.addRole(role);
+    public int addRole(String roleName, String roleDescribe, String roleDate) {
+        return roleMapper.addRole(roleName,roleDescribe,roleDate);
+    }
+
+    @Override
+    public int getRoleId(String roleName) {
+        return roleMapper.getRoleId(roleName);
     }
 
     @Override

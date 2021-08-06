@@ -12,9 +12,12 @@
         select * from role where role.roleName like concat('%',#{roleName},'%');
     </select>
 <!--添加新角色-->
-    <insert id="addRole" parameterType="com.cykj.bean.Role">
+    <insert id="addRole">
         insert into role(roleName,roleDescribe,roleDate) values (#{roleName},#{roleDescribe},#{roleDate});
     </insert>
+    <select id="getRoleId" resultType="int">
+        select role.roleId from role where roleName = #{roleName};
+    </select>
 <!--删除角色    -->
     <delete id="deleteRole">
         delete from role where roleId = #{roleId};

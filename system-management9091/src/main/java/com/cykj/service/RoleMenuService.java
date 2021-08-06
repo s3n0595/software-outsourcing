@@ -1,5 +1,7 @@
 package com.cykj.service;
 import com.cykj.bean.RoleMenu;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -11,4 +13,6 @@ import java.util.List;
 public interface RoleMenuService {
     // 获取角色id对应的菜单
     RoleMenu getMenu(int roleId);
+    // 添加关系
+    int addRoleMenu(int roleId, int menuId);
 }

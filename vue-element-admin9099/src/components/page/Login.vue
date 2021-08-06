@@ -26,6 +26,8 @@
 <script>
 import {
   userInfoLogin,
+  updateLoginDate,
+  getDate
 } from "../../api/api"
 import bus from "@/components/common/bus";
 export default {
@@ -72,7 +74,16 @@ export default {
                 type: "error",
               });
             }else {
-              console.log("登录成功")
+              this.$message({
+                message: "欢迎["+res.data.userName+"]登录系统",
+                type: "success"
+              })
+              let params = {
+                userId: res.data.userId,
+                loginNumber: res.data.loginNumber+1,
+                loginDate: getDate(),
+              }
+              updateLoginDate(params);
               sessionStorage.setItem('user',JSON.stringify(res.data));
               this.$router.push('/');
             }

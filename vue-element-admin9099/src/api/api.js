@@ -48,6 +48,10 @@ export const updateUserInfo = params=>{
 export const userInfoLogin = params =>{
     return axios.get(`${baseUrl}/userinfo/userInfoLogin`,{params:params})
 }
+// 登陆后修改最后登录时间，次数
+export const updateLoginDate = params =>{
+    return axios.get(`${baseUrl}/userinfo/updateLoginDate`,{params:params})
+}
 // 登录后对应用户的动态菜单列表
 export const getMenu = params =>{
     return axios.get(`${baseUrl}/userinfo/getMenu`,{params: params})
@@ -68,6 +72,10 @@ export const addRole = params =>{
 // 删除角色
 export const deleteRole = params =>{
     return axios.get(`${baseUrl}/userinfo/deleteRole`,{params: params});
+}
+// 获取全部的菜单列表
+export const getMenuData = params =>{
+    return axios.get(`${baseUrl}/userinfo/getMenuData`,{params: params});
 }
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})
