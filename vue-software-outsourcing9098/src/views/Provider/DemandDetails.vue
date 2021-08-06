@@ -65,8 +65,8 @@ import Nav from "@/views/Nav";
 
         },
         mounted() {
-            console.log(this.$route.params.demand)
-            this.demand = this.$route.params.demand;
+            console.log(JSON.parse(sessionStorage.getItem("demand")));
+            this.demand = JSON.parse(sessionStorage.getItem("demand"));
         }
     }
 </script>

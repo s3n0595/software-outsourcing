@@ -19,6 +19,6 @@ public class Works {
   private double worksPrice;
   private String releaseTime;
   private int auditStatus;
-
+  private int worksTypeId;
 
 }

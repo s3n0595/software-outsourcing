@@ -8,14 +8,38 @@
       <div style="background-color: #f0f2f5">
         <div id="main">
           <div id="condition">
-            <div>
-              <p>需求类型</p>
-              <el-radio  label="1" ><i class="el-icon-platform-eleme">&nbsp;&nbsp;Web 网站</i></el-radio>
-              <el-radio  label="2"><i class="el-icon-mobile-phone">&nbsp;&nbsp;App 开发</i></el-radio>
-              <el-radio  label="3"><i class="el-icon-connection">&nbsp;&nbsp;微信公众号</i></el-radio>
-              <el-radio   label="4"><i class="el-icon-s-management">&nbsp;&nbsp;HTML5 应用</i></el-radio>
-              <el-radio  label="5"><i class="el-icon-info">&nbsp;&nbsp;小程序</i></el-radio>
-              <el-radio  label="6"><i class="el-icon-cherry">&nbsp;&nbsp;其他应用</i></el-radio>
+            <div style="padding-top: 35px;">
+              <span style="margin-left: 5%;">作品类型:</span>
+              <el-radio-group v-model="radio1" style="margin-left: 20px;" size="mini">
+                <el-radio-button label="全部" ></el-radio-button>
+                <el-radio-button label="Web 网站"></el-radio-button>
+                <el-radio-button label="App 开发"></el-radio-button>
+                <el-radio-button label="微信公众号"></el-radio-button>
+                <el-radio-button label="HTML5 应用"></el-radio-button>
+                <el-radio-button label="小程序"></el-radio-button>
+                <el-radio-button label="其他应用"></el-radio-button>
+              </el-radio-group>
+            </div>
+
+            <div style="padding-top: 20px;">
+              <span style="margin-left: 5%;">作品价格:</span>
+              <el-radio-group v-model="radio2" style="margin-left: 20px;" size="mini">
+                <el-radio-button label="全部" ></el-radio-button>
+                <el-radio-button label="0-5K"></el-radio-button>
+                <el-radio-button label="5K-1万"></el-radio-button>
+                <el-radio-button label="1万-5万"></el-radio-button>
+                <el-radio-button label="5万以上"></el-radio-button>
+              </el-radio-group>
+            </div>
+            <div style="padding-top: 20px;">
+              <span style="margin-left: 5%;">角色领域:</span>
+              <el-radio-group v-model="radio3" style="margin-left: 20px;" size="mini">
+                <el-radio-button label="全部" ></el-radio-button>
+                <el-radio-button label="前端开发"></el-radio-button>
+                <el-radio-button label="后端开发"></el-radio-button>
+                <el-radio-button label="微信应用开发"></el-radio-button>
+                <el-radio-button label="全栈开发"></el-radio-button>
+              </el-radio-group>
             </div>
           </div>
           <div id="sort">
@@ -84,7 +108,10 @@ import Nav from "@/views/Nav";
           return {
             count: 0,
             searchInfo:"",
-            demandList:{}
+            demandList:{},
+            radio1: '全部',
+            radio2: '全部',
+            radio3: '全部',
           }
         },
       components:{
@@ -121,7 +148,11 @@ import Nav from "@/views/Nav";
             })
           },
           viewDetails(item) {
-            this.$router.push({name:"demandDetails",params:{"demand":item}});
+            sessionStorage.setItem("demand", JSON.stringify(item));
+             let routeData = this.$router.resolve({
+              name: 'demandDetails'
+            });
+            window.open(routeData.href, '_blank');
           }
         },
         mounted() {
