@@ -371,6 +371,7 @@ export default {
       this.$refs['editRoleForm'].validate((valid) => {
         if (valid) {
           this.editUserVisible = false;
+          this.isShowloading = true;
           let params = {
             roleId: this.roleForm.roleId,
             roleName: this.roleForm.roleName,
@@ -383,6 +384,7 @@ export default {
               message: "修改成功"
             });
             this.getRoleList();
+            this.isShowloading = false;
           })
         }
       });
