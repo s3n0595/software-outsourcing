@@ -2,7 +2,7 @@
   <div class="news">
     <el-button type="primary" @click="openDialog()">添加更多作品</el-button>
     <div v-for="item in worksList" style="margin: 20px;" @click="editWorks()">
-      <img :src="'api/images/'+item.providerId+'/'+item.annexPath" alt="" style="width: 200px;height: 200px;border: 1px solid black;"/>
+      <img :src="'api/images/'+item.annexPath" alt="" style="width: 150px;height: 150px;border: 1px solid black;"/>
       <p style="margin: 20px"> {{item.worksTitle}} </p>
       <a :href="'api/images/'+item.annexPath" download="">{{item.annexPath}}</a>
     </div>
