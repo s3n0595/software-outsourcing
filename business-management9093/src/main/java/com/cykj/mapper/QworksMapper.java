@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -12,5 +13,7 @@ import java.util.Map;
  */
 @Mapper
 public interface QworksMapper {
-    List<Map<String, Object>> queryAllWork(int count);
+    List<Map<String, Object>> queryAllWork(int count);//获取所有作品列表
+    int countProWork(@Param("providerId")int providerId);//计算单个服务商发布的作品
+    List<Map<String,Object>> workProInfo(int providerId);//获取服务商信息
 }

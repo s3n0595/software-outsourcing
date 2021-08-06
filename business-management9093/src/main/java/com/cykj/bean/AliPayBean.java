@@ -15,7 +15,6 @@ public class AliPayBean {
      * 商户订单号
      */
     private String out_trade_no;
-
     /**
      * 订单名称
      */

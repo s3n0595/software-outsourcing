@@ -21,4 +21,14 @@ public class QworkServiceImpl implements QworksService {
     public List<Map<String, Object>> queryAllWork(int count) {
         return qworksMapper.queryAllWork(count);
     }
+
+    @Override
+    public int countProWork(int providerId) {
+        return qworksMapper.countProWork(providerId);
+    }
+
+    @Override
+    public List<Map<String, Object>> workProInfo(int providerId) {
+        return qworksMapper.workProInfo(providerId);
+    }
 }

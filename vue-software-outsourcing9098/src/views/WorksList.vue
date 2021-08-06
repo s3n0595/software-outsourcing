@@ -74,10 +74,10 @@
                 </el-col>
                 <el-col :span="15">
                   <p style="padding-top: 20px;">
-                    <span>No.{{item.worksId}}&nbsp;</span>
+                    <span @click="details(item)">No.{{item.worksId}}&nbsp;</span>
                     <span>&nbsp;{{item.worksTitle}}</span>
                   </p>
-<!--                  <p>工期：{{item.predictTime}}</p>-->
+<!--                  </a>-->
                   <p> <el-tag :type="miStatusColor(item.demandTypeName)">{{item.demandTypeName}}</el-tag></p>
                   <p>发布时间：{{item.releaseTime}}</p>
                 </el-col>
@@ -162,6 +162,15 @@ export default {
         }
       })
     },
+    details(item){
+      sessionStorage.setItem("work",JSON.stringify(item))
+      let routeData = this.$router.resolve({
+        name: 'worksdetails'
+      });
+      window.open(routeData.href, '_blank');
+
+      // this.$router.push({ name: 'worksdetails'});
+    }
   },
   mounted() {
     this.load();
@@ -214,4 +223,10 @@ export default {
 .goods:hover{
   background: #eff2f7;
 }
+
+a {text-decoration:none;color: black;}
+a:hover{text-decoration:none; cursor:pointer}/*a标签鼠标经过mouseover时的样式*/
+a:link{text-decoration:none; cursor:pointer;} /*a标签未访问时的样式*/
+a:visited{text-decoration: overline ; cursor:pointer}/*a标签访问过之后样式*/
+
 </style>
