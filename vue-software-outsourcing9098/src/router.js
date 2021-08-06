@@ -37,7 +37,7 @@ export default new Router({
       component: () => import('./views/WorksDetails.vue')
     },
       {
-      path: '/demandDetails/:demand',
+      path: '/demandDetails',
       name: 'demandDetails',
       component: () => import('./views/Provider/DemandDetails.vue')
     },

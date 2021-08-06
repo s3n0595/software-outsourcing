@@ -63,6 +63,9 @@
             <img width="100%" :src="dialogImageUrl" alt="">
           </el-dialog>
         </el-form-item>
+        <el-form-item label="项目类型" :label-width="formLabelWidth" >
+          <el-radio  v-model="form.worksTypeId" v-for="ck in checklist" :key="ck.demandTypeId"  :label="ck.demandTypeId" ><i v-bind:class="ck.icon">&nbsp;&nbsp;{{ck.demandTypeName}}</i></el-radio>
+        </el-form-item>
         <el-form-item label="作品名称" :label-width="formLabelWidth">
           <el-input v-model="form.worksTitle" autocomplete="off" style="margin-left: 25px;width: 550px"></el-input>
         </el-form-item>
@@ -107,12 +110,14 @@ export default {
       loading: true,
       fileList: [],
       limitNum: 1,
+      checklist:[],
       form: {
         worksTitle: "",
         worksDescribe:"",
         worksPrice:"",
         worksAddress:"",
         providerId:"",
+        workTypeId:""
       },
       worksList: [],
       baseURL: "",
@@ -123,6 +128,7 @@ export default {
         console.log(res.data);
         this.worksList = res.data;
     })
+    this.selcheckList();
     let token = "Browser " + sessionStorage.getItem("token");
     this.form.providerId = JSON.parse(sessionStorage.getItem("user")).providerId;
     //window.console.log(token);
@@ -216,7 +222,16 @@ export default {
       return str[str.length - 1];
 
     },
-
+    selcheckList(){
+      this.$axios.post("/empcenter/ckList").then(response =>{
+        this.checklist=response.data;
+      }).catch(e => {
+        this.$message({
+          message: "网络或程序异常！" + e,
+          type: "error"
+        });
+      });
+    },
 
 
     loadData() {
