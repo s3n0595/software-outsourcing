@@ -67,15 +67,24 @@
           :before-close="confirmClose"
           v-dialogDrag
       >
-        <el-form :model="userForm" :rules="editRule" ref="editUserForm">
-          <el-form-item label="用户名" :label-width="formLabelWidth" prop="userName">
-            <el-input v-model="userForm.userName" autocomplete="off"></el-input>
+        <el-form :model="roleForm" :rules="editRule" ref="editRoleForm">
+          <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleName">
+            <el-input v-model="roleForm.roleName" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="角色名称" :label-width="formLabelWidth" prop="roleId">
-            <el-select v-model="userForm.roleId">
-              <el-option label="管理员" :value="2"></el-option>
-              <el-option label="系统管理员" :value="1"></el-option>
-            </el-select>
+          <el-form-item label="角色描述" :label-width="formLabelWidth" prop="roleDescribe">
+            <el-input v-model="roleForm.roleDescribe" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="菜单分配" :label-width="formLabelWidth" prop="menu">
+            <el-tree
+                :data="this.treeData"
+                node-key="id"
+                :props="props"
+                ref="editTree"
+                accordion
+                show-checkbox
+                @check="currentChecked">
+            >
+            </el-tree>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -101,6 +110,7 @@
                 node-key="id"
                 :props="props"
                 ref="addTree"
+                accordion
                 show-checkbox
                 @check="currentChecked">
             </el-tree>
@@ -116,17 +126,19 @@
 </template>
 <script>
 import {
-  updateUserInfo,
   getRoleList,
   addRole,
   getDate,
   deleteRole,
   getSearchRole,
   getMenuData,
+  getMenu,
+  updateRole,
+  roleNameExist,
 } from "../../../api/api";
 export default {
   data() {
-    // tree的rule规则
+    // 添加角色tree的rule规则
     var validateMenu =(rule, value, callback)=>{
       let arr = this.$refs.addTree.getCheckedKeys();
       if (arr.length == 0 || !arr) {
@@ -134,6 +146,19 @@ export default {
       } else {
         callback();
       }
+    }
+    // roleName查重规则
+    var validateRoleName = (rule,value,callback)=>{
+      let params = {
+        roleName: this.addRoleForm.roleName,
+      }
+      roleNameExist(params).then(res=>{
+        if ('' !== res.data){
+            callback(new Error("该角色名已被占用"));
+        }else {
+          callback();
+        }
+      })
     }
     return {
       url:"",
@@ -156,22 +181,23 @@ export default {
       // 新建用户框
       addUserVisible: false,
       // 编辑数据
-      userForm: {},
+      roleForm: {},
       // 添加角色的数据
       addRoleForm: {
         roleName: '',
         roleDescribe: '',
         roleDate: '',
       },
-      // 添加角色所选中的菜单id
+      // 角色所选中的菜单id
       addRoleMenes:[],
-      // 菜单集合
-      MenuData: '',
+      // 用于编辑角色，角色对应的菜单集合
+      MenuData: [],
       // 树模型
       props: {
         label: 'name',
         children: 'zones',
       },
+      // 所有的菜单列表
       treeData: [],
       // 新增角色自定义规则
       addRoleRule: {
@@ -179,23 +205,51 @@ export default {
           {required: true, message: "请填写角色名", trigger: "blur" },
           {max: 10, message: "不能超过10位",trigger: "blur" },
           {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+          {validator:validateRoleName,trigger: 'blur'}
         ],
         roleDescribe: [
           {required: true, message: "请给角色添加描述", trigger: "blur"},
-          {max: 11, message: "不能超过11位",trigger: "blur" },
+          {max: 50, message: "不能超过50位",trigger: "blur" },
           {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
         ],
         menu: [
           {required: true, validator: validateMenu, trigger: "blur"},
         ]
       },
-      // 修改用户规则
+      // 修改角色规则
       editRule: {
-        userName: [
-          {required: true, message: "请输入用户名", trigger: "blur" },
+        roleName: [
+          {required: true, message: "请填写角色名", trigger: "blur" },
           {max: 10, message: "不能超过10位",trigger: "blur" },
           {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+          {validator:(rule,value,callback)=>{
+              let params = {
+                roleName: this.roleForm.roleName,
+              }
+              roleNameExist(params).then(res=>{
+                if ('' !== res.data){
+                  callback(new Error("该角色名已被占用"));
+                }else {
+                  callback();
+                }
+              })
+            },trigger: 'blur'}
         ],
+        roleDescribe: [
+          {required: true, message: "请给角色添加描述", trigger: "blur"},
+          {max: 50, message: "不能超过50位",trigger: "blur" },
+          {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+        ],
+        menu: [
+          {required: true, validator: (rule,value,callback)=>{
+              let arr = this.$refs.editTree.getCheckedKeys();
+              if (arr.length == 0 || !arr) {
+                callback(new Error("请选择菜单"));
+              } else {
+                callback();
+              }
+            }, trigger: "blur"},
+        ]
       },
       formLabelWidth: "120px"
     };
@@ -223,7 +277,7 @@ export default {
       // 将复选框选中的结果集合赋值给delData
       this.delData = delData;
     },
-    // 添加用户按钮
+    // 添加角色按钮
     saveRole() {
       //validate:表单验证,返回validate结果
       this.$refs['addRoleForm'].validate((validate)=>{
@@ -294,28 +348,42 @@ export default {
     },
     // 编辑按钮
     handleEdit(index, row) {
-      this.editUserVisible = true;
       // 获取选中数据
-      this.userForm = Object.assign({}, row);
+      this.roleForm = Object.assign({}, row);
+      let params = {
+        roleId: row.roleId,
+      }
+      // 获取选择角色的菜单
+      getMenu(params).then(res=>{
+        let menuList = res.data.menuList;
+        let menuData = [];
+        menuList.forEach(val=>{
+          if (val.parentId !== 0){
+            menuData.push(val.menuId);
+          }
+        })
+        this.$refs.editTree.setCheckedKeys(menuData);
+      })
+      this.editUserVisible = true;
     },
-    // 编辑用户
+    // 编辑角色确认按钮
     editUser() {
-      this.$refs['editUserForm'].validate((valid) => {
+      this.$refs['editRoleForm'].validate((valid) => {
         if (valid) {
+          this.editUserVisible = false;
           let params = {
-            userId: this.userForm.userId,
-            userName: this.userForm.userName,
-            roleId: this.userForm.roleId,
-          };
-          updateUserInfo(params).then(res => {
+            roleId: this.roleForm.roleId,
+            roleName: this.roleForm.roleName,
+            roleDescribe: this.roleForm.roleDescribe,
+            addRoleMenus: this.addRoleMenes+'',
+          }
+          updateRole(params).then(res=>{
             this.$message({
               type: "success",
               message: "修改成功"
             });
-            this.getUserList();
-
-          });
-          this.editUserVisible = false;
+            this.getRoleList();
+          })
         }
       });
     },
@@ -347,7 +415,7 @@ export default {
     // halfCheckedNodes:选中父级选中父级对象集合
     currentChecked(data,checked){
       // 判断父级是否被选中
-      if (checked.halfCheckedKeys == ''){
+      if (checked.halfCheckedKeys === ''){
         this.addRoleMenes = checked.checkedKeys;
       }else{
         // concat:数据合并

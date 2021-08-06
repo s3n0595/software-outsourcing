@@ -33,5 +33,7 @@ public interface UserInfoMapper {
     int updateLoginDate(@Param("userId") int userId,@Param("loginNumber") int loginNumber,@Param("loginDate") String loginDate);
     //修改用户密码
     int updatePwd(@Param("userId") int userId,@Param("userPassword") String userPassword,@Param("password") String password);
+    // 用户账号查重
+    UserInfo userAccountExist(@Param("userAccount") String userAccount);
 
 }

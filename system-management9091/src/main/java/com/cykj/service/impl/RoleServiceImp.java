@@ -42,4 +42,14 @@ public class RoleServiceImp implements RoleService {
     public int deleteRole(int roleId) {
         return roleMapper.deleteRole(roleId);
     }
+
+    @Override
+    public int updateRole(int roleId,String roleName,String roleDescribe) {
+        return roleMapper.updateRole(roleId,roleName,roleDescribe);
+    }
+
+    @Override
+    public Role roleNameExist(String roleName) {
+        return roleMapper.roleNameExist(roleName);
+    }
 }

@@ -24,4 +24,8 @@ public interface RoleMapper {
     int getRoleId(@Param("roleName") String roleName);
     // 根据roleId删除角色
     int deleteRole(@Param("roleId") int roleId);
+    // 修改角色信息
+    int updateRole(@Param("roleId") int roleId,@Param("roleName") String roleName,@Param("roleDescribe") String roleDescribe);
+    // 用户名查重
+    Role roleNameExist(@Param("roleName") String roleName);
 }

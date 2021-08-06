@@ -21,4 +21,7 @@
     <insert id="addRoleMenu">
         insert into role_menu(roleId, menuId) values(#{roleId},#{menuId});
     </insert>
+    <delete id="deleteRoleMenu">
+        delete from role_menu where roleId = #{roleId};
+    </delete>
 </mapper>

@@ -27,4 +27,9 @@ public class RoleMenuServiceImp implements RoleMenuService {
     public int addRoleMenu(int roleId, int menuId) {
         return roleMenuMapper.addRoleMenu(roleId,menuId);
     }
+
+    @Override
+    public int deleteRoleMenu(int roleId) {
+        return roleMenuMapper.deleteRoleMenu(roleId);
+    }
 }

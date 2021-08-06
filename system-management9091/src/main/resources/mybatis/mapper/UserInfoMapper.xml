@@ -85,4 +85,7 @@
     <update id="updateLoginDate">
         update userInfo set loginNumber = #{loginNumber},loginDate = #{loginDate} where userId = #{userId};
     </update>
+    <select id="userAccountExist" resultType="com.cykj.bean.UserInfo">
+        select * from userInfo where userAccount = #{userAccount};
+    </select>
 </mapper>

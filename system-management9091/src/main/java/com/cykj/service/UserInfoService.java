@@ -33,4 +33,6 @@ public interface UserInfoService {
     int updateUserInfo(int userId,String userName,int roleId);
     // 登录后修改用户最后登录时间，登录次数
     int updateLoginDate(int userId,int loginNumber,String loginDate);
+    // 用户账号查重
+    UserInfo userAccountExist(String userAccount);
 }

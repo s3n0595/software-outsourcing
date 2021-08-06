@@ -103,6 +103,12 @@ public class UserInfoController {
             return "修改失败";
         }
     }
+    // 用户账号查重 userAccountExist
+    @GetMapping("/userAccountExist")
+    @ResponseBody
+    public UserInfo userAccountExist(String userAccount){
+        return userInfoService.userAccountExist(userAccount);
+    }
     // 登录后修改用户最后登录时间，登录次数
     @GetMapping("/updateLoginDate")
     @ResponseBody
@@ -138,27 +144,43 @@ public class UserInfoController {
         // 先将角色添加 并查出添加后的roleId
         roleService.addRole(roleName,roleDescribe,roleDate);
         int roleId = roleService.getRoleId(roleName);
+        // 增加角色对应的菜单
         for (int menuId : addRoleMenus) {
             roleMenuService.addRoleMenu(roleId,menuId);
         }
-//        int i = roleService.addRole(role);
-//        if (1==i){
-//            return "添加成功";
-//        }else {
-//            return "添加失败";
-//        }
-        return "123";
+        return "添加成功";
     }
-    // 删除角色
+    // 删除角色 还要删除对应的菜单关系
     @GetMapping("/deleteRole")
     @ResponseBody
     public String deleteRole(int[] roleIds){
         for (int roleId : roleIds) {
             roleService.deleteRole(roleId);
+            roleMenuService.deleteRoleMenu(roleId);
         }
         return "删除成功";
     }
-    //=================================角色管理=============================//
+    // 修改角色 修改角色信息 然后删除对应角色的菜单，再添加修改后的菜单
+    @GetMapping("/updateRole")
+    @ResponseBody
+    public String updateRole(int roleId,String roleName,String roleDescribe,int[] addRoleMenus){
+        // 1.先修改角色信息
+        roleService.updateRole(roleId,roleName,roleDescribe);
+        // 2.删除角色对应的菜单关系
+        roleMenuService.deleteRoleMenu(roleId);
+        // 3.添加修改后的菜单关系
+        for (int menuId : addRoleMenus) {
+            roleMenuService.addRoleMenu(roleId,menuId);
+        }
+        return "修改成功";
+    }
+    // 查重角色名
+    @GetMapping("/roleNameExist")
+    @ResponseBody
+    public Role roleNameExist(String roleName){
+        return roleService.roleNameExist(roleName);
+    }
+    //=================================菜单管理=============================//
     @GetMapping("/getMenuData")
     @ResponseBody
     public List<Menu> getMenuData(){
