@@ -65,36 +65,36 @@ export default {
           index: "dashboard",
           title: "系统首页"
         },
-        {
-          icon: "el-icon-lx-settings",
-          index: "11",
-          title: "系统管理",
-          subs: [
-            {
-              index: "userInfoManage",
-              title: "用户管理"
-            },
-            {
-              index: "roleManage",
-              title: "角色管理"
-            },
-          ]
-        },
-        {
-          icon: "el-icon-lx-calendar",
-          index: "8",
-          title: "用户管理",
-          subs: [
-            {
-              index: "employer",
-              title: "雇主管理"
-            },
-            {
-              index: "providerManage",
-              title: "服务商管理"
-            }
-          ]
-        },
+        // {
+        //   icon: "el-icon-lx-settings",
+        //   index: "11",
+        //   title: "系统管理",
+        //   subs: [
+        //     {
+        //       index: "userInfoManage",
+        //       title: "用户管理"
+        //     },
+        //     {
+        //       index: "roleManage",
+        //       title: "角色管理"
+        //     },
+        //   ]
+        // },
+        // {
+        //   icon: "el-icon-lx-calendar",
+        //   index: "8",
+        //   title: "用户管理",
+        //   subs: [
+        //     {
+        //       index: "employer",
+        //       title: "雇主管理"
+        //     },
+        //     {
+        //       index: "providerManage",
+        //       title: "服务商管理"
+        //     }
+        //   ]
+        // },
         {
           icon: "el-icon-lx-cascades",
           index: "table",
