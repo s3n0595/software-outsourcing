@@ -1,7 +1,7 @@
 <template>
   <el-header>
     <div class="logo">
-      <img src="../assets/img/toplogo.png" alt/>
+      <img src="../assets/img/chinamobile.png" alt/>
     </div>
     <el-menu
         :default-active="defaultActive"
@@ -106,12 +106,13 @@ body {
   //background-color: #fff;
 
   .logo {
-    width: 280px;
-    padding: 10px;
+    width: 180px;
+    //padding: 10px;
+    height: 60px;
 
     img {
       width: 100%;
-      line-height: 60px;
+      height: 60px;
     }
   }
 }
