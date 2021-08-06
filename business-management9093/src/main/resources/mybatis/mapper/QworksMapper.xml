@@ -6,6 +6,13 @@
     <select id="queryAllWork" resultType="java.util.Map" parameterType="int">
         select * from works t1 , demandType t2 where t1.worksTypeId = t2.demandTypeId limit #{count}, 10;
     </select>
+
+    <select id="" resultType="int">
+        SELECT count(*) from works where providerId=#{providerId};
+    </select>
+    <select id="" resultType="java.util.Map" parameterType="int">
+        select * from providerAccount t1 , providerInfo t2 where t1.providerId = t2.providerId AND t1.providerId=#{providerId};
+    </select>
 </mapper>
 
 

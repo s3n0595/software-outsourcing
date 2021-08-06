@@ -1,5 +1,6 @@
 package com.cykj.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,4 +13,6 @@ import java.util.Map;
  */
 public interface QworksService {
     List<Map<String, Object>> queryAllWork(int count);
+    int countProWork(int providerId);
+    List<Map<String,Object>> workProInfo(int providerId);
 }
