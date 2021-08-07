@@ -166,9 +166,8 @@ export default {
       window.console.log(this.isShow);
     },
     logout(){
-      sessionStorage.removeItem("user");
-      sessionStorage.removeItem("employer");
-      sessionStorage.removeItem("provider");
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('token')
       this.$router.push("/");
     },
     personCenter(){
