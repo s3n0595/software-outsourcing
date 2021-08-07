@@ -25,15 +25,18 @@
           ref="multipleTable"
           @selection-change="handleSelectionChange"
           v-loading="isShowloading"
+          style="text-align: center"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="orderNum" label="序号" sortable width="150"></el-table-column>
-        <el-table-column prop="username" label="用户名" width="120"></el-table-column>
-        <el-table-column prop="rolename" label="角色名称"></el-table-column>
-        <el-table-column prop="isable" label="状态" :formatter="formatterState"></el-table-column>
-        <el-table-column prop="loginTime" label="登录次数"></el-table-column>
-        <el-table-column prop="loginDate" label="登录时间"></el-table-column>
-        <el-table-column prop="creater" label="创建者"></el-table-column>
+        <el-table-column prop="demandId" label="需求序号" sortable width="110"></el-table-column>
+        <el-table-column prop="demandTitle" label="需求标题" width="120"></el-table-column>
+        <el-table-column prop="demandTypeName" label="需求类型" width="120"></el-table-column>
+        <el-table-column prop="predictTime" label="需求工期"></el-table-column>
+        <el-table-column prop="predictPrice" label="需求金额"></el-table-column>
+        <el-table-column prop="demandDescribe" label="需求描述"></el-table-column>
+        <el-table-column prop="releaseTime" label="发布时间" :formatter="formatterState"></el-table-column>
+
+        <el-table-column prop="employerId" label="创建者"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button
@@ -114,7 +117,6 @@ import {
   getEditUser,
   getAddUser,
   getDeleteOne,
-  testApi
 } from "../../../api/api";
 export default {
   data() {

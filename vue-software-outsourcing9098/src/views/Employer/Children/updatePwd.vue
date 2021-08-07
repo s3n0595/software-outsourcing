@@ -86,9 +86,11 @@ export default {
                 console.log(response);
                 const res = response.data.code;
                 if (res === 200) {
-                  this.$message.success("密码修改成功")
+                  this.$message.success("密码修改成功");
+                  this.$refs[formName].resetFields();
                 } else {
-                  this.$message.error("原密码输入有误")
+                  this.$message.error("原密码输入有误");
+                  this.$refs[formName].resetFields();
                 }
           }).catch(error=>{
             console.log(error)
