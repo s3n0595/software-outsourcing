@@ -1,92 +1,82 @@
 <template>
 
-
-  <el-container>
-    <el-header>
-      <Nav></Nav>
-    </el-header>
-    <el-main>
-      <div class="home">
-        <swiper id="swiperBox" v-bind:options="swiperOption" ref="mySwiper">
-          <swiper-slide class="swiper-slide slide-one">
-            <div class="page">
-              <h3></h3>
-              <p></p>
-            </div>
-            <p class="slogan"> </p>
-          </swiper-slide>
-          <swiper-slide class="swiper-slide slide-two">
-            <div class="page">
-              <h3>经典案例</h3>
-              <p>Suecessful Cass</p>
-            </div>
-            <ul class="case-item">
-              <li
-                  v-for="(item,index) in caseList"
-                  :key="index"
-                  v-lazy:background-image="imgserver + item.Img"
-              >
-                <router-link
-                    class="text-decoration"
-                    :to="{ name: 'casedetails', params: { id: item.Id }}"
-                >
-                  <div class="case-item-hover">
-                    <p class="hover-title">{{item.Title}}</p>
-                    <div class="bottom"></div>
-                    <div class="more">
-                      <span>MORE</span>
-                    </div>
-                  </div>
-                </router-link>
-              </li>
-            </ul>
-          </swiper-slide>
-          <swiper-slide class="swiper-slide slide-three">
-            <div class="page">
-              <h3>最新资讯</h3>
-              <p>Latest News</p>
-            </div>
-            <div class="news-content">
-              <div class="news-content-item" v-for="(news,i) in newsList" :key="i">
-                <div :style="'order: '+ (i%2==0 ? 1: 3)">
-                  <router-link
-                      class="text-decoration"
-                      :to="{ name: 'newsdetails', params: { id: news.Id }}"
-                  >
-                    <div class="item-img" v-lazy:background-image="imgserver + news.Img"></div>
-                  </router-link>
-                </div>
-                <div style="order: 2">
-                  <el-divider>
-                    <i class="el-icon-apple"></i>
-                  </el-divider>
-                </div>
-                <div class="item-content" :style="'order: '+ (i%2==0 ? 3: 1)">
-                  <h3>{{news.Title}}</h3>
-                  <p>{{news.Content}}</p>
-                  <span>{{news.CreateTime}}</span>
+  <div class="home">
+    <swiper id="swiperBox" v-bind:options="swiperOption" ref="mySwiper">
+      <swiper-slide class="swiper-slide slide-one">
+        <div class="page">
+          <h3></h3>
+          <p></p>
+        </div>
+        <p class="slogan"></p>
+      </swiper-slide>
+      <swiper-slide class="swiper-slide slide-two">
+        <div class="page">
+          <h3>经典案例</h3>
+          <p>Suecessful Cass</p>
+        </div>
+        <ul class="case-item">
+          <li
+              v-for="(item,index) in caseList"
+              :key="index"
+              v-lazy:background-image="imgserver + item.Img"
+          >
+            <router-link
+                class="text-decoration"
+                :to="{ name: 'casedetails', params: { id: item.Id }}"
+            >
+              <div class="case-item-hover">
+                <p class="hover-title">{{ item.Title }}</p>
+                <div class="bottom"></div>
+                <div class="more">
+                  <span>MORE</span>
                 </div>
               </div>
+            </router-link>
+          </li>
+        </ul>
+      </swiper-slide>
+      <swiper-slide class="swiper-slide slide-three">
+        <div class="page">
+          <h3>最新资讯</h3>
+          <p>Latest News</p>
+        </div>
+        <div class="news-content">
+          <div class="news-content-item" v-for="(news,i) in newsList" :key="i">
+            <div :style="'order: '+ (i%2==0 ? 1: 3)">
+              <router-link
+                  class="text-decoration"
+                  :to="{ name: 'newsdetails', params: { id: news.Id }}"
+              >
+                <div class="item-img" v-lazy:background-image="imgserver + news.Img"></div>
+              </router-link>
             </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </el-main>
-  </el-container>
-
+            <div style="order: 2">
+              <el-divider>
+                <i class="el-icon-apple"></i>
+              </el-divider>
+            </div>
+            <div class="item-content" :style="'order: '+ (i%2==0 ? 3: 1)">
+              <h3>{{ news.Title }}</h3>
+              <p>{{ news.Content }}</p>
+              <span>{{ news.CreateTime }}</span>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper>
+  </div>
 
 
 </template>
 
 <script>
-import { swiper, swiperSlide } from "vue-awesome-swiper";
-import Nav from "@/views/Nav";
+import {swiper, swiperSlide} from "vue-awesome-swiper";
+
 export default {
   name: "home",
   components: {
     swiper,
     swiperSlide,
-    Nav
   },
   data() {
     return {
@@ -129,7 +119,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   // 如果你需要得到当前的swiper对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的swiper对象，同时notNextTick必须为true
   computed: {
     swiper() {
@@ -154,10 +145,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-header,.el-main{
+.el-header, .el-main {
   padding: 0;
   margin: 0;
 }
+
 /* .el-header {
   position: absolute;
 } */
@@ -174,6 +166,7 @@ export default {
     text-align: center;
     height: 100px;
     overflow: hidden;
+
     h3,
     p {
       font-size: 40px;
@@ -189,6 +182,7 @@ export default {
     padding: 30px 0;
   }
 }
+
 //经典案例
 .case-item {
   width: 1100px;
@@ -199,6 +193,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+
   li {
     width: 330px;
     height: 250px;
@@ -219,6 +214,7 @@ export default {
     }
   }
 }
+
 //经典案例hover
 .case-item-hover {
   width: 100%;
@@ -240,23 +236,27 @@ export default {
     font-weight: 400;
     margin-top: 20px;
   }
+
   .bottom {
     border-bottom: 1px solid #fff;
     width: 60px;
     margin: 0 auto;
   }
+
   .more {
     width: 90px;
     padding: 5px 5px;
     margin: 0 auto;
     margin-top: 100px;
     border: 2px solid #fff;
+
     span {
       color: #fff;
       font-size: 20px;
     }
   }
 }
+
 // .swiper-slide:nth-child(2n) {
 //   background: skyblue;
 // }
@@ -267,14 +267,17 @@ export default {
   background: url(../assets/img/home_top.jpg) no-repeat center;
   background-size: cover;
 }
+
 .slide-two {
   background: url(../assets/img/home_do.jpg) no-repeat center;
   background-size: cover;
 }
+
 .slide-three {
   background: url(../assets/img/home_anli.jpg) no-repeat center;
   background-size: cover;
 }
+
 //最新资讯
 .news-content {
   width: 1240px;
@@ -297,9 +300,11 @@ export default {
       background-origin: content-box;
       margin: 0 auto;
     }
+
     .el-divider {
       background-color: #fff;
       height: 3px;
+
       .el-divider__text {
         width: 20px;
         height: 20px;
@@ -308,6 +313,7 @@ export default {
         color: #fff;
       }
     }
+
     .item-content {
       width: 360px;
       height: 230px;
@@ -320,6 +326,7 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+
       p {
         font-size: 15px;
         height: 80px;
@@ -332,11 +339,13 @@ export default {
         white-space: normal !important;
         word-wrap: break-word;
       }
+
       span {
         display: block;
         font-size: 14px;
         text-align: end;
       }
+
       h3,
       p,
       span {
@@ -345,9 +354,11 @@ export default {
     }
   }
 }
+
 .order {
   order: -1;
 }
+
 .order-img {
   order: 1;
 }
