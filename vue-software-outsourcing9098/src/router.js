@@ -3,26 +3,43 @@ import Router from 'vue-router'
 import Nav from "@/views/Nav";
 import Home from "@/views/Home";
 import EmployerReg from "@/views/EmployerReg";
+import GoodsList from "@/views/GoodsList";
 
 Vue.use(Router)
 
 
 export default new Router({
-  routes: [
+  routes: [{
+    path: '/',
+    name: 'home',
+    component: () => import('./views/Home.vue')
+  },
     {
-      path: '/',
-      redirect: {
-        name:'Home'
-      },
-      component: Nav,
-      children:[
-        {
-          path: '/Home',
-          name:'Home',
-          component: Home,
-        },
+      path: '/home',
+      name: 'home',
+      component: Home
+    },
 
-      ]
+
+    {
+      path: '/goodsList',
+      name: 'goodsList',
+      component: () => import('./views/GoodsList.vue')
+    },
+    {
+      path: '/worksList',
+      name: 'worksList',
+      component: () => import('./views/WorksList.vue')
+    },
+    {
+      path: '/worksdetails',
+      name: 'worksdetails',
+      component: () => import('./views/WorksDetails.vue')
+    },
+      {
+      path: '/demandDetails/:demand',
+      name: 'demandDetails',
+      component: () => import('./views/Provider/DemandDetails.vue')
     },
 
 
@@ -98,8 +115,7 @@ export default new Router({
           component: () => import('./views/Provider/updatePwd.vue'),
         },
       ]
-    }
-
+    },
 
   ]
 })

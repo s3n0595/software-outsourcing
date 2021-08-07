@@ -14,6 +14,8 @@
     <update id="updatePwd" parameterType="com.cykj.bean.ProviderPwd">
         update providerAccount set providerPassword = #{password} where providerPassword = #{providerPassword} and providerId = #{providerId}
     </update>
+
+
 </mapper>
 
 

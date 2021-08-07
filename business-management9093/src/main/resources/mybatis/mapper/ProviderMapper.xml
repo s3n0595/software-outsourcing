@@ -5,8 +5,8 @@
 <mapper namespace="com.cykj.mapper.ProviderMapper">
 
     <insert id="addProvider" parameterType="com.cykj.bean.ProviderAccount">
-        insert providerAccount(providerName,phoneNumber,providerPassword)
-            values(#{providerName},#{phoneNumber},#{providerPassword})
+        insert providerAccount(providerName,phoneNumber,providerPassword,role)
+            values(#{providerName},#{phoneNumber},#{providerPassword},#{role})
     </insert>
 
     <select id="queryProviderAccByTel" resultType="int">
@@ -18,7 +18,7 @@
     </select>
 
     <select id="queryProviderIdName" resultType="com.cykj.bean.ProviderAccount">
-        select providerId,providerName,phoneNumber from providerAccount where phoneNumber = #{phoneNumber}
+        select providerId,providerName,phoneNumber,role from providerAccount where phoneNumber = #{phoneNumber}
     </select>
 
     <insert id="addProviderInfo" parameterType="com.cykj.bean.ProviderAccount">

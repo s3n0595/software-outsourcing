@@ -1,7 +1,7 @@
 <template>
   <el-header>
     <div class="logo">
-      <img src="../assets/img/toplogo.png" alt/>
+      <img src="../assets/img/chinamobile.png" alt/>
     </div>
     <el-menu
         :default-active="defaultActive"
@@ -9,7 +9,9 @@
         mode="horizontal"
         @select="handleSelect"
     >
-      <el-menu-item @click="home">首页</el-menu-item>
+      <el-menu-item @click.native="home">首页</el-menu-item>
+      <el-menu-item @click.native="goodsList">找需求</el-menu-item>
+      <el-menu-item @click.native="worksList">作品广场</el-menu-item>
       <el-submenu index="login">
         <template slot="title">登陆</template>
         <el-menu-item @click="employerLogin">雇主登陆</el-menu-item>
@@ -38,6 +40,12 @@ export default {
   methods: {
     home(){
       this.$router.push('/Home')
+    },
+    goodsList(){
+      this.$router.push('/goodsList')
+    },
+    worksList(){
+      this.$router.push('/worksList')
     },
     employerRegister(){
       this.$router.push('/employerReg')
@@ -88,13 +96,13 @@ body {
   //background-color: #fff;
 
   .logo {
-    width: 280px;
-    padding: 10px;
+    width: 180px;
+    //padding: 10px;
     height: 60px;
 
     img {
       width: 100%;
-      line-height: 60px;
+      height: 60px;
     }
   }
 }

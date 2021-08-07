@@ -13,6 +13,7 @@ public class ProviderAccount {
   private String providerName;
   private String phoneNumber;
   private String providerPassword;
+  private String role;
 
 
 }

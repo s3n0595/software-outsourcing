@@ -40,6 +40,9 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit('registerForm')" style="width: 300px">注册</el-button>
       </el-form-item>
+      <el-form-item prop="role">
+        <el-input type="hidden" v-model="data.role"></el-input>
+      </el-form-item>
     </el-form>
   </div>
 
@@ -99,6 +102,7 @@ export default {
         re_password: '',
         phoneNumber: '',
         code: '',
+        role: ''
         // checked: [],
       },
       // 所有校验规则
@@ -216,7 +220,8 @@ export default {
                   this.$qs.stringify({
                     "employerName":this.data.employerName,
                     "phoneNumber":this.data.phoneNumber,
-                    "employerPassword":this.data.password
+                    "employerPassword":this.data.password,
+                    "role":"emp"
                   })).then(response=>{
                 // eslint-disable-next-line no-console
                 console.log(response);

@@ -5,8 +5,8 @@
 <mapper namespace="com.cykj.mapper.EmployerMapper">
 
     <insert id="addUser" parameterType="com.cykj.bean.EmployerAccount">
-        insert employerAccount(employerName,phoneNumber,employerPassword)
-            values(#{employerName},#{phoneNumber},#{employerPassword})
+        insert employerAccount(employerName,phoneNumber,employerPassword,role)
+            values(#{employerName},#{phoneNumber},#{employerPassword},#{role})
     </insert>
 
     <select id="queryEmployerAccByTel" resultType="int">
@@ -18,7 +18,7 @@
     </select>
 
     <select id="queryEmployerIdName" resultType="com.cykj.bean.EmployerAccount">
-        select employerId,employerName,phoneNumber from employerAccount where phoneNumber = #{phoneNumber}
+        select employerId,employerName,phoneNumber,role from employerAccount where phoneNumber = #{phoneNumber}
     </select>
 
     <insert id="addEmployerInfo" parameterType="com.cykj.bean.EmployerAccount">

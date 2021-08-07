@@ -38,6 +38,9 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit('registerForm')" style="width: 300px">注册</el-button>
       </el-form-item>
+      <el-form-item prop="role">
+        <el-input type="hidden" v-model="data.role"></el-input>
+      </el-form-item>
 
     </el-form>
   </div>
@@ -98,7 +101,8 @@ export default {
         providerPassword: '',
         re_password: '',
         phoneNumber: '',
-        code: ''
+        code: '',
+        role: ''
       },
       // 所有校验规则
       rules: {
@@ -212,7 +216,8 @@ export default {
                   this.$qs.stringify({
                     "providerName":this.data.providerName,
                     "phoneNumber":this.data.phoneNumber,
-                    "providerPassword":this.data.providerPassword
+                    "providerPassword":this.data.providerPassword,
+                    "role":"pro"
                   })).then(response=>{
                 // eslint-disable-next-line no-console
                 console.log(response);

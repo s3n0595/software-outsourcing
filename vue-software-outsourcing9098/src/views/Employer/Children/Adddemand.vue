@@ -192,7 +192,7 @@ export default {
     this.headers = {
       Authorization: token
     };
-    this.user=JSON.parse(sessionStorage.getItem('employer'));//获取登录储存的雇主
+    this.user=JSON.parse(sessionStorage.getItem('user'));//获取登录储存的雇主
     this.selcheckList();
     this.loadData();
 
