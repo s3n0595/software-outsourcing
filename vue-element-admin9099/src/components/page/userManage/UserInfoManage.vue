@@ -145,7 +145,7 @@ import {
   updateUserInfo,
   getSearchUser,
   getRoleList,
-  getDate,
+  userAccountExist,
 } from "../../../api/api";
 export default {
   data() {
@@ -192,6 +192,18 @@ export default {
           {required: true, message: "请设置账号", trigger: "blur"},
           {max: 11, message: "不能超过11位",trigger: "blur" },
           {pattern: /^[\u4E00-\u9FA5A-Za-z0-9_]+$/,message: "不能有除下划线的特殊符号"},
+          {validator:(rule,value,callback)=>{
+              let params = {
+                userAccount: this.addUserForm.userAccount,
+              }
+              userAccountExist(params).then(res=>{
+                if ('' !== res.data){
+                  callback(new Error("该账号已被占用"));
+                }else {
+                  callback();
+                }
+              })
+            },trigger: "blur"}
         ],
         userPassword: [
           {required: true, message: "请设置密码", trigger: "blur"},

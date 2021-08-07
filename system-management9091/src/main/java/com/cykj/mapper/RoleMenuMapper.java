@@ -15,6 +15,8 @@ import java.util.List;
 public interface RoleMenuMapper {
     // 获取角色id对应的菜单
     RoleMenu getMenu(@Param("roleId") int roleId);
-    // 添加关系
+    // 添加roleId对应的menuId关系
     int addRoleMenu(@Param("roleId") int roleId,@Param("menuId") int menuId);
+    // 删除roleId对应的menuId关系
+    int deleteRoleMenu(@Param("roleId") int roleId);
 }

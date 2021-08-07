@@ -15,4 +15,6 @@ public interface RoleMenuService {
     RoleMenu getMenu(int roleId);
     // 添加关系
     int addRoleMenu(int roleId, int menuId);
+    // 删除roleId对应的menuId关系
+    int deleteRoleMenu(int roleId);
 }

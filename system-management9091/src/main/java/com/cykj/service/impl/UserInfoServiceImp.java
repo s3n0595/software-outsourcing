@@ -64,4 +64,9 @@ public class UserInfoServiceImp implements UserInfoService {
     public int updateLoginDate(int userId, int loginNumber, String loginDate) {
         return userInfoMapper.updateLoginDate(userId,loginNumber,loginDate);
     }
+
+    @Override
+    public UserInfo userAccountExist(String userAccount) {
+        return userInfoMapper.userAccountExist(userAccount);
+    }
 }

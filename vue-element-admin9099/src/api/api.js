@@ -43,6 +43,10 @@ export const updateState = params=>{
 export const updateUserInfo = params=>{
     return axios.get(`${baseUrl}/userinfo/updateUserInfo`,{params:params})
 }
+// 用户名查重
+export const userAccountExist = params=>{
+    return axios.get(`${baseUrl}/userinfo/userAccountExist`,{params:params})
+}
 // 后台登录
 // 登录验证
 export const userInfoLogin = params =>{
@@ -72,6 +76,14 @@ export const addRole = params =>{
 // 删除角色
 export const deleteRole = params =>{
     return axios.get(`${baseUrl}/userinfo/deleteRole`,{params: params});
+}
+// 修改角色
+export const updateRole = params =>{
+    return axios.get(`${baseUrl}/userinfo/updateRole`,{params: params});
+}
+// 角色名查重
+export const roleNameExist = params =>{
+    return axios.get(`${baseUrl}/userinfo/roleNameExist`,{params: params});
 }
 // 获取全部的菜单列表
 export const getMenuData = params =>{
