@@ -19,7 +19,8 @@
     "vue-baidu-map": "^0.21.22",
     "vue-lazyload": "^1.3.2",
     "vue-router": "^3.0.3",
-    "vue-video-player": "^5.0.2"
+    "vue-video-player": "^5.0.2",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

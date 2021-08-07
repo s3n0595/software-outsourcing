@@ -83,10 +83,11 @@ export default {
             } else {
               sessionStorage.setItem('user',JSON.stringify(res.data))
               this.user = JSON.parse(sessionStorage.getItem('user'))
+              sessionStorage.setItem('token',JSON.stringify(res.data))
               console.log(this.user)
               console.log(this.user.role)
               this.$message.success("登陆成功")
-              this.$router.push("/providerCenter")
+              this.$router.push("/home")
             }
           }).catch(error => {
             // eslint-disable-next-line no-console
