@@ -15,5 +15,5 @@ import java.util.Map;
 public interface QworksMapper {
     List<Map<String, Object>> queryAllWork(int count);//获取所有作品列表
     int countProWork(@Param("providerId")int providerId);//计算单个服务商发布的作品
-    List<Map<String,Object>> workProInfo(int providerId);//获取服务商信息
+    Map<String,Object> workProInfo(int providerId);//获取服务商信息
 }

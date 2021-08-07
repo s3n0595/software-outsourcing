@@ -46,11 +46,11 @@
 
             <el-card class="box-card" >
               <div class="clearfix" style="font-size: 15px">
-                <span>增值信息</span>
+                <span>企业信息</span>
               </div>
-              <el-menu-item index="/admin/user" style="height: 50px;">
+              <el-menu-item index="/employerCenter/map" style="height: 50px;">
                 <i class="el-icon-star-off"></i>
-                <span slot="title" >保证金计划</span>
+                <span slot="title" >关于我们</span>
               </el-menu-item>
             </el-card>
 

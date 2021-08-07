@@ -20,6 +20,12 @@ Vue.use(VideoPlayer)
 // import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
 // import 'vue-directive-image-previewer/dist/assets/style.css'
 // Vue.use(VueDirectiveImagePreviewer)
+import BaiduMap from 'vue-baidu-map'
+
+Vue.use(BaiduMap, {
+  ak: 'EcwWAOPxAobDgl4TiAt7wmPvVGYNN6tq'  //  在此输入你自己的百度地图ak
+})
+
 
 import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload, {

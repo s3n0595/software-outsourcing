@@ -42,7 +42,6 @@ export default new Router({
       component: () => import('./views/Provider/DemandDetails.vue')
     },
 
-
     {
       //雇主注册
       path: '/EmployerReg',
@@ -95,6 +94,11 @@ export default new Router({
           path: '/employerCenter/updatePwd',
           name: 'updatePwd',
           component: () => import('./views/Employer/Children/updatePwd.vue'),
+        },
+        {
+          path: '/employerCenter/map',
+          name: 'map',
+          component: () => import('./views/Employer/Children/Map.vue')
         },
       ]
     },
