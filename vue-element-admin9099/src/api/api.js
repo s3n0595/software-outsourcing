@@ -115,6 +115,11 @@ export const getAddUser = params=>{
         params:params
     })
 }
+export const getDemandList = params=>{
+    return axios.get(`${baseUrl}/business/demand`),{
+        params:params
+    }
+}
 // export const getDeleteOne = params=>{
 //     return axios.get(`${baseUrl}/user/DeleteOne`,{params:params})
 // }
