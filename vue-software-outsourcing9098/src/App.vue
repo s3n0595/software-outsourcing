@@ -19,27 +19,33 @@
 
 
         <div class="logReg" v-if="log">
-          <div class="header-right" >
+          <div class="header-right">
+            <div class="login">
+              <el-dropdown>
+              <span class="el-dropdown-link">
+                登陆<i class="el-icon-arrow-down el-icon--right"></i>
+                <!--            <i class="el-icon-caret-bottom"></i>-->
+              </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click.native="employerLogin">雇主登陆</el-dropdown-item>
+                  <el-dropdown-item @click.native="providerLogin">服务商登陆</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
+            <div class="register">
+              <el-dropdown>
+                <span class="el-dropdown-link">
+                  注册<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click.native="employerRegister">注册成为雇主</el-dropdown-item>
+                  <el-dropdown-item @click.native="providerRegister">注册成为服务商</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
 
-            <el-dropdown >
-          <span class="el-dropdown-link">
-            登陆<i class="el-icon-arrow-down el-icon--right"></i>
-            <!--            <i class="el-icon-caret-bottom"></i>-->
-          </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="employerLogin">雇主登陆</el-dropdown-item>
-                <el-dropdown-item @click.native="providerLogin">服务商登陆</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <el-dropdown>
-          <span class="el-dropdown-link">
-            注册<i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="employerRegister">注册成为雇主</el-dropdown-item>
-                <el-dropdown-item @click.native="providerRegister">注册成为服务商</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+
+
           </div>
         </div>
 
@@ -50,7 +56,7 @@
               <img src="./assets/img/img.jpg">
             </div>
             <!-- 用户名下拉菜单 -->
-            <el-dropdown class="user-name" trigger="click" >
+            <el-dropdown class="user-name" trigger="click">
           <span class="el-dropdown-link">
 <!--            {{username}}-->
             <i class="el-icon-caret-bottom"></i>
@@ -67,7 +73,7 @@
 
       </el-header>
       <el-main>
-        <router-view />
+        <router-view/>
       </el-main>
       <div class="footer" v-show="isShow">
         <div class="footer-content">
@@ -98,7 +104,7 @@
               <span>地址：上海市杨浦区翔殷路128号12号楼101</span>
             </li>
           </ul>
-          <img src="./assets/img/ercode.png" alt />
+          <img src="./assets/img/ercode.png" alt/>
         </div>
         <div class="copyright">
           <span>科建版权所有</span>
@@ -115,8 +121,8 @@ export default {
       router: true,
       defaultActive: "/",
       isShow: false,
-      log:false,
-      info:false
+      log: false,
+      info: false
     };
   },
   created() {
@@ -129,7 +135,7 @@ export default {
   updated() {
 
     this.user = !!sessionStorage.getItem('token')
-    console.log("********************"+this.user)
+    console.log("********************" + this.user)
     if (this.user) {
       this.log = false
       this.info = true
@@ -140,39 +146,39 @@ export default {
   },
   methods: {
 
-    home(){
+    home() {
       this.$router.push('/Home')
     },
-    goodsList(){
+    goodsList() {
       this.$router.push('/goodsList')
     },
-    worksList(){
+    worksList() {
       this.$router.push('/worksList')
     },
-    employerRegister(){
+    employerRegister() {
       this.$router.push('/employerReg')
     },
-    providerRegister(){
+    providerRegister() {
       this.$router.push('/providerReg')
     },
-    employerLogin(){
+    employerLogin() {
       this.$router.push('/employerLog')
     },
-    providerLogin(){
+    providerLogin() {
       this.$router.push('/providerLog')
     },
     handleSelect(key) {
       this.isShow = this.defaultActive != key;
       window.console.log(this.isShow);
     },
-    logout(){
+    logout() {
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('token')
       this.$router.push("/");
     },
-    personCenter(){
+    personCenter() {
       this.user = JSON.parse(sessionStorage.getItem('user'))
-      console.log("***********user=*********"+this.user)
+      console.log("***********user=*********" + this.user)
       if ((this.user.role) === "emp") {
         this.$router.push('/employerCenter')
       } else {
@@ -189,7 +195,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 * {
   padding: 0;
   margin: 0;
@@ -234,6 +240,7 @@ body {
 .user-avator {
   margin-left: 20px;
 }
+
 .user-avator img {
   display: block;
   width: 40px;
@@ -250,31 +257,37 @@ body {
   font-size: 22px;
   color: #fff;
 }
+
 .collapse-btn {
   float: left;
   padding: 0 21px;
   cursor: pointer;
   line-height: 70px;
 }
+
 .header .logo {
   float: left;
   width: 250px;
   line-height: 70px;
 }
+
 .header-right {
   float: right;
   padding-right: 50px;
 }
+
 .header-user-con {
   display: flex;
   height: 70px;
   align-items: center;
 }
+
 .btn-fullscreen {
   transform: rotate(45deg);
   margin-right: 5px;
   font-size: 24px;
 }
+
 .btn-bell,
 .btn-fullscreen {
   position: relative;
@@ -284,6 +297,7 @@ body {
   border-radius: 15px;
   cursor: pointer;
 }
+
 .btn-bell-badge {
   position: absolute;
   right: 0;
@@ -294,30 +308,37 @@ body {
   background: #f56c6c;
   color: #fff;
 }
+
 .btn-bell .el-icon-bell {
   color: #fff;
 }
+
 .user-name {
   margin-left: 10px;
 }
+
 .user-avator {
   margin-left: 20px;
 }
+
 .user-avator img {
   display: block;
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
+
 .el-dropdown-link {
   color: #000000;
   cursor: pointer;
 }
+
 .el-dropdown-menu__item {
   text-align: center;
 }
-.collapse-btn:hover{
-  background-color: #009688!important;
+
+.collapse-btn:hover {
+  background-color: #009688 !important;
 }
 
 
@@ -375,6 +396,29 @@ body {
       line-height: 30px;
     }
   }
+}
+
+.el-dropdown-link {
+  cursor: pointer;
+  //color: #409EFF;
+}
+
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+
+.logReg {
+  //float:right;
+  //margin: 0 auto;
+}
+.login{
+  float: left;
+  padding-top: 20%;
+  padding-right: 15px;
+}
+.register{
+  float: right;
+  padding-top: 20%;
 }
 
 </style>
