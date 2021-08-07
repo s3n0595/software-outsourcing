@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +31,10 @@ public class QWorksController {
     }
 
     @RequestMapping("selpro")
-    public String selproAllInfo(@RequestParam("proId") Integer proId){
-        System.out.println("服务商id:+"+proId);
-        return "1";
+    public Map<String, Object> selproAllInfo(@RequestParam("proId") Integer proId){
+       Map<String, Object> workproInfo=qworksService.workProInfo(proId);
+       int count =qworksService.countProWork(proId);
+       workproInfo.put("workCount",count);
+       return workproInfo;
     }
 }

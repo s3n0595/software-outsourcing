@@ -14,5 +14,5 @@ import java.util.Map;
 public interface QworksService {
     List<Map<String, Object>> queryAllWork(int count);
     int countProWork(int providerId);
-    List<Map<String,Object>> workProInfo(int providerId);
+    Map<String,Object> workProInfo(int providerId);
 }

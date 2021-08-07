@@ -28,7 +28,7 @@ public class QworkServiceImpl implements QworksService {
     }
 
     @Override
-    public List<Map<String, Object>> workProInfo(int providerId) {
+    public Map<String, Object> workProInfo(int providerId) {
         return qworksMapper.workProInfo(providerId);
     }
 }

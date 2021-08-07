@@ -47,6 +47,18 @@ public class EmpCenterController {
         return demands;
     }
 
+    @RequestMapping("rrr")
+    public String RRR(){
+        try {
+            File path = new File(ResourceUtils.getURL("classpath:").getPath());
+            System.out.println("========================:"+path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "123";
+    }
+
+
     //雇主添加需求
     @RequestMapping("file")
     public String getDemandFile(MultipartFile file, Demand demand){
