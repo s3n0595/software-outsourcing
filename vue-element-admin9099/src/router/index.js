@@ -144,8 +144,13 @@ export default new Router({
                     meta: {title: '角色管理'}
                 },
                 {
+                    path: '/menuManage',
+                    component: resolve => require(['../components/page/userManage/MenuManage'], resolve),
+                    meta: {title: '菜单管理'}
+                },
+                {
                     path: '/demandManage',
-                    component: resolve => require(['../components/page/businessManage/demandManage'], resolve),
+                    component: resolve => require(['../components/page/userManage/DemandManage'], resolve),
                     meta: {title: '需求管理'}
                 },
             ]

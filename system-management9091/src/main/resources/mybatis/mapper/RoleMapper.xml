@@ -23,9 +23,9 @@
         delete from role where roleId = #{roleId};
     </delete>
 <!--修改角色信息-->
-    <insert id="updateRole">
+    <update id="updateRole">
         update role set roleName = #{roleName},roleDescribe = #{roleDescribe} where roleId = #{roleId};
-    </insert>
+    </update>
 <!--查重用户名-->
     <select id="roleNameExist" resultType="com.cykj.bean.Role">
         select * from role where roleName = #{roleName};

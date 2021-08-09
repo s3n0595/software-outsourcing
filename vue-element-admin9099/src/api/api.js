@@ -89,6 +89,28 @@ export const roleNameExist = params =>{
 export const getMenuData = params =>{
     return axios.get(`${baseUrl}/userinfo/getMenuData`,{params: params});
 }
+// 业务管理
+// 获取需求列表
+export const getDemandList = params =>{
+    return axios.get(`${baseUrl}/Demand/getDemandList`,{params: params});
+}
+// 修改审核状态
+export const updateDemandState = params =>{
+    return axios.get(`${baseUrl}/Demand/updateDemandState`,{params: params});
+}
+// 删除
+export const deleteDemandList = params =>{
+    return axios.get(`${baseUrl}/Demand/deleteDemandList`,{params: params});
+}
+// 雇主名称关键字
+export const getSearchDemand = params =>{
+    return axios.get(`${baseUrl}/Demand/getSearchDemand`,{params: params});
+}
+// 审核状态查找
+export const getSearchState = params =>{
+    return axios.get(`${baseUrl}/Demand/getSearchState`,{params: params});
+}
+
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})
 }

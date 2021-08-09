@@ -25,5 +25,5 @@ public class Demand {
   private String annexPath;
   private String predictNumber;
   private DemandType demandType;
-
+  private EmployerAccount employerAccount;
 }
