@@ -1,29 +1,5 @@
 <template>
   <div class="admin">
-
-    <el-container>
-      <el-aside width="240px">
-        <el-menu default-active="2" class="el-menu-vertical-demo" router>
-          <el-card class="box-card">
-            <div class="clearfix" style="font-size: 15px">
-              <span>基本信息</span>
-            </div>
-            <el-menu-item index="/admin/user" style="height: 50px;">
-              <i class="el-icon-star-off"></i>
-              <span slot="title">账户信息</span>
-            </el-menu-item>
-            <el-menu-item index="/providerCenter/updatePwd" style="height: 50px;">
-              <i class="el-icon-star-off"></i>
-              <span slot="title">修改密码</span>
-            </el-menu-item>
-            <el-menu-item index="/admin/user" style="height: 50px;">
-              <i class="el-icon-star-off"></i>
-              <span slot="title">码市认证</span>
-            </el-menu-item>
-          </el-card>
-      <el-header>
-        <Nav></Nav>
-      </el-header>
       <el-container>
         <el-aside width="240px">
           <el-menu default-active="2" class="el-menu-vertical-demo" router>
