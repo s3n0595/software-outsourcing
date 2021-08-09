@@ -95,6 +95,16 @@ let softwareOutsourcing = new Router({
           name: 'map',
           component: () => import('./views/Employer/Children/Map.vue')
         },
+        {
+          path: '/employerCenter/buywork',
+          name: 'buywork',
+          component: () => import('./views/Employer/Children/Buywork.vue')
+        },
+        {
+          path: '/employerCenter/kefu',
+          name: 'kefu',
+          component: () => import('./views/Employer/Children/Kefu.vue')
+        },
       ]
     },
     {

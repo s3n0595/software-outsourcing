@@ -16,27 +16,27 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">修改密码</span>
             </el-menu-item>
-            <el-menu-item index="/admin/user" style="height: 50px;">
-              <i class="el-icon-star-off"></i>
-              <span slot="title">码市认证</span>
-            </el-menu-item>
+<!--            <el-menu-item index="/admin/user" style="height: 50px;">-->
+<!--              <i class="el-icon-star-off"></i>-->
+<!--              <span slot="title">码市认证</span>-->
+<!--            </el-menu-item>-->
           </el-card>
 
           <el-card class="box-card">
             <div class="clearfix" style="font-size: 15px">
-              <span>开发者信息</span>
+              <span>我的服务</span>
             </div>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/employerCenter/kefu" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">技能展示</span>
             </el-menu-item>
             <el-menu-item index="/employerCenter/adddemand" style="height: 50px;">
               <i class="el-icon-star-off"></i>
-              <span slot="title">案例作品</span>
+              <span slot="title">发布需求</span>
             </el-menu-item>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/employerCenter/buywork" style="height: 50px;">
               <i class="el-icon-star-off"></i>
-              <span slot="title">码市测试</span>
+              <span slot="title">购买中心</span>
             </el-menu-item>
           </el-card>
 
