@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.DemandMapper">
+    <select id="getDemandList" resultMap="getDemandLists">
+        select t1.demandId,t1.demandStatus,t1.releaseTime,t1.predictPrice,t1.predictTime,t1.predictNumber,
+            dT.demandTypeName,eA.employerName
+        from demand t1 join demandType dT on t1.demandTypeId = dT.demandTypeId
+        join employerAccount eA on t1.employerId = eA.employerId
+    </select>
+    <resultMap id="getDemandLists" type="com.cykj.bean.Demand">
+        <id column="demandId" property="demandId"></id>
+        <result column="demandStatus" property="demandStatus"></result>
+        <result column="releaseTime" property="releaseTime"></result>
+        <result column="predictPrice" property="predictPrice"></result>
+        <result column="predictTime" property="predictTime"></result>
+        <result column="predictNumber" property="predictNumber"></result>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"></result>
+        </association>
+        <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+            <result column="employerName" property="employerName"></result>
+        </association>
+    </resultMap>
+<!--    getSearchDemand-->
+    <select id="getSearchDemand" resultMap="getSearchDemands">
+        select t1.demandId,t1.demandStatus,t1.releaseTime,t1.predictPrice,t1.predictTime,t1.predictNumber,
+               dT.demandTypeName,eA.employerName
+        from demand t1 join demandType dT on t1.demandTypeId = dT.demandTypeId
+                       join employerAccount eA on t1.employerId = eA.employerId
+        where eA.employerName like concat('%',#{employerName},'%')
+    </select>
+    <resultMap id="getSearchDemands" type="com.cykj.bean.Demand">
+        <id column="demandId" property="demandId"></id>
+        <result column="demandStatus" property="demandStatus"></result>
+        <result column="releaseTime" property="releaseTime"></result>
+        <result column="predictPrice" property="predictPrice"></result>
+        <result column="predictTime" property="predictTime"></result>
+        <result column="predictNumber" property="predictNumber"></result>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"></result>
+        </association>
+        <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+            <result column="employerName" property="employerName"></result>
+        </association>
+    </resultMap>
+<!--    getSearchState-->
+    <select id="getSearchState" resultMap="getSearchStates">
+        select t1.demandId,t1.demandStatus,t1.releaseTime,t1.predictPrice,t1.predictTime,t1.predictNumber,
+               dT.demandTypeName,eA.employerName
+        from demand t1 join demandType dT on t1.demandTypeId = dT.demandTypeId
+                       join employerAccount eA on t1.employerId = eA.employerId
+        where t1.demandStatus = #{demandStatus};
+    </select>
+    <resultMap id="getSearchStates" type="com.cykj.bean.Demand">
+        <id column="demandId" property="demandId"></id>
+        <result column="demandStatus" property="demandStatus"></result>
+        <result column="releaseTime" property="releaseTime"></result>
+        <result column="predictPrice" property="predictPrice"></result>
+        <result column="predictTime" property="predictTime"></result>
+        <result column="predictNumber" property="predictNumber"></result>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"></result>
+        </association>
+        <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+            <result column="employerName" property="employerName"></result>
+        </association>
+    </resultMap>
+    <update id="updateDemandState">
+        update demand set demandStatus = #{demandStatus} where demandId = #{demandId};
+    </update>
+    <delete id="deleteDemandList">
+        delete from demand where demandId = #{demandId};
+    </delete>
+</mapper>
