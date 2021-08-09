@@ -1,6 +1,7 @@
 package com.cykj.controller;
 
 import com.cykj.bean.Demand;
+import com.cykj.bean.TenderRecord;
 import com.cykj.service.DemandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,5 +28,17 @@ public class DemandController {
 		System.out.println("================需求列表===========");
 		System.out.println("count : " + count);
 		return demandService.queryAllDemand(count);
+	}
+	@RequestMapping("/join")
+	@ResponseBody
+	public String joinDemand(TenderRecord tenderRecord){
+		System.out.println("================参与项目===========");
+		System.out.println(tenderRecord);
+		if(demandService.joinDemand(tenderRecord)){
+			return "success";
+		} else {
+			return "failed";
+		}
+
 	}
 }
