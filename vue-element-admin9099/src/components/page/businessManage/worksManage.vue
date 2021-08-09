@@ -20,9 +20,33 @@
         <el-table-column prop="worksPrice" label="价格"></el-table-column>
         <el-table-column prop="worksDescribe" label="描述"></el-table-column>
         <el-table-column prop="releaseTime" label="时间"></el-table-column>
-        <el-table-column prop="providerId" label="发布者ID"></el-table-column>
+        <el-table-column prop="providerAccount.providerName" label="服务商"></el-table-column>
         <el-table-column prop="worksAddress" label="链接"></el-table-column>
-        <el-table-column prop="auditStatus" label="审核"></el-table-column>
+        <el-table-column prop="auditStatus" label="审核状态">
+          <template slot-scope="scope">
+            <el-tag type="info" v-if="scope.row.auditStatus === 0">未审核</el-tag>
+            <el-tag type="success" v-if="scope.row.auditStatus === 1">已通过</el-tag>
+            <el-tag type="danger" v-if="scope.row.auditStatus === 2">未通过</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="180" align="center">
+          <!--      slot-scope="scope" 可以获取到父组件传递的参数，将这些参数使用到子组件插槽里-->
+          <template slot-scope="scope">
+            <el-button
+                type="text"
+                icon="el-icon-lx-roundcheck"
+                :disabled="scope.row.auditStatus !== 0"
+                @click="handleAccept(scope.$index, scope.row)"
+            >通过</el-button>
+            <el-button
+                type="text"
+                icon="el-icon-lx-roundclose"
+                :disabled="scope.row.auditStatus !== 0"
+                class="red"
+                @click="handleRefuse(scope.$index, scope.row)"
+            >未通过</el-button>
+          </template>
+        </el-table-column>
       </el-table>
             <div class="pagination">
               <el-pagination
@@ -71,6 +95,40 @@ export default {
     handleSelectionChange(delData) {
       // 将复选框选中的结果集合赋值给delData
       this.delData = delData;
+    },
+    //审核通过
+    handleAccept(index, row){
+      this.$axios.get("/",
+          {params:{
+            'worksId':row.worksId,
+              'auditStatus':1
+          }}).then(handleAudit=>{
+            const code = handleAudit.data
+        if (code === 200) {
+          this.$message.success("修改成功")
+        } else {
+          this.$message.error("修改失败，请重新修改")
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    //审核不通过
+    handleRefuse(index, row){
+      this.$axios.get("/",
+          {params:{
+              'worksId' : row.worksId,
+              'auditStatus' : 2
+            }}).then(handleRefuse=>{
+              const code = handleRefuse.data
+        if (code === 200) {
+          this.$message.success("修改成功")
+        } else {
+          this.$message.error("修改失败，请重新修改")
+        }
+      }).catch(err=>{
+        console.log(err)
+      })
     },
     //获取作品列表
     getWorks(){

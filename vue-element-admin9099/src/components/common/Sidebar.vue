@@ -34,13 +34,13 @@
                 >{{ threeItem.title }}</el-menu-item>
               </el-submenu>
 <!--          不存在-->
-              <el-menu-item v-else :index="subItem.index+''" :key="subItem.index">{{ subItem.title }}</el-menu-item>
+              <el-menu-item v-else :index="subItem.index+''" >{{ subItem.title }}</el-menu-item>
             </template>
           </el-submenu>
         </template>
 <!--    不存在二级菜单-->
         <template v-else>
-          <el-menu-item :index="item.index+''" :key="item.index">
+          <el-menu-item :index="item.index+''" >
             <i :class="item.icon"></i>
             <span slot="title">{{ item.title }}</span>
           </el-menu-item>

@@ -21,5 +21,6 @@ public class Works {
   private int auditStatus;
   private int worksTypeId;
   private DemandType demandType;
+  private ProviderAccount providerAccount;
 
 }

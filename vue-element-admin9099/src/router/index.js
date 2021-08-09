@@ -156,6 +156,7 @@ export default new Router({
                 {
                   path: '/worksManage',
                   component: resolve => require(['../components/page/businessManage/worksManage'], resolve),
+                    meta:{title: '作品管理'}
                 },
             ]
         },

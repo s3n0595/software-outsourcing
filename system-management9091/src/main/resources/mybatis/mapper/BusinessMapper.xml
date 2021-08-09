@@ -5,16 +5,18 @@
 <mapper namespace="com.cykj.mapper.BusinessMapper">
 
     <select id="queryAllWorks" resultMap="worksList">
-        SELECT w1.worksId,w1.providerId,w1.worksTitle,
-               w1.worksDescribe,w1.worksPrice,w1.releaseTime,
-               w1.worksAddress,w1.auditStatus,t1.demandTypeName
-        FROM works w1,demandType t1
-        WHERE w1.worksTypeId = t1.demandTypeId
+        SELECT w1.worksId,w1.worksTitle,w1.worksDescribe,
+               w1.worksPrice,w1.releaseTime,w1.worksAddress,
+               w1.auditStatus,t1.demandTypeName,pA.providerName
+        FROM works w1
+            join demandType t1
+            on w1.worksTypeId = t1.demandTypeId
+            join providerAccount pA
+            on w1.providerId = pA.providerId
         limit ${(page - 1) * pageSize}, #{pageSize}
     </select>
     <resultMap id="worksList" type="com.cykj.bean.Works">
         <id column="worksId" property="worksId"></id>
-        <result column="providerId" property="providerId"></result>
         <result column="worksTitle" property="worksTitle"></result>
         <result column="worksDescribe" property="worksDescribe"></result>
         <result column="worksPrice" property="worksPrice"></result>
@@ -23,6 +25,9 @@
         <result column="auditStatus" property="auditStatus"></result>
         <association property="demandType" javaType="com.cykj.bean.DemandType">
             <result column="demandTypeName" property="demandTypeName"></result>
+        </association>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"></result>
         </association>
     </resultMap>
 
