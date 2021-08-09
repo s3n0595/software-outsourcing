@@ -71,7 +71,15 @@
 
 <script>
 import {swiper, swiperSlide} from "vue-awesome-swiper";
-
+(function (w, d, n, a, j) {
+  w[n] = w[n] || function () {
+    (w[n].a = w[n].a || []).push(arguments);
+  };
+  j = d.createElement('script');
+  j.async = true;
+  j.src ='https://qiyukf.com/script/0514178d5942d40e7a5fef43db2460c8.js';
+  d.body.appendChild(j);
+})(window, document, 'ysf');
 export default {
   name: "home",
   components: {

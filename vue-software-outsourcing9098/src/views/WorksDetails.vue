@@ -11,7 +11,7 @@
                   <span style="margin-left: 30px;" class="border">No.{{ work.worksId }}</span>
                 </p>
                 <p style="margin-top: 2%;">作品类型
-                  <el-tag style="margin-left: 2%">{{ work.demandTypeName }}</el-tag>
+                  <el-tag :type="miStatusColor(work.demandTypeName)" style="margin-left: 2%">{{ work.demandTypeName }}</el-tag>
                 </p>
                 <p style="margin-top: 2%;padding-bottom: 20px;">金额<span style="margin-left: 10px;">￥{{
                     work.worksPrice
@@ -20,7 +20,9 @@
                   信用分<span style="margin-left: 10px;">{{ workproInfo.credit }}</span>
                   <span class="fenge"></span>
                   发布时间<span style="margin-left: 10px;">{{ work.releaseTime }}</span>
-                  <span style="margin-left: 85%"><el-button type="primary">立即购买</el-button></span>
+                  <span style="margin-left: 85%">
+                    <el-button v-show="this.user.role !='pro'" type="primary" @click="buying">立即购买</el-button>
+                  </span>
                 </p>
               </div>
             </el-col>
@@ -89,6 +91,8 @@ export default {
       radio3: '全部',
       work: "",
       workproInfo: {},
+      user:"",
+      order:"",
       miStatusColor: function (val) {
         if (val == 'Web 网站') {
           return 'lightpink'
@@ -114,11 +118,81 @@ export default {
         this.workproInfo = res.data;
       });
     },
+    buying(){
+      this.user=JSON.parse(sessionStorage.getItem("user"));
+      if(this.user=="" || this.user === null){
+        this.$notify.error({
+          title: '提示',
+          message: `请先登录后购买作品`
+        });
+        this.$router.push({ name: 'employerLog'});
+      }else{
+        this.$axios.post('buy/whetherworks',this.$qs.stringify({
+          employerId:this.user.employerId,
+          worksId:this.work.worksId
+        })).then(res=>{
+            if(res.data==1){
+              this.$notify.error({
+                title: '提示',
+                message: `您已经购买过该作品了`
+              });
+            }else{
+              this.$axios.post('buy/buyBalance',this.$qs.stringify({
+                employerId:this.user.employerId
+              })).then(res=>{
+                if(this.work.worksPrice<=res.data){
+                  this.order= this.getProjectNum() + Math.floor(Math.random() * 100000000)
+                  this.$axios.post('buy/works',this.$qs.stringify({
+                    employerId:this.user.employerId,
+                    worksId:this.work.worksId,
+                    tradeStatus:1,
+                    worksPrice:this.work.worksPrice,
+                    tradeOrder:this.order
+                  })).then(resp=>{
+                    this.$message({
+                      message: "购买成功，请前往个人中心查看",
+                      type: "success",
+                      offset:150,
+                      duration:3000,
+                    });
+                  })
+                }else{
+                  this.$message({
+                    message: "开发宝余额不足，请前往个人中心充值",
+                    type: "warning",
+                    offset:150,
+                    duration:2000,
+                  });
+                }
+              })
+            }
+        })
+      }
+    },
+    // 获取当前日期的方法
+    getProjectNum () {
+      const projectTime = new Date() // 当前中国标准时间
+      const Year = projectTime.getFullYear() // 获取当前年份 支持IE和火狐浏览器.
+      const Month = projectTime.getMonth() + 1 // 获取中国区月份
+      const Day = projectTime.getDate() // 获取几号
+      var CurrentDate = Year
+      if (Month >= 10) { // 判断月份和几号是否大于10或者小于10
+        CurrentDate += Month
+      } else {
+        CurrentDate += '0' + Month
+      }
+      if (Day >= 10) {
+        CurrentDate += Day
+      } else {
+        CurrentDate += '0' + Day
+      }
+      return CurrentDate
+    },
   },
   mounted() {
     this.work = JSON.parse(sessionStorage.getItem("work"));
     this.selproInfo();
-  }
+  },
 }
 </script>
 

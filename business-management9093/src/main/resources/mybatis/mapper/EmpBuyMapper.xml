@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.EmpBuyMapper">
+    <select id="selBalance" resultType="int">
+        select balance from employerInfo where employerId=#{employerId}
+    </select>
+
+    <update id="editBalance">
+        update employerInfo set balance=balance-#{balance} where employerId=#{employerId}
+    </update>
+
+    <insert id="addtradeWork" parameterType="com.cykj.bean.TradeWork">
+        insert tradeWork(employerId,worksId,tradeTime,tradeStatus,tradeOrder)
+         values (#{employerId},#{worksId},#{tradeTime},#{tradeStatus},#{tradeOrder});
+    </insert>
+
+    <select id="oldtradeWork" parameterType="com.cykj.bean.TradeWork" resultType="com.cykj.bean.TradeWork">
+        select * from tradeWork where employerId=#{employerId} and worksId=#{worksId}
+    </select>
+
+    <select id="selbuyList" resultType="java.util.Map" parameterType="int">
+        SELECT t1.*,t2.worksTitle,t2.worksPrice,t2.annexPath,t3.providerId,t3.providerName,t3.phoneNumber,t4.demandTypeName
+        FROM tradeWork t1
+        INNER JOIN works t2
+        INNER JOIN providerAccount t3
+        INNER JOIN demandType t4
+        ON t1.worksId = t2.worksId
+        AND t2.providerId = t3.providerId AND t2.worksTypeId=t4.demandTypeId WHERE t1.employerId =#{employerId}
+    </select>
+
+    <update id="editState" parameterType="com.cykj.bean.TradeWork">
+        update tradeWork set tradeStatus=#{tradeStatus} where tradeWorksId=#{tradeWorksId} and employerId=#{employerId}
+    </update>
+</mapper>
+
+
