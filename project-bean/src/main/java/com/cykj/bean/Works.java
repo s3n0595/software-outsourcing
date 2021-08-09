@@ -20,5 +20,6 @@ public class Works {
   private String releaseTime;
   private int auditStatus;
   private int worksTypeId;
+  private DemandType demandType;
 
 }

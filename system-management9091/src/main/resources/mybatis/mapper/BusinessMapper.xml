@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.BusinessMapper">
+
+    <select id="queryAllWorks" resultMap="worksList">
+        SELECT w1.worksId,w1.providerId,w1.worksTitle,
+               w1.worksDescribe,w1.worksPrice,w1.releaseTime,
+               w1.worksAddress,w1.auditStatus,t1.demandTypeName
+        FROM works w1,demandType t1
+        WHERE w1.worksTypeId = t1.demandTypeId
+        limit ${(page - 1) * pageSize}, #{pageSize}
+    </select>
+    <resultMap id="worksList" type="com.cykj.bean.Works">
+        <id column="worksId" property="worksId"></id>
+        <result column="providerId" property="providerId"></result>
+        <result column="worksTitle" property="worksTitle"></result>
+        <result column="worksDescribe" property="worksDescribe"></result>
+        <result column="worksPrice" property="worksPrice"></result>
+        <result column="releaseTime" property="releaseTime"></result>
+        <result column="worksAddress" property="worksAddress"></result>
+        <result column="auditStatus" property="auditStatus"></result>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"></result>
+        </association>
+    </resultMap>
+
+    <select id="queryWorksTotal" resultType="int">
+        select count(*) from works
+    </select>
+
+</mapper>
