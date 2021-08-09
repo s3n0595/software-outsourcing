@@ -1,6 +1,9 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.Demand;
+import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -12,5 +15,9 @@ import java.util.Map;
 @Mapper
 public interface BusinessMapper {
 
-    List<Map<String, Object> > queryAllDemand(int count);
+    //作品列表
+    List<Works> queryAllWorks(@Param("page") int page, @Param("pageSize") int pageSize);
+
+    //作品总量
+    int queryWorksTotal();
 }

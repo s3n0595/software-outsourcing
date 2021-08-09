@@ -1,10 +1,13 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.Demand;
+import com.cykj.bean.Works;
 import com.cykj.mapper.BusinessMapper;
 import com.cykj.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +22,12 @@ public class BusinessServiceImpl implements BusinessService {
     private BusinessMapper businessMapper;
 
     @Override
-    public List<Map<String, Object>> queryAllDemand(int count) {
-        return businessMapper.queryAllDemand(count);
+    public List<Works> queryAllWorks(int page, int pageSize) {
+        return businessMapper.queryAllWorks(page,pageSize);
+    }
+
+    @Override
+    public int queryWorksTotal() {
+        return businessMapper.queryWorksTotal();
     }
 }

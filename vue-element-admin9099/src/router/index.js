@@ -148,6 +148,10 @@ export default new Router({
                     component: resolve => require(['../components/page/businessManage/demandManage'], resolve),
                     meta: {title: '需求管理'}
                 },
+                {
+                  path: '/worksManage',
+                  component: resolve => require(['../components/page/businessManage/worksManage'], resolve),
+                },
             ]
         },
         {
