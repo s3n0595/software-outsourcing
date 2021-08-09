@@ -396,6 +396,7 @@ export default {
         roleName: this.searchInfo,
       }
       getSearchRole(params).then(res=>{
+        this.pageNo = 1;
         this.roles = res.data;
         this.total = this.roles.length;
         this.isShowloading=false;
