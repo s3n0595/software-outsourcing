@@ -20,4 +20,16 @@ public interface BusinessMapper {
 
     //作品总量
     int queryWorksTotal();
+
+    //作品审核
+    int updateStatus(@Param("worksId") int worksId,@Param("auditStatus") int auditStatus);
+
+    //关键词搜索
+    List<Works> queryWorksTitle(@Param("worksTitle") String worksTitle);
+
+    //根据审核状态查找
+    List<Works> queryWorksByAudit(@Param("auditStatus") int auditStatus);
+
+    //批量删除
+    int deleteWorksList(@Param("worksId") int worksId);
 }

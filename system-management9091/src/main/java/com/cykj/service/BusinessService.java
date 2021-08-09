@@ -16,4 +16,13 @@ public interface BusinessService {
     List<Works> queryAllWorks(int page ,int pageSize);
 
     int queryWorksTotal();
+
+    int updateStatus(int worksId, int auditStatus);
+
+    List<Works> queryWorksTitle(String worksTitle);
+
+    List<Works> queryWorksByAudit( int auditStatus);
+
+    int deleteWorksList(int worksId);
+
 }

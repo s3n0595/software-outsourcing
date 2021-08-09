@@ -57,10 +57,10 @@
             </div>
             <!-- 用户名下拉菜单 -->
             <el-dropdown class="user-name" trigger="click">
-          <span class="el-dropdown-link">
-<!--            {{username}}-->
-            <i class="el-icon-caret-bottom"></i>
-          </span>
+              <span class="el-dropdown-link">
+                {{username}}
+                <i class="el-icon-caret-bottom"></i>
+              </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="personCenter">用户信息</el-dropdown-item>
                 <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
@@ -122,7 +122,8 @@ export default {
       defaultActive: "/",
       isShow: false,
       log: false,
-      info: false
+      info: false,
+      username:''
     };
   },
   created() {
@@ -130,7 +131,8 @@ export default {
       this.log = true;
     } else {
       this.log = false;
-    }
+      this.username = JSON.parse(sessionStorage.getItem('username'))
+    };
   },
   updated() {
 
@@ -173,26 +175,28 @@ export default {
     },
     logout() {
       sessionStorage.removeItem('user');
-      sessionStorage.removeItem('token')
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('username')
       this.$router.push("/");
     },
     personCenter() {
       this.user = JSON.parse(sessionStorage.getItem('user'))
       console.log("***********user=*********" + this.user)
       if ((this.user.role) === "emp") {
+        console.log(this.user.employerName)
+        console.log(this.user.employerId)
         this.$router.push('/employerCenter')
       } else {
         this.$router.push('/providerCenter')
       }
-      // this.user = JSON.parse(sessionStorage.getItem('user'))
-      // console.log("用户id"+this.user.employerId)
-      // this.$router.push('/employerCenter')
     },
   },
   mounted() {
     this.token = JSON.parse(sessionStorage.getItem('token'))
+    this.username = JSON.parse(sessionStorage.getItem('username'))
   }
 };
+
 </script>
 
 <style lang="scss">
