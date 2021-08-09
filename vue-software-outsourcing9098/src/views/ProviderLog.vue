@@ -82,6 +82,7 @@ export default {
               this.$message.error("账号或密码错误")
             } else {
               sessionStorage.setItem('user',JSON.stringify(res.data))
+              sessionStorage.setItem('username',JSON.stringify(res.data.providerName))
               this.user = JSON.parse(sessionStorage.getItem('user'))
               sessionStorage.setItem('token',JSON.stringify(res.data))
               console.log(this.user)

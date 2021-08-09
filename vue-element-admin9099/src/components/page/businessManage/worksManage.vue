@@ -6,8 +6,24 @@
       </el-breadcrumb>
     </div>
     <div class="container">
+      <div class="handle-box">
+        <!--    批量删除按钮-->
+        <el-button
+            type="primary"
+            icon="delete"
+            class="handle-del mr10"
+            @click="delAll"
+            :disabled="this.delData.length===0"
+        >批量删除</el-button>
+        <el-input v-model="searchInfo" placeholder="请输入作品标题" class="handle-input mr10"></el-input>
+        <el-button type="primary" icon="search" @click="searchWorks">搜索</el-button>
+        <el-button type="primary" @click="getSearchState(0)">未审核</el-button>
+        <el-button type="primary" @click="getSearchState(1)">已通过</el-button>
+        <el-button type="primary" @click="getSearchState(2)">未通过</el-button>
+      </div>
       <el-table
           :data="worksList"
+          align="center"
           border
           class="table"
           ref="multipleTable"
@@ -63,11 +79,14 @@
   </div>
 </template>
 <script>
+import {deleteDemandList} from "@/api/api";
+
 export default {
   data() {
     return {
       url:"",
       worksList: [],
+      searchInfo:'',
       // 总条数
       total: 0,
       // 当前页数
@@ -75,6 +94,7 @@ export default {
       // 每页的条数
       pageSize: 5,
       isShowloading: false,
+      delData:[],
       formLabelWidth: "120px"
     };
   },
@@ -96,16 +116,79 @@ export default {
       // 将复选框选中的结果集合赋值给delData
       this.delData = delData;
     },
+    //批量删除
+    delAll() {
+      this.$confirm("确认删除该作品?", "提示", {
+        type: "warning"
+      }).then(() => {
+        this.isShowloading = true;
+        let delIds = this.delData.map(item => item.worksId);
+        // axios传递数组 在数组后加入''
+        let baseUrl = 'baseUrl';
+        this.$axios.get(`${baseUrl}/audit/deleteList`,
+            {params:{
+                worksIds: delIds + '',
+          }}).then(res=>{
+            console.log(res)
+          const code = res.data
+          if (code.code === 200) {
+            this.$message.success("删除成功")
+            this.getWorks()
+          } else {
+            this.$message.error("删除失败")
+          }
+        }).catch(err=>{
+          console.log(err)
+        })
+      });
+    },
+    //关键词搜索
+    searchWorks() {
+      this.isShowloading = true
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/audit/search`,{params:{
+          worksTitle: this.searchInfo
+        }}).then(res=>{
+          console.log(res)
+        const code = res.data
+        this.pageNo = 1;
+          this.worksList = code.data
+        this.total = this.worksList.length
+        this.isShowloading = false
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    //审核状态筛选
+    getSearchState(State) {
+      this.isShowloading = true;
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/audit/state`,{params:{
+          auditStatus: State
+        }}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.pageNo = 1;
+        this.worksList = code.data
+        this.total = this.worksList.length
+        this.isShowloading = false
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
     //审核通过
     handleAccept(index, row){
-      this.$axios.get("/",
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/audit/updateStatus`,
           {params:{
             'worksId':row.worksId,
               'auditStatus':1
-          }}).then(handleAudit=>{
-            const code = handleAudit.data
-        if (code === 200) {
+          }}).then(res=>{
+            console.log(res.data)
+            const code = res.data
+        if (code.code === 200) {
           this.$message.success("修改成功")
+          this.getWorks()
         } else {
           this.$message.error("修改失败，请重新修改")
         }
@@ -115,14 +198,17 @@ export default {
     },
     //审核不通过
     handleRefuse(index, row){
-      this.$axios.get("/",
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/audit/updateStatus`,
           {params:{
               'worksId' : row.worksId,
               'auditStatus' : 2
-            }}).then(handleRefuse=>{
-              const code = handleRefuse.data
-        if (code === 200) {
+            }}).then(res=>{
+        console.log(res)
+        const code = res.data
+        if (code.code === 200) {
           this.$message.success("修改成功")
+          this.getWorks()
         } else {
           this.$message.error("修改失败，请重新修改")
         }
@@ -141,6 +227,8 @@ export default {
         console.log(res)
         const code = res.data
         this.worksList = code.data
+        this.total = this.worksList.length;
+        this.isShowloading = false
       }).catch(error=>{
         console.log(error)
       })

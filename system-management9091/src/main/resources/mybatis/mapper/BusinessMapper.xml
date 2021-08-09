@@ -35,4 +35,68 @@
         select count(*) from works
     </select>
 
+    <update id="updateStatus" >
+        update works set auditStatus = #{auditStatus} where worksId = #{worksId}
+    </update>
+
+    <select id="queryWorksTitle" resultMap="worksTitleList">
+        SELECT w1.worksId,w1.worksTitle,w1.worksDescribe,
+               w1.worksPrice,w1.releaseTime,w1.worksAddress,
+               w1.auditStatus,t1.demandTypeName,pA.providerName
+        FROM works w1
+                 join demandType t1
+                      on w1.worksTypeId = t1.demandTypeId
+                 join providerAccount pA
+                      on w1.providerId = pA.providerId
+        where w1.worksTitle like concat('%',#{worksTitle},'%')
+    </select>
+    <resultMap id="worksTitleList" type="com.cykj.bean.Works">
+        <id column="worksId" property="worksId"></id>
+        <result column="worksTitle" property="worksTitle"></result>
+        <result column="worksDescribe" property="worksDescribe"></result>
+        <result column="worksPrice" property="worksPrice"></result>
+        <result column="releaseTime" property="releaseTime"></result>
+        <result column="worksAddress" property="worksAddress"></result>
+        <result column="auditStatus" property="auditStatus"></result>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"></result>
+        </association>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"></result>
+        </association>
+    </resultMap>
+
+    <select id="queryWorksByAudit" resultMap="auditList">
+        SELECT w1.worksId,w1.worksTitle,w1.worksDescribe,
+               w1.worksPrice,w1.releaseTime,w1.worksAddress,
+               w1.auditStatus,t1.demandTypeName,pA.providerName
+        FROM works w1
+                 join demandType t1
+                      on w1.worksTypeId = t1.demandTypeId
+                 join providerAccount pA
+                      on w1.providerId = pA.providerId
+        where w1.auditStatus = #{auditStatus}
+    </select>
+    <resultMap id="auditList" type="com.cykj.bean.Works">
+        <id column="worksId" property="worksId"></id>
+        <result column="worksTitle" property="worksTitle"></result>
+        <result column="worksDescribe" property="worksDescribe"></result>
+        <result column="worksPrice" property="worksPrice"></result>
+        <result column="releaseTime" property="releaseTime"></result>
+        <result column="worksAddress" property="worksAddress"></result>
+        <result column="auditStatus" property="auditStatus"></result>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"></result>
+        </association>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"></result>
+        </association>
+    </resultMap>
+
+    <delete id="deleteWorksList">
+        delete from works where worksId = #{worksId}
+    </delete>
+
+
+
 </mapper>

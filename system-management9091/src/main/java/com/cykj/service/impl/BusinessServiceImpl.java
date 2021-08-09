@@ -30,4 +30,26 @@ public class BusinessServiceImpl implements BusinessService {
     public int queryWorksTotal() {
         return businessMapper.queryWorksTotal();
     }
+
+    @Override
+    public int updateStatus(int worksId, int auditStatus) {
+        return businessMapper.updateStatus(worksId,auditStatus);
+    }
+
+    @Override
+    public List<Works> queryWorksTitle(String worksTitle) {
+        return businessMapper.queryWorksTitle(worksTitle);
+    }
+
+    @Override
+    public List<Works> queryWorksByAudit(int auditStatus) {
+        return businessMapper.queryWorksByAudit(auditStatus);
+    }
+
+    @Override
+    public int deleteWorksList(int worksId) {
+        return businessMapper.deleteWorksList(worksId);
+    }
+
+
 }
