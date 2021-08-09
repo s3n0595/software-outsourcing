@@ -369,6 +369,7 @@ export default {
         userName: this.searchInfo,
       }
       getSearchUser(params).then(res=>{
+        this.pageNo = 1;
         this.users = res.data;
         this.total = this.users.length;
         this.isShowloading=false;

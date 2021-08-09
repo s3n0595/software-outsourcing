@@ -118,9 +118,6 @@ export default {
     formatterNumber(row,cloumn){
       return row.predictNumber == null ? "暂未设定" : row.predictNumber;
     },
-    formatterState(state){
-      return state == 0 ? "未通过" : "以通过";
-    },
     // 当前页数发送改变
     currentChange(val) {
       console.log("当前页"+val);
@@ -192,6 +189,7 @@ export default {
         demandStatus: State,
       }
       getSearchState(params).then(res=>{
+        this.pageNo = 1;
         this.demandList = res.data;
         this.total = this.demandList.length;
         this.isShowloading=false;
@@ -204,6 +202,7 @@ export default {
         employerName: this.searchInfo,
       }
       getSearchDemand(params).then(res=>{
+        this.pageNo = 1;
         this.demandList = res.data;
         this.total = this.demandList.length;
         this.isShowloading=false;
