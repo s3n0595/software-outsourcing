@@ -3,7 +3,7 @@
 
     <el-container>
       <el-header>
-        <PersonCenterNav></PersonCenterNav>
+        <Nav></Nav>
       </el-header>
       <el-container>
         <el-aside width="240px">
@@ -89,11 +89,11 @@
 </template>
 
 <script>
-import PersonCenterNav from "@/views/PersonCenterNav";
+import Nav from "@/views/Nav";
 export default {
-  name: "EmployerCenter",
+  name: "ProviderCenter",
   components: {
-    PersonCenterNav
+    Nav
   }
 };
 </script>

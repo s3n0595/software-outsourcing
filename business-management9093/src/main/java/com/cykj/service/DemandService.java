@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 import com.cykj.bean.Demand;
+import com.cykj.bean.TenderRecord;
 
 import java.util.List;
 import java.util.Map;
@@ -13,4 +14,5 @@ import java.util.Map;
  */
 public interface DemandService {
 	List<Map<String, Object>> queryAllDemand(int count);
+	boolean joinDemand(TenderRecord tenderRecord);
 }
