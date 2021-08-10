@@ -1,12 +1,11 @@
 package com.cykj.service;
 
 
-import com.cykj.bean.CapitalFlow;
-import com.cykj.bean.Demand;
-import com.cykj.bean.DemandType;
+import com.cykj.bean.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmpCenterService {
     int addNeed(Demand demand);
@@ -24,4 +23,9 @@ public interface EmpCenterService {
     int selproBalance(int providerId);
     int seleProId(String phoneNumber);
     int editProBalance( int providerId, double balance);
+    int updateEmpEmail(EmployerInfo employerInfo);
+    int updateHead(int employerId,String name);
+    Map<String,Object> selempInfo( int employerId);
+    int updateEmpName(EmployerAccount employerAccount);
+    List<CreditDetails> selCredit(CreditDetails creditDetails);
 }

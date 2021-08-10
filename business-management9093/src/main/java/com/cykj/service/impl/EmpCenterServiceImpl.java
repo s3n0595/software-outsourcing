@@ -1,14 +1,13 @@
 package com.cykj.service.impl;
 
-import com.cykj.bean.CapitalFlow;
-import com.cykj.bean.Demand;
-import com.cykj.bean.DemandType;
+import com.cykj.bean.*;
 import com.cykj.mapper.EmpCenterMapper;
 import com.cykj.service.EmpCenterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -99,5 +98,30 @@ public class EmpCenterServiceImpl implements EmpCenterService {
     @Override
     public int editProBalance(int providerId, double balance) {
         return empCenterMapper.editProBalance(providerId,balance);
+    }
+
+    @Override
+    public int updateEmpEmail(EmployerInfo employerInfo) {
+        return empCenterMapper.updateEmpEmail(employerInfo);
+    }
+
+    @Override
+    public int updateHead(int employerId, String name) {
+        return empCenterMapper.updateHead(employerId,name);
+    }
+
+    @Override
+    public Map<String, Object> selempInfo(int employerId) {
+        return empCenterMapper.selempInfo(employerId);
+    }
+
+    @Override
+    public int updateEmpName(EmployerAccount employerAccount) {
+        return empCenterMapper.updateEmpName(employerAccount);
+    }
+
+    @Override
+    public List<CreditDetails> selCredit(CreditDetails creditDetails) {
+        return empCenterMapper.selCredit(creditDetails);
     }
 }
