@@ -168,6 +168,11 @@ export default new Router({
                     component: resolve => require(['../components/page/businessManage/UnionManage'], resolve),
                     meta:{title: '联盟管理'}
                 },
+                {
+                    path: '/adviserManage',
+                    component: resolve => require(['../components/page/businessManage/AdviserManage'], resolve),
+                    meta:{title: '顾问管理'}
+                },
             ]
         },
         {
