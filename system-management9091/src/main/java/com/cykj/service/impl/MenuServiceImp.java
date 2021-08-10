@@ -22,4 +22,24 @@ public class MenuServiceImp implements MenuService {
     public List<Menu> getMenuData() {
         return menuMapper.getMenuData();
     }
+
+    @Override
+    public int addMenu(Menu menu) {
+        return menuMapper.addMenu(menu);
+    }
+
+    @Override
+    public Menu menuNameExist(String menuName) {
+        return menuMapper.menuNameExist(menuName);
+    }
+
+    @Override
+    public int updateMenu(Menu menu) {
+        return menuMapper.updateMenu(menu);
+    }
+
+    @Override
+    public int deleteMenuList(int menuId) {
+        return menuMapper.deleteMenuList(menuId);
+    }
 }

@@ -149,6 +149,11 @@ export default new Router({
                     meta: {title: '菜单管理'}
                 },
                 {
+                    path: '/logManage',
+                    component: resolve => require(['../components/page/userManage/LogManage'], resolve),
+                    meta: {title: '日志管理'}
+                },
+                {
                     path: '/demandManage',
                     component: resolve => require(['../components/page/userManage/DemandManage'], resolve),
                     meta: {title: '需求管理'}

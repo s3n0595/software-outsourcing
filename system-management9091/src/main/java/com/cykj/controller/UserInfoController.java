@@ -181,6 +181,40 @@ public class UserInfoController {
         return roleService.roleNameExist(roleName);
     }
     //=================================菜单管理=============================//
+    // 添加新菜单
+    @GetMapping("/addMenu")
+    @ResponseBody
+    public String addMenu(Menu menu){
+        menuService.addMenu(menu);
+        return "添加成功";
+    }
+    //修改用户信息
+    @GetMapping("/updateMenu")
+    @ResponseBody
+    public String updateMenu(Menu menu){
+        menuService.updateMenu(menu);
+        return "修改成功";
+    }
+    // 查菜单重名
+    @GetMapping("/menuNameExist")
+    @ResponseBody
+    public Menu menuNameExist(String menuName){
+        return menuService.menuNameExist(menuName);
+    }
+    // 删除菜单
+    @GetMapping("/deleteMenuList")
+    @ResponseBody
+    public String deleteMenuList(int[] menuIds){
+        for (int menuId : menuIds) {
+            menuService.deleteMenuList(menuId);
+        }
+        return "删除成功";
+    }
+
+
+
+
+
     @GetMapping("/getMenuData")
     @ResponseBody
     public List<Menu> getMenuData(){
