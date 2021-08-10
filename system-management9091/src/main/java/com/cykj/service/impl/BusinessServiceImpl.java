@@ -1,6 +1,7 @@
 package com.cykj.service.impl;
 
 import com.cykj.bean.Demand;
+import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import com.cykj.mapper.BusinessMapper;
 import com.cykj.service.BusinessService;
@@ -49,6 +50,36 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public int deleteWorksList(int worksId) {
         return businessMapper.deleteWorksList(worksId);
+    }
+
+    @Override
+    public List<UnionInfo> queryAllUnion() {
+        return businessMapper.queryAllUnion();
+    }
+
+    @Override
+    public int updateUnion(int unionId, int auditStatus) {
+        return businessMapper.updateUnion(unionId,auditStatus);
+    }
+
+    @Override
+    public List<UnionInfo> queryUnionName(String unionName) {
+        return businessMapper.queryUnionName(unionName);
+    }
+
+    @Override
+    public List<UnionInfo> queryUnionByAudit(int auditStatus) {
+        return businessMapper.queryUnionByAudit(auditStatus);
+    }
+
+    @Override
+    public int deleteUnion(int unionId) {
+        return businessMapper.deleteUnion(unionId);
+    }
+
+    @Override
+    public int getUnionTotal() {
+        return businessMapper.getUnionTotal();
     }
 
 

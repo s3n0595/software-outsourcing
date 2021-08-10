@@ -97,6 +97,30 @@
         delete from works where worksId = #{worksId}
     </delete>
 
+    <select id="queryAllUnion" resultType="UnionInfo">
+        SELECT unionId,unionName,allProviderId,applicationTime,auditStatus FROM unionInfo
+    </select>
+
+    <update id="updateUnion" >
+        update unionInfo set auditStatus = #{auditStatus} where unionId = #{unionId}
+    </update>
+
+    <select id="queryUnionName" resultType="UnionInfo">
+        select * from unionInfo where unionName like concat('%',#{unionName},'%')
+    </select>
+
+    <select id="queryUnionByAudit" resultType="UnionInfo">
+        select * from unionInfo where auditStatus = #{auditStatus}
+    </select>
+
+    <delete id="deleteUnion">
+        delete from unionInfo where unionId = #{unionId}
+    </delete>
+
+    <select id="getUnionTotal" resultType="int">
+        select count(*) from unionInfo
+    </select>
+
 
 
 </mapper>

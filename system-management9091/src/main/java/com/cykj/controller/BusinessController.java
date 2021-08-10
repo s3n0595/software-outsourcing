@@ -2,6 +2,7 @@ package com.cykj.controller;
 
 import com.cykj.bean.CommonResult;
 import com.cykj.bean.Demand;
+import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import com.cykj.service.BusinessService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +30,6 @@ public class BusinessController {
     //获取作品列表
     public CommonResult queryAllWorks(int page, int pageSize){
         log.info("*******作品列表********");
-        log.info("*******作品列表********");
-        log.info("*******作品列表********");
-        log.info("*******作品列表********");
         List<Works> worksList = businessService.queryAllWorks(page,pageSize);
         return new CommonResult(200,"作品列表查询成功",worksList);
     }
@@ -41,9 +39,6 @@ public class BusinessController {
     @ResponseBody
     public CommonResult queryTotal(){
         int worksTotal = businessService.queryWorksTotal();
-        log.info("******作品总数*****"+worksTotal);
-        log.info("******作品总数*****"+worksTotal);
-        log.info("******作品总数*****"+worksTotal);
         log.info("******作品总数*****"+worksTotal);
         return new CommonResult(200,"页数获取成功",worksTotal);
     }
@@ -88,6 +83,66 @@ public class BusinessController {
             businessService.deleteWorksList(worksId);
         }
         return new CommonResult(200,"删除成功",null);
+    }
+
+    //查询联盟记录
+    @RequestMapping("/unionList")
+    @ResponseBody
+    public CommonResult queryUnionInfo(){
+        log.info("********查询联盟记录中*******");
+        List<UnionInfo> unionInfos = businessService.queryAllUnion();
+        return new CommonResult(200,"查询联盟记录成功",unionInfos);
+    }
+
+    //联盟审核
+    @RequestMapping("/union")
+    @ResponseBody
+    public CommonResult auditUnion(int unionId, int auditStatus) {
+        log.info("********联盟审核中*******");
+        int i = businessService.updateUnion(unionId, auditStatus);
+        if (i > 0) {
+            return new CommonResult(200,"联盟审核状态修改成功",i);
+        } else {
+            return new CommonResult(400,"联盟审核状态修改失败",null);
+        }
+    }
+
+    //联盟关键词搜索
+    @RequestMapping("/searchUnion")
+    @ResponseBody
+    public CommonResult queryUnionName(String unionName) {
+        log.info("********联盟搜索中*******");
+        List<UnionInfo> queryUnionName = businessService.queryUnionName(unionName);
+        return new CommonResult(200,"联盟关键词搜索成功",queryUnionName);
+    }
+
+    //根据联盟审核状态搜索
+    @RequestMapping("/unionState")
+    @ResponseBody
+    public CommonResult queryUnionState(int auditStatus) {
+        log.info("********联盟审核状态搜索中*******");
+        List<UnionInfo> queryUnionByAudit = businessService.queryUnionByAudit(auditStatus);
+        return new CommonResult(200,"联盟审核状态搜索成功",queryUnionByAudit);
+    }
+
+    //批量删除联盟
+    @RequestMapping("/deleteUnion")
+    @ResponseBody
+    public CommonResult deleteUnion(int[] unionIds){
+        log.info("********批量删除联盟中*******");
+        for (int unionId: unionIds) {
+            businessService.deleteUnion(unionId);
+        }
+        return new CommonResult(200,"删除成功",null);
+    }
+
+    //获取联盟总数
+    @RequestMapping("/getUnionTotal")
+    @ResponseBody
+    public CommonResult getUnionTotal() {
+        log.info("********获取联盟总数中*******");
+        int unionTotal = businessService.getUnionTotal();
+        return new CommonResult(200,"联盟总数",unionTotal);
     }
 
 }
