@@ -1,6 +1,6 @@
 package com.cykj.service.impl;
 
-import com.cykj.bean.Demand;
+import com.cykj.bean.Adviser;
 import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import com.cykj.mapper.BusinessMapper;
@@ -8,9 +8,7 @@ import com.cykj.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author guoquansen
@@ -23,13 +21,8 @@ public class BusinessServiceImpl implements BusinessService {
     private BusinessMapper businessMapper;
 
     @Override
-    public List<Works> queryAllWorks(int page, int pageSize) {
-        return businessMapper.queryAllWorks(page,pageSize);
-    }
-
-    @Override
-    public int queryWorksTotal() {
-        return businessMapper.queryWorksTotal();
+    public List<Works> queryAllWorks() {
+        return businessMapper.queryAllWorks();
     }
 
     @Override
@@ -78,8 +71,28 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public int getUnionTotal() {
-        return businessMapper.getUnionTotal();
+    public List<Adviser> queryAllAdviser() {
+        return businessMapper.queryAllAdviser();
+    }
+
+    @Override
+    public List<Adviser> queryAdviserByProviderName(String providerName) {
+        return businessMapper.queryAdviserByProviderName(providerName);
+    }
+
+    @Override
+    public int updateAdviser(int adviserId, int auditStatus) {
+        return businessMapper.updateAdviser(adviserId,auditStatus);
+    }
+
+    @Override
+    public List<Adviser> queryAdviserState(int auditStatus) {
+        return businessMapper.queryAdviserState(auditStatus);
+    }
+
+    @Override
+    public int deleteAdviser(int adviserId) {
+        return businessMapper.deleteAdviser(adviserId);
     }
 
 

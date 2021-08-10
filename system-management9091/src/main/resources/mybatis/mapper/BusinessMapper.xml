@@ -13,27 +13,22 @@
             on w1.worksTypeId = t1.demandTypeId
             join providerAccount pA
             on w1.providerId = pA.providerId
-        limit ${(page - 1) * pageSize}, #{pageSize}
     </select>
     <resultMap id="worksList" type="com.cykj.bean.Works">
-        <id column="worksId" property="worksId"></id>
-        <result column="worksTitle" property="worksTitle"></result>
-        <result column="worksDescribe" property="worksDescribe"></result>
-        <result column="worksPrice" property="worksPrice"></result>
-        <result column="releaseTime" property="releaseTime"></result>
-        <result column="worksAddress" property="worksAddress"></result>
-        <result column="auditStatus" property="auditStatus"></result>
+        <id column="worksId" property="worksId"/>
+        <result column="worksTitle" property="worksTitle"/>
+        <result column="worksDescribe" property="worksDescribe"/>
+        <result column="worksPrice" property="worksPrice"/>
+        <result column="releaseTime" property="releaseTime"/>
+        <result column="worksAddress" property="worksAddress"/>
+        <result column="auditStatus" property="auditStatus"/>
         <association property="demandType" javaType="com.cykj.bean.DemandType">
-            <result column="demandTypeName" property="demandTypeName"></result>
+            <result column="demandTypeName" property="demandTypeName"/>
         </association>
         <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
-            <result column="providerName" property="providerName"></result>
+            <result column="providerName" property="providerName"/>
         </association>
     </resultMap>
-
-    <select id="queryWorksTotal" resultType="int">
-        select count(*) from works
-    </select>
 
     <update id="updateStatus" >
         update works set auditStatus = #{auditStatus} where worksId = #{worksId}
@@ -51,18 +46,18 @@
         where w1.worksTitle like concat('%',#{worksTitle},'%')
     </select>
     <resultMap id="worksTitleList" type="com.cykj.bean.Works">
-        <id column="worksId" property="worksId"></id>
-        <result column="worksTitle" property="worksTitle"></result>
-        <result column="worksDescribe" property="worksDescribe"></result>
-        <result column="worksPrice" property="worksPrice"></result>
-        <result column="releaseTime" property="releaseTime"></result>
-        <result column="worksAddress" property="worksAddress"></result>
-        <result column="auditStatus" property="auditStatus"></result>
+        <id column="worksId" property="worksId"/>
+        <result column="worksTitle" property="worksTitle"/>
+        <result column="worksDescribe" property="worksDescribe"/>
+        <result column="worksPrice" property="worksPrice"/>
+        <result column="releaseTime" property="releaseTime"/>
+        <result column="worksAddress" property="worksAddress"/>
+        <result column="auditStatus" property="auditStatus"/>
         <association property="demandType" javaType="com.cykj.bean.DemandType">
-            <result column="demandTypeName" property="demandTypeName"></result>
+            <result column="demandTypeName" property="demandTypeName"/>
         </association>
         <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
-            <result column="providerName" property="providerName"></result>
+            <result column="providerName" property="providerName"/>
         </association>
     </resultMap>
 
@@ -78,18 +73,18 @@
         where w1.auditStatus = #{auditStatus}
     </select>
     <resultMap id="auditList" type="com.cykj.bean.Works">
-        <id column="worksId" property="worksId"></id>
-        <result column="worksTitle" property="worksTitle"></result>
-        <result column="worksDescribe" property="worksDescribe"></result>
-        <result column="worksPrice" property="worksPrice"></result>
-        <result column="releaseTime" property="releaseTime"></result>
-        <result column="worksAddress" property="worksAddress"></result>
-        <result column="auditStatus" property="auditStatus"></result>
+        <id column="worksId" property="worksId"/>
+        <result column="worksTitle" property="worksTitle"/>
+        <result column="worksDescribe" property="worksDescribe"/>
+        <result column="worksPrice" property="worksPrice"/>
+        <result column="releaseTime" property="releaseTime"/>
+        <result column="worksAddress" property="worksAddress"/>
+        <result column="auditStatus" property="auditStatus"/>
         <association property="demandType" javaType="com.cykj.bean.DemandType">
-            <result column="demandTypeName" property="demandTypeName"></result>
+            <result column="demandTypeName" property="demandTypeName"/>
         </association>
         <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
-            <result column="providerName" property="providerName"></result>
+            <result column="providerName" property="providerName"/>
         </association>
     </resultMap>
 
@@ -117,9 +112,90 @@
         delete from unionInfo where unionId = #{unionId}
     </delete>
 
-    <select id="getUnionTotal" resultType="int">
-        select count(*) from unionInfo
+    <select id="queryAllAdviser" resultMap="AdviserList">
+        SELECT a1.adviserId,a1.auditStatus,p1.providerName,
+               d1.demandTypeName,pI.credit
+        FROM adviser a1
+            JOIN providerAccount p1
+                ON a1.providerId = p1.providerId
+            JOIN demandType d1
+                ON d1.demandTypeId = a1.serviceTypeId
+            JOIN providerInfo pI
+                ON pI.providerId = a1.providerId
     </select>
+    <resultMap id="AdviserList" type="com.cykj.bean.Adviser">
+        <id column="adviserId" property="adviserId"/>
+        <result column="auditStatus" property="auditStatus"/>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"/>
+        </association>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"/>
+        </association>
+        <association property="providerInfo" javaType="com.cykj.bean.ProviderInfo">
+            <result column="credit" property="credit"/>
+        </association>
+    </resultMap>
+
+    <select id="queryAdviserByProviderName" resultMap="adviserByProviderName">
+        SELECT a1.adviserId,a1.auditStatus,p1.providerName,
+               d1.demandTypeName,pI.credit
+        FROM providerAccount p1,adviser a1,demandType d1,providerInfo pI
+        WHERE p1.providerId = a1.providerId
+          AND a1.serviceTypeId = d1.demandTypeId
+          AND a1.providerId = pI.providerId
+          AND p1.providerName like concat('%',#{providerName},'%')
+    </select>
+    <resultMap id="adviserByProviderName" type="com.cykj.bean.ProviderAccount">
+        <id column="providerId" property="providerId"/>
+        <result column="providerName" property="providerName"/>
+        <association property="adviser" javaType="com.cykj.bean.Adviser">
+            <result column="adviserId" property="adviserId"/>
+            <result column="auditStatus" property="auditStatus"/>
+        </association>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"/>
+        </association>
+        <association property="providerInfo" javaType="com.cykj.bean.ProviderInfo">
+            <result column="credit" property="credit"/>
+        </association>
+    </resultMap>
+
+    <update id="updateAdviser">
+        update adviser set auditStatus = #{auditStatus} where adviserId = #{adviserId}
+    </update>
+
+    <select id="queryAdviserState" resultMap="adviserState">
+        SELECT a1.adviserId,a1.auditStatus,p1.providerName,
+               d1.demandTypeName,pI.credit
+        FROM adviser a1
+                 JOIN providerAccount p1
+                      ON a1.providerId = p1.providerId
+                 JOIN demandType d1
+                      ON d1.demandTypeId = a1.serviceTypeId
+                 JOIN providerInfo pI
+                      ON pI.providerId = a1.providerId
+        where a1.auditStatus = #{auditStatus}
+    </select>
+    <resultMap id="adviserState" type="com.cykj.bean.Adviser">
+        <id column="adviserId" property="adviserId"/>
+        <result column="auditStatus" property="auditStatus"/>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"/>
+        </association>
+        <association property="demandType" javaType="com.cykj.bean.DemandType">
+            <result column="demandTypeName" property="demandTypeName"/>
+        </association>
+        <association property="providerInfo" javaType="com.cykj.bean.ProviderInfo">
+            <result column="credit" property="credit"/>
+        </association>
+    </resultMap>
+
+    <delete id="deleteAdviser">
+        delete from adviser where adviserId = #{adviserId}
+    </delete>
+
+
 
 
 

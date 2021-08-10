@@ -1,12 +1,11 @@
 package com.cykj.service;
 
-import com.cykj.bean.Demand;
+import com.cykj.bean.Adviser;
 import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author guoquansen
@@ -14,9 +13,7 @@ import java.util.Map;
  */
 public interface BusinessService {
 
-    List<Works> queryAllWorks(int page ,int pageSize);
-
-    int queryWorksTotal();
+    List<Works> queryAllWorks();
 
     int updateStatus(int worksId, int auditStatus);
 
@@ -40,7 +37,20 @@ public interface BusinessService {
     //批量删除联盟
     int deleteUnion(int unionId);
 
-    //获取联盟总数
-    int getUnionTotal();
+    //获取顾问列表
+    List<Adviser> queryAllAdviser();
+
+    //顾问关键词
+    List<Adviser> queryAdviserByProviderName(String providerName);
+
+    //审核顾问
+    int updateAdviser(int adviserId, int auditStatus);
+
+    //根据顾问审核状态筛选
+    List<Adviser> queryAdviserState(int auditStatus);
+
+    //批量删除顾问
+    int deleteAdviser(int adviserId);
+
 
 }

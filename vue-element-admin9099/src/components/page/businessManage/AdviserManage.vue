@@ -15,29 +15,25 @@
             @click="delAll"
             :disabled="this.delData.length===0"
         >批量删除</el-button>
-        <el-input v-model="searchInfo" placeholder="请输入作品标题" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="search" @click="searchWorks">搜索</el-button>
+        <el-input v-model="searchInfo" placeholder="请输入顾问名称" class="handle-input mr10"></el-input>
+        <el-button type="primary" icon="search" @click="searchAdviser">搜索</el-button>
         <el-button type="primary" @click="getSearchState(0)">未审核</el-button>
         <el-button type="primary" @click="getSearchState(1)">已通过</el-button>
         <el-button type="primary" @click="getSearchState(2)">未通过</el-button>
       </div>
       <el-table
-          :data="worksList"
-          align="center"
+          :data="tableDataList"
           border
           class="table"
           ref="multipleTable"
+          @selection-change="handleSelectionChange"
           v-loading="isShowloading"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="worksId" label="作品序号" sortable width="110"></el-table-column>
-        <el-table-column prop="worksTitle" label="标题" width="120"></el-table-column>
-        <el-table-column prop="demandType.demandTypeName" label="类型"></el-table-column>
-        <el-table-column prop="worksPrice" label="价格"></el-table-column>
-        <el-table-column prop="worksDescribe" label="描述"></el-table-column>
-        <el-table-column prop="releaseTime" label="时间"></el-table-column>
-        <el-table-column prop="providerAccount.providerName" label="服务商"></el-table-column>
-        <el-table-column prop="worksAddress" label="链接"></el-table-column>
+        <el-table-column prop="adviserId" label="序号" sortable width="110"></el-table-column>
+        <el-table-column prop="providerAccount.providerName" label="顾问名称" width="120"></el-table-column>
+        <el-table-column prop="demandType.demandTypeName" label="服务类型"></el-table-column>
+        <el-table-column prop="providerInfo.credit" label="信用分"></el-table-column>
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <el-tag type="info" v-if="scope.row.auditStatus === 0">未审核</el-tag>
@@ -83,7 +79,7 @@ export default {
   data() {
     return {
       url:"",
-      worksList: [],
+      adviserList: [],
       searchInfo:'',
       // 总条数
       total: 0,
@@ -96,18 +92,22 @@ export default {
       formLabelWidth: "120px"
     };
   },
+  computed:{
+    // 动态获取分页data
+    tableDataList(){
+      return this.adviserList.slice((this.pageNo-1)*this.pageSize,this.pageNo*this.pageSize);
+    },
+  },
   methods: {
     // 当前页数发送改变
     currentChange(val) {
       console.log("当前页"+val);
       this.pageNo = val;
-      this.getWorks();
     },
     // // 每页显示条数
     handleSizeChange(val){
       console.log("每页条数更改为"+val);
       this.pageSize = val;
-      this.currentChange(1);
     },
     // 当选择项发送变化时，执行一下方法
     handleSelectionChange(delData) {
@@ -116,22 +116,22 @@ export default {
     },
     //批量删除
     delAll() {
-      this.$confirm("确认删除该作品?", "提示", {
+      this.$confirm("确认删除该顾问?", "提示", {
         type: "warning"
       }).then(() => {
         this.isShowloading = true;
-        let delIds = this.delData.map(item => item.worksId);
+        let delIds = this.delData.map(item => item.adviserId);
         // axios传递数组 在数组后加入''
         let baseUrl = 'baseUrl';
-        this.$axios.get(`${baseUrl}/audit/deleteList`,
+        this.$axios.get(`${baseUrl}/audit/deleteAdviser`,
             {params:{
-                worksIds: delIds + '',
+                adviserId: delIds + '',
               }}).then(res=>{
           console.log(res)
           const code = res.data
           if (code.code === 200) {
             this.$message.success("删除成功")
-            this.getWorks()
+            this.getAdviser()
           } else {
             this.$message.error("删除失败")
           }
@@ -141,17 +141,17 @@ export default {
       });
     },
     //关键词搜索
-    searchWorks() {
+    searchAdviser() {
       this.isShowloading = true
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/search`,{params:{
-          worksTitle: this.searchInfo
+      this.$axios.get(`${baseUrl}/audit/searchAdviser`,{params:{
+          providerName: this.searchInfo
         }}).then(res=>{
         console.log(res)
         const code = res.data
         this.pageNo = 1;
-        this.worksList = code.data
-        this.total = this.worksList.length
+        this.adviserList = code.data
+        this.total = this.adviserList.length
         this.isShowloading = false
       }).catch(err=>{
         console.log(err)
@@ -161,14 +161,14 @@ export default {
     getSearchState(State) {
       this.isShowloading = true;
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/state`,{params:{
+      this.$axios.get(`${baseUrl}/audit/adviserState`,{params:{
           auditStatus: State
         }}).then(res=>{
         console.log(res)
         const code = res.data
         this.pageNo = 1;
-        this.worksList = code.data
-        this.total = this.worksList.length
+        this.adviserList = code.data
+        this.total = this.adviserList.length
         this.isShowloading = false
       }).catch(err=>{
         console.log(err)
@@ -177,16 +177,16 @@ export default {
     //审核通过
     handleAccept(index, row){
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/updateStatus`,
+      this.$axios.get(`${baseUrl}/audit/adviserAudit`,
           {params:{
-              'worksId':row.worksId,
+              'adviserId':row.adviserId,
               'auditStatus':1
             }}).then(res=>{
         console.log(res.data)
         const code = res.data
         if (code.code === 200) {
           this.$message.success("修改成功")
-          this.getWorks()
+          this.getAdviser()
         } else {
           this.$message.error("修改失败，请重新修改")
         }
@@ -197,16 +197,16 @@ export default {
     //审核不通过
     handleRefuse(index, row){
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/updateStatus`,
+      this.$axios.get(`${baseUrl}/audit/adviserAudit`,
           {params:{
-              'worksId' : row.worksId,
+              'adviserId' : row.adviserId,
               'auditStatus' : 2
             }}).then(res=>{
         console.log(res)
         const code = res.data
         if (code.code === 200) {
           this.$message.success("修改成功")
-          this.getWorks()
+          this.getAdviser()
         } else {
           this.$message.error("修改失败，请重新修改")
         }
@@ -214,39 +214,27 @@ export default {
         console.log(err)
       })
     },
-    //获取作品列表
-    getWorks(){
+    //获取顾问列表
+    getAdviser(){
+      this.isShowloading = true;
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/works`,
+      this.$axios.get(`${baseUrl}/audit/adviser`,
           {params:{
-              page: this.pageNo,
-              pageSize:this.pageSize
+
             }}).then(res=>{
         console.log(res)
         const code = res.data
-        this.worksList = code.data
-        this.total = this.worksList.length;
+        this.adviserList = code.data
+        this.total = this.adviserList.length;
         this.isShowloading = false
       }).catch(error=>{
         console.log(error)
       })
     },
-    //获取总数
-    getTotal(){
-      let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/total`).then(totalWorks=>{
-        console.log(totalWorks)
-        const total = totalWorks.data
-        this.total = total.data
-      }).catch(error=>{
-        console.log(error)
-      })
-    }
 
   },
   mounted() {
-    this.getWorks();
-    this.getTotal();
+    this.getAdviser();
   }
 };
 </script>
