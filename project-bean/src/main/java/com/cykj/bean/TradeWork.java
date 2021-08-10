@@ -22,4 +22,7 @@ public class TradeWork {
     private int tradeStatus;
     private String tradeOrder;
     private int providerId;
+    private EmployerAccount employerAccount;
+    private ProviderAccount providerAccount;
+    private Works works;
 }
