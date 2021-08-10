@@ -158,6 +158,11 @@ export default new Router({
                   component: resolve => require(['../components/page/businessManage/worksManage'], resolve),
                     meta:{title: '作品管理'}
                 },
+                {
+                    path: '/unionManage',
+                    component: resolve => require(['../components/page/businessManage/UnionManage'], resolve),
+                    meta:{title: '联盟管理'}
+                },
             ]
         },
         {

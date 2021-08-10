@@ -16,13 +16,13 @@
             :disabled="this.delData.length===0"
         >批量删除</el-button>
         <el-input v-model="searchInfo" placeholder="请输入作品标题" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="search" @click="searchWorks">搜索</el-button>
+        <el-button type="primary" icon="search" @click="searchUnion">搜索</el-button>
         <el-button type="primary" @click="getSearchState(0)">未审核</el-button>
         <el-button type="primary" @click="getSearchState(1)">已通过</el-button>
         <el-button type="primary" @click="getSearchState(2)">未通过</el-button>
       </div>
       <el-table
-          :data="worksList"
+          :data="unionList"
           align="center"
           border
           class="table"
@@ -30,14 +30,10 @@
           v-loading="isShowloading"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="worksId" label="作品序号" sortable width="110"></el-table-column>
-        <el-table-column prop="worksTitle" label="标题" width="120"></el-table-column>
-        <el-table-column prop="demandType.demandTypeName" label="类型"></el-table-column>
-        <el-table-column prop="worksPrice" label="价格"></el-table-column>
-        <el-table-column prop="worksDescribe" label="描述"></el-table-column>
-        <el-table-column prop="releaseTime" label="时间"></el-table-column>
-        <el-table-column prop="providerAccount.providerName" label="服务商"></el-table-column>
-        <el-table-column prop="worksAddress" label="链接"></el-table-column>
+        <el-table-column prop="unionId" label="联盟序号" sortable width="110"></el-table-column>
+        <el-table-column prop="unionName" label="联盟名称" width="120"></el-table-column>
+        <el-table-column prop="allProviderId" label="服务商ID"></el-table-column>
+        <el-table-column prop="applicationTime" label="创建时间"></el-table-column>
         <el-table-column prop="auditStatus" label="审核状态">
           <template slot-scope="scope">
             <el-tag type="info" v-if="scope.row.auditStatus === 0">未审核</el-tag>
@@ -64,17 +60,17 @@
           </template>
         </el-table-column>
       </el-table>
-            <div class="pagination">
-              <el-pagination
-                  background
-                  @current-change="currentChange"
-                  @size-change="handleSizeChange"
-                  layout="total, prev, pager, next, sizes, jumper"
-                  :total="total"
-                  :page-size="pageSize"
-                  :page-sizes="[5,10,15]"
-              ></el-pagination>
-            </div>
+      <div class="pagination">
+        <el-pagination
+            background
+            @current-change="currentChange"
+            @size-change="handleSizeChange"
+            layout="total, prev, pager, next, sizes, jumper"
+            :total="total"
+            :page-size="pageSize"
+            :page-sizes="[5,10,15]"
+        ></el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -83,7 +79,7 @@ export default {
   data() {
     return {
       url:"",
-      worksList: [],
+      unionList: [],
       searchInfo:'',
       // 总条数
       total: 0,
@@ -101,7 +97,7 @@ export default {
     currentChange(val) {
       console.log("当前页"+val);
       this.pageNo = val;
-      this.getWorks();
+      this.getUnion();
     },
     // // 每页显示条数
     handleSizeChange(val){
@@ -116,22 +112,22 @@ export default {
     },
     //批量删除
     delAll() {
-      this.$confirm("确认删除该作品?", "提示", {
+      this.$confirm("确认删除该联盟?", "提示", {
         type: "warning"
       }).then(() => {
         this.isShowloading = true;
-        let delIds = this.delData.map(item => item.worksId);
+        let delIds = this.delData.map(item => item.unionId);
         // axios传递数组 在数组后加入''
         let baseUrl = 'baseUrl';
-        this.$axios.get(`${baseUrl}/audit/deleteList`,
+        this.$axios.get(`${baseUrl}/audit/deleteUnion`,
             {params:{
-                worksIds: delIds + '',
-          }}).then(res=>{
-            console.log(res)
+                unionIds: delIds + '',
+              }}).then(res=>{
+          console.log(res)
           const code = res.data
           if (code.code === 200) {
             this.$message.success("删除成功")
-            this.getWorks()
+            this.getUnion()
           } else {
             this.$message.error("删除失败")
           }
@@ -141,17 +137,17 @@ export default {
       });
     },
     //关键词搜索
-    searchWorks() {
+    searchUnion() {
       this.isShowloading = true
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/search`,{params:{
-          worksTitle: this.searchInfo
+      this.$axios.get(`${baseUrl}/audit/searchUnion`,{params:{
+          unionName: this.searchInfo
         }}).then(res=>{
-          console.log(res)
+        console.log(res)
         const code = res.data
         this.pageNo = 1;
-          this.worksList = code.data
-        this.total = this.worksList.length
+        this.unionList = code.data
+        this.total = this.unionList.length
         this.isShowloading = false
       }).catch(err=>{
         console.log(err)
@@ -161,14 +157,14 @@ export default {
     getSearchState(State) {
       this.isShowloading = true;
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/state`,{params:{
+      this.$axios.get(`${baseUrl}/audit/unionState`,{params:{
           auditStatus: State
         }}).then(res=>{
         console.log(res)
         const code = res.data
         this.pageNo = 1;
-        this.worksList = code.data
-        this.total = this.worksList.length
+        this.unionList = code.data
+        this.total = this.unionList.length
         this.isShowloading = false
       }).catch(err=>{
         console.log(err)
@@ -177,16 +173,16 @@ export default {
     //审核通过
     handleAccept(index, row){
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/updateStatus`,
+      this.$axios.get(`${baseUrl}/audit/union`,
           {params:{
-            'worksId':row.worksId,
+              'unionId':row.unionId,
               'auditStatus':1
-          }}).then(res=>{
-            console.log(res.data)
-            const code = res.data
+            }}).then(res=>{
+        console.log(res.data)
+        const code = res.data
         if (code.code === 200) {
           this.$message.success("修改成功")
-          this.getWorks()
+          this.getUnion()
         } else {
           this.$message.error("修改失败，请重新修改")
         }
@@ -197,16 +193,16 @@ export default {
     //审核不通过
     handleRefuse(index, row){
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/updateStatus`,
+      this.$axios.get(`${baseUrl}/audit/union`,
           {params:{
-              'worksId' : row.worksId,
+              'unionId' : row.unionId,
               'auditStatus' : 2
             }}).then(res=>{
         console.log(res)
         const code = res.data
         if (code.code === 200) {
           this.$message.success("修改成功")
-          this.getWorks()
+          this.getUnion()
         } else {
           this.$message.error("修改失败，请重新修改")
         }
@@ -214,18 +210,18 @@ export default {
         console.log(err)
       })
     },
-    //获取作品列表
-    getWorks(){
+    //获取联盟列表
+    getUnion(){
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/works`,
+      this.$axios.get(`${baseUrl}/audit/unionList`,
           {params:{
-            page: this.pageNo,
+              page: this.pageNo,
               pageSize:this.pageSize
             }}).then(res=>{
         console.log(res)
         const code = res.data
-        this.worksList = code.data
-        this.total = this.worksList.length;
+        this.unionList = code.data
+        this.total = this.unionList.length;
         this.isShowloading = false
       }).catch(error=>{
         console.log(error)
@@ -234,9 +230,9 @@ export default {
     //获取总数
     getTotal(){
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/audit/total`).then(totalWorks=>{
-        console.log(totalWorks)
-        const total = totalWorks.data
+      this.$axios.get(`${baseUrl}audit/getUnionTotal/`).then(totalUnion=>{
+        console.log(totalUnion)
+        const total = totalUnion.data
         this.total = total.data
       }).catch(error=>{
         console.log(error)
@@ -245,7 +241,7 @@ export default {
 
   },
   mounted() {
-    this.getWorks();
+    this.getUnion();
     this.getTotal();
   }
 };

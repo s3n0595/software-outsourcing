@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.Demand;
+import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,6 +31,25 @@ public interface BusinessMapper {
     //根据审核状态查找
     List<Works> queryWorksByAudit(@Param("auditStatus") int auditStatus);
 
-    //批量删除
+    //批量删除作品
     int deleteWorksList(@Param("worksId") int worksId);
+
+    //联盟列表
+    List<UnionInfo> queryAllUnion();
+
+    //联盟审核
+    int updateUnion(@Param("unionId") int unionId,@Param("auditStatus") int auditStatus);
+
+    //联盟关键词搜索
+    List<UnionInfo> queryUnionName(@Param("unionName") String unionName);
+
+    //根据联盟审核状态查找
+    List<UnionInfo> queryUnionByAudit(@Param("auditStatus") int auditStatus);
+
+    //批量删除联盟
+    int deleteUnion(@Param("unionId") int unionId);
+
+    //获取联盟总数
+    int getUnionTotal();
+
 }

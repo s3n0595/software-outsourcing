@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 import com.cykj.bean.Demand;
+import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,5 +25,22 @@ public interface BusinessService {
     List<Works> queryWorksByAudit( int auditStatus);
 
     int deleteWorksList(int worksId);
+
+    List<UnionInfo> queryAllUnion();
+
+    //联盟审核
+    int updateUnion(int unionId, int auditStatus);
+
+    //联盟关键词搜索
+    List<UnionInfo> queryUnionName(String unionName);
+
+    //根据联盟审核状态查找
+    List<UnionInfo> queryUnionByAudit(int auditStatus);
+
+    //批量删除联盟
+    int deleteUnion(int unionId);
+
+    //获取联盟总数
+    int getUnionTotal();
 
 }
