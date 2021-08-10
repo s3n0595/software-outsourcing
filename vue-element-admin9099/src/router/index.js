@@ -168,6 +168,11 @@ export default new Router({
                     component: resolve => require(['../components/page/businessManage/UnionManage'], resolve),
                     meta:{title: '联盟管理'}
                 },
+                {
+                    path: '/tradeRecordManage',
+                    component: resolve => require(['../components/page/userManage/TradeRecordManage'], resolve),
+                    meta:{title: '交易管理'}
+                },
             ]
         },
         {
