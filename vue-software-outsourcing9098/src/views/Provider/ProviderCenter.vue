@@ -33,19 +33,19 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">案例作品</span>
             </el-menu-item>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/providerCenter/mywork" style="height: 50px;">
               <i class="el-icon-star-off"></i>
-              <span slot="title">码市测试</span>
+              <span slot="title">作品交易</span>
             </el-menu-item>
           </el-card>
 
           <el-card class="box-card">
             <div class="clearfix" style="font-size: 15px">
-              <span>增值信息</span>
+              <span>企业信息</span>
             </div>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/providerCenter/map" style="height: 50px;">
               <i class="el-icon-star-off"></i>
-              <span slot="title">保证金计划</span>
+              <span slot="title">关于我们</span>
             </el-menu-item>
           </el-card>
 
@@ -53,7 +53,7 @@
             <div class="clearfix" style="font-size: 15px">
               <span>我的开发宝</span>
             </div>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/providerCenter/accountviewp" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">账户概览</span>
             </el-menu-item>

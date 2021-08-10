@@ -21,4 +21,5 @@ public class TradeWork {
     private String tradeTime;
     private int tradeStatus;
     private String tradeOrder;
+    private int providerId;
 }

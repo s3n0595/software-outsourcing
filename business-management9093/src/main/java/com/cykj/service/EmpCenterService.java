@@ -21,4 +21,7 @@ public interface EmpCenterService {
     int editEmpBalance(int employerId,double balance);
     int updFlow(CapitalFlow capitalFlow);
     int selempBalance(int eid);
+    int selproBalance(int providerId);
+    int seleProId(String phoneNumber);
+    int editProBalance( int providerId, double balance);
 }

@@ -16,4 +16,6 @@ public interface EmpBuyService {
     TradeWork oldtradeWork(TradeWork tradeWork);
     List<Map<String, Object>> selbuyList(Integer employerId);
     int editState(TradeWork tradeWork);
+    List<Map<String, Object>> selprobuyList(Integer providerId);
+    int editproState(TradeWork tradeWork);
 }

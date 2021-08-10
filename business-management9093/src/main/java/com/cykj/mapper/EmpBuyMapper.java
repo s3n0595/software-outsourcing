@@ -20,4 +20,6 @@ public interface EmpBuyMapper {
     TradeWork oldtradeWork(TradeWork tradeWork);//查询用户是否购买过该作品
     List<Map<String, Object>> selbuyList(Integer employerId);//用户购买作品表
     int editState(TradeWork tradeWork);//雇主确认收货
+    List<Map<String, Object>> selprobuyList(Integer providerId);//服务商个人中心交易作品
+    int editproState(TradeWork tradeWork);//服务商修改交易作品进度
 }

@@ -143,10 +143,17 @@ public class EmpCenterController {
             return new CommonResult(400,"密码修改失败",null);
         }
     }
-    //查询账户余额
+    //查询雇主账户余额
     @RequestMapping("selbalance")
     public int empBalance(@RequestParam("employerId") int employerId){
         int i=empCenterService.selempBalance(employerId);
         return i;
+    }
+
+
+    //查询服务商账户余额
+    @RequestMapping("selprobalance")
+    public int proBalance(@RequestParam("providerId") int providerId){
+        return empCenterService.selproBalance(providerId);
     }
 }
