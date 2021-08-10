@@ -18,7 +18,7 @@ export const getSelEmpList = params=>{
     return axios.get(`${baseUrl}/employer/selEmpList`,{params:params})
 }
 
-// 用户管理
+// ====================================用户管理===============================//
 // 获取用户列表
 export const getUserInfoList = params=>{
     return axios.get(`${baseUrl}/userinfo/getUserList`,{params:params})
@@ -60,7 +60,7 @@ export const updateLoginDate = params =>{
 export const getMenu = params =>{
     return axios.get(`${baseUrl}/userinfo/getMenu`,{params: params})
 }
-// 角色管理
+// ====================================角色管理===============================//
 // 获取角色列表
 export const getRoleList = params =>{
     return axios.get(`${baseUrl}/userinfo/getRoleList`,{params: params});
@@ -89,7 +89,24 @@ export const roleNameExist = params =>{
 export const getMenuData = params =>{
     return axios.get(`${baseUrl}/userinfo/getMenuData`,{params: params});
 }
-// 业务管理
+// 菜单管理
+// 菜单名名查重
+export const menuNameExist = params =>{
+    return axios.get(`${baseUrl}/userinfo/menuNameExist`,{params: params});
+}
+// 修改菜单信息
+export const updateMenu = params =>{
+    return axios.get(`${baseUrl}/userinfo/updateMenu`,{params: params});
+}
+// 添加新菜单
+export const addMenu = params =>{
+    return axios.get(`${baseUrl}/userinfo/addMenu`,{params: params});
+}
+// 删除
+export const deleteMenuList = params =>{
+    return axios.get(`${baseUrl}/userinfo/deleteMenuList`,{params: params});
+}
+// ====================================业务管理===============================//
 // 获取需求列表
 export const getDemandList = params =>{
     return axios.get(`${baseUrl}/Demand/getDemandList`,{params: params});

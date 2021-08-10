@@ -6,4 +6,17 @@
     <select id="getMenuData" resultType="com.cykj.bean.Menu">
         select * from menu;
     </select>
+    <select id="menuNameExist" resultType="com.cykj.bean.Menu">
+        select * from menu where menuName = #{menuName};
+    </select>
+    <update id="updateMenu" parameterType="com.cykj.bean.Menu">
+        update menu set menuName = #{menuName},menuIcon = #{menuIcon},menuPath = #{menuPath},parentId = #{parentId}
+        where menuId = #{menuId}
+    </update>
+    <insert id="addMenu">
+        insert into menu(menuName, menuPath, parentId, menuIcon) values (#{menuName},#{menuPath},#{parentId},#{menuIcon});
+    </insert>
+    <delete id="deleteMenuList">
+        delete from menu where menuId = #{menuId}
+    </delete>
 </mapper>
