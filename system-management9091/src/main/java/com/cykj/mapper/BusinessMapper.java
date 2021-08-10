@@ -1,13 +1,12 @@
 package com.cykj.mapper;
 
-import com.cykj.bean.Demand;
+import com.cykj.bean.Adviser;
 import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author guoquansen
@@ -17,10 +16,7 @@ import java.util.Map;
 public interface BusinessMapper {
 
     //作品列表
-    List<Works> queryAllWorks(@Param("page") int page, @Param("pageSize") int pageSize);
-
-    //作品总量
-    int queryWorksTotal();
+    List<Works> queryAllWorks();
 
     //作品审核
     int updateStatus(@Param("worksId") int worksId,@Param("auditStatus") int auditStatus);
@@ -49,7 +45,19 @@ public interface BusinessMapper {
     //批量删除联盟
     int deleteUnion(@Param("unionId") int unionId);
 
-    //获取联盟总数
-    int getUnionTotal();
+    //获取顾问列表
+    List<Adviser> queryAllAdviser();
+
+    //顾问关键词
+    List<Adviser> queryAdviserByProviderName(@Param("providerName") String providerName);
+
+    //审核顾问
+    int updateAdviser(@Param("adviserId") int adviserId, @Param("auditStatus") int auditStatus);
+
+    //根据顾问审核状态筛选
+    List<Adviser> queryAdviserState(@Param("auditStatus") int auditStatus);
+
+    //批量删除顾问
+    int deleteAdviser(@Param("adviserId") int adviserId);
 
 }

@@ -1,7 +1,7 @@
 package com.cykj.controller;
 
+import com.cykj.bean.Adviser;
 import com.cykj.bean.CommonResult;
-import com.cykj.bean.Demand;
 import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import com.cykj.service.BusinessService;
@@ -28,19 +28,10 @@ public class BusinessController {
     @RequestMapping("works")
     @ResponseBody
     //获取作品列表
-    public CommonResult queryAllWorks(int page, int pageSize){
+    public CommonResult queryAllWorks(){
         log.info("*******作品列表********");
-        List<Works> worksList = businessService.queryAllWorks(page,pageSize);
+        List<Works> worksList = businessService.queryAllWorks();
         return new CommonResult(200,"作品列表查询成功",worksList);
-    }
-
-    //获取总数
-    @RequestMapping("/total")
-    @ResponseBody
-    public CommonResult queryTotal(){
-        int worksTotal = businessService.queryWorksTotal();
-        log.info("******作品总数*****"+worksTotal);
-        return new CommonResult(200,"页数获取成功",worksTotal);
     }
 
     //审核状态
@@ -136,13 +127,53 @@ public class BusinessController {
         return new CommonResult(200,"删除成功",null);
     }
 
-    //获取联盟总数
-    @RequestMapping("/getUnionTotal")
+    //获取顾问列表
+    @RequestMapping("/adviser")
     @ResponseBody
-    public CommonResult getUnionTotal() {
-        log.info("********获取联盟总数中*******");
-        int unionTotal = businessService.getUnionTotal();
-        return new CommonResult(200,"联盟总数",unionTotal);
+    public CommonResult getAdviserList() {
+        log.info("********获取顾问列表中*******");
+        List<Adviser> adviserList = businessService.queryAllAdviser();
+        return new CommonResult(200,"顾问列表",adviserList);
     }
+
+    //顾问关键词搜索
+    @RequestMapping("/searchAdviser")
+    @ResponseBody
+    public CommonResult searchAdviser(String providerName){
+        log.info("********顾问关键词搜索中*******");
+        List<Adviser> adviserList = businessService.queryAdviserByProviderName(providerName);
+        return new CommonResult(200,"顾问关键词搜索列表",adviserList);
+    }
+
+    //顾问审核
+    @RequestMapping("/adviserAudit")
+    @ResponseBody
+    public CommonResult adviserAudit(int adviserId, int auditStatus) {
+        int i = businessService.updateAdviser(adviserId, auditStatus);
+        if (i > 0) {
+            return new CommonResult(200,"顾问审核状态修改成功",i);
+        } else {
+            return new CommonResult(400,"顾问审核状态修改失败",null);
+        }
+    }
+
+    //根据审核状态筛选
+    @RequestMapping("/adviserState")
+    @ResponseBody
+    public CommonResult adviserState(int auditStatus) {
+        List<Adviser> adviserList = businessService.queryAdviserState(auditStatus);
+        return new CommonResult(200,"顾问审核状态列表",adviserList);
+    }
+
+    //批量删除
+    @RequestMapping("/deleteAdviser")
+    @ResponseBody
+    public CommonResult deleteAdviser(int[] adviserIds) {
+        for(int adviserId : adviserIds) {
+            businessService.deleteAdviser(adviserId);
+        }
+        return new CommonResult(200,"删除成功",null);
+    }
+
 
 }

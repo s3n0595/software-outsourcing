@@ -13,6 +13,9 @@ public class Adviser {
   private int providerId;
   private int serviceTypeId;
   private int auditStatus;
+  private DemandType demandType;
+  private ProviderInfo providerInfo;
+  private ProviderAccount providerAccount;
 
 
 
