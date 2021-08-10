@@ -55,6 +55,9 @@ public class OrderController {
         if(cap.getType().equals("雇主")){
             int employerId=empCenterService.seleEmpId(cap.getPhoneNumber());
             empCenterService.editEmpBalance(employerId, Double.parseDouble(total_amount));
+        }else if(cap.getType().equals("服务商")){
+            int providerId= empCenterService.seleProId(cap.getPhoneNumber());
+            empCenterService.editProBalance(providerId, Double.parseDouble(total_amount));
         }
         CapitalFlow capitalFlow=new CapitalFlow();
         capitalFlow.setTradeNo(out_trade_no);

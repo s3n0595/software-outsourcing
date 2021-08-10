@@ -72,6 +72,18 @@
     <select id="selempBalance" resultType="int">
         select balance from employerInfo where employerId=#{employerId}
     </select>
+
+    <select id="selproBalance" resultType="int">
+        select balance from providerInfo where providerId=#{providerId}
+    </select>
+
+    <select id="seleProId" resultType="int">
+        select providerId from providerAccount where phoneNumber=#{phoneNumber}
+    </select>
+
+    <update id="editProBalance">
+        update providerInfo set balance=balance+#{balance} where providerId=#{providerId}
+    </update>
 </mapper>
 
 

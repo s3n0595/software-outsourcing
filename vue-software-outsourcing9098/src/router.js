@@ -71,6 +71,11 @@ let softwareOutsourcing = new Router({
       component: () => import('./views/Employer/EmployerCenter.vue'),
       children: [
         {
+          path: '/employerCenter/information',
+          name: 'information',
+          component: () => import('./views/Employer/Children/Information.vue')
+        },
+        {
           path: '/employerCenter/adddemand',
           name: 'adddemand',
           component: () => import('./views/Employer/Children/Adddemand.vue')
@@ -93,7 +98,7 @@ let softwareOutsourcing = new Router({
         {
           path: '/employerCenter/map',
           name: 'map',
-          component: () => import('./views/Employer/Children/Map.vue')
+          component: () => import('./views/Map.vue')
         },
         {
           path: '/employerCenter/buywork',
@@ -104,6 +109,11 @@ let softwareOutsourcing = new Router({
           path: '/employerCenter/kefu',
           name: 'kefu',
           component: () => import('./views/Employer/Children/Kefu.vue')
+        },
+        {
+          path: '/employerCenter/liaotian',
+          name: 'liaotian',
+          component: () => import('./views/Employer/Children/Liaotian.vue')
         },
       ]
     },
@@ -122,6 +132,26 @@ let softwareOutsourcing = new Router({
           path: '/providerCenter/updatePwd',
           name: 'updatePwd',
           component: () => import('./views/Provider/updatePwd.vue'),
+        },
+        {
+          path: '/providerCenter/mywork',
+          name: 'mywork',
+          component: () => import('./views/Provider/Mywork.vue'),
+        },
+        {
+          path: '/providerCenter/map',
+          name: 'map',
+          component: () => import('./views/Map.vue')
+        },
+        {
+          path: '/providerCenter/accountviewp',
+          name: 'accountviewp',
+          component: () => import('./views/Provider/Accountpreview.vue')
+        },
+        {
+          path: '/providerCenter/depositp',
+          name: 'depositp',
+          component: () => import('./views/Provider/deposit.vue')
         },
       ]
     },

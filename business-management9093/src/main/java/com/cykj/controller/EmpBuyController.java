@@ -71,4 +71,18 @@ public class EmpBuyController {
         }
     }
 
+    @RequestMapping("probuylist")//服务商个人中心交易作品
+    public List<Map<String, Object>> probuyList(int providerId){
+        return empBuyService.selprobuyList(providerId);
+    }
+    @RequestMapping("probuysteps")//服务商完成进度条
+    public int proeditSteps(TradeWork tradeWork){
+       int i=empBuyService.editproState(tradeWork);
+       if(i>0){
+           return 1;
+       }else{
+           return 0;
+       }
+
+    }
 }

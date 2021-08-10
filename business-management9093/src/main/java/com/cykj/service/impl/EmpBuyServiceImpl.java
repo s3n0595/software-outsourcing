@@ -57,4 +57,14 @@ public class EmpBuyServiceImpl implements EmpBuyService {
     public int editState(TradeWork tradeWork) {
         return empBuyMapper.editState(tradeWork);
     }
+
+    @Override
+    public List<Map<String, Object>> selprobuyList(Integer providerId) {
+        return empBuyMapper.selprobuyList(providerId);
+    }
+
+    @Override
+    public int editproState(TradeWork tradeWork) {
+        return empBuyMapper.editproState(tradeWork);
+    }
 }

@@ -8,7 +8,7 @@
             <div class="clearfix" style="font-size: 15px">
               <span>基本信息</span>
             </div>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/employerCenter/information" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">账户信息</span>
             </el-menu-item>
@@ -16,10 +16,10 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">修改密码</span>
             </el-menu-item>
-<!--            <el-menu-item index="/admin/user" style="height: 50px;">-->
-<!--              <i class="el-icon-star-off"></i>-->
-<!--              <span slot="title">码市认证</span>-->
-<!--            </el-menu-item>-->
+            <el-menu-item index="/employerCenter/liaotian" style="height: 50px;">
+              <i class="el-icon-star-off"></i>
+              <span slot="title">聊天</span>
+            </el-menu-item>
           </el-card>
 
           <el-card class="box-card">
