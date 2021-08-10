@@ -85,4 +85,19 @@ public class EmpCenterServiceImpl implements EmpCenterService {
         int i=empCenterMapper.selempBalance(eid);
         return i;
     }
+
+    @Override
+    public int selproBalance(int providerId) {
+        return empCenterMapper.selproBalance(providerId);
+    }
+
+    @Override
+    public int seleProId(String phoneNumber) {
+        return empCenterMapper.seleProId(phoneNumber);
+    }
+
+    @Override
+    public int editProBalance(int providerId, double balance) {
+        return empCenterMapper.editProBalance(providerId,balance);
+    }
 }

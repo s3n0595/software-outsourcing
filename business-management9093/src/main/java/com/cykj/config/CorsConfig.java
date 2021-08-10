@@ -23,6 +23,8 @@ public class CorsConfig {
         corsConfiguration.addAllowedHeader("*");
         //允许所有方法
         corsConfiguration.addAllowedMethod("*");
+        //最终的结果是可以 在跨域请求的时候获取同一个 session
+        corsConfiguration.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(source);
     }

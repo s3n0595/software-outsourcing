@@ -147,7 +147,8 @@ export default {
                     worksId:this.work.worksId,
                     tradeStatus:1,
                     worksPrice:this.work.worksPrice,
-                    tradeOrder:this.order
+                    tradeOrder:this.order,
+                    providerId:this.work.providerId
                   })).then(resp=>{
                     this.$message({
                       message: "购买成功，请前往个人中心查看",

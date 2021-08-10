@@ -12,8 +12,8 @@
     </update>
 
     <insert id="addtradeWork" parameterType="com.cykj.bean.TradeWork">
-        insert tradeWork(employerId,worksId,tradeTime,tradeStatus,tradeOrder)
-         values (#{employerId},#{worksId},#{tradeTime},#{tradeStatus},#{tradeOrder});
+        insert tradeWork(employerId,worksId,tradeTime,tradeStatus,tradeOrder,providerId)
+         values (#{employerId},#{worksId},#{tradeTime},#{tradeStatus},#{tradeOrder},#{providerId});
     </insert>
 
     <select id="oldtradeWork" parameterType="com.cykj.bean.TradeWork" resultType="com.cykj.bean.TradeWork">
@@ -32,6 +32,20 @@
 
     <update id="editState" parameterType="com.cykj.bean.TradeWork">
         update tradeWork set tradeStatus=#{tradeStatus} where tradeWorksId=#{tradeWorksId} and employerId=#{employerId}
+    </update>
+
+    <select id="selprobuyList" resultType="java.util.Map" parameterType="int">
+        SELECT t1.*,t2.worksTitle,t2.worksPrice,t2.annexPath,t3.employerName,t3.phoneNumber,t4.demandTypeName
+        FROM tradeWork t1
+        INNER JOIN works t2
+        INNER JOIN employerAccount t3
+        INNER JOIN demandType t4
+        ON t1.worksId = t2.worksId
+        AND t1.employerId = t3.employerId AND t2.worksTypeId=t4.demandTypeId WHERE t1.providerId =#{providerId}
+    </select>
+
+    <update id="editproState" parameterType="com.cykj.bean.TradeWork">
+        update tradeWork set tradeStatus=#{tradeStatus} where tradeWorksId=#{tradeWorksId}
     </update>
 </mapper>
 

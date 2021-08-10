@@ -20,7 +20,10 @@ public interface EmpCenterMapper {
     CapitalFlow seleEmpphone(@Param("tradeNo") String tradeNo);//通过订单号查找充值对象
     int seleEmpId(@Param("phoneNumber") String phoneNumber);//通过手机号查找雇主ID
     int updFlow(CapitalFlow capitalFlow);//修改充值记录
-    int editEmpBalance(@Param("employerId") int employerId,@Param("balance") double balance);
-    int selempBalance(@Param("employerId") int eid);//查询账户余额
+    int editEmpBalance(@Param("employerId") int employerId,@Param("balance") double balance);//修改雇主余额
+    int selempBalance(@Param("employerId") int eid);//查询雇主账户余额
     int updatePwd(@Param("employerId") int employerId,@Param("employerPassword") String employerPassword,@Param("password") String password);
+    int selproBalance(@Param("providerId") int providerId);//查询服务商余额
+    int seleProId(@Param("phoneNumber") String phoneNumber);//通过手机号查找服务商ID
+    int editProBalance(@Param("providerId") int providerId,@Param("balance") double balance);//修改服务商余额
 }
