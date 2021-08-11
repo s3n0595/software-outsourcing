@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.TradeWorksMapper">
+    <select id="getTradeWordList" resultMap="getTradeWordLists">
+        select tW.tradeWorksId,tW.employerId,tW.providerId,tW.worksId,tW.tradeStatus,tW.tradeTime,tW.tradeOrder,
+               eA.employerName,pA.providerName,
+               w.worksTitle,w.worksDescribe,w.worksPrice,w.releaseTime
+        from tradeWork tW join employerAccount eA on tW.employerId = eA.employerId
+                          join providerAccount pA on tW.providerId = pA.providerId
+                          join works w on tW.worksId = w.worksId
+    </select>
+    <resultMap id="getTradeWordLists" type="com.cykj.bean.TradeWork">
+        <id column="tradeWorksId" property="tradeWorksId"></id>
+        <result column="employerId" property="employerId"></result>
+        <result column="providerId" property="providerId"></result>
+        <result column="worksId" property="worksId"></result>
+        <result column="tradeStatus" property="tradeStatus"></result>
+        <result column="tradeTime" property="tradeTime"></result>
+        <result column="tradeOrder" property="tradeOrder"></result>
+        <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+            <result column="employerName" property="employerName"></result>
+        </association>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"></result>
+        </association>
+        <association property="works" javaType="com.cykj.bean.Works">
+            <result column="worksTitle" property="worksTitle"></result>
+            <result column="worksDescribe" property="worksDescribe"></result>
+            <result column="worksPrice" property="worksPrice"></result>
+            <result column="releaseTime" property="releaseTime"></result>
+        </association>
+    </resultMap>
+
+</mapper>

@@ -227,7 +227,7 @@ export default {
                 roleName: this.roleForm.roleName,
               }
               roleNameExist(params).then(res=>{
-                if ('' !== res.data){
+                if (this.roleForm.roleId !== res.data.roleId){
                   callback(new Error("该角色名已被占用"));
                 }else {
                   callback();

@@ -89,7 +89,7 @@ export const roleNameExist = params =>{
 export const getMenuData = params =>{
     return axios.get(`${baseUrl}/userinfo/getMenuData`,{params: params});
 }
-// 菜单管理
+// ====================================菜单管理===============================//
 // 菜单名名查重
 export const menuNameExist = params =>{
     return axios.get(`${baseUrl}/userinfo/menuNameExist`,{params: params});
@@ -127,6 +127,16 @@ export const getSearchDemand = params =>{
 export const getSearchState = params =>{
     return axios.get(`${baseUrl}/Demand/getSearchState`,{params: params});
 }
+// ====================================订单管理===============================//
+// 获取作品交易列表
+export const getTradeWordList = params =>{
+    return axios.get(`${baseUrl}/tradeManage/getTradeWordList`,{params: params});
+}
+
+
+
+
+
 
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})

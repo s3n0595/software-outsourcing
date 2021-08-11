@@ -23,7 +23,6 @@
           :data="tableDataList"
           border
           class="table"
-          ref="multipleTable"
           @selection-change="handleSelectionChange"
           v-loading="isShowloading"
       >

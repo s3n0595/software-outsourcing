@@ -173,6 +173,16 @@ export default new Router({
                     component: resolve => require(['../components/page/businessManage/AdviserManage'], resolve),
                     meta:{title: '顾问管理'}
                 },
+                {
+                    path: '/tradeRecordManage',
+                    component: resolve => require(['../components/page/userManage/TradeRecordManage'], resolve),
+                    meta:{title: '投标交易'}
+                },
+                {
+                    path: '/tradeWorkManage',
+                    component: resolve => require(['../components/page/userManage/TradeWorkManage'], resolve),
+                    meta:{title: '作品交易'}
+                },
             ]
         },
         {
