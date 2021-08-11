@@ -3,6 +3,9 @@ package com.cykj.mapper;
 import com.cykj.bean.TenderRecord;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @version 1.0
  * @author: yitong
@@ -12,4 +15,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TenderRecodeMapper {
 	int insertRecode(TenderRecord tenderRecord);
+	List<Map<String, Object>> queryTenderRecordById(int employerId);
+	int deleteRecode(TenderRecord tenderRecord);
 }

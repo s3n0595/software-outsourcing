@@ -38,6 +38,10 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">购买中心</span>
             </el-menu-item>
+            <el-menu-item index="/employerCenter/demandList" style="height: 50px;">
+              <i class="el-icon-star-off"></i>
+              <span slot="title">我的需求</span>
+            </el-menu-item>
           </el-card>
 
           <el-card class="box-card">

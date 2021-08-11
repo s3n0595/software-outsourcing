@@ -16,6 +16,6 @@ public class TenderRecord {
   private String existTime;
   private double price;
   private String projectTime;
-
+  private String annexPath;
 
 }

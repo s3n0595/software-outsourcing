@@ -5,9 +5,15 @@
 <mapper namespace="com.cykj.mapper.TenderRecodeMapper">
 
     <insert id="insertRecode" parameterType="com.cykj.bean.TenderRecord">
-        insert into tenderRecord (tenderId,demandId)
-        values (#{tenderId},#{demandId});
+        insert into tenderRecord (tenderId,demandId,unionStatus,existTime,price,projectTime,annexPath)
+        values (#{tenderId},#{demandId},#{unionStatus},#{existTime},#{price},#{projectTime},#{annexPath});
     </insert>
+    <select id="queryTenderRecordById" resultType="java.util.Map" parameterType="int">
+        select * from tenderRecord  where demandId=#{demandId};
+    </select>
+    <delete id="deleteRecode" parameterType="com.cykj.bean.TenderRecord">
+        delete from tenderRecord where tenderRecordId = #{tenderRecordId};
+    </delete>
 </mapper>
 
 

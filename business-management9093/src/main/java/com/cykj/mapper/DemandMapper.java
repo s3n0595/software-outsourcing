@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.Demand;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.Map;
 @Repository
 public interface DemandMapper {
 	List<Map<String, Object>> queryAllDemand(int count);
+	List<Map<String, Object>> queryDemandById(int employerId);
+	int updateDemandStatus(@Param("demandId") int demandId, @Param("status") int status);
 }
