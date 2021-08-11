@@ -18,4 +18,5 @@ public class CreditDetails {
     private String remarks;
     private String creditTime;
     private String type;
+    private String score;
 }
