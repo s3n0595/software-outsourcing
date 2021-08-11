@@ -17,9 +17,22 @@
         select count(*) from employerAccount where phoneNumber = #{phoneNumber} and employerPassword = #{employerPassword}
     </select>
 
-    <select id="queryEmployerIdName" resultType="com.cykj.bean.EmployerAccount">
-        select employerId,employerName,phoneNumber,role from employerAccount where phoneNumber = #{phoneNumber}
+    <select id="queryEmployerIdName" resultMap="employerInfo">
+        select eA.employerId,eA.employerName,eA.phoneNumber,eA.role,eI.headPath
+        from employerAccount eA
+            JOIN employerInfo eI
+                ON eA.employerId = eI.employerId
+        where eA.phoneNumber = #{phoneNumber}
     </select>
+    <resultMap id="employerInfo" type="com.cykj.bean.EmployerAccount">
+        <id column="employerId" property="employerId"/>
+        <result column="employerName" property="employerName"/>
+        <result column="phoneNumber" property="phoneNumber"/>
+        <result column="role" property="role"/>
+        <association property="employerInfo" javaType="com.cykj.bean.EmployerInfo">
+            <result column="headPath" property="headPath"/>
+        </association>
+    </resultMap>
 
     <insert id="addEmployerInfo" parameterType="com.cykj.bean.EmployerAccount">
         insert employerInfo(employerId) values(#{employerId})
