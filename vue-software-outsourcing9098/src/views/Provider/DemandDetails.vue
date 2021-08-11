@@ -1,5 +1,4 @@
 <template>
-
     <el-main>
       <div style="background-color: #f0f2f5">
         <div id="main">
@@ -63,9 +62,60 @@
               <a :href="'api/images/'+this.demand.annexPath" download="">{{this.demand.annexPath}}</a>
             </div>
           </div>
+          <button @click="test">建立连接</button>
+          <button @click="sendMessage">发送</button>
         </div>
       </div>
+      <el-dialog title="申请参与项目" :visible.sync="dialogFormVisible">
+        <el-form ref="applyForm" :model="form">
+          <el-input v-model="form.providerId" type="hidden"></el-input>
 
+          <el-form-item label="预算价格" :label-width="formLabelWidth">
+            <el-input v-model="form.price" placeholder="我希望能获得多少报酬？" autocomplete="off" style="margin-left: 25px;width: 250px">
+              <template slot="append">元</template>
+            </el-input>
+
+          </el-form-item>
+          <el-form-item label="预算工期" :label-width="formLabelWidth">
+            <el-input v-model="form.projectTime" placeholder="我有信心能在多少工期内完成" autocomplete="off"
+                      style="margin-left: 25px;width: 250px;">
+              <template slot="append">周</template>
+            </el-input>
+
+          </el-form-item>
+          <el-form-item label="投标身份" :label-width="formLabelWidth">
+            <el-radio-group v-model="radio" style="margin-left: 20px;" size="mini">
+              <el-radio label="个人"></el-radio>
+              <el-radio label="联盟"></el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="简历信息" :label-width="formLabelWidth">
+            <el-upload
+                    ref="upload"
+                    action="api/demand/join"
+                    accept=".doc,.docx"
+                    list-type="text"
+                    drag
+                    :file-list="fileList"
+                    :auto-upload="false"
+                    :data="form"
+                    :on-success="uploadSuccess"
+                    :before-upload="handleBeforeUpload"
+                    :on-preview="handlePictureCardPreview"
+                    :on-remove="handleRemove"
+                    :on-exceed="handleExceed"
+                    :on-change="uploadChange">
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            </el-upload>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="uploadFile()">确 定</el-button>
+        </div>
+      </el-dialog>
     </el-main>
 
 
@@ -80,14 +130,69 @@ export default {
   name: "GoodsList",
   data () {
     return {
+      websocket: null, // WebSocket对象
       count: 0,
       demand:{},
       searchInfo:"",
       demandList:{},
-      status:false
+      status:false,
+      fileList: [],
+      dialogFormVisible: false,
+      formLabelWidth: "120px",
+      radio: "",
+      form: {
+        demandId:"",
+        price: "",
+        projectTime: "",
+        tenderId: "",
+      },
     }
   },
   methods: {
+    test() {
+      console.log("建立连接");
+      //判断当前浏览器是否支持WebSocket
+      if ("WebSocket" in window) {
+        this.websocket = new WebSocket(
+                "ws://127.0.0.1:9093/webSocket/provider/" + JSON.parse(sessionStorage.getItem("user")).providerId
+        );
+      } else {
+        alert("不支持建立socket连接");
+      }
+      //连接发生错误的回调方法
+      this.websocket.onerror = function () {
+
+      };
+      //连接成功建立的回调方法
+      this.websocket.onopen = function (event) {
+
+      };
+      //接收到消息的回调方法
+      var that = this;
+      this.websocket.onmessage = function (event) {
+        console.log(event);
+
+      };
+      //连接关闭的回调方法
+      this.websocket.onclose = function () {
+      };
+      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+      window.onbeforeunload = function () {
+        this.websocket.close();
+      };
+
+    },
+    // 发送消息
+    sendMessage: function() {
+      let socketMsg = { option:"test", msg: "这是一条消息", senderRole: "provider" };
+      this.websocket.send(JSON.stringify(socketMsg));
+    },
+    // 上传文件之前的钩子
+    handleBeforeUpload(file){},
+    handlePictureCardPreview(){},
+    handleRemove(){},
+    handleExceed(){},
+    uploadChange(){},
     joinDemand() {
       console.log(JSON.parse(sessionStorage.getItem("user")))
       if(JSON.parse(sessionStorage.getItem("user")) == null) {
@@ -97,19 +202,27 @@ export default {
         });
       }
       else {
-        let params = {
-          tenderId: JSON.parse(sessionStorage.getItem("user")).providerId,
-          demandId: this.demand.demandId
-        };
-        this.$axios.get('demand/join', {params: params}).then(res => {
-          this.$message({
-            message: "参与成功",
-            type: "success"
-          });
-        })
+        this.dialogFormVisible = true;
       }
 
-    }
+    },
+    uploadFile() {
+      this.form.tenderId = JSON.parse(sessionStorage.getItem("user")).providerId;
+      this.form.demandId = this.demand.demandId;
+      console.log(this.form);
+      console.log(this.fileList);
+      this.$refs.upload.submit();
+    },
+    // 上传文件成功后的回调
+    uploadSuccess() {
+      this.$message({
+          message: "参与成功",
+          type: "success"
+        });
+      this.dialogFormVisible = false;
+      this.form = {tenderId: JSON.parse(sessionStorage.getItem("user")).providerId, demandId: this.demand.demandId};
+      this.$refs.upload.clearFiles();
+    },
   },
   mounted() {
     console.log(JSON.parse(sessionStorage.getItem("demand")));

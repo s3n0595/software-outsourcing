@@ -40,18 +40,17 @@ public class WorksServiceImpl implements WorksService {
 		System.out.println(realPath);
         works.setAnnexPath(file.getOriginalFilename());
 		works.setAuditStatus(7);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		works.setReleaseTime(sdf.format(new Date()));
 		try {
 			file.transferTo(new File(realPath + '/' + works.getAnnexPath()));
+			if(worksMapper.addWorks(works) > 0) {
+				return true;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(worksMapper.addWorks(works) > 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	@Override
