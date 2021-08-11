@@ -1,10 +1,7 @@
 package com.cykj.controller;
 
 
-import com.cykj.bean.CommonResult;
-import com.cykj.bean.Demand;
-import com.cykj.bean.DemandType;
-import com.cykj.bean.EmployerPwd;
+import com.cykj.bean.*;
 import com.cykj.service.EmpCenterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -49,8 +47,6 @@ public class EmpCenterController {
     //雇主添加需求
     @RequestMapping("file")
     public String getDemandFile(MultipartFile file, Demand demand){
-        System.out.println("!!!!!!!!!!!!!:"+file);
-
         if(file!=null){
             try {
                 String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
@@ -150,10 +146,66 @@ public class EmpCenterController {
         return i;
     }
 
+    //修改雇主邮箱
+    @RequestMapping("editEmail")
+    public int empEmail(EmployerInfo employerInfo){
+       int i=empCenterService.updateEmpEmail(employerInfo);
+       if(i>0){
+           return 1;
+       }else {
+           return 0;
+       }
+    }
 
+    //雇主、服务商修改账户头像
+    @RequestMapping("uploadhead")
+    public int editHead(MultipartFile file, @RequestParam("Id") int Id,@RequestParam("role") String role){
+        try {
+            String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
+            File fileDir = new File(realPath);
+            if (!fileDir.exists() && !fileDir.isDirectory()) {
+                fileDir.mkdirs();
+            }
+            String headName=file.getOriginalFilename();
+            File saveFile = new File(realPath, headName);
+            file.transferTo(saveFile);
+            if(role.equals("emp")){
+                empCenterService.updateHead(Id,headName);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
+    //个人中心基本信息--查询
+    @RequestMapping("centerInfo")
+    public Map<String,Object> selempInfo(int employerId){
+        return empCenterService.selempInfo(employerId);
+    }
+
+    //雇主个人中心修改名称
+    @RequestMapping("editEmpName")
+    public int editEName(EmployerAccount employerAccount){
+        int i=empCenterService.updateEmpName(employerAccount);
+        if(i>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    //查看信用分明细
+    @RequestMapping("redCredit")
+    public List<CreditDetails> readCredit(CreditDetails creditDetails){
+        return empCenterService.selCredit(creditDetails);
+    }
     //查询服务商账户余额
     @RequestMapping("selprobalance")
     public int proBalance(@RequestParam("providerId") int providerId){
         return empCenterService.selproBalance(providerId);
     }
+
+
 }

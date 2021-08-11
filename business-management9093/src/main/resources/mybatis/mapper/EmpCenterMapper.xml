@@ -84,6 +84,28 @@
     <update id="editProBalance">
         update providerInfo set balance=balance+#{balance} where providerId=#{providerId}
     </update>
+
+    <update id="updateEmpEmail" parameterType="com.cykj.bean.EmployerInfo">
+        update employerInfo set email=#{email} where employerId=#{employerId}
+    </update>
+
+    <update id="updateHead">
+        update employerInfo set headPath=#{headPath} where employerId=#{employerId}
+    </update>
+
+    <select id="selempInfo" resultType="java.util.Map" parameterType="int">
+        SELECT t1.*,t2.employerProfile,t2.email,t2.credit,t2.balance,t2.headPath
+        from employerAccount t1,employerInfo t2
+        where t1.employerId=t2.employerId and t1.employerId=#{employerId}
+    </select>
+
+    <update id="updateEmpName" parameterType="com.cykj.bean.EmployerAccount">
+        update employerAccount set employerName=#{employerName} where employerId=#{employerId}
+    </update>
+
+    <select id="selCredit" resultType="com.cykj.bean.CreditDetails">
+        select * from creditDetails where userId=#{userId} and type=#{type}
+    </select>
 </mapper>
 
 
