@@ -10,10 +10,8 @@ import lombok.NoArgsConstructor;
 public class TradeRecord {
 
   private int tradeRecordId;
-  private int employerId;
-  private int providerId;
+  private int tenderRecordId;
   private String tradeTime;
-  private double tradePrice;
   private int tradeStatus;
 
 

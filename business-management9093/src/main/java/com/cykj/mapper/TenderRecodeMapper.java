@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.TenderRecord;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface TenderRecodeMapper {
 	int insertRecode(TenderRecord tenderRecord);
 	List<Map<String, Object>> queryTenderRecordById(int employerId);
 	int deleteRecode(TenderRecord tenderRecord);
+	List<Map<String, Object>> queryTenderById(int provider);
+	int updateRecode(TenderRecord tenderRecord);
+	Map<String, Object> queryTenderProviderById(int demandId);
 }

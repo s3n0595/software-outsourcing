@@ -49,12 +49,27 @@ public class DemandController {
 		System.out.println(employerId);
 		return demandService.queryDemandById(employerId);
 	}
+	@RequestMapping("/recruitProvider")
+	@ResponseBody
+	public void recruitProvider(int demandId){
+		System.out.println("================需求状态更改为招募中===========");
+		System.out.println(demandId);
+		demandService.recruitProvider(demandId);
+	}
 	@RequestMapping("/tenderList")
 	@ResponseBody
 	public List<Map<String, Object>> tenderList(int demandId){
 		System.out.println("===============投标人列表===========");
 		System.out.println(demandId);
 		return demandService.queryTenderRecordById(demandId);
+	}
+
+	@RequestMapping("/tenderProvider")
+	@ResponseBody
+	public Map<String, Object> tenderProvider(int demandId){
+		System.out.println("==============成功投标的服务商===========");
+		System.out.println(demandId);
+		return demandService.queryTenderProviderById(demandId);
 	}
 	@RequestMapping("/acceptTender")
 	@ResponseBody
@@ -78,5 +93,49 @@ public class DemandController {
 			return "failed";
 		}
 	}
+	@RequestMapping("/myTender")
+	@ResponseBody
+	public List<Map<String, Object>> myTenderList(int providerId){
+		System.out.println("===============服务商投标列表===========");
+		System.out.println(providerId);
+		return demandService.queryTenderById(providerId);
+	}
+	@RequestMapping("/advanceCharge")
+	@ResponseBody
+	public void advanceCharge(int employerId, int tradeRecordId){
+		System.out.println("===============雇主预付款===========");
+		System.out.println(employerId);
+		System.out.println(tradeRecordId);
+		demandService.advanceCharge(employerId, tradeRecordId);
+	}
+	@RequestMapping("/deliveryProject")
+	@ResponseBody
+	public void deliveryProject(int tradeRecordId, int demandId){
+		System.out.println("===============开发商交付项目===========");
+		System.out.println(tradeRecordId);
+		demandService.deliveryProject(tradeRecordId, demandId);
+	}
+	@RequestMapping("/checkProject")
+	@ResponseBody
+	public void checkProject(int tradeRecordId){
+		System.out.println("===============雇主核验项目===========");
+		System.out.println(tradeRecordId);
+		demandService.checkProject(tradeRecordId);
+	}
+	@RequestMapping("/restCharge")
+	@ResponseBody
+	public void restCharge(int employerId, int tradeRecordId){
+		System.out.println("===============雇主付尾款===========");
+		System.out.println(employerId);
+		System.out.println(tradeRecordId);
+		demandService.restCharge(employerId, tradeRecordId);
+	}
+	@RequestMapping("/toEvaluate")
+	@ResponseBody
+	public void toEvaluate(int demandId){
+		System.out.println("===============雇主评价===========");
+		demandService.toEvaluate(demandId);
+	}
+
 
 }
