@@ -74,28 +74,28 @@
         <span  style="margin-left: 100px;">{{infoList.credit}}</span>
         <div style="margin-top: -2%"><span style="margin-left: 80%;"><el-link @click="readCredit" type="primary">查看信用详情</el-link></span></div>
       </div>
-      <div>
+      <div v-if="creditShow">
         <el-table
-            v-if="creditShow"
             :data="tableData"
-            style="width: 100%"
+            style="width: 90%"
             :default-sort = "{prop: 'date', order: 'descending'}">
           <el-table-column
               prop="creditTime"
               label="日期"
               sortable
-              width="180">
+              width="280">
           </el-table-column>
           <el-table-column
               prop="remarks"
               label="备注"
-              width="180">
+              width="520">
           </el-table-column>
           <el-table-column
-              prop="userId"
-              label="地址">
+              prop="score"
+              label="详情">
           </el-table-column>
         </el-table>
+        <p style="margin-top: 20px;margin-left: 40%"><el-link @click="noCredit" type="primary">▲收起</el-link></p>
       </div>
     </div>
   </div>
@@ -207,11 +207,16 @@ export default {
       this.nameEdit=true,
       this.nameInput=false
     },
+    noCredit(){
+      this.creditShow=false;
+    },
     // 向后端发请求的点击事件
     getCode () {
       let _this = this
       if (this.ruleForm.email === '') {
         _this.$message.error('请先输入邮箱再点击获取验证码')
+      }else if(this.ruleForm.email===this.infoList.email){
+        _this.$message.error('与原邮箱相同请重新输入邮箱')
       } else {
         this.$axios({
           method: 'post',
@@ -220,8 +225,7 @@ export default {
             'email': this.ruleForm.email
           }
         }).then(function (res) {
-          sessionStorage.setItem('checkCode', res.data.data)  // 这里我没用redis做缓存，用的浏览器sessionStorage+md5加密存下来的
-          console.log("验证码"+res.data.data)
+          sessionStorage.setItem('checkCode', res.data.data)
         })
         // 验证码倒计时
         if (!this.timer) {
@@ -295,7 +299,8 @@ export default {
         employerId:this.user.employerId
       })).then(res=>{
           this.infoList=res.data;
-          this.imageUrl='api/images/'+res.data.headPath
+          this.imageUrl='api/images/'+res.data.headPath;
+          this.ruleForm.email=res.data.email;
       })
     }
   },
