@@ -53,12 +53,14 @@
           <div class="header-user-con">
             <!-- 用户头像 -->
             <div class="user-avator">
+<!--              <img src="headImg">-->
+
               <img src="./assets/img/img.jpg">
             </div>
             <!-- 用户名下拉菜单 -->
             <el-dropdown class="user-name" trigger="click">
               <span class="el-dropdown-link">
-                {{username}}
+<!--                {{username}}-->
                 <i class="el-icon-caret-bottom"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
@@ -123,7 +125,8 @@ export default {
       isShow: false,
       log: false,
       info: false,
-      username:''
+      headImg:'',
+      // username:''
     };
   },
   created() {
@@ -131,7 +134,6 @@ export default {
       this.log = true;
     } else {
       this.log = false;
-      this.username = JSON.parse(sessionStorage.getItem('username'))
     };
   },
   updated() {
@@ -141,6 +143,8 @@ export default {
     if (this.user) {
       this.log = false
       this.info = true
+      this.headImg = this.headPath
+      // this.username = this.username
     } else {
       this.log = true
       this.info = false
@@ -176,7 +180,8 @@ export default {
     logout() {
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('token');
-      sessionStorage.removeItem('username')
+      // sessionStorage.removeItem('username')
+      sessionStorage.removeItem('headPath')
       this.$router.push("/");
     },
     personCenter() {
@@ -193,7 +198,8 @@ export default {
   },
   mounted() {
     this.token = JSON.parse(sessionStorage.getItem('token'))
-    this.username = JSON.parse(sessionStorage.getItem('username'))
+    this.headPath = JSON.parse(sessionStorage.getItem('headPath'))
+    // this.username = JSON.parse(sessionStorage.getItem('username'))
   }
 };
 

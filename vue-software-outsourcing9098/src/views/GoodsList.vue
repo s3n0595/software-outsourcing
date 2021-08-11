@@ -61,7 +61,7 @@
 
       </div>
       <div id="list">
-        <el-row v-for="item in demandList">
+        <el-row v-for="(item,index) in demandList" :key="index">
           <div class="goods" @click="viewDetails(item)">
             <el-col :span="6">
               <img :src="'api/images/bg_00' + (item.demandId%5) +'.png'" alt=""
