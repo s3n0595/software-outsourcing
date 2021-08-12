@@ -16,6 +16,9 @@
     <update id="updateDemandStatus">
         update demand set demandStatus = #{status} where demandId = #{demandId}
     </update>
+    <select id="selectDemandById" parameterType="int" resultType="com.cykj.bean.Demand">
+        select * from demand where demandId = #{demandId};
+    </select>
 </mapper>
 
 

@@ -91,7 +91,7 @@
                 </el-col>
                 <el-col :span="6">
                   <p>
-                    <el-button @click="">联系开发商</el-button>
+                    <el-button @click="openChatRoom(item.demandId)">联系开发商</el-button>
                   </p>
                   <p v-show="tenderProvider.tradeStatus==0">
                     <el-button @click="advanceCharge">预付款</el-button>
@@ -109,7 +109,34 @@
         </el-collapse-item>
       </el-collapse>
     </div>
+  <div id="chatRoom" v-show="showChatRoom">
+        <div id="roomTitle" >
+          <span>={{this.chatRoom.roomName}}=开发交流群</span>
+          <el-button size="mini" icon="el-icon-close" type="button" circle style="float: right;" @click="closeRoom"></el-button>
+          <div style="clear: both;"></div>
+        </div>
 
+        <div style="overflow: auto;display: flex;flex-direction: column-reverse;height: 300px">
+
+          <div v-for="item in historyList" style="height: auto;">
+            <div style="margin-top: 10px;">
+              <el-tag type="success" v-if="item.memberRole == 'provider'">服务商</el-tag>
+              <el-tag type="warning" v-else>雇主</el-tag>
+              <span v-else style="color:orange"></span>
+              {{item.memberName}} {{item.sendTime}}</div>
+            <div style="margin-top: 10px;">{{item.message}}</div>
+          </div>
+          <div style="text-align: center">
+            <el-button type="text" size="mini" @click="loadMore">加载更多</el-button>
+          </div>
+        </div>
+<!--        <el-divider></el-divider>-->
+        <el-input type="textarea" autosize v-model="context" :autosize="{ minRows: 3, maxRows: 3}">
+        </el-input>
+        <div>
+          <el-button type="primary" style="float: right;" @click="sendMessage">发送</el-button>
+        </div>
+      </div>
 
 <!--    <div style="margin-top: 30px" v-show="showTable">-->
 <!--      <el-table-->
@@ -167,7 +194,15 @@ export default {
       statu:"",
       showDetails:false,
       currentDemand:{},
-      succeed:false
+      succeed:false,
+      websocket:{},
+      chatRoom:{
+        chatRoomId:"",
+        roomName:"",
+      },
+      context:"",
+      showChatRoom:false,
+       historyList:{},
     };
   },
   methods:{
@@ -303,7 +338,7 @@ export default {
         type: "info"
       }).then(() => {
         this.$axios.get("/demand/acceptTender", {params: row}).then(response => {
-          this.getTenderList(row.demandId);
+          this.getMyDemandList();
         });
       });
     },
@@ -320,11 +355,131 @@ export default {
       this.$axios.get("/demand/myDemand", {params: {employerId: this.employer.employerId}}).then(response => {
         this.myDemand = response.data;
       });
-    }
+    },
+        openChatRoom(demandId){
+      let that = this;
+      //判断当前浏览器是否支持WebSocket
+      if ("WebSocket" in window) {
+        this.websocket = new WebSocket("ws://localhost:9093/webSocket/employer/" + this.employer.employerId + "/" + demandId);
+      } else {
+        alert("不支持建立socket连接");
+      }
+
+      //连接发生错误的回调方法
+      this.websocket.onerror = function () {};
+      //连接成功建立的回调方法
+      this.websocket.onopen = function (event) {
+      };
+      //接收到消息的回调方法
+      this.websocket.onmessage = function (event) {
+        console.log("===========服务器发来消息===========");
+        console.log(event.data);
+        let msg = event.data.split("::");
+        switch (msg[0]) {
+          case "room":
+            that.chatRoom.chatRoomId = msg[1];
+            that.chatRoom.roomName = msg[2];
+            that.showChatRoom = true;
+            let message = {
+              "option": "history"
+              , "chatRoomId": that.chatRoom.chatRoomId
+              , "current": 0 + ""
+            };
+            that.websocket.send(JSON.stringify(message));
+            break;
+          case "loadMore":
+            let list = JSON.parse(msg[1]);
+            for (let i = 0; i < list.length; i++) {
+              that.historyList.push(list[i]);
+            }
+
+            break;
+            case "append":
+              that.historyList.unshift(JSON.parse(msg[1])[0]);
+            break;
+          case "init":
+            that.historyList = JSON.parse(msg[1]);
+            break;
+        }
+      };
+      //连接关闭的回调方法
+      this.websocket.onclose = function () {};
+      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+      window.onbeforeunload = function () {
+        this.websocket.close();
+      };
+
+    },
+    closeRoom(){
+      this.showChatRoom = false;
+    },
+
+    loadMore(){
+      let message = {
+        "option": "loadMore"
+        , "chatRoomId": this.chatRoom.chatRoomId
+        , "current": this.historyList.length + ""
+      };
+      this.websocket.send(JSON.stringify(message));
+    },
+
+    sendMessage(){
+      let message = {
+        "option": "sendMessage"
+        , "chatRoomId": this.chatRoom.chatRoomId
+        , "memberRole": "employer"
+        , "memberId": this.employer.employerId + ""
+        , "memberName": this.employer.employerName
+        , "data": this.context
+      };
+      console.log(message);
+      this.websocket.send(JSON.stringify(message));
+      this.context = "";
+    },
   },
   mounted() {
     this.employer = JSON.parse(sessionStorage.getItem("user"));
     this.getMyDemandList();
+    dragElement(document.getElementById(("chatRoom")));
+
+    function dragElement(elmnt) {
+      var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      if (document.getElementById(elmnt.id + "header")) {
+        /* if present, the header is where you move the DIV from:*/
+        document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+      } else {
+        /* otherwise, move the DIV from anywhere inside the DIV:*/
+        elmnt.onmousedown = dragMouseDown;
+      }
+
+      function dragMouseDown(e) {
+        e = e || window.event;
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+      }
+
+      function closeDragElement() {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    }
   }
 }
 </script>
@@ -356,5 +511,26 @@ export default {
 
   p{
     padding-top: 20px;
+  }
+    #chatRoom {
+      position: fixed;
+      z-index: 9;
+      background-color: #f1f1f1;
+
+      border: 1px solid #d3d3d3;
+      width: 300px;
+      height: auto;
+      right: 10px;
+      top: 200px;
+  }
+
+  #roomTitle {
+      /*padding: 10px;*/
+      height: auto;
+      cursor: move;
+      z-index: 10;
+      background-color: #2196F3;
+      color: #fff;
+    text-align: center;
   }
 </style>

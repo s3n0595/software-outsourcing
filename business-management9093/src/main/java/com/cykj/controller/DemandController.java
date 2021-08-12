@@ -2,6 +2,7 @@ package com.cykj.controller;
 
 import com.cykj.bean.Demand;
 import com.cykj.bean.TenderRecord;
+import com.cykj.service.ChatService;
 import com.cykj.service.DemandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class DemandController {
 	@Autowired
 	private DemandService demandService;
+	@Autowired
+	private ChatService chatService;
 	@RequestMapping("/list")
 	@ResponseBody
 	public List<Map<String, Object>> queryDemandList(int count){
@@ -77,6 +80,7 @@ public class DemandController {
 		System.out.println("===============通过投标人===========");
 		System.out.println(tenderRecord);
 		if(demandService.acceptTender(tenderRecord)) {
+			chatService.createRoom(tenderRecord);
 			return "success";
 		} else {
 			return "failed";
