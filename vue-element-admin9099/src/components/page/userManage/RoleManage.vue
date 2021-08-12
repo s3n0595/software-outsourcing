@@ -242,7 +242,7 @@ export default {
         menu: [
           {required: true, validator: (rule,value,callback)=>{
               let arr = this.$refs.editTree.getCheckedKeys();
-              if (arr.length == 0 || !arr) {
+              if (arr.length === 0 || !arr) {
                 callback(new Error("请选择菜单"));
               } else {
                 callback();
@@ -290,7 +290,7 @@ export default {
           };
           this.addUserVisible = false;
           addRole(params).then(res=>{
-            if ("添加成功" == res.data){
+            if ("添加成功" === res.data){
               this.$message({
                 message: "添加成功",
                 type: "success",
