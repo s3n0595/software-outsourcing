@@ -37,6 +37,10 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">作品交易</span>
             </el-menu-item>
+            <el-menu-item index="/providerCenter/myTenderList" style="height: 50px;">
+              <i class="el-icon-star-off"></i>
+              <span slot="title">我的投标</span>
+            </el-menu-item>
           </el-card>
 
           <el-card class="box-card">

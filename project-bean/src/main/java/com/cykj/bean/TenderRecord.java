@@ -17,5 +17,6 @@ public class TenderRecord {
   private double price;
   private String projectTime;
   private String annexPath;
+  private int applyStatus;
 
 }
