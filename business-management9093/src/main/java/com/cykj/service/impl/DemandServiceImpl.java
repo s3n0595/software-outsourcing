@@ -37,8 +37,40 @@ public class DemandServiceImpl implements DemandService {
 	private TradeRecordMapper tradeRecordMapper;
 
 	@Override
-	public List<Map<String, Object>> queryAllDemand(int count) {
-		return demandMapper.queryAllDemand(count);
+	public List<Map<String, Object>> queryAllDemand(int count, String type, String price, String time) {
+		int leftPrice = -1, rightPrice = -1, leftTime = -1 , rightTime = -1;
+		switch (price){
+			case "0-5K":
+				leftPrice = 0;
+				rightPrice = 5000;
+				break;
+
+			case "5K-10K":
+				leftPrice = 5000;
+				rightPrice = 10000;
+				break;
+			case "10K-50K":
+				leftPrice = 10000;
+				rightPrice = 50000;
+				break;
+			case "50K以上":
+				leftPrice = 50000;
+				break;
+		}
+		switch (time){
+				case "小于10周":
+				rightTime = 10;
+				break;
+
+			case "10周到30周":
+				leftTime = 10;
+				rightTime = 30;
+				break;
+			case "大于30周":
+				leftTime = 30;
+				break;
+		}
+		return demandMapper.queryAllDemand(count, type, leftPrice, rightPrice, leftTime, rightTime);
 	}
 
 	@Override
