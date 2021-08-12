@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.Adviser;
+import com.cykj.bean.ProviderAccount;
 import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Mapper;
@@ -48,8 +49,11 @@ public interface BusinessMapper {
     //获取顾问列表
     List<Adviser> queryAllAdviser();
 
+    //获取顾问关键词搜索出的id
+    List<ProviderAccount> queryIdByName(@Param("providerName") String providerName);
+
     //顾问关键词
-    List<Adviser> queryAdviserByProviderName(@Param("providerName") String providerName);
+    Adviser queryAdviserByProviderId(@Param("providerId") int providerId);
 
     //审核顾问
     int updateAdviser(@Param("adviserId") int adviserId, @Param("auditStatus") int auditStatus);

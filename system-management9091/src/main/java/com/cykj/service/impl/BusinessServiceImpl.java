@@ -1,6 +1,7 @@
 package com.cykj.service.impl;
 
 import com.cykj.bean.Adviser;
+import com.cykj.bean.ProviderAccount;
 import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import com.cykj.mapper.BusinessMapper;
@@ -76,9 +77,15 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public List<Adviser> queryAdviserByProviderName(String providerName) {
-        return businessMapper.queryAdviserByProviderName(providerName);
+    public List<ProviderAccount> queryIdByName(String providerName) {
+        return businessMapper.queryIdByName(providerName);
     }
+
+    @Override
+    public Adviser queryAdviserByProviderId(int providerId) {
+        return businessMapper.queryAdviserByProviderId(providerId);
+    }
+
 
     @Override
     public int updateAdviser(int adviserId, int auditStatus) {

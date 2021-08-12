@@ -1,6 +1,7 @@
 package com.cykj.service.impl;
 
 import com.cykj.bean.TradeWork;
+import com.cykj.bean.Works;
 import com.cykj.mapper.PortalMapper;
 import com.cykj.service.PortalService;
 import com.cykj.vo.SuccessfulCase;
@@ -41,7 +42,13 @@ public class PortalServiceImpl implements PortalService {
     }
 
     @Override
-    public List<SuccessfulCase> queryByTitle(String worksTitle) {
-        return portalMapper.queryByTitle(worksTitle);
+    public List<Works> queryWorksIdByTitle(String worksTitle) {
+        return portalMapper.queryWorksIdByTitle(worksTitle);
     }
+
+    @Override
+    public TradeWork querySearchById(int worksId) {
+        return portalMapper.querySearchById(worksId);
+    }
+
 }

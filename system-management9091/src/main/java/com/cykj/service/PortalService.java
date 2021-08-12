@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 import com.cykj.bean.TradeWork;
+import com.cykj.bean.Works;
 import com.cykj.vo.SuccessfulCase;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,8 +25,11 @@ public interface PortalService {
     //批量删除
     int deleteCase(int tradeWorksId);
 
+    //查询作品id
+    List<Works> queryWorksIdByTitle(String worksTitle);
+
     //根据关键词搜索
-    List<SuccessfulCase> queryByTitle(String worksTitle);
+    TradeWork querySearchById(int worksId);
 
 
 
