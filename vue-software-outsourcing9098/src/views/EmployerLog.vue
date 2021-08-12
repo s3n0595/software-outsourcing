@@ -85,7 +85,7 @@ export default {
               sessionStorage.setItem('user', JSON.stringify(res.data))
               sessionStorage.setItem('username',JSON.stringify(res.data.employerName))
               sessionStorage.setItem('token', JSON.stringify(res.data.employerId))
-              sessionStorage.setItem('headPath',JSON.stringify('localhost/images/'+res.data.employerInfo.headPath))
+              sessionStorage.setItem('headPath',JSON.stringify('api/images/'+res.data.employerInfo.headPath))
               this.user = JSON.parse(sessionStorage.getItem('user'))
               this.token = JSON.parse(sessionStorage.getItem('token'))
               this.headPath = JSON.parse(sessionStorage.getItem('headPath'))

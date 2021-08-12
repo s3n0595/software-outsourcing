@@ -53,8 +53,7 @@
           <div class="header-user-con">
             <!-- 用户头像 -->
             <div class="user-avator">
-<!--              <img src="headImg">-->
-
+<!--              <img :src="require(headImg)">-->
               <img src="./assets/img/img.jpg">
             </div>
             <!-- 用户名下拉菜单 -->
@@ -64,7 +63,7 @@
                 <i class="el-icon-caret-bottom"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="personCenter">用户信息</el-dropdown-item>
+                <el-dropdown-item @click.native="personCenter">个人中心</el-dropdown-item>
                 <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
