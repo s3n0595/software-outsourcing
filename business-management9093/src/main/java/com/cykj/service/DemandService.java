@@ -15,7 +15,7 @@ import java.util.Map;
  * @desc:
  */
 public interface DemandService {
-	List<Map<String, Object>> queryAllDemand(int count);
+	List<Map<String, Object>> queryAllDemand(int count, String type, String price, String time);
 	boolean joinDemand(TenderRecord tenderRecord, MultipartFile file);
 	List<Map<String, Object>> queryDemandById(int employerId);
 	List<Map<String, Object>> queryTenderRecordById(int demandId);

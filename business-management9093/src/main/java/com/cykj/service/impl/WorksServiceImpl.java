@@ -39,7 +39,7 @@ public class WorksServiceImpl implements WorksService {
         }
 		System.out.println(realPath);
         works.setAnnexPath(file.getOriginalFilename());
-		works.setAuditStatus(7);
+		works.setAuditStatus(0);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		works.setReleaseTime(sdf.format(new Date()));
 		try {

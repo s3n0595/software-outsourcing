@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @Repository
 public interface DemandMapper {
-	List<Map<String, Object>> queryAllDemand(int count);
+	List<Map<String, Object>> queryAllDemand(@Param("count") int count,@Param("type") String type, @Param("leftPrice") int leftPrice, @Param("rightPrice") int rightPrice, @Param("leftTime") int leftTime, @Param("rightTime") int rightTime);
 	List<Map<String, Object>> queryDemandById(int employerId);
 	int updateDemandStatus(@Param("demandId") int demandId, @Param("status") int status);
 	Demand selectDemandById(int demandId);

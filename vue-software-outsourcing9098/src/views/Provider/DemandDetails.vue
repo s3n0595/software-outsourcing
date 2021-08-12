@@ -62,8 +62,6 @@
               <a :href="'api/images/'+this.demand.annexPath" download="">{{this.demand.annexPath}}</a>
             </div>
           </div>
-          <button @click="test">建立连接</button>
-          <button @click="sendMessage">发送</button>
         </div>
       </div>
       <el-dialog title="申请参与项目" :visible.sync="dialogFormVisible">
@@ -213,6 +211,7 @@ export default {
       console.log(this.fileList);
       this.$refs.upload.submit();
     },
+
     // 上传文件成功后的回调
     uploadSuccess() {
       this.$message({
@@ -227,6 +226,7 @@ export default {
   mounted() {
     console.log(JSON.parse(sessionStorage.getItem("demand")));
     this.demand = JSON.parse(sessionStorage.getItem("demand"));
+
   }
 }
 </script>

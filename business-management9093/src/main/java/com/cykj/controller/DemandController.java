@@ -28,10 +28,10 @@ public class DemandController {
 	private ChatService chatService;
 	@RequestMapping("/list")
 	@ResponseBody
-	public List<Map<String, Object>> queryDemandList(int count){
+	public List<Map<String, Object>> queryDemandList(int count, String type, String price, String time){
 		System.out.println("================需求列表===========");
 		System.out.println("count : " + count);
-		return demandService.queryAllDemand(count);
+		return demandService.queryAllDemand(count, type, price, time);
 	}
 	@RequestMapping("/join")
 	@ResponseBody

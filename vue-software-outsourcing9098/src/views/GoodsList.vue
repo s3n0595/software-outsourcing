@@ -5,60 +5,41 @@
       <div id="condition">
         <div style="padding-top: 35px;">
           <span style="margin-left: 5%;">作品类型:</span>
-          <el-radio-group v-model="radio1" style="margin-left: 20px;" size="mini">
+
+
+          <el-radio-group v-model="radio1" style="margin-left: 20px;" size="mini" @change="conditionChange">
             <el-radio-button label="全部"></el-radio-button>
-            <el-radio-button label="Web 网站"></el-radio-button>
-            <el-radio-button label="App 开发"></el-radio-button>
-            <el-radio-button label="微信公众号"></el-radio-button>
-            <el-radio-button label="HTML5 应用"></el-radio-button>
-            <el-radio-button label="小程序"></el-radio-button>
-            <el-radio-button label="其他应用"></el-radio-button>
+            <el-radio-button v-model="item.demandTypeId" v-for="item in checklist" :key="item.demandTypeId" :label="item.demandTypeName" ></el-radio-button>
+
           </el-radio-group>
         </div>
 
         <div style="padding-top: 20px;">
-          <span style="margin-left: 5%;">作品价格:</span>
-          <el-radio-group v-model="radio2" style="margin-left: 20px;" size="mini">
+          <span style="margin-left: 5%;">项目预算:</span>
+          <el-radio-group v-model="radio2" style="margin-left: 20px;" size="mini" @change="conditionChange">
             <el-radio-button label="全部"></el-radio-button>
             <el-radio-button label="0-5K"></el-radio-button>
-            <el-radio-button label="5K-1万"></el-radio-button>
-            <el-radio-button label="1万-5万"></el-radio-button>
-            <el-radio-button label="5万以上"></el-radio-button>
+            <el-radio-button label="5K-10K"></el-radio-button>
+            <el-radio-button label="10K-50K"></el-radio-button>
+            <el-radio-button label="50K以上"></el-radio-button>
           </el-radio-group>
         </div>
         <div style="padding-top: 20px;">
-          <span style="margin-left: 5%;">角色领域:</span>
-          <el-radio-group v-model="radio3" style="margin-left: 20px;" size="mini">
+          <span style="margin-left: 5%;">项目工期:</span>
+          <el-radio-group v-model="radio3" style="margin-left: 20px;" size="mini" @change="conditionChange">
             <el-radio-button label="全部"></el-radio-button>
-            <el-radio-button label="前端开发"></el-radio-button>
-            <el-radio-button label="后端开发"></el-radio-button>
-            <el-radio-button label="微信应用开发"></el-radio-button>
-            <el-radio-button label="全栈开发"></el-radio-button>
+            <el-radio-button label="小于10周"></el-radio-button>
+            <el-radio-button label="10周到30周"></el-radio-button>
+            <el-radio-button label="大于30周"></el-radio-button>
           </el-radio-group>
         </div>
       </div>
-      <div id="sort">
-        <el-row>
-          <el-col :span="18">
-            <p>排序:</p>
-            <el-divider direction="vertical"></el-divider>
-            <span>综合</span>
-            <el-divider direction="vertical"></el-divider>
-            <span>发布时间</span>
-            <el-divider direction="vertical"></el-divider>
-            <span>价格排序</span>
-            <el-divider direction="vertical"></el-divider>
-          </el-col>
-          <el-col :span="6" style="padding-top: 10px;">
-            <el-input
-                placeholder="请输入内容"
-                size="mini"
-                v-model="searchInfo">
-              <i slot="prefix" class="el-input__icon el-icon-search"></i>
-            </el-input>
-          </el-col>
-        </el-row>
 
+      <div id="sort" style="padding-top: 20px;">
+        <span style="margin-left: 20px;">排序：</span>
+        <span class="sort" @click="sortTotal()">综合</span>
+        <span class="sort">发布时间<i class="el-icon-d-caret"></i></span>
+        <span class="sort">价格排序<i class="el-icon-d-caret"></i></span>
       </div>
       <div id="list">
         <el-row v-for="(item,index) in demandList" :key="index">
@@ -101,6 +82,7 @@ export default {
       count: 0,
       searchInfo: "",
       demandList: {},
+      checklist:[],
       radio1: '全部',
       radio2: '全部',
       radio3: '全部',
@@ -110,7 +92,10 @@ export default {
     load() {
       console.log(this.count)
       let params = {
-        count: this.count
+        count: 0,
+        type: this.radio1,
+        price: this.radio2,
+        time: this.radio3
       };
       console.log(params)
       this.$axios.get('demand/list', {params: params}).then(res => {
@@ -118,9 +103,15 @@ export default {
         this.count = res.data.length;
       })
     },
+    conditionChange(){
+      this.load();
+    },
     addMore() {
       let params = {
-        count: this.count
+        count: this.count,
+         type: this.radio1,
+        price: this.radio2,
+        time: this.radio3
       };
       this.$axios.get('demand/list', {params: params}).then(res => {
         if (res.data.length == 0) {
@@ -136,6 +127,19 @@ export default {
         }
       })
     },
+    sortTotal(){
+      this.$attrs("color", "blue");
+    },
+    selcheckList(){
+      this.$axios.post("/empcenter/ckList").then(response =>{
+        this.checklist=response.data;
+      }).catch(e => {
+        this.$message({
+          message: "网络或程序异常！" + e,
+          type: "error"
+        });
+      });
+    },
     viewDetails(item) {
       sessionStorage.setItem("demand", JSON.stringify(item));
       let routeData = this.$router.resolve({
@@ -146,6 +150,7 @@ export default {
   },
   mounted() {
     this.load();
+    this.selcheckList();
   }
 }
 </script>
@@ -199,5 +204,11 @@ export default {
 
 .goods:hover {
   background: #eff2f7;
+
 }
+
+.sort{
+  margin-left: 20px;
+}
+
 </style>
