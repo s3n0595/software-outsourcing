@@ -8,7 +8,10 @@
         select * from demand t1 , demandType t2 where t1.demandTypeid = t2.demandTypeid limit #{count}, 10;
     </select>
     <select id="queryDemandById" resultType="java.util.Map" parameterType="int">
-        select * from demand t1 , demandType t2 where t1.demandTypeid = t2.demandTypeid and t1.employerId=#{employerId};
+        select *
+        from demand t1 , demandType t4
+            where t1.demandTypeid = t4.demandTypeid
+          and t1.employerId = #{employerId};
     </select>
     <update id="updateDemandStatus">
         update demand set demandStatus = #{status} where demandId = #{demandId}

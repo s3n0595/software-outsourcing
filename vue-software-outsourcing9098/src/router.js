@@ -158,6 +158,12 @@ let softwareOutsourcing = new Router({
           name: 'depositp',
           component: () => import('./views/Provider/deposit.vue')
         },
+        {
+          path: '/providerCenter/myTenderList',
+          name: 'myTenderList',
+          component: () => import('./views/Provider/myTenderList.vue')
+        },
+
       ]
     },
 
