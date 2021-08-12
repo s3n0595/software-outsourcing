@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeWork;
 import com.cykj.mapper.EmpBuyMapper;
 import com.cykj.service.EmpBuyService;
@@ -66,5 +67,10 @@ public class EmpBuyServiceImpl implements EmpBuyService {
     @Override
     public int editproState(TradeWork tradeWork) {
         return empBuyMapper.editproState(tradeWork);
+    }
+
+    @Override
+    public EmployerInfo selEmpPwd(EmployerInfo employerInfo) {
+        return empBuyMapper.selEmpPwd(employerInfo);
     }
 }

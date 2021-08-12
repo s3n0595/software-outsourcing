@@ -1,5 +1,6 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeWork;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,5 @@ public interface EmpBuyMapper {
     int editState(TradeWork tradeWork);//雇主确认收货
     List<Map<String, Object>> selprobuyList(Integer providerId);//服务商个人中心交易作品
     int editproState(TradeWork tradeWork);//服务商修改交易作品进度
+    EmployerInfo selEmpPwd(EmployerInfo employerInfo);//判断雇主交易密码是否正确
 }
