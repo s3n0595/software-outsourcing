@@ -2,8 +2,10 @@ package com.cykj.controller;
 
 
 import com.cykj.bean.*;
+import com.cykj.config.HtmlParseUtil;
 import com.cykj.service.EmpCenterService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,7 +30,6 @@ import java.util.UUID;
 public class EmpCenterController {
     @Autowired
     private EmpCenterService empCenterService;
-
     //获取需求类型列表
     @RequestMapping("ckList")
     public List<DemandType> selCkList(){
@@ -157,6 +158,17 @@ public class EmpCenterController {
        }
     }
 
+    //修改服务商邮箱
+    @RequestMapping("editproEmail")
+    public int proEmail(ProviderInfo providerInfo){
+        int i=empCenterService.updateProEmail(providerInfo);
+        if(i>0){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+
     //雇主、服务商修改账户头像
     @RequestMapping("uploadhead")
     public int editHead(MultipartFile file, @RequestParam("Id") int Id,@RequestParam("role") String role){
@@ -171,6 +183,8 @@ public class EmpCenterController {
             file.transferTo(saveFile);
             if(role.equals("emp")){
                 empCenterService.updateHead(Id,headName);
+            }else{
+                empCenterService.updateproHead(Id,headName);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -186,10 +200,25 @@ public class EmpCenterController {
         return empCenterService.selempInfo(employerId);
     }
 
+    @RequestMapping("procenterInfo")
+    public Map<String,Object> selproInfo(int providerId){
+        return empCenterService.selproInfo(providerId);
+    }
+
     //雇主个人中心修改名称
     @RequestMapping("editEmpName")
     public int editEName(EmployerAccount employerAccount){
         int i=empCenterService.updateEmpName(employerAccount);
+        if(i>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    //服务商个人中心修改名称
+    @RequestMapping("editProName")
+    public int editPName(ProviderAccount providerAccount){
+        int i=empCenterService.updateProName(providerAccount);
         if(i>0){
             return 1;
         }else{
@@ -206,6 +235,46 @@ public class EmpCenterController {
     public int proBalance(@RequestParam("providerId") int providerId){
         return empCenterService.selproBalance(providerId);
     }
+    //雇主、服务商查询是否存在交易密码
+    @RequestMapping("selPwd")
+    public Map<String,Object> seletPwd(@RequestParam("userID") int userId,@RequestParam("role") String role){
+        if(role.equals("emp")){
+            return empCenterService.selEmpInfo(userId);
+        }else{
+            return empCenterService.selProInfo(userId);
+        }
+    }
+    //雇主、服务商首次设置交易密码
+    @RequestMapping("setPwd")
+    public int setPwd(@RequestParam("userID") int userId,@RequestParam("role") String role,@RequestParam("transactionPwd") int transactionPwd){
+       if(role.equals("emp")){
+           empCenterService.empSetPwd(userId,transactionPwd);
 
+       }else{
+           empCenterService.proSetPwd(userId,transactionPwd);
+       }
+       return 1;
+    }
+    //雇主、服务商修改交易密码
+    @RequestMapping("editPwd")
+    public int editPwd(@RequestParam("userID") int userId,@RequestParam("role") String role,@RequestParam("oldpwd") int oldpwd,@RequestParam("opwd") int opwd){
+        if(role.equals("emp")){
+            int i=empCenterService.empEditPwd(userId,oldpwd,opwd);
+            if(i>0){
+                return 1;
+            }else{return 0;}
+        }else{
+            int i=empCenterService.proEditPwd(userId,oldpwd,opwd);
+            if(i>0){
+                return 1;
+            }else{return 0;}
+        }
+    }
+    //行业资讯爬虫
+    @RequestMapping("getrealinfo")
+    public List<RealtimeInfo> getInfo(){
+       HtmlParseUtil htmlParseUtil=new HtmlParseUtil();
+       return htmlParseUtil.parseInfo();
+    }
 
 }

@@ -7,7 +7,7 @@
               <div class="clearfix" style="font-size: 15px">
                 <span>基本信息</span>
               </div>
-              <el-menu-item index="/admin/user" style="height: 50px;">
+              <el-menu-item index="/providerCenter/information" style="height: 50px;">
                 <i class="el-icon-star-off"></i>
                 <span slot="title" >账户信息</span>
               </el-menu-item>
@@ -65,7 +65,7 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">交易记录</span>
             </el-menu-item>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/providerCenter/paypwd" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">交易密码</span>
             </el-menu-item>

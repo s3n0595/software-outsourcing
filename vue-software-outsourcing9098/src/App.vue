@@ -14,7 +14,7 @@
           <el-menu-item @click="home">首页</el-menu-item>
           <el-menu-item @click="goodsList">找需求</el-menu-item>
           <el-menu-item @click="worksList">作品广场</el-menu-item>
-
+          <el-menu-item @click="realList">行业资讯</el-menu-item>
         </el-menu>
 
 
@@ -159,6 +159,9 @@ export default {
     },
     worksList() {
       this.$router.push('/worksList')
+    },
+    realList(){
+      this.$router.push('/realinfo')
     },
     employerRegister() {
       this.$router.push('/employerReg')
