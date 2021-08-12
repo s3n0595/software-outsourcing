@@ -211,15 +211,12 @@ public class UserInfoController {
         return "删除成功";
     }
 
-
-
-
-
     @GetMapping("/getMenuData")
     @ResponseBody
     public List<Menu> getMenuData(){
         return menuService.getMenuData();
     }
+
     //修改密码
     @RequestMapping("/updatePwd")
     @ResponseBody

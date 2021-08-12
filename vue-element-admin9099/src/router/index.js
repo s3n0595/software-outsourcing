@@ -188,6 +188,11 @@ export default new Router({
                     component: resolve => require(['../components/page/userManage/TradeWorkManage'], resolve),
                     meta:{title: '作品交易'}
                 },
+                {
+                    path: '/successfulCases',
+                    component: resolve => require(['../components/page/portalManage/SuccessfulCases'], resolve),
+                    meta:{title: '成功案例配置'}
+                },
             ]
         },
         {

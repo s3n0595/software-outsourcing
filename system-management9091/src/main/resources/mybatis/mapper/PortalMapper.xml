@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.PortalMapper">
+
+    <select id="queryAllSuccessCase" resultMap="successCase">
+        SELECT tW.tradeWorksId,tW.tradeStatus,tW.tradeTime,tW.showCase,
+               eA.employerName,pA.providerName,w1.worksTitle,
+               w1.worksDescribe,w1.annexPath,w1.worksPrice
+        FROM tradeWork tW
+            JOIN employerAccount eA
+                ON tW.employerId = eA.employerId
+            JOIN providerAccount pA
+                ON pA.providerId = tW.providerId
+            JOIN works w1
+                ON w1.worksId = tW.worksId
+        WHERE tradeStatus = 4
+    </select>
+    <resultMap id="successCase" type="com.cykj.bean.TradeWork">
+        <id column="tradeWorksId" property="tradeWorksId"/>
+        <result column="tradeTime" property="tradeTime"/>
+        <result column="tradeStatus" property="tradeStatus"/>
+        <result column="showCase" property="showCase"/>
+        <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+            <result column="employerName" property="employerName"/>
+        </association>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"/>
+        </association>
+        <association property="works" javaType="com.cykj.bean.Works">
+            <result column="worksTitle" property="worksTitle"/>
+            <result column="worksDescribe" property="worksDescribe"/>
+            <result column="annexPath" property="annexPath"/>
+            <result column="worksPrice" property="worksPrice"/>
+        </association>
+    </resultMap>
+
+    <update id="showCase">
+        update tradeWork set showCase = #{showCase} where tradeWorksId = #{tradeWorksId}
+    </update>
+
+    <select id="queryIsShow" resultMap="isShowCase">
+        SELECT tW.tradeWorksId,tW.tradeStatus,tW.tradeTime,tW.showCase,
+               eA.employerName,pA.providerName,w1.worksTitle,
+               w1.worksDescribe,w1.annexPath,w1.worksPrice
+        FROM tradeWork tW
+                 JOIN employerAccount eA
+                      ON tW.employerId = eA.employerId
+                 JOIN providerAccount pA
+                      ON pA.providerId = tW.providerId
+                 JOIN works w1
+                      ON w1.worksId = tW.worksId
+        WHERE showCase = #{showCase}
+          AND tradeStatus = 4
+    </select>
+    <resultMap id="isShowCase" type="com.cykj.bean.TradeWork">
+        <id column="tradeWorksId" property="tradeWorksId"/>
+        <result column="tradeTime" property="tradeTime"/>
+        <result column="tradeStatus" property="tradeStatus"/>
+        <result column="showCase" property="showCase"/>
+        <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+            <result column="employerName" property="employerName"/>
+        </association>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"/>
+        </association>
+        <association property="works" javaType="com.cykj.bean.Works">
+            <result column="worksTitle" property="worksTitle"/>
+            <result column="worksDescribe" property="worksDescribe"/>
+            <result column="annexPath" property="annexPath"/>
+            <result column="worksPrice" property="worksPrice"/>
+        </association>
+    </resultMap>
+
+    <delete id="deleteCase">
+        delete from tradeWork where tradeWorksId = #{tradeWorksId}
+    </delete>
+
+    <select id="queryByTitle" resultType="SuccessfulCase">
+        select * from
+    </select>
+</mapper>
+
