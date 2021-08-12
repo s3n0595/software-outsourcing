@@ -16,7 +16,7 @@
             :disabled="this.delData.length===0"
         >批量删除</el-button>
         <el-input v-model="searchInfo" placeholder="请输入顾问名称" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="search" @click="searchAdviser">搜索</el-button>
+        <el-button type="primary" icon="search" @click="searchCase">搜索</el-button>
         <el-button type="primary" @click="getSearchState(0)">待确定</el-button>
         <el-button type="primary" @click="getSearchState(1)">已显示</el-button>
         <el-button type="primary" @click="getSearchState(2)">不显示</el-button>
@@ -144,7 +144,7 @@ export default {
       });
     },
     //关键词搜索
-    searchAdviser() {
+    searchCase() {
       this.isShowloading = true
       let baseUrl = 'baseUrl';
       this.$axios.get(`${baseUrl}/portal/searchCase`,{params:{

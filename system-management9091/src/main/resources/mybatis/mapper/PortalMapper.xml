@@ -77,8 +77,42 @@
         delete from tradeWork where tradeWorksId = #{tradeWorksId}
     </delete>
 
-    <select id="queryByTitle" resultType="SuccessfulCase">
-        select * from
+    <select id="queryWorksIdByTitle" resultType="works">
+        select worksId from works where worksTitle like concat('%',#{worksTitle},'%')
     </select>
+
+    <select id="querySearchById" resultMap="successCaseById">
+        SELECT tW.tradeWorksId,tW.tradeStatus,tW.tradeTime,tW.showCase,
+               eA.employerName,pA.providerName,w1.worksTitle,
+               w1.worksDescribe,w1.annexPath,w1.worksPrice
+        FROM tradeWork tW
+                 JOIN employerAccount eA
+                      ON tW.employerId = eA.employerId
+                 JOIN providerAccount pA
+                      ON pA.providerId = tW.providerId
+                 JOIN works w1
+                      ON w1.worksId = tW.worksId AND w1.worksId = #{worksId}
+        WHERE tradeStatus = 4
+    </select>
+    <resultMap id="successCaseById" type="com.cykj.bean.TradeWork">
+        <id column="tradeWorksId" property="tradeWorksId"/>
+        <result column="tradeTime" property="tradeTime"/>
+        <result column="tradeStatus" property="tradeStatus"/>
+        <result column="showCase" property="showCase"/>
+        <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+            <result column="employerName" property="employerName"/>
+        </association>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"/>
+        </association>
+        <association property="works" javaType="com.cykj.bean.Works">
+            <result column="worksTitle" property="worksTitle"/>
+            <result column="worksDescribe" property="worksDescribe"/>
+            <result column="annexPath" property="annexPath"/>
+            <result column="worksPrice" property="worksPrice"/>
+        </association>
+    </resultMap>
+
+
 </mapper>
 

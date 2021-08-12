@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 import com.cykj.bean.Adviser;
+import com.cykj.bean.ProviderAccount;
 import com.cykj.bean.UnionInfo;
 import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Param;
@@ -40,8 +41,11 @@ public interface BusinessService {
     //获取顾问列表
     List<Adviser> queryAllAdviser();
 
+    //获取顾问关键词搜索出的id
+    List<ProviderAccount> queryIdByName(@Param("providerName") String providerName);
+
     //顾问关键词
-    List<Adviser> queryAdviserByProviderName(String providerName);
+    Adviser queryAdviserByProviderId( int providerId);
 
     //审核顾问
     int updateAdviser(int adviserId, int auditStatus);

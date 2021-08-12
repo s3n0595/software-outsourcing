@@ -137,21 +137,26 @@
         </association>
     </resultMap>
 
-    <select id="queryAdviserByProviderName" resultMap="adviserByProviderName">
+    <select id="queryIdByName" resultType="providerAccount">
+        select providerId from providerAccount where providerName like concat('%',#{providerName},'%')
+    </select>
+
+    <select id="queryAdviserByProviderId" resultMap="adviserByProviderId">
         SELECT a1.adviserId,a1.auditStatus,p1.providerName,
                d1.demandTypeName,pI.credit
-        FROM providerAccount p1,adviser a1,demandType d1,providerInfo pI
-        WHERE p1.providerId = a1.providerId
-          AND a1.serviceTypeId = d1.demandTypeId
-          AND a1.providerId = pI.providerId
-          AND p1.providerName like concat('%',#{providerName},'%')
+        FROM adviser a1
+                 JOIN providerAccount p1
+                      ON a1.providerId = p1.providerId AND a1.providerId = #{providerId}
+                 JOIN demandType d1
+                      ON d1.demandTypeId = a1.serviceTypeId
+                 JOIN providerInfo pI
+                      ON pI.providerId = a1.providerId
     </select>
-    <resultMap id="adviserByProviderName" type="com.cykj.bean.ProviderAccount">
-        <id column="providerId" property="providerId"/>
-        <result column="providerName" property="providerName"/>
-        <association property="adviser" javaType="com.cykj.bean.Adviser">
-            <result column="adviserId" property="adviserId"/>
-            <result column="auditStatus" property="auditStatus"/>
+    <resultMap id="adviserByProviderId" type="com.cykj.bean.Adviser">
+        <id column="adviserId" property="adviserId"/>
+        <result column="auditStatus" property="auditStatus"/>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"/>
         </association>
         <association property="demandType" javaType="com.cykj.bean.DemandType">
             <result column="demandTypeName" property="demandTypeName"/>
@@ -160,6 +165,7 @@
             <result column="credit" property="credit"/>
         </association>
     </resultMap>
+
 
     <update id="updateAdviser">
         update adviser set auditStatus = #{auditStatus} where adviserId = #{adviserId}

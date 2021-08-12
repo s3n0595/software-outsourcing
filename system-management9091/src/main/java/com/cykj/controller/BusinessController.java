@@ -1,9 +1,6 @@
 package com.cykj.controller;
 
-import com.cykj.bean.Adviser;
-import com.cykj.bean.CommonResult;
-import com.cykj.bean.UnionInfo;
-import com.cykj.bean.Works;
+import com.cykj.bean.*;
 import com.cykj.service.BusinessService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -141,7 +139,14 @@ public class BusinessController {
     @ResponseBody
     public CommonResult searchAdviser(String providerName){
         log.info("********顾问关键词搜索中*******");
-        List<Adviser> adviserList = businessService.queryAdviserByProviderName(providerName);
+        List<Adviser> adviserList = new ArrayList<>();
+        List<ProviderAccount> providerAccounts = businessService.queryIdByName(providerName);
+        for (ProviderAccount account : providerAccounts) {
+            Adviser adviser = businessService.queryAdviserByProviderId(account.getProviderId());
+            if (adviser != null) {
+                adviserList.add(adviser);
+            }
+        }
         return new CommonResult(200,"顾问关键词搜索列表",adviserList);
     }
 

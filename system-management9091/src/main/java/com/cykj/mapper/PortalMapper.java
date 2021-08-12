@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.TradeWork;
+import com.cykj.bean.Works;
 import com.cykj.vo.SuccessfulCase;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,8 +27,11 @@ public interface PortalMapper {
     //批量删除
     int deleteCase(@Param("tradeWorksId") int tradeWorksId);
 
+    //查询作品id
+    List<Works> queryWorksIdByTitle(@Param("worksTitle") String worksTitle);
+
     //根据关键词搜索
-    List<SuccessfulCase> queryByTitle(@Param("worksTitle") String worksTitle);
+    TradeWork querySearchById(@Param("worksId") int worksId);
 
 
 
