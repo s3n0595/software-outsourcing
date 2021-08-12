@@ -21,7 +21,6 @@
       </div>
       <el-table
           :data="tableDataList"
-          border
           class="table"
           ref="multipleTable"
           @selection-change="handleSelectionChange"
@@ -165,9 +164,9 @@ export default {
       // 搜索关键字
       searchInfo: "",
       // 菜单列表
-      roles: '',
+      roles: [],
       // 总条数
-      total: '',
+      total: 0,
       // 当前页数
       pageNo: 1,
       // 每页的条数
@@ -243,7 +242,7 @@ export default {
         menu: [
           {required: true, validator: (rule,value,callback)=>{
               let arr = this.$refs.editTree.getCheckedKeys();
-              if (arr.length == 0 || !arr) {
+              if (arr.length === 0 || !arr) {
                 callback(new Error("请选择菜单"));
               } else {
                 callback();
@@ -291,7 +290,7 @@ export default {
           };
           this.addUserVisible = false;
           addRole(params).then(res=>{
-            if ("添加成功" == res.data){
+            if ("添加成功" === res.data){
               this.$message({
                 message: "添加成功",
                 type: "success",

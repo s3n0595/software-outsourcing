@@ -21,7 +21,6 @@
       </div>
       <el-table
           :data="tableDataList"
-          border
           class="table"
           @selection-change="handleSelectionChange"
           v-loading="isShowloading"
@@ -387,7 +386,6 @@ export default {
     getRoleList(){
       getRoleList().then(res=>{
         this.roles = res.data;
-        console.log(this.roles)
       })
     },
     // 关闭提示

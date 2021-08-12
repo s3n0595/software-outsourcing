@@ -1,10 +1,7 @@
 package com.cykj.controller;
 
 import com.cykj.bean.*;
-import com.cykj.service.impl.MenuServiceImp;
-import com.cykj.service.impl.RoleMenuServiceImp;
-import com.cykj.service.impl.RoleServiceImp;
-import com.cykj.service.impl.UserInfoServiceImp;
+import com.cykj.service.impl.*;
 import com.cykj.vo.UserInfoPwd;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,8 @@ public class UserInfoController {
     private RoleMenuServiceImp roleMenuService;
     @Autowired
     private RoleServiceImp roleService;
+    @Autowired
+    private LogInfoServiceImp logInfoService;
     // 获取用户列表
     @GetMapping("/getUserList")
     @ResponseBody
@@ -211,6 +210,36 @@ public class UserInfoController {
         return "删除成功";
     }
 
+    //=================================辅助功能=============================//
+    // 获取日志列表
+    @GetMapping("/getLogInfoList")
+    @ResponseBody
+    public List<LogInfo> getLogInfoList(){
+        return logInfoService.getLogInfoList();
+    }
+    // 删除日志
+    @GetMapping("/deleteLogInfo")
+    @ResponseBody
+    public String deleteLogInfo(int[] logIds){
+        for (int logId : logIds) {
+            logInfoService.deleteLogInfo(logId);
+        }
+        return "删除成功";
+    }
+    // 关键字搜索
+    @GetMapping("/getSearchLogInfo")
+    @ResponseBody
+    public List<LogInfo> getSearchLogInfo(String userName){
+        return logInfoService.getSearchLogInfo(userName);
+    }
+    // 添加日志
+    @GetMapping("/addLogInfo")
+    @ResponseBody
+    public void addLogInfo(LogInfo logInfo){
+        logInfoService.addLogInfo(logInfo);
+    }
+
+    // 修改密码
     @GetMapping("/getMenuData")
     @ResponseBody
     public List<Menu> getMenuData(){

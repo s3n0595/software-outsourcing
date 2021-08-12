@@ -2,7 +2,7 @@
   <div class="login-wrap">
     <div class="ms-login">
       <div class="ms-title">后台管理系统</div>
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content" v-loading="isShowloading">
         <el-form-item prop="userAccount">
           <el-input v-model="ruleForm.userAccount" placeholder="account">
             <el-button slot="prepend" icon="el-icon-lx-people"></el-button>
@@ -27,7 +27,8 @@
 import {
   userInfoLogin,
   updateLoginDate,
-  getDate
+  getDate,
+  addLogInfo
 } from "../../api/api"
 import bus from "@/components/common/bus";
 export default {
@@ -38,6 +39,7 @@ export default {
         userAccount: '',
         userPassword: '',
       },
+      isShowloading: false,
       rules: {
         userAccount: [
           {required: true, message: '请输入账号', trigger: 'blur' },
@@ -56,12 +58,12 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.isShowloading = true;
           let params = {
             userAccount: this.ruleForm.userAccount,
             userPassword: this.ruleForm.userPassword,
           }
           userInfoLogin(params).then(res=>{
-            console.log(res.data);
             if ("" == res.data){
               this.$message({
                 message: "登录失败，账号或密码错误！",
@@ -73,6 +75,14 @@ export default {
                 message: "您登录的账号已被封禁，请联系管理员进行处理",
                 type: "error",
               });
+              let param1 = {
+                userId: res.data.userId,
+                time: getDate(),
+                operation: "登录系统",
+                state: 0,
+                LogDescribe: "登录的账号已被封禁",
+              }
+              addLogInfo(param1);
             }else {
               this.$message({
                 message: "欢迎["+res.data.userName+"]登录系统",
@@ -84,10 +94,19 @@ export default {
                 loginDate: getDate(),
               }
               updateLoginDate(params);
+              let param1 = {
+                userId: res.data.userId,
+                time: getDate(),
+                operation: "登录系统",
+                state: 1,
+                LogDescribe: "已成功登录管理系统",
+              }
+              addLogInfo(param1);
               sessionStorage.setItem('user',JSON.stringify(res.data));
               this.$router.push('/');
             }
           })
+          this.isShowloading = false;
         }
       });
     }

@@ -13,6 +13,9 @@ public class LogInfo {
   private String operation;
   private String time;
   private int userId;
+  private int state;
+  private String logDescribe;
+  private UserInfo userInfo;
 
 
 
