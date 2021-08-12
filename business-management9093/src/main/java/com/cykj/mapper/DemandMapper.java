@@ -18,4 +18,5 @@ public interface DemandMapper {
 	List<Map<String, Object>> queryAllDemand(int count);
 	List<Map<String, Object>> queryDemandById(int employerId);
 	int updateDemandStatus(@Param("demandId") int demandId, @Param("status") int status);
+	Demand selectDemandById(int demandId);
 }
