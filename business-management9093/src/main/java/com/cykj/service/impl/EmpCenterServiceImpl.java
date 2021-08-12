@@ -106,8 +106,18 @@ public class EmpCenterServiceImpl implements EmpCenterService {
     }
 
     @Override
+    public int updateProEmail(ProviderInfo providerInfo) {
+        return empCenterMapper.updateProEmail(providerInfo);
+    }
+
+    @Override
     public int updateHead(int employerId, String name) {
         return empCenterMapper.updateHead(employerId,name);
+    }
+
+    @Override
+    public int updateproHead(int providerId, String name) {
+        return empCenterMapper.updateproHead(providerId,name);
     }
 
     @Override
@@ -116,12 +126,52 @@ public class EmpCenterServiceImpl implements EmpCenterService {
     }
 
     @Override
+    public Map<String, Object> selproInfo(int providerId) {
+        return empCenterMapper.selproInfo(providerId);
+    }
+
+    @Override
     public int updateEmpName(EmployerAccount employerAccount) {
         return empCenterMapper.updateEmpName(employerAccount);
     }
 
     @Override
+    public int updateProName(ProviderAccount providerAccount) {
+        return empCenterMapper.updateProName(providerAccount);
+    }
+
+    @Override
     public List<CreditDetails> selCredit(CreditDetails creditDetails) {
         return empCenterMapper.selCredit(creditDetails);
+    }
+
+    @Override
+    public Map<String, Object> selEmpInfo(int userid) {
+        return empCenterMapper.selEmpInfo(userid);
+    }
+
+    @Override
+    public Map<String, Object> selProInfo(int userid) {
+        return empCenterMapper.selProInfo(userid);
+    }
+
+    @Override
+    public int empSetPwd(int userid, int transactionPwd) {
+        return empCenterMapper.empSetPwd(userid,transactionPwd);
+    }
+
+    @Override
+    public int proSetPwd(int userid, int transactionPwd) {
+        return empCenterMapper.proSetPwd(userid,transactionPwd);
+    }
+
+    @Override
+    public int empEditPwd(int userid, int oldpwd, int opwd) {
+        return empCenterMapper.empEditPwd(userid, oldpwd, opwd);
+    }
+
+    @Override
+    public int proEditPwd(int userid, int oldpwd, int opwd) {
+        return empCenterMapper.proEditPwd(userid, oldpwd, opwd);
     }
 }

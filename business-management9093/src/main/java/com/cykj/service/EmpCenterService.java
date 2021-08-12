@@ -24,8 +24,18 @@ public interface EmpCenterService {
     int seleProId(String phoneNumber);
     int editProBalance( int providerId, double balance);
     int updateEmpEmail(EmployerInfo employerInfo);
+    int updateProEmail(ProviderInfo providerInfo);
     int updateHead(int employerId,String name);
+    int updateproHead(int providerId, String name);
     Map<String,Object> selempInfo( int employerId);
+    Map<String,Object> selproInfo( int providerId);
     int updateEmpName(EmployerAccount employerAccount);
+    int updateProName(ProviderAccount providerAccount);
     List<CreditDetails> selCredit(CreditDetails creditDetails);
+    Map<String,Object> selEmpInfo(int userid);
+    Map<String,Object> selProInfo(int userid);
+    int empSetPwd(int userid,int transactionPwd);
+    int proSetPwd(int userid,int transactionPwd);
+    int empEditPwd(int userid,int oldpwd,int opwd);
+    int proEditPwd( int userid,int oldpwd,int opwd);
 }

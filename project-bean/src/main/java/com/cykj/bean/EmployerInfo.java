@@ -18,7 +18,7 @@ public class EmployerInfo {
   private double balance;
   private String headPath;
   private String email;
-
+  private int transactionPwd;
 
 
 }

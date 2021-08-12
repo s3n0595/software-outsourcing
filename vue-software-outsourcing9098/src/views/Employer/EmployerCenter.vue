@@ -62,7 +62,7 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">交易记录</span>
             </el-menu-item>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/employerCenter/paypwd" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">交易密码</span>
             </el-menu-item>

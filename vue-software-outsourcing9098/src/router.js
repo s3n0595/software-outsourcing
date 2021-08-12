@@ -38,6 +38,11 @@ let softwareOutsourcing = new Router({
       component: () => import('./views/Provider/DemandDetails.vue')
     },
     {
+      path: '/realinfo',
+      name: 'realinfo',
+      component: () => import('./views/RealInfo.vue')
+    },
+    {
       //雇主注册
       path: '/EmployerReg',
       name: 'EmployerReg',
@@ -115,6 +120,11 @@ let softwareOutsourcing = new Router({
           name: 'liaotian',
           component: () => import('./views/Employer/Children/Liaotian.vue')
         },
+        {
+          path: '/employerCenter/paypwd',
+          name: 'paypwd',
+          component: () => import('./views/PayPassword.vue')
+        },
       ]
     },
     {
@@ -123,6 +133,11 @@ let softwareOutsourcing = new Router({
       name: 'providerCenter',
       component: () => import('./views/Provider/ProviderCenter.vue'),
       children: [
+        {
+          path: '/providerCenter/information',
+          name: 'information',
+          component: () => import('./views/Provider/Information.vue')
+        },
         {
           path: '/providerCenter/PublishWorks',
           name: 'PublishWorks',
@@ -152,6 +167,11 @@ let softwareOutsourcing = new Router({
           path: '/providerCenter/depositp',
           name: 'depositp',
           component: () => import('./views/Provider/deposit.vue')
+        },
+        {
+          path: '/providerCenter/paypwd',
+          name: 'paypwd',
+          component: () => import('./views/PayPassword.vue')
         },
       ]
     },
