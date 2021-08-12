@@ -2,19 +2,29 @@
   <div class="news">
     <el-button type="primary" @click="openDialog()">新增需求</el-button>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="demandId" label="序号" width="100"></el-table-column>
+      <el-table-column prop="demandId" label="序号" width="50"></el-table-column>
       <el-table-column prop="demandTitle" label="项目名称" width="180"></el-table-column>
-      <el-table-column prop="predictTime" label="交付周期(天)" width="120"></el-table-column>
+      <el-table-column prop="predictTime" label="交付周期(天)" width="100"></el-table-column>
       <el-table-column prop="predictPrice" label="项目预算(元)" width="120"></el-table-column>
       <el-table-column prop="demandType.demandTypeName" label="项目类别" width="100"></el-table-column>
 
       <el-table-column prop="demandDescribe" label="项目描述">
         <template slot-scope="scope">
-          <p v-if="scope.row.demandDescribe.length > 100">{{scope.row.Content.substring(0,50)}} ...</p>
+          <p v-if="scope.row.demandDescribe.length > 100">{{scope.row.demandDescribe.substring(0,50)}} ...</p>
           <p v-else>{{scope.row.demandDescribe}}</p>
         </template>
       </el-table-column>
-
+      <el-table-column prop="demandStatus" label="需求状态" width="100">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.demandStatus===0">待审核</el-tag>
+          <el-tag v-else-if="scope.row.demandStatus===1" type="warning">已通过</el-tag>
+          <el-tag v-else-if="scope.row.demandStatus===2" type="info">未通过</el-tag>
+          <el-tag v-else-if="scope.row.demandStatus===3" type="warning">招募中</el-tag>
+          <el-tag v-else-if="scope.row.demandStatus===4" type="danger">开发中</el-tag>
+          <el-tag v-else-if="scope.row.demandStatus===5" type="danger">交付中</el-tag>
+          <el-tag v-else-if="scope.row.demandStatus===6" type="success">已完成</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column  label="操作">
         <template slot-scope="scope">
           <el-button

@@ -3,9 +3,9 @@
   <div style="background-color: #f0f2f5">
     <div id="main">
       <div id="condition">
-        <div style="padding-top: 35px;">
+        <div style="padding-top: 50px;">
           <span style="margin-left: 5%;">作品类型:</span>
-          <el-radio-group v-model="radio1" style="margin-left: 20px;" size="mini">
+          <el-radio-group v-model="radio1" style="margin-left: 20px;" size="mini" @change="type">
             <el-radio-button label="全部"></el-radio-button>
             <el-radio-button label="Web 网站"></el-radio-button>
             <el-radio-button label="App 开发"></el-radio-button>
@@ -18,7 +18,7 @@
 
         <div style="padding-top: 20px;">
           <span style="margin-left: 5%;">作品价格:</span>
-          <el-radio-group v-model="radio2" style="margin-left: 20px;" size="mini">
+          <el-radio-group v-model="radio2" style="margin-left: 20px;" size="mini" @change="price">
             <el-radio-button label="全部"></el-radio-button>
             <el-radio-button label="0-5K"></el-radio-button>
             <el-radio-button label="5K-1万"></el-radio-button>
@@ -26,36 +26,38 @@
             <el-radio-button label="5万以上"></el-radio-button>
           </el-radio-group>
         </div>
-        <div style="padding-top: 20px;">
-          <span style="margin-left: 5%;">角色领域:</span>
-          <el-radio-group v-model="radio3" style="margin-left: 20px;" size="mini">
-            <el-radio-button label="全部"></el-radio-button>
-            <el-radio-button label="前端开发"></el-radio-button>
-            <el-radio-button label="后端开发"></el-radio-button>
-            <el-radio-button label="微信应用开发"></el-radio-button>
-            <el-radio-button label="全栈开发"></el-radio-button>
-          </el-radio-group>
-        </div>
+<!--        <div style="padding-top: 20px;">-->
+<!--          <span style="margin-left: 5%;">角色领域:</span>-->
+<!--          <el-radio-group v-model="radio3" style="margin-left: 20px;" size="mini">-->
+<!--            <el-radio-button label="全部"></el-radio-button>-->
+<!--            <el-radio-button label="前端开发"></el-radio-button>-->
+<!--            <el-radio-button label="后端开发"></el-radio-button>-->
+<!--            <el-radio-button label="微信应用开发"></el-radio-button>-->
+<!--            <el-radio-button label="全栈开发"></el-radio-button>-->
+<!--          </el-radio-group>-->
+<!--        </div>-->
       </div>
       <div id="sort">
         <el-row>
           <el-col :span="18">
             <p>排序:</p>
             <el-divider direction="vertical"></el-divider>
-            <span>综合</span>
+            <span onchange="">综合</span>
             <el-divider direction="vertical"></el-divider>
-            <span>发布时间</span>
+            <span >发布时间</span>
             <el-divider direction="vertical"></el-divider>
             <span>价格排序</span>
             <el-divider direction="vertical"></el-divider>
           </el-col>
-          <el-col :span="6" style="padding-top: 10px;padding-right: 10px;">
+          <el-col :span="6" style="padding-top: 10px;padding-right: 20px;">
             <el-input
                 placeholder="请输入内容"
                 size="mini"
-                v-model="searchInfo">
-              <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                v-model="searchInfo"
+               >
+              <el-button slot="append" icon="el-icon-search" @click="find"></el-button>
             </el-input>
+
           </el-col>
         </el-row>
 
@@ -70,7 +72,7 @@
             <el-col :span="15">
               <p style="padding-top: 20px;">
                 <span @click="details(item)">No.{{item.worksId}}&nbsp;</span>
-                <span>&nbsp;{{item.worksTitle}}</span>
+                <span @click="details(item)">&nbsp;{{item.worksTitle}}</span>
               </p>
               <!--                  </a>-->
               <p>
@@ -89,8 +91,6 @@
       </div>
     </div>
   </div>
-
-
 </template>
 
 
@@ -126,7 +126,10 @@ export default {
     load() {
       console.log(this.count)
       let params = {
-        count: this.count
+        count: 0,
+        demandTypeName:this.radio1,
+        price:this.radio2,
+        searchInfo:this.searchInfo
       };
       console.log(params)
       this.$axios.get('qworks/worksList', {params: params}).then(res => {
@@ -136,7 +139,10 @@ export default {
     },
     addMore() {
       let params = {
-        count: this.count
+        count: this.count,
+        demandTypeName:this.radio1,
+        price:this.radio2,
+        searchInfo:this.searchInfo
       };
       this.$axios.get('qworks/worksList', {params: params}).then(res => {
         if (res.data.length == 0) {
@@ -158,8 +164,15 @@ export default {
         name: 'worksdetails'
       });
       window.open(routeData.href, '_blank');
-
-      // this.$router.push({ name: 'worksdetails'});
+    },
+    price(){
+      this.load();
+    },
+    type(){
+      this.load();
+    },
+    find(){
+      this.load();
     }
   },
   mounted() {

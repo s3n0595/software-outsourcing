@@ -3,8 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.mapper.QworksMapper">
-    <select id="queryAllWork" resultType="java.util.Map" parameterType="int">
-        select * from works t1 , demandType t2 where t1.worksTypeId = t2.demandTypeId limit #{count}, 10;
+    <select id="queryAllWork" resultType="java.util.Map">
+        select t1.*,t2.demandTypeName from works t1 , demandType t2 where t1.worksTypeId = t2.demandTypeId
+        <if test="demandTypeName !='全部'">
+            AND t2.demandTypeName=#{demandTypeName}
+        </if>
+        <if test="priceMin!=-1">
+            AND t1.worksPrice <![CDATA[>=]]> #{priceMin}
+        </if>
+        <if test="priceMax!=-1">
+            AND t1.worksPrice <![CDATA[<=]]> #{priceMax}
+        </if>
+        <if test="searchInfo !=null">
+            AND t1.worksTitle like concat('%',#{searchInfo},'%')
+        </if>
+        limit #{count}, 10;
     </select>
 
     <select id="countProWork" resultType="int">

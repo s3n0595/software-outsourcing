@@ -17,6 +17,9 @@ import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
 Vue.use(VideoPlayer)
 
+import payBox from './components/payBox';
+Vue.component('payBox',payBox)
+
 // import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
 // import 'vue-directive-image-previewer/dist/assets/style.css'
 // Vue.use(VueDirectiveImagePreviewer)

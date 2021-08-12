@@ -47,6 +47,10 @@
     <update id="editproState" parameterType="com.cykj.bean.TradeWork">
         update tradeWork set tradeStatus=#{tradeStatus} where tradeWorksId=#{tradeWorksId}
     </update>
+
+    <select id="selEmpPwd" resultType="com.cykj.bean.EmployerInfo" parameterType="com.cykj.bean.EmployerInfo">
+        select * from employerInfo where employerId=#{employerId} and transactionPwd=#{transactionPwd}
+    </select>
 </mapper>
 
 

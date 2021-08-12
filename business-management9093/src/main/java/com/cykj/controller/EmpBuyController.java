@@ -1,11 +1,13 @@
 package com.cykj.controller;
 
+import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeWork;
 import com.cykj.service.EmpBuyService;
 import com.cykj.service.impl.EmpBuyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +29,11 @@ public class EmpBuyController {
     @RequestMapping("buyBalance")//查询余额
     public int empBalance(Integer employerId){
         return empBuyService.selBalance(employerId);
+    }
+
+    @RequestMapping("buyPwd")//判断交易密码是否正确
+    public EmployerInfo empPwd(EmployerInfo employerInfo){
+        return empBuyService.selEmpPwd(employerInfo);
     }
 
     @RequestMapping("works")//添加购买记录
