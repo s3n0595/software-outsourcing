@@ -21,7 +21,6 @@
       </div>
       <el-table
           :data="tableDataList"
-          border
           class="table"
           ref="multipleTable"
           @selection-change="handleSelectionChange"
@@ -165,9 +164,9 @@ export default {
       // 搜索关键字
       searchInfo: "",
       // 菜单列表
-      roles: '',
+      roles: [],
       // 总条数
-      total: '',
+      total: 0,
       // 当前页数
       pageNo: 1,
       // 每页的条数

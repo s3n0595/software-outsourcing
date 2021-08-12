@@ -132,11 +132,31 @@ export const getSearchState = params =>{
 export const getTradeWordList = params =>{
     return axios.get(`${baseUrl}/tradeManage/getTradeWordList`,{params: params});
 }
-
-
-
-
-
+// 获取投标交易列表
+export const getTradeRecord = params =>{
+    return axios.get(`${baseUrl}/tradeManage/getTradeRecord`,{params: params});
+}
+// 通过providerInfoId 查找对应的服务商
+export const getProvider = params =>{
+    return axios.get(`${baseUrl}/tradeManage/getProvider`,{params: params});
+}
+//=====================================登录日志================================//
+// 获取日志列表
+export const getLogInfoList = params =>{
+    return axios.get(`${baseUrl}/userinfo/getLogInfoList`,{params: params});
+}
+// 关键字查找
+export const getSearchLogInfo = params=>{
+    return axios.get(`${baseUrl}/userinfo/getSearchLogInfo`,{params:params})
+}
+// 删除日志
+export const deleteLogInfo = params =>{
+    return axios.get(`${baseUrl}/userinfo/deleteLogInfo`,{params: params});
+}
+// 添加日志
+export const addLogInfo = params =>{
+    return axios.get(`${baseUrl}/userinfo/addLogInfo`,{params: params});
+}
 
 export const getUserList = params=>{
     return axios.get(`${baseUrl}/user/list`,{params:params})

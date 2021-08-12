@@ -23,7 +23,6 @@
       </div>
       <el-table
           :data="tableDataList"
-          border
           class="table"
           ref="multipleTable"
           @selection-change="handleSelectionChange"
@@ -38,6 +37,10 @@
             <el-tag type="info" v-if="scope.row.demandStatus === 0">未审核</el-tag>
             <el-tag type="success" v-if="scope.row.demandStatus === 1">已通过</el-tag>
             <el-tag type="danger" v-if="scope.row.demandStatus === 2">未通过</el-tag>
+            <el-tag type="danger" v-if="scope.row.demandStatus === 3">招募中</el-tag>
+            <el-tag type="danger" v-if="scope.row.demandStatus === 4">开发中</el-tag>
+            <el-tag type="danger" v-if="scope.row.demandStatus === 5">交付中</el-tag>
+            <el-tag type="danger" v-if="scope.row.demandStatus === 6">已完成</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="releaseTime" label="发布时间" width="180"></el-table-column>

@@ -342,7 +342,6 @@ export default {
   computed:{
   },
   methods: {
-
     // 点击行关闭
     clickTable(row,index,e) {
       //调用,table的方法,展开/折叠 行

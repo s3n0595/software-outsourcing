@@ -3,5 +3,41 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.mapper.TradeRecordMapper">
-
+    <select id="getTradeRecord" resultMap="getTradeRecords">
+        select t1.tradeRecordId,t1.tradeTime,t1.tenderRecordId,t1.tradeStatus,tR.tenderId,tR.price,tR.projectTime,tR.unionStatus,
+               d.demandTitle,d.predictPrice,eA.employerName
+        from tradeRecord t1 join tenderRecord tR on t1.tenderRecordId = tR.tenderRecordId
+                            join demand d on tR.demandId = d.demandId
+                            join employerAccount eA on d.employerId = eA.employerId
+    </select>
+    <resultMap id="getTradeRecords" type="com.cykj.bean.TradeRecord">
+        <id column="tradeRecordId" property="tradeRecordId"></id>
+        <result column="tradeTime" property="tradeTime"></result>
+        <result column="tenderRecordId" property="tenderRecordId"></result>
+        <result column="tradeStatus" property="tradeStatus"></result>
+        <collection property="tenderRecord" ofType="com.cykj.bean.TenderRecord">
+            <result column="tenderId" property="tenderId"></result>
+            <result column="projectTime" property="projectTime"></result>
+            <result column="price" property="price"></result>
+            <result column="unionStatus" property="unionStatus"></result>
+            <collection property="demand" ofType="com.cykj.bean.Demand">
+                <result column="demandTitle" property="demandTitle"></result>
+                <result column="predictPrice" property="predictPrice"></result>
+                <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+                    <result column="employerName" property="employerName"></result>
+                </association>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="getProvider" resultMap="getProviders">
+        select pA.providerName,pI.credit
+        from providerAccount pA join providerInfo pI on pA.providerId = pI.providerId
+        where pA.providerId = #{providerId}
+    </select>
+    <resultMap id="getProviders" type="com.cykj.bean.ProviderAccount">
+        <result column="providerName" property="providerName"></result>
+        <association property="providerInfo" javaType="com.cykj.bean.ProviderInfo">
+            <result column="credit" property="credit"></result>
+        </association>
+    </resultMap>
 </mapper>
