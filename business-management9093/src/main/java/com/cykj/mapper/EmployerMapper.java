@@ -1,7 +1,9 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.CreditDetails;
 import com.cykj.bean.EmployerAccount;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -31,5 +33,11 @@ public interface EmployerMapper {
 
     //增加雇主个人信息到曝光台
     int addEmployerExpose(int employerId);
+
+    //查询注册信息
+    EmployerAccount queryEmployerInfo(@Param("phoneNumber") String phoneNumber);
+
+    //注册信用分
+    int addCreditByReg(CreditDetails creditDetails);
 
 }

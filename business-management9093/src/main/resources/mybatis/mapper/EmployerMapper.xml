@@ -5,8 +5,8 @@
 <mapper namespace="com.cykj.mapper.EmployerMapper">
 
     <insert id="addUser" parameterType="com.cykj.bean.EmployerAccount">
-        insert employerAccount(employerName,phoneNumber,employerPassword,role)
-            values(#{employerName},#{phoneNumber},#{employerPassword},#{role})
+        insert employerAccount(employerName,phoneNumber,employerPassword,role,regTime)
+            values(#{employerName},#{phoneNumber},#{employerPassword},#{role},#{regTime})
     </insert>
 
     <select id="queryEmployerAccByTel" resultType="int">
@@ -44,6 +44,14 @@
 
     <insert id="addEmployerExpose" parameterType="com.cykj.bean.ProviderAccount">
         insert exposeStory(employerId) values(#{employerId})
+    </insert>
+
+    <select id="queryEmployerInfo" resultType="com.cykj.bean.EmployerAccount">
+        select * from employerAccount where phoneNumber = #{phoneNumber}
+    </select>
+
+    <insert id="addCreditByReg" parameterType="com.cykj.bean.CreditDetails">
+        insert creditDetails(userId,remarks,score,creditTime,type) values (#{userId},#{remarks},#{score},#{creditTime},#{type})
     </insert>
 </mapper>
 

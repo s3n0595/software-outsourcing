@@ -1,6 +1,7 @@
 package com.cykj.controller;
 
 import com.cykj.bean.CommonResult;
+import com.cykj.bean.CreditDetails;
 import com.cykj.bean.EmployerAccount;
 import com.cykj.bean.ProviderAccount;
 import com.cykj.service.EmployerService;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author guoquansen
@@ -38,11 +42,22 @@ public class RegisterController {
         if (i > 0 ) {
             return new CommonResult(400,"雇主账号注册失败",null);
         } else {
+            Date date = new Date();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            String dateTime = df.format(date); // Formats a Date into a date/time string.
+            employerAccount.setRegTime(dateTime);
             employerService.addUser(employerAccount);
-            EmployerAccount queryEmployerIdName = employerService.queryEmployerIdName(employerAccount.getPhoneNumber());
-            int addEmployerInfo = employerService.addEmployerInfo(queryEmployerIdName.getEmployerId());
-            int addEmployerStory = employerService.addEmployerStory(queryEmployerIdName.getEmployerId());
-            int addEmployerExpose = employerService.addEmployerExpose(queryEmployerIdName.getEmployerId());
+            EmployerAccount account = employerService.queryEmployerInfo(employerAccount.getPhoneNumber());
+            int addEmployerInfo = employerService.addEmployerInfo(account.getEmployerId());
+            int addEmployerStory = employerService.addEmployerStory(account.getEmployerId());
+            int addEmployerExpose = employerService.addEmployerExpose(account.getEmployerId());
+            CreditDetails creditDetails = new CreditDetails();
+            creditDetails.setRemarks("注册账号");
+            creditDetails.setScore("+80");
+            creditDetails.setUserId(account.getEmployerId());
+            creditDetails.setCreditTime(account.getRegTime());
+            creditDetails.setType(account.getRole());
+            employerService.addCreditByReg(creditDetails);
             if (addEmployerInfo > 0 && addEmployerStory > 0 && addEmployerExpose > 0) {
                 return new CommonResult(200,"雇主信息写入成功",addEmployerInfo);
             } else {
@@ -61,10 +76,21 @@ public class RegisterController {
         if (i > 0) {
             return new CommonResult(400,"服务商账号注册失败",null);
         } else {
+            Date date = new Date();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            String dateTime = df.format(date); // Formats a Date into a date/time string.
+            providerAccount.setRegTime(dateTime);
             providerService.addProvider(providerAccount);
             ProviderAccount queryProviderIdName = providerService.queryProviderIdName(providerAccount.getPhoneNumber());
             int addProviderInfo = providerService.addProviderInfo(queryProviderIdName.getProviderId());
             int addProviderExpose = providerService.addProviderExpose(queryProviderIdName.getProviderId());
+            CreditDetails creditDetails = new CreditDetails();
+            creditDetails.setRemarks("注册账号");
+            creditDetails.setScore("+80");
+            creditDetails.setUserId(queryProviderIdName.getProviderId());
+            creditDetails.setCreditTime(queryProviderIdName.getRegTime());
+            creditDetails.setType(queryProviderIdName.getRole());
+            providerService.addCreditByReg(creditDetails);
             if (addProviderInfo > 0 && addProviderExpose > 0) {
                 return new CommonResult(200,"服务商信息写入成功",addProviderInfo);
             } else {

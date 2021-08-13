@@ -1,5 +1,6 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.CreditDetails;
 import com.cykj.bean.EmployerAccount;
 import com.cykj.bean.ProviderAccount;
 import org.apache.ibatis.annotations.Mapper;
@@ -31,4 +32,7 @@ public interface ProviderMapper {
     int addProviderExpose(int providerId);
 
 	List<ProviderInfo> queryAll();
+
+    //注册信用分
+    int addCreditByReg(CreditDetails creditDetails);
 }
