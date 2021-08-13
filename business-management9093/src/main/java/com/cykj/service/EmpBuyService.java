@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 import com.cykj.bean.EmployerInfo;
+import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface EmpBuyService {
     List<Map<String, Object>> selprobuyList(Integer providerId);
     int editproState(TradeWork tradeWork);
     EmployerInfo selEmpPwd(EmployerInfo employerInfo);
+    int adTradeRetreat(TradeRetreat tradeRetreat,int tradeStatus);
 }

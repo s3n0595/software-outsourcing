@@ -27,13 +27,19 @@
           </p>
           <p style="margin-top: 20px;margin-left: 20%;">
             <el-button v-if="item.tradeStatus==1 || item.tradeStatus==2 || item.tradeStatus==3" type="primary" @click="confirmRec(item)">确认收货</el-button>
-            <el-button v-else  type="success" disabled>&nbsp;已收货</el-button>
+            <el-button v-else-if="item.tradeStatus==4"  type="success" disabled>&nbsp;已收货</el-button>
+            <el-button v-else-if="item.tradeStatus==5"  type="success" disabled>&nbsp;退货中</el-button>
+            <el-button v-else-if="item.tradeStatus==6"  type="success" disabled>&nbsp;退货成功</el-button>
           </p>
+          <p style="margin-top: 20px;margin-left: 20%;">
+            <el-button v-if="item.tradeStatus==1 || item.tradeStatus==2 || item.tradeStatus==3" type="warning" @click="returnList(item.tradeWorksId)">申请退货</el-button>
+          </p>
+
         </el-col>
         <div>
         <el-col :span="24" style="border: none">
             <div style="border: none;"> <el-divider content-position="center" ><span style="font-size: 20px;">交付进度</span></el-divider></div>
-          <div style="margin-left: 15%;margin-top: 20px;margin-bottom: 20px;">
+          <div style="margin-left: 15%;margin-top: 20px;margin-bottom: 20px;" v-if="item.tradeStatus<5">
           <el-steps :space="200" :active="item.tradeStatus" finish-status="success" align-center>
             <el-step title="支付成功"></el-step>
             <el-step title="服务方确认"></el-step>
@@ -41,11 +47,31 @@
             <el-step title="交易完成"></el-step>
           </el-steps>
           </div>
+          <div style="margin-left: 32%;margin-top: 20px;margin-bottom: 20px;" v-if="item.tradeStatus>4">
+            <el-steps :space="200" :active="item.tradeStatus==5" finish-status="success" align-center>
+              <el-step title="申请退款"></el-step>
+              <el-step title="平台同意，退款成功"></el-step>
+            </el-steps>
+          </div>
         </el-col>
         </div>
       </div>
     </el-row>
   </div>
+
+    <!--申请退货-->
+    <el-dialog title="申请退货" :visible.sync="returnFormVisible">
+      <el-input
+          type="textarea"
+          :rows="10"
+          placeholder="请输入退货理由"
+          v-model="textarea">
+      </el-input>
+      <div style="margin-top: 20px;margin-left: 45%">
+      <el-button size="small" type="primary" @click="returnSubmit">提交</el-button>
+      <el-button size="small" @click="returnFormVisible = false">取消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -55,7 +81,11 @@ export default {
   data(){
     return{
       user:'',
-      buylist:{}
+      buylist:{},
+      formLabelWidth: "120px",
+      textarea: '',
+      returnFormVisible:false,
+      publicID:''
     }
   },
   methods:{
@@ -95,7 +125,32 @@ export default {
           message: "已取消确认收货"
         });
       });
-    }
+    },
+    returnList(tradeWorksId){
+        this.publicID=tradeWorksId;
+        this.returnFormVisible=true
+    },
+    returnSubmit(){
+      this.$axios.post('buy/returnBuy',this.$qs.stringify({
+        tradeWorksId:this.publicID,
+        remarks:this.textarea,
+        tradeStatus:5
+      })).then(res=>{
+        if(res.data===1){
+          this.$notify.success({
+            title: '提示',
+            message: '申请退款成功'
+          });
+        }else{
+          this.$notify.error({
+            title: '提示',
+            message: '申请退款失败'
+          });
+        }
+        this.returnFormVisible=false;
+        this.seltradeWork();
+      })
+      }
 
   },
   mounted() {
