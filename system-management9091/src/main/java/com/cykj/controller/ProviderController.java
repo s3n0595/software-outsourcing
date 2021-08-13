@@ -2,6 +2,7 @@ package com.cykj.controller;
 
 import com.cykj.bean.ProviderAccount;
 import com.cykj.bean.ProviderInfo;
+import com.cykj.bean.Works;
 import com.cykj.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,28 +52,5 @@ public class ProviderController {
         System.out.println("服务商信息字段 ：" + providerInfo);
         System.out.println("==================================");
         return providerService.editProvider(providerAccount, providerInfo);
-    }
-    //小程序图片上传
-    @RequestMapping("/imgUpLoad")
-    @ResponseBody
-    public String imgUpLoad(@RequestParam("file") MultipartFile file){
-        System.out.println("上传图片");
-        try {
-            String realPath= ResourceUtils.getURL("classpath:").getPath()+"provider";
-            System.out.println(realPath);
-            File fileDir = new File(realPath);
-            if (!fileDir.exists() && !fileDir.isDirectory()) {
-                fileDir.mkdirs();
-            }
-            String uuid = UUID.randomUUID().toString();
-            String filename = uuid + '_' + file.getOriginalFilename();;//uuid+文件名
-            File saveFile = new File(realPath, filename);
-            file.transferTo(saveFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "上传成功";
     }
 }

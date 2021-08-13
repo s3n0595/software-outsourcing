@@ -18,4 +18,6 @@ public interface WorksMapper {
 	List<Works> queryAllWorks();
 	int updatePwd(@Param("providerId") int providerId, @Param("providerPassword") String providerPassword, @Param("password") String password);
 
+	//小程序添加作品
+	int wechatAddWorks(Works works);
 }
