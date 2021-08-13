@@ -16,20 +16,20 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">修改密码</span>
             </el-menu-item>
-            <el-menu-item index="/employerCenter/liaotian" style="height: 50px;">
-              <i class="el-icon-star-off"></i>
-              <span slot="title">聊天</span>
-            </el-menu-item>
+<!--            <el-menu-item index="/employerCenter/liaotian" style="height: 50px;">-->
+<!--              <i class="el-icon-star-off"></i>-->
+<!--              <span slot="title">聊天</span>-->
+<!--            </el-menu-item>-->
           </el-card>
 
           <el-card class="box-card">
             <div class="clearfix" style="font-size: 15px">
               <span>我的服务</span>
             </div>
-            <el-menu-item index="/employerCenter/kefu" style="height: 50px;">
-              <i class="el-icon-star-off"></i>
-              <span slot="title">技能展示</span>
-            </el-menu-item>
+<!--            <el-menu-item index="/employerCenter/kefu" style="height: 50px;">-->
+<!--              <i class="el-icon-star-off"></i>-->
+<!--              <span slot="title">技能展示</span>-->
+<!--            </el-menu-item>-->
             <el-menu-item index="/employerCenter/adddemand" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">发布需求</span>
@@ -62,7 +62,7 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">账户概览</span>
             </el-menu-item>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/employerCenter/detailed" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">交易记录</span>
             </el-menu-item>

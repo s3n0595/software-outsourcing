@@ -1,5 +1,6 @@
 package com.cykj.controller;
 
+import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
@@ -38,12 +39,20 @@ public class EmpBuyController {
     }
 
     @RequestMapping("works")//添加购买记录
-    public int addtradeWork(TradeWork tradeWork,int worksPrice){
+    public int addtradeWork(TradeWork tradeWork,int worksPrice,String phoneNumber,String tradeContent){
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String dateTime = df.format(date); // Formats a Date into a date/time string
         tradeWork.setTradeTime(dateTime);
-        int i=empBuyService.addTradeWork(tradeWork,worksPrice);
+        CapitalFlow capitalFlow=new CapitalFlow();
+        capitalFlow.setPhoneNumber(phoneNumber);
+        capitalFlow.setTradeType("开发宝");
+        capitalFlow.setTradeContent(tradeContent);
+        capitalFlow.setTradeTime(dateTime);
+        capitalFlow.setTradeCapital(worksPrice);
+        capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
+        capitalFlow.setType("雇主");
+        int i=empBuyService.addTradeWork(tradeWork,worksPrice,capitalFlow);
         if(i>0){
             return 1;
         }else{
@@ -86,7 +95,6 @@ public class EmpBuyController {
             return 0;
         }
     }
-
 
     @RequestMapping("probuylist")//服务商个人中心交易作品
     public List<Map<String, Object>> probuyList(int providerId){

@@ -174,4 +174,9 @@ public class EmpCenterServiceImpl implements EmpCenterService {
     public int proEditPwd(int userid, int oldpwd, int opwd) {
         return empCenterMapper.proEditPwd(userid, oldpwd, opwd);
     }
+
+    @Override
+    public List<Map<String, Object>> selempAllFlow(CapitalFlow capitalFlow) {
+        return empCenterMapper.selempAllFlow(capitalFlow);
+    }
 }

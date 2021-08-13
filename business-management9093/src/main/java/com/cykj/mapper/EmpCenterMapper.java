@@ -40,4 +40,5 @@ public interface EmpCenterMapper {
     int proSetPwd(@Param("id") int userid,@Param("transactionPwd") int transactionPwd);//服务商设置交易密码
     int empEditPwd(@Param("id") int userid,@Param("oldpwd") int oldpwd,@Param("opwd") int opwd);//雇主修改交易密码
     int proEditPwd(@Param("id") int userid,@Param("oldpwd") int oldpwd,@Param("opwd") int opwd);//服务商修改交易密码
+    List<Map<String, Object>> selempAllFlow(CapitalFlow capitalFlow);//查询雇主流水
 }

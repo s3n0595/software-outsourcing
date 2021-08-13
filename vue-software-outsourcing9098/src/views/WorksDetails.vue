@@ -192,7 +192,9 @@ export default {
                   tradeStatus:1,
                   worksPrice:this.work.worksPrice,
                   tradeOrder:this.order,
-                  providerId:this.work.providerId
+                  providerId:this.work.providerId,
+                  phoneNumber:this.user.phoneNumber,
+                  tradeContent:"购买作品《"+this.work.worksTitle+"》"
                 })).then(resp=>{
                   this.$message({
                     message: "购买成功，请前往个人中心查看",

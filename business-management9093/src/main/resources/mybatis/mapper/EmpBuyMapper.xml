@@ -61,6 +61,10 @@
         update tradeWork set tradeStatus=#{tradeStatus} where tradeWorksId=#{tradeWorksId}
     </update>
 
+    <insert id="addFlow" parameterType="com.cykj.bean.CapitalFlow">
+        insert capitalFlow(tradeType,phoneNumber,tradeContent,tradeCapital,tradeTime,tradeState,type)
+        values (#{tradeType},#{phoneNumber},#{tradeContent},#{tradeCapital},#{tradeTime},#{tradeState},#{type})
+    </insert>
 </mapper>
 
 

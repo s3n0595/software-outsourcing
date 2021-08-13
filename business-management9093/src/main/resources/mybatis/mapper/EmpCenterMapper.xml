@@ -148,6 +148,10 @@
     <update id="proEditPwd">
         update providerInfo set transactionPwd=#{opwd} where providerId=#{id} and transactionPwd=#{oldpwd}
     </update>
+
+    <select id="selempAllFlow" parameterType="com.cykj.bean.CapitalFlow" resultType="java.util.Map">
+        select * from capitalFlow where phoneNumber=#{phoneNumber} and type=#{type}
+    </select>
 </mapper>
 
 
