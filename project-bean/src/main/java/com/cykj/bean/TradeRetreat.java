@@ -17,6 +17,9 @@ import lombok.ToString;
 public class TradeRetreat {
     private int tradeRetreatId;
     private int tradeWorksId;
+    // 1:退款 2：成功 3：失败
     private int retreatStatus;
     private String remarks;
+    private String tradeRetreatTime;
+    private TradeWork tradeWork;
 }
