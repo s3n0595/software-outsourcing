@@ -62,4 +62,12 @@ public class WorksServiceImpl implements WorksService {
 	public int updatePwd(int providerId, String providerPassword, String password) {
 		return worksMapper.updatePwd(providerId,providerPassword,password);
 	}
+
+
+	//小程序添加作品
+	@Override
+	public int wechatAddWorks(Works works) {
+		int i = worksMapper.wechatAddWorks(works);
+		return i;
+	}
 }
