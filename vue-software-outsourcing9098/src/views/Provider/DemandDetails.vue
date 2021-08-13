@@ -199,7 +199,10 @@ export default {
     this.$axios.get('demand/findEmployerInfo',{params:{demandId: this.demand.demandId}}).then(res =>{
       console.log(res.data)
         this.employer = res.data;
-    })
+    });
+    this.$axios.get('traffic/increase',{params:{id: this.demand.demandId,type:"demand"}}).then(res =>{
+    });
+
   }
 }
 </script>

@@ -78,19 +78,22 @@
                     <img :src="'api/images/bg_00' + (item.demandId%5) +'.png'" alt=""
                          style="width: 80%;height: 80%;margin: 5%">
                   </el-col>
-                  <el-col :span="15">
+                  <el-col :span="12">
                     <p style="padding: 10px;">
                       <span>No.{{ item.demandId }}&nbsp;</span>
                       <span style="margin-left: 5px;">&nbsp;{{ item.demandTitle }}</span>
                       <el-tag style="margin-left: 10px;">{{ item.demandTypeName }}</el-tag>
                     </p>
                     <p style="padding: 10px;">
-                      <span>工期：{{ item.predictTime }}周 </span></p>
+                      <span>工期：{{ item.predictTime }}周  </span>
+                      <span style="margin-left: 5px">|</span>
+                      <span style="margin-left: 5px;">￥{{ item.predictPrice }}</span>
+                    </p>
                     <p style="padding: 10px;"><span>发布时间：{{ item.releaseTime }}</span></p>
                   </el-col>
-                  <el-col :span="3">
+                  <el-col :span="6">
                     <p style="padding: 30px;">
-                      ￥{{ item.predictPrice }}
+                      <span>热度：{{item.trafficNumber}}</span>
                     </p>
                   </el-col>
                 </div>
@@ -228,7 +231,7 @@ export default {
         this.sort = "价格降序";
       } else if (this.price == 1) {
         this.price = 2;
-        this.sort = "";
+        this.sort = "价格升序";
       } else if (this.price == 2) {
         this.price = 1;
         this.sort = "价格降序";

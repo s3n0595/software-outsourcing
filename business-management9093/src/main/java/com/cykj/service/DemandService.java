@@ -31,4 +31,5 @@ public interface DemandService {
 	boolean restCharge(int employerId, int tradeRecordId);
 	boolean toEvaluate(int demandId);
 	Map<String, Object> findEmployerInfo(int demandId);
+	void increaseTraffic(int demandId);
 }

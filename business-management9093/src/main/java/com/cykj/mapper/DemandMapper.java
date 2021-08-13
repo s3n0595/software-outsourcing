@@ -20,4 +20,5 @@ public interface DemandMapper {
 	int updateDemandStatus(@Param("demandId") int demandId, @Param("status") int status);
 	Demand selectDemandById(int demandId);
 	Map<String, Object> queryEmployerByDemandId(int demandId);
+	int updateTraffic(int demandId);
 }

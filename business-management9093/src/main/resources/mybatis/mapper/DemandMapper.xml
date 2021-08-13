@@ -46,6 +46,9 @@
         from demand t1, employerInfo t2, employerAccount t3
         where t1.employerId = t2.employerId and t2.employerId = t3.employerId and t1.demandId = #{demandId}
     </select>
+    <update id="updateTraffic">
+        update demand set trafficNumber = trafficNumber + 1 where demandId = #{demandId};
+    </update>
 </mapper>
 
 

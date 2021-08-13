@@ -79,6 +79,9 @@ public class DemandServiceImpl implements DemandService {
 				break;
 		}
 		switch (sort) {
+			case "综合排序":
+				sortType = "trafficNumber desc";
+				break;
 			case "时间降序":
 				sortType = "releaseTime desc";
 				break;
@@ -91,7 +94,6 @@ public class DemandServiceImpl implements DemandService {
 			case "价格升序":
 				sortType = "predictPrice asc";
 				break;
-
 		}
 		return demandMapper.queryAllDemand(count, type, leftPrice, rightPrice, leftTime, rightTime, sortType, searchInfo);
 	}
@@ -266,5 +268,10 @@ public class DemandServiceImpl implements DemandService {
 	public Map<String, Object> findEmployerInfo(int demandId) {
 
 		return demandMapper.queryEmployerByDemandId(demandId);
+	}
+
+	@Override
+	public void increaseTraffic(int demandId) {
+		demandMapper.updateTraffic(demandId);
 	}
 }
