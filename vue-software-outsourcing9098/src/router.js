@@ -149,12 +149,12 @@ let softwareOutsourcing = new Router({
       component: () => import('./views/Provider/ProviderCenter.vue'),
       children: [
         {
-          path: '/',
+          path: '/providerCenter',
           name: 'information',
           component: () => import('./views/Provider/Information.vue')
         },
         {
-          path: '/information',
+          path: '/providerCenter/information',
           name: 'information',
           component: () => import('./views/Provider/Information.vue')
         },

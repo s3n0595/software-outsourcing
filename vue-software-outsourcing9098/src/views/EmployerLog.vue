@@ -19,7 +19,7 @@
         <el-input clearable type="password" v-model="data.password" placeholder="请输入密码"></el-input>
       </el-form-item>
       <el-form-item style="text-align: left">
-        <el-checkbox v-model="data.checked">记住我
+        <el-checkbox v-model="checked">记住我
         </el-checkbox>
       </el-form-item>
       <el-form-item>
@@ -102,7 +102,7 @@ export default {
         }
       })
     },
-  }
+  },
 }
 </script>
 

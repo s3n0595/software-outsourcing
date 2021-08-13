@@ -2,8 +2,6 @@ package com.cykj.service;
 
 import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
-import com.cykj.vo.SuccessfulCase;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

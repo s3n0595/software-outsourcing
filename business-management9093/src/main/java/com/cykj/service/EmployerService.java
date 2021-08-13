@@ -1,6 +1,8 @@
 package com.cykj.service;
 
+import com.cykj.bean.CreditDetails;
 import com.cykj.bean.EmployerAccount;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author guoquansen
@@ -28,4 +30,10 @@ public interface EmployerService {
 
     //增加雇主个人信息到曝光台
     int addEmployerExpose(int employerId);
+
+    //查询注册信息
+    EmployerAccount queryEmployerInfo(String phoneNumber);
+
+    //注册信用分
+    int addCreditByReg(CreditDetails creditDetails);
 }

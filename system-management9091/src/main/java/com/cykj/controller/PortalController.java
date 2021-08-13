@@ -4,7 +4,6 @@ import com.cykj.bean.CommonResult;
 import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
 import com.cykj.service.PortalService;
-import com.cykj.vo.SuccessfulCase;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

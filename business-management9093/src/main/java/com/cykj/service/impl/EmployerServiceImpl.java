@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.CreditDetails;
 import com.cykj.bean.EmployerAccount;
 import com.cykj.mapper.EmployerMapper;
 import com.cykj.service.EmployerService;
@@ -49,6 +50,16 @@ public class EmployerServiceImpl implements EmployerService {
     @Override
     public int addEmployerExpose(int employerId) {
         return employerMapper.addEmployerExpose(employerId);
+    }
+
+    @Override
+    public EmployerAccount queryEmployerInfo(String phoneNumber) {
+        return employerMapper.queryEmployerInfo(phoneNumber);
+    }
+
+    @Override
+    public int addCreditByReg(CreditDetails creditDetails) {
+        return employerMapper.addCreditByReg(creditDetails);
     }
 
 

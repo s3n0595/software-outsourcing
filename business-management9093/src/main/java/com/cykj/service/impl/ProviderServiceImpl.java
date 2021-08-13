@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.CreditDetails;
 import com.cykj.bean.ProviderAccount;
 import com.cykj.bean.ProviderInfo;
 import com.cykj.mapper.ProviderMapper;
@@ -67,5 +68,10 @@ public class ProviderServiceImpl implements ProviderService {
         results.put("list", providerList);
         results.put("total", providerList.size());
         return results;
+    }
+
+    @Override
+    public int addCreditByReg(CreditDetails creditDetails) {
+        return providerMapper.addCreditByReg(creditDetails);
     }
 }

@@ -2,7 +2,6 @@ package com.cykj.mapper;
 
 import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
-import com.cykj.vo.SuccessfulCase;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
