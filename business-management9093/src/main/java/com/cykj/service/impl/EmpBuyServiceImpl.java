@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
@@ -29,11 +30,12 @@ public class EmpBuyServiceImpl implements EmpBuyService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int addTradeWork(TradeWork tradeWork, Integer balance) {
+    public int addTradeWork(TradeWork tradeWork, Integer balance, CapitalFlow capitalFlow) {
         try{
             int i=empBuyMapper.editBalance(tradeWork.getEmployerId(),balance);
             int j=empBuyMapper.addtradeWork(tradeWork);
-            if(i>0 && j>0){
+            int k=empBuyMapper.addFlow(capitalFlow);
+            if(i>0 && j>0 && k>0){
                 return i;
             }else{
                 return 0;

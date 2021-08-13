@@ -1,5 +1,6 @@
 package com.cykj.service;
 
+import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
@@ -14,7 +15,7 @@ import java.util.Map;
  */
 public interface EmpBuyService {
     int selBalance(Integer employerId);
-    int addTradeWork(TradeWork tradeWork,Integer balance);
+    int addTradeWork(TradeWork tradeWork, Integer balance, CapitalFlow capitalFlow);
     TradeWork oldtradeWork(TradeWork tradeWork);
     List<Map<String, Object>> selbuyList(Integer employerId);
     int editState(TradeWork tradeWork);

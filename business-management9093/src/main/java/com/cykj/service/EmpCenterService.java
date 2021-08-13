@@ -38,4 +38,5 @@ public interface EmpCenterService {
     int proSetPwd(int userid,int transactionPwd);
     int empEditPwd(int userid,int oldpwd,int opwd);
     int proEditPwd( int userid,int oldpwd,int opwd);
+    List<Map<String, Object>> selempAllFlow(CapitalFlow capitalFlow);
 }

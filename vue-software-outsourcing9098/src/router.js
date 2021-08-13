@@ -135,6 +135,11 @@ let softwareOutsourcing = new Router({
           name: 'paypwd',
           component: () => import('./views/PayPassword.vue')
         },
+        {
+          path: '/employerCenter/detailed',
+          name: 'detailed',
+          component: () => import('./views/Employer/Children/Detailed')
+        },
       ]
     },
     {
@@ -188,11 +193,15 @@ let softwareOutsourcing = new Router({
           name: 'myTenderList',
           component: () => import('./views/Provider/myTenderList.vue')
         },
-
         {
           path: '/providerCenter/paypwd',
           name: 'paypwd',
           component: () => import('./views/PayPassword.vue')
+        },
+        {
+          path: '/providerCenter/detailed',
+          name: 'detailed',
+          component: () => import('./views/Provider/DetailedP.vue')
         },
       ]
     },

@@ -270,6 +270,12 @@ public class EmpCenterController {
             }else{return 0;}
         }
     }
+
+    @RequestMapping("flow")//雇主流水明细表
+    public List<Map<String, Object>> allFlow(CapitalFlow capitalFlow){
+        return empCenterService.selempAllFlow(capitalFlow);
+    }
+
     //行业资讯爬虫
     @RequestMapping("getrealinfo")
     public List<RealtimeInfo> getInfo(){
