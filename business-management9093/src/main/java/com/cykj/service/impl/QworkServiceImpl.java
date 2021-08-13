@@ -19,8 +19,8 @@ public class QworkServiceImpl implements QworksService {
     @Autowired
     private QworksMapper qworksMapper;
     @Override
-    public List<Map<String, Object>> queryAllWork( int count,  String  demandTypeName,  int priceMin, int priceMax,String searchInfo) {
-        return qworksMapper.queryAllWork(count,demandTypeName,priceMin,priceMax,searchInfo);
+    public List<Map<String, Object>> queryAllWork( int count,  String  demandTypeName,  int priceMin, int priceMax,String searchInfo,String sortType) {
+        return qworksMapper.queryAllWork(count,demandTypeName,priceMin,priceMax,searchInfo,sortType);
     }
 
     @Override

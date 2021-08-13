@@ -26,9 +26,10 @@ public class QWorksController {
     @Autowired
     private QworksService qworksService;
     @RequestMapping("worksList")
-    public List<Map<String, Object>> queryWorkdList(int count,@RequestParam("demandTypeName") String demandTypeName,@RequestParam("price") String price,@RequestParam("searchInfo") String searchInfo){
+    public List<Map<String, Object>> queryWorkdList(int count,@RequestParam("demandTypeName") String demandTypeName,@RequestParam("price") String price,@RequestParam("searchInfo") String searchInfo,@RequestParam("sort") String sort){
         int priceMin = -1;
         int priceMax = -1;
+        String sortType=null;
         switch (price){
             case "0-5K":
                 priceMin=0;
@@ -46,9 +47,21 @@ public class QWorksController {
                 priceMin=50000;
                 break;
         }
-        System.out.println("最小价格："+priceMin);
-        System.out.println("最大价格："+priceMax);
-        return qworksService.queryAllWork(count,demandTypeName,priceMin,priceMax,searchInfo);
+        switch (sort){
+            case "时间降序":
+                sortType="releaseTime desc";
+                break;
+            case "时间升序":
+                sortType="releaseTime asc";
+                break;
+            case "价格降序":
+                sortType="worksPrice desc";
+                break;
+            case "价格升序":
+                sortType="worksPrice asc";
+                break;
+        }
+        return qworksService.queryAllWork(count,demandTypeName,priceMin,priceMax,searchInfo,sortType);
     }
 
     @RequestMapping("selpro")

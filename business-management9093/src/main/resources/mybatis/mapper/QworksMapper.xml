@@ -17,6 +17,9 @@
         <if test="searchInfo !=null">
             AND t1.worksTitle like concat('%',#{searchInfo},'%')
         </if>
+        <if test="sortType !=null">
+            order by ${sortType}
+        </if>
         limit #{count}, 10;
     </select>
 

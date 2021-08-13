@@ -57,9 +57,24 @@ public class EmpBuyServiceImpl implements EmpBuyService {
         return empBuyMapper.selbuyList(employerId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public int editState(TradeWork tradeWork) {
-        return empBuyMapper.editState(tradeWork);
+    public int editState(TradeWork tradeWork,CapitalFlow capitalFlow,int providerId) {
+        try{
+            int i=empBuyMapper.editState(tradeWork);
+            int j=empBuyMapper.addproFlow(capitalFlow);
+            int k=empBuyMapper.editproBalance(providerId, (int) capitalFlow.getTradeCapital());
+            if(i>0 && j>0 && k>0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return 0;
+        }
+//        return empBuyMapper.editState(tradeWork);
     }
 
     @Override
