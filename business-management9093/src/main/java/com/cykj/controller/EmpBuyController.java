@@ -76,9 +76,13 @@ public class EmpBuyController {
     }
 
     @RequestMapping("confirm")//雇主确认收货
-    public int edittradeState(TradeWork tradeWork){
+    public int edittradeState(TradeWork tradeWork,CapitalFlow capitalFlow,@RequestParam("providerId") int providerId){
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String dateTime = df.format(date); // Formats a Date into a date/time string
+        capitalFlow.setTradeTime(dateTime);
         tradeWork.setTradeStatus(4);
-        int i=empBuyService.editState(tradeWork);
+        int i=empBuyService.editState(tradeWork,capitalFlow,providerId);
         if(i>0){
             return 1;
         }else{

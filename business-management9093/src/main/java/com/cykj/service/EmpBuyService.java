@@ -4,6 +4,7 @@ import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public interface EmpBuyService {
     int addTradeWork(TradeWork tradeWork, Integer balance, CapitalFlow capitalFlow);
     TradeWork oldtradeWork(TradeWork tradeWork);
     List<Map<String, Object>> selbuyList(Integer employerId);
-    int editState(TradeWork tradeWork);
+    int editState(TradeWork tradeWork,CapitalFlow capitalFlow,int providerId);
     List<Map<String, Object>> selprobuyList(Integer providerId);
     int editproState(TradeWork tradeWork);
     EmployerInfo selEmpPwd(EmployerInfo employerInfo);
