@@ -16,6 +16,7 @@ public class ProviderInfo {
   private String credit;
   private double balance;
   private String headPath;
+  private int transactionPwd;
 
 
 }

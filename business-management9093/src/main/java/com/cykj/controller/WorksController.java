@@ -7,17 +7,19 @@ import com.cykj.service.WorksService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @version 1.0
@@ -93,6 +95,58 @@ public class WorksController {
         } else {
             return new CommonResult(400,"服务商密码修改失败",null);
         }
+    }
+    //小程序图片上传
+    String filename;
+    @RequestMapping("/imgUpLoad")
+    @ResponseBody
+    public String imgUpLoad(@RequestParam("file") MultipartFile file){
+        System.out.println(file);
+        System.out.println("上传图片");
+        try {
+            String realPath= ResourceUtils.getURL("classpath:").getPath()+"provider";
+            System.out.println(realPath);
+            File fileDir = new File(realPath);
+            if (!fileDir.exists() && !fileDir.isDirectory()) {
+                fileDir.mkdirs();
+            }
+            String uuid = UUID.randomUUID().toString();
+             filename = uuid + '_' + file.getOriginalFilename();;//uuid+文件名
+            System.out.println("文件名称："+filename);
+            File saveFile = new File(realPath, filename);
+            file.transferTo(saveFile);
+            System.out.println("上传图片"+saveFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "上传成功";
+    }
+    //小程序发布作品
+    @RequestMapping("/worksUpLoad")
+    @ResponseBody
+    public String worksUpLoad(String worksTitle,String worksTypeId,String worksDescribe,String worksPrice,String providerId,String worksAddress){
+        System.out.println("小程序发布作品");
+        Works works=new Works();
+        works.setAuditStatus(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        works.setReleaseTime(sdf.format(new Date()));
+        works.setWorksTypeId(Integer.valueOf(worksTypeId));
+        works.setProviderId(Integer.valueOf(providerId));
+        works.setWorksDescribe(worksDescribe);
+        works.setWorksPrice(Double.valueOf(worksPrice));
+        works.setWorksTitle(worksTitle);
+        works.setWorksAddress(worksAddress);
+        System.out.println("文件名字"+filename);
+        works.setAnnexPath(filename);
+        System.out.println(works);
+        if(worksService.wechatAddWorks(works)>0){
+            return "success";
+        }else{
+           return "false";
+       }
+
     }
 
 

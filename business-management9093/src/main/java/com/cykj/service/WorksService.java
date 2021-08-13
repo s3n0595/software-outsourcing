@@ -19,4 +19,7 @@ public interface WorksService {
 	List<Works> queryAllWorks();
 	int updatePwd(int providerId, String providerPassword,String password);
 
+	//小程序添加作品
+	int wechatAddWorks(Works works);
+
 }

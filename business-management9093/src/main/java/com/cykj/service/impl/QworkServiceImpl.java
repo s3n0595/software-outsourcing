@@ -2,6 +2,7 @@ package com.cykj.service.impl;
 
 import com.cykj.mapper.QworksMapper;
 import com.cykj.service.QworksService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,8 @@ public class QworkServiceImpl implements QworksService {
     @Autowired
     private QworksMapper qworksMapper;
     @Override
-    public List<Map<String, Object>> queryAllWork(int count) {
-        return qworksMapper.queryAllWork(count);
+    public List<Map<String, Object>> queryAllWork( int count,  String  demandTypeName,  int priceMin, int priceMax,String searchInfo) {
+        return qworksMapper.queryAllWork(count,demandTypeName,priceMin,priceMax,searchInfo);
     }
 
     @Override

@@ -3,10 +3,12 @@ package com.cykj.bean;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class EmployerInfo {
 
   private int employerInfoId;
@@ -16,7 +18,7 @@ public class EmployerInfo {
   private double balance;
   private String headPath;
   private String email;
-
+  private int transactionPwd;
 
 
 }

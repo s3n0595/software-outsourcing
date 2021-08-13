@@ -14,7 +14,7 @@
           <el-menu-item @click="home">首页</el-menu-item>
           <el-menu-item @click="goodsList">找需求</el-menu-item>
           <el-menu-item @click="worksList">作品广场</el-menu-item>
-
+          <el-menu-item @click="realList">行业资讯</el-menu-item>
         </el-menu>
 
 
@@ -53,16 +53,17 @@
           <div class="header-user-con">
             <!-- 用户头像 -->
             <div class="user-avator">
+<!--              <img :src="require(headImg)">-->
               <img src="./assets/img/img.jpg">
             </div>
             <!-- 用户名下拉菜单 -->
             <el-dropdown class="user-name" trigger="click">
               <span class="el-dropdown-link">
-                {{username}}
+<!--                {{username}}-->
                 <i class="el-icon-caret-bottom"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="personCenter">用户信息</el-dropdown-item>
+                <el-dropdown-item @click.native="personCenter">个人中心</el-dropdown-item>
                 <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -123,7 +124,8 @@ export default {
       isShow: false,
       log: false,
       info: false,
-      username:''
+      headImg:'',
+      // username:''
     };
   },
   created() {
@@ -131,7 +133,6 @@ export default {
       this.log = true;
     } else {
       this.log = false;
-      this.username = JSON.parse(sessionStorage.getItem('username'))
     };
   },
   updated() {
@@ -141,6 +142,8 @@ export default {
     if (this.user) {
       this.log = false
       this.info = true
+      this.headImg = this.headPath
+      // this.username = this.username
     } else {
       this.log = true
       this.info = false
@@ -156,6 +159,9 @@ export default {
     },
     worksList() {
       this.$router.push('/worksList')
+    },
+    realList(){
+      this.$router.push('/realinfo')
     },
     employerRegister() {
       this.$router.push('/employerReg')
@@ -176,7 +182,8 @@ export default {
     logout() {
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('token');
-      sessionStorage.removeItem('username')
+      // sessionStorage.removeItem('username')
+      sessionStorage.removeItem('headPath')
       this.$router.push("/");
     },
     personCenter() {
@@ -193,7 +200,8 @@ export default {
   },
   mounted() {
     this.token = JSON.parse(sessionStorage.getItem('token'))
-    this.username = JSON.parse(sessionStorage.getItem('username'))
+    this.headPath = JSON.parse(sessionStorage.getItem('headPath'))
+    // this.username = JSON.parse(sessionStorage.getItem('username'))
   }
 };
 

@@ -5,9 +5,29 @@
 <mapper namespace="com.cykj.mapper.TenderRecodeMapper">
 
     <insert id="insertRecode" parameterType="com.cykj.bean.TenderRecord">
-        insert into tenderRecord (tenderId,demandId)
-        values (#{tenderId},#{demandId});
+        insert into tenderRecord (tenderId,demandId,unionStatus,existTime,price,projectTime,annexPath,applyStatus)
+        values (#{tenderId},#{demandId},#{unionStatus},#{existTime},#{price},#{projectTime},#{annexPath},0);
     </insert>
+    <select id="queryTenderRecordById" resultType="java.util.Map" parameterType="int">
+        select * from tenderRecord  where demandId=#{demandId};
+    </select>
+    <delete id="deleteRecode" parameterType="com.cykj.bean.TenderRecord">
+        delete from tenderRecord where tenderRecordId = #{tenderRecordId};
+    </delete>
+     <delete id="updateRecode" parameterType="com.cykj.bean.TenderRecord">
+        update tenderRecord set applyStatus = #{applyStatus} where tenderRecordId = #{tenderRecordId};
+    </delete>
+    <select id="queryTenderById" resultType="java.util.Map" parameterType="int">
+        select *
+        from tenderRecord t1 left join tradeRecord t on t1.tenderRecordId = t.tenderRecordId, demand t2, demandType t3, employerAccount t4
+        where t1.demandId = t2.demandId
+            and t2.demandTypeid = t3.demandTypeid
+          and t2.employerId = t4.employerId
+          and t1.tenderId = #{providerId};
+    </select>
+    <select id="queryTenderProviderById" resultType="java.util.Map" parameterType="int">
+        select *
+        from demand t1, providerAccount t2, tenderRecord t3, tradeRecord t4
+        where t1.demandId = t3.demandId and t3.tenderRecordId = t4.tenderRecordId and t3.tenderId = t2.providerId and t3.applyStatus = 1 and t1.demandId = #{demandId}
+    </select>
 </mapper>
-
-

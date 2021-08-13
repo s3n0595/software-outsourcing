@@ -84,6 +84,70 @@
     <update id="editProBalance">
         update providerInfo set balance=balance+#{balance} where providerId=#{providerId}
     </update>
+
+    <update id="updateEmpEmail" parameterType="com.cykj.bean.EmployerInfo">
+        update employerInfo set email=#{email} where employerId=#{employerId}
+    </update>
+
+    <update id="updateProEmail" parameterType="com.cykj.bean.ProviderInfo">
+        update providerInfo set email=#{email} where providerId=#{providerId}
+    </update>
+
+    <update id="updateHead">
+        update employerInfo set headPath=#{headPath} where employerId=#{employerId}
+    </update>
+
+    <update id="updateproHead">
+        update providerInfo set headPath=#{headPath} where providerId=#{providerId}
+    </update>
+
+    <select id="selempInfo" resultType="java.util.Map" parameterType="int">
+        SELECT t1.*,t2.employerProfile,t2.email,t2.credit,t2.balance,t2.headPath
+        from employerAccount t1,employerInfo t2
+        where t1.employerId=t2.employerId and t1.employerId=#{employerId}
+    </select>
+
+    <select id="selproInfo" resultType="java.util.Map" parameterType="int">
+        SELECT t1.*,t2.providerProfile,t2.email,t2.credit,t2.balance,t2.headPath
+        from providerAccount t1,providerInfo t2
+        where t1.providerId=t2.providerId and t1.providerId=#{providerId}
+    </select>
+
+    <update id="updateEmpName" parameterType="com.cykj.bean.EmployerAccount">
+        update employerAccount set employerName=#{employerName} where employerId=#{employerId}
+    </update>
+
+    <update id="updateProName" parameterType="com.cykj.bean.EmployerAccount">
+        update providerAccount set providerName=#{providerName} where providerId=#{providerId}
+    </update>
+
+    <select id="selCredit" resultType="com.cykj.bean.CreditDetails">
+        select * from creditDetails where userId=#{userId} and type=#{type}
+    </select>
+
+    <select id="selEmpInfo" resultType="java.util.Map">
+        select t1.role,t2.* from employerAccount t1,employerInfo t2 where t1.employerId=t2.employerId and t2.employerId=#{id}
+    </select>
+
+    <select id="selProInfo" resultType="java.util.Map">
+        select t1.role,t2.* from providerAccount t1,providerInfo t2 where t1.providerId=t2.providerId and t2.providerId=#{id}
+    </select>
+
+    <update id="empSetPwd">
+        update employerInfo set transactionPwd=#{transactionPwd} where employerId=#{id}
+    </update>
+
+    <update id="proSetPwd">
+        update providerInfo set transactionPwd=#{transactionPwd} where providerId=#{id}
+    </update>
+
+    <update id="empEditPwd">
+        update employerInfo set transactionPwd=#{opwd} where employerId=#{id} and transactionPwd=#{oldpwd}
+    </update>
+
+    <update id="proEditPwd">
+        update providerInfo set transactionPwd=#{opwd} where providerId=#{id} and transactionPwd=#{oldpwd}
+    </update>
 </mapper>
 
 

@@ -8,7 +8,7 @@
             <div class="clearfix" style="font-size: 15px">
               <span>基本信息</span>
             </div>
-            <el-menu-item index="/employerCenter/information" style="height: 50px;">
+            <el-menu-item index="/information" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">账户信息</span>
             </el-menu-item>
@@ -38,6 +38,10 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">购买中心</span>
             </el-menu-item>
+            <el-menu-item index="/employerCenter/demandList" style="height: 50px;">
+              <i class="el-icon-star-off"></i>
+              <span slot="title">我的需求</span>
+            </el-menu-item>
           </el-card>
 
           <el-card class="box-card">
@@ -62,7 +66,7 @@
               <i class="el-icon-star-off"></i>
               <span slot="title">交易记录</span>
             </el-menu-item>
-            <el-menu-item index="/admin/user" style="height: 50px;">
+            <el-menu-item index="/employerCenter/paypwd" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">交易密码</span>
             </el-menu-item>
@@ -75,7 +79,7 @@
             <router-view/>
           </div>
         </el-main>
-        <el-footer>2019@科建版权所有</el-footer>
+        <el-footer>2021@传一之光所有</el-footer>
       </el-container>
     </el-container>
 

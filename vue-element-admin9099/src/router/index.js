@@ -169,6 +169,16 @@ export default new Router({
                     meta:{title: '联盟管理'}
                 },
                 {
+                    path: '/adviserManage',
+                    component: resolve => require(['../components/page/businessManage/AdviserManage'], resolve),
+                    meta:{title: '顾问管理'}
+                },
+                {
+                    path: '/report',
+                    component: resolve => require(['../components/page/businessManage/report'], resolve),
+                    meta:{title: '报表统计'}
+                },
+                {
                     path: '/tradeRecordManage',
                     component: resolve => require(['../components/page/userManage/TradeRecordManage'], resolve),
                     meta:{title: '投标交易'}
@@ -177,6 +187,11 @@ export default new Router({
                     path: '/tradeWorkManage',
                     component: resolve => require(['../components/page/userManage/TradeWorkManage'], resolve),
                     meta:{title: '作品交易'}
+                },
+                {
+                    path: '/successfulCases',
+                    component: resolve => require(['../components/page/portalManage/SuccessfulCases'], resolve),
+                    meta:{title: '成功案例配置'}
                 },
             ]
         },

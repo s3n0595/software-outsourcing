@@ -28,6 +28,7 @@
         INNER JOIN demandType t4
         ON t1.worksId = t2.worksId
         AND t2.providerId = t3.providerId AND t2.worksTypeId=t4.demandTypeId WHERE t1.employerId =#{employerId}
+        ORDER BY t1.tradeWorksId DESC
     </select>
 
     <update id="editState" parameterType="com.cykj.bean.TradeWork">
@@ -47,6 +48,19 @@
     <update id="editproState" parameterType="com.cykj.bean.TradeWork">
         update tradeWork set tradeStatus=#{tradeStatus} where tradeWorksId=#{tradeWorksId}
     </update>
+
+    <select id="selEmpPwd" resultType="com.cykj.bean.EmployerInfo" parameterType="com.cykj.bean.EmployerInfo">
+        select * from employerInfo where employerId=#{employerId} and transactionPwd=#{transactionPwd}
+    </select>
+
+    <insert id="addtradeRetreat" parameterType="com.cykj.bean.TradeRetreat">
+        insert tradeRetreat(tradeWorksId,remarks) values (#{tradeWorksId},#{remarks})
+    </insert>
+
+    <update id="editRetreat">
+        update tradeWork set tradeStatus=#{tradeStatus} where tradeWorksId=#{tradeWorksId}
+    </update>
+
 </mapper>
 
 

@@ -21,11 +21,22 @@ spring:
   mvc:
     static-path-pattern: /images/**
   resources:
-    static-locations: classpath:/Provider/, classpath:/static/, classpath:/EmpFolder/
+    static-locations: classpath:/Provider/, classpath:/static/, classpath:/EmpFolder/, classpath:/file/
   redis:
     host: 127.0.0.1
     port: 6379
-
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: 616667914@qq.com
+    password: onwubclphmmybeii
+    properties:
+      mail:
+        smtp:
+          auth: true
+        starttls:
+          enable: true
+          required: true
 
 app:
   #appId

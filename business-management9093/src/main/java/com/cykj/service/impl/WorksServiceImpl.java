@@ -39,19 +39,18 @@ public class WorksServiceImpl implements WorksService {
         }
 		System.out.println(realPath);
         works.setAnnexPath(file.getOriginalFilename());
-		works.setAuditStatus(7);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		works.setAuditStatus(0);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		works.setReleaseTime(sdf.format(new Date()));
 		try {
 			file.transferTo(new File(realPath + '/' + works.getAnnexPath()));
+			if(worksMapper.addWorks(works) > 0) {
+				return true;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(worksMapper.addWorks(works) > 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	@Override
@@ -62,5 +61,13 @@ public class WorksServiceImpl implements WorksService {
 	@Override
 	public int updatePwd(int providerId, String providerPassword, String password) {
 		return worksMapper.updatePwd(providerId,providerPassword,password);
+	}
+
+
+	//小程序添加作品
+	@Override
+	public int wechatAddWorks(Works works) {
+		int i = worksMapper.wechatAddWorks(works);
+		return i;
 	}
 }

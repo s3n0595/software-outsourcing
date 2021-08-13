@@ -19,6 +19,8 @@ public class TenderRecord {
   private double price;
   // 工期
   private String projectTime;
+  private String annexPath;
+  private int applyStatus;
   private Demand demand;
 
 

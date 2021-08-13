@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.ChatMapper">
+    <insert id="createRoom" parameterType="int">
+        insert into chatRoom(demandId) values (#{demandId});
+    </insert>
+    <select id="selectLastRoom" resultType="com.cykj.bean.ChatRoom">
+        select * from chatRoom where chatRoomId = (select max(chatRoomId) from chatRoom);
+    </select>
+    <insert id="insertMember" parameterType="java.util.ArrayList">
+        insert into chatMember(chatRoomId, memberId, memberRole) values
+        <foreach item="m" index="index" collection="list" separator="," close=";">
+            (#{m.chatRoomId},#{m.memberId},#{m.memberRole})
+        </foreach>
+    </insert>
+    <select id="queryMemberRoomByDemandId" resultType="java.util.Map">
+        select * from chatRoom t1, demand t2 where t1.demandId = t2.demandId and t2.demandId = #{demandId}
+    </select>
+    <select id="queryMemberId" resultType="int" parameterType="com.cykj.bean.ChatMember">
+        select chatMemberId from chatMember where chatRoomId = #{chatRoomId} and memberId = #{memberId} and memberRole = #{memberRole}
+    </select>
+    <insert id="insertChatHistory">
+        insert into chatHistory(chatRoomId, chatMemberId, memberName, message, sendTime)
+        values (#{chatRoomId}, #{chatMemberId}, #{memberName}, #{message}, #{sendTime})
+    </insert>
+    <select id="selectHistory" resultType="java.util.Map">
+        select * from chatHistory t1, chatMember t2 where t1.chatMemberId = t2.chatMemberId and t1.chatRoomId = #{chatRoomId} order by t1.sendTime desc
+        limit #{current}, #{size}
+    </select>
+    <select id="countHistory" resultType="int" parameterType="int">
+        select count(*) from chatHistory where chatRoomId = #{chatRoomId}
+    </select>
+</mapper>
+
+

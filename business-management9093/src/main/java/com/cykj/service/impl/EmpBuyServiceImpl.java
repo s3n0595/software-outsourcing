@@ -1,5 +1,7 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.EmployerInfo;
+import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
 import com.cykj.mapper.EmpBuyMapper;
 import com.cykj.service.EmpBuyService;
@@ -66,5 +68,28 @@ public class EmpBuyServiceImpl implements EmpBuyService {
     @Override
     public int editproState(TradeWork tradeWork) {
         return empBuyMapper.editproState(tradeWork);
+    }
+
+    @Override
+    public EmployerInfo selEmpPwd(EmployerInfo employerInfo) {
+        return empBuyMapper.selEmpPwd(employerInfo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int adTradeRetreat(TradeRetreat tradeRetreat, int tradeStatus) {
+        try{
+            int i=empBuyMapper.addtradeRetreat(tradeRetreat);
+            int j=empBuyMapper.editRetreat(tradeRetreat.getTradeWorksId(),tradeStatus);
+            if(i>0 && j>0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return 0;
+        }
     }
 }

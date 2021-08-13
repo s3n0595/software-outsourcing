@@ -209,6 +209,7 @@ public class UserInfoController {
         }
         return "删除成功";
     }
+
     //=================================辅助功能=============================//
     // 获取日志列表
     @GetMapping("/getLogInfoList")
@@ -244,6 +245,7 @@ public class UserInfoController {
     public List<Menu> getMenuData(){
         return menuService.getMenuData();
     }
+
     //修改密码
     @RequestMapping("/updatePwd")
     @ResponseBody

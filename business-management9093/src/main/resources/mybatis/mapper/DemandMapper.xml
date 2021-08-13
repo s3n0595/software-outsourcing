@@ -4,8 +4,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cykj.mapper.DemandMapper">
 
-    <select id="queryAllDemand" resultType="java.util.Map" parameterType="int">
-        select * from demand t1 , demandType t2 where t1.demandTypeid = t2.demandTypeid limit #{count}, 10;
+    <select id="queryAllDemand" resultType="java.util.Map">
+        select * from demand t1 , demandType t2 where t1.demandTypeid = t2.demandTypeid
+        <if test="type != '全部'">
+              AND t2.demandTypeName = #{type}
+        </if>
+        <if test="leftPrice != -1">
+              AND t1.predictPrice <![CDATA[ >= ]]> #{leftPrice}
+        </if>
+         <if test="rightPrice != -1">
+              AND t1.predictPrice <![CDATA[ <= ]]> #{rightPrice}
+        </if>
+        <if test="leftTime != -1">
+              AND t1.predictTime <![CDATA[ >= ]]> #{leftTime}
+        </if>
+         <if test="rightTime != -1">
+              AND t1.predictTime <![CDATA[ <= ]]> #{rightTime}
+        </if>
+        limit #{count}, 10;
+    </select>
+    <select id="queryDemandById" resultType="java.util.Map" parameterType="int">
+        select *
+        from demand t1 , demandType t4
+            where t1.demandTypeid = t4.demandTypeid
+          and t1.employerId = #{employerId};
+    </select>
+    <update id="updateDemandStatus">
+        update demand set demandStatus = #{status} where demandId = #{demandId}
+    </update>
+    <select id="selectDemandById" parameterType="int" resultType="com.cykj.bean.Demand">
+        select * from demand where demandId = #{demandId};
     </select>
 </mapper>
 

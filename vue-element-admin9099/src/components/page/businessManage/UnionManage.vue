@@ -22,11 +22,12 @@
         <el-button type="primary" @click="getSearchState(2)">未通过</el-button>
       </div>
       <el-table
-          :data="unionList"
+          :data="tableDataList"
           align="center"
           border
           class="table"
           ref="multipleTable"
+          @selection-change="handleSelectionChange"
           v-loading="isShowloading"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
@@ -92,18 +93,22 @@ export default {
       formLabelWidth: "120px"
     };
   },
+  computed:{
+    // 动态获取分页data
+    tableDataList(){
+      return this.unionList.slice((this.pageNo-1)*this.pageSize,this.pageNo*this.pageSize);
+    },
+  },
   methods: {
     // 当前页数发送改变
     currentChange(val) {
       console.log("当前页"+val);
       this.pageNo = val;
-      this.getUnion();
     },
     // // 每页显示条数
     handleSizeChange(val){
       console.log("每页条数更改为"+val);
       this.pageSize = val;
-      this.currentChange(1);
     },
     // 当选择项发送变化时，执行一下方法
     handleSelectionChange(delData) {
@@ -215,8 +220,7 @@ export default {
       let baseUrl = 'baseUrl';
       this.$axios.get(`${baseUrl}/audit/unionList`,
           {params:{
-              page: this.pageNo,
-              pageSize:this.pageSize
+
             }}).then(res=>{
         console.log(res)
         const code = res.data
@@ -227,22 +231,9 @@ export default {
         console.log(error)
       })
     },
-    //获取总数
-    getTotal(){
-      let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}audit/getUnionTotal/`).then(totalUnion=>{
-        console.log(totalUnion)
-        const total = totalUnion.data
-        this.total = total.data
-      }).catch(error=>{
-        console.log(error)
-      })
-    }
-
   },
   mounted() {
     this.getUnion();
-    this.getTotal();
   }
 };
 </script>

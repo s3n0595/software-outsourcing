@@ -1,11 +1,14 @@
 package com.cykj.controller;
 
+import com.cykj.bean.EmployerInfo;
+import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
 import com.cykj.service.EmpBuyService;
 import com.cykj.service.impl.EmpBuyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +30,11 @@ public class EmpBuyController {
     @RequestMapping("buyBalance")//查询余额
     public int empBalance(Integer employerId){
         return empBuyService.selBalance(employerId);
+    }
+
+    @RequestMapping("buyPwd")//判断交易密码是否正确
+    public EmployerInfo empPwd(EmployerInfo employerInfo){
+        return empBuyService.selEmpPwd(employerInfo);
     }
 
     @RequestMapping("works")//添加购买记录
@@ -55,8 +63,6 @@ public class EmpBuyController {
 
     @RequestMapping("buylist")//个人中心显示购买作品
     public List<Map<String, Object>> empbuyList(int employerId){
-        List<Map<String, Object>> abcd=empBuyService.selbuyList(employerId);
-        System.out.println(abcd.get(0).get("worksTitle").toString());
         return empBuyService.selbuyList(employerId);
     }
 
@@ -70,6 +76,17 @@ public class EmpBuyController {
             return 0;
         }
     }
+
+    @RequestMapping("returnBuy")//雇主申请退货
+    public int buyRetreat(TradeRetreat tradeRetreat,@RequestParam("tradeStatus") int tradeStatus){
+        int i=empBuyService.adTradeRetreat(tradeRetreat,tradeStatus);
+        if(i>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
 
     @RequestMapping("probuylist")//服务商个人中心交易作品
     public List<Map<String, Object>> probuyList(int providerId){

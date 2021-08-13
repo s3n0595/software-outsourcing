@@ -85,10 +85,13 @@ export default {
               sessionStorage.setItem('user', JSON.stringify(res.data))
               sessionStorage.setItem('username',JSON.stringify(res.data.employerName))
               sessionStorage.setItem('token', JSON.stringify(res.data.employerId))
+              sessionStorage.setItem('headPath',JSON.stringify('api/images/'+res.data.employerInfo.headPath))
               this.user = JSON.parse(sessionStorage.getItem('user'))
               this.token = JSON.parse(sessionStorage.getItem('token'))
+              this.headPath = JSON.parse(sessionStorage.getItem('headPath'))
               console.log(this.user.role)
               console.log("token" + this.token)
+              console.log("头像："+this.headPath)
               this.$message.success("登陆成功")
               this.$router.push("/home")
             }
