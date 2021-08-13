@@ -49,6 +49,7 @@ public class RegisterController {
             employerService.addUser(employerAccount);
             EmployerAccount account = employerService.queryEmployerInfo(employerAccount.getPhoneNumber());
             int addEmployerInfo = employerService.addEmployerInfo(account.getEmployerId());
+            EmployerAccount queryEmployerIdName = employerService.queryEmployerIdName(account.getPhoneNumber());
             int addEmployerStory = employerService.addEmployerStory(account.getEmployerId());
             int addEmployerExpose = employerService.addEmployerExpose(account.getEmployerId());
             CreditDetails creditDetails = new CreditDetails();
@@ -59,7 +60,7 @@ public class RegisterController {
             creditDetails.setType(account.getRole());
             employerService.addCreditByReg(creditDetails);
             if (addEmployerInfo > 0 && addEmployerStory > 0 && addEmployerExpose > 0) {
-                return new CommonResult(200,"雇主信息写入成功",addEmployerInfo);
+                return new CommonResult(200,"雇主信息写入成功",queryEmployerIdName);
             } else {
                 return new CommonResult(400,"雇主信息写入失败",null);
             }

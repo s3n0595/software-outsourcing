@@ -18,7 +18,7 @@
     </select>
 
     <select id="queryEmployerIdName" resultMap="employerInfo">
-        select eA.employerId,eA.employerName,eA.phoneNumber,eA.role,eI.headPath
+        select eA.employerId,eA.employerName,eA.phoneNumber,eA.role,eI.headPath,eI.credit,eI.email,eI.employerId,eI.employerProfile,eI.balance,eI.transactionPwd
         from employerAccount eA
             JOIN employerInfo eI
                 ON eA.employerId = eI.employerId
@@ -31,6 +31,12 @@
         <result column="role" property="role"/>
         <association property="employerInfo" javaType="com.cykj.bean.EmployerInfo">
             <result column="headPath" property="headPath"/>
+            <result column="credit" property="credit"/>
+            <result column="employerId" property="employerId"/>
+            <result column="employerProfile" property="employerProfile"/>
+            <result column="email" property="email"/>
+            <result column="balance" property="balance"/>
+            <result column="transactionPwd" property="transactionPwd"/>
         </association>
     </resultMap>
 
