@@ -13,7 +13,7 @@ public class ProviderInfo {
   private int providerId;
   private String providerProfile;
   private String email;
-  private String credit;
+  private int credit;
   private double balance;
   private String headPath;
   private int transactionPwd;
