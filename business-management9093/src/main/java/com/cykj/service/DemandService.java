@@ -15,7 +15,7 @@ import java.util.Map;
  * @desc:
  */
 public interface DemandService {
-	List<Map<String, Object>> queryAllDemand(int count, String type, String price, String time);
+	List<Map<String, Object>> queryAllDemand(int count, String type, String price, String time, String sort, String searchInfo);
 	boolean joinDemand(TenderRecord tenderRecord, MultipartFile file);
 	List<Map<String, Object>> queryDemandById(int employerId);
 	List<Map<String, Object>> queryTenderRecordById(int demandId);
@@ -30,4 +30,5 @@ public interface DemandService {
 	boolean checkProject(int tradeRecordId);
 	boolean restCharge(int employerId, int tradeRecordId);
 	boolean toEvaluate(int demandId);
+	Map<String, Object> findEmployerInfo(int demandId);
 }
