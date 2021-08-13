@@ -205,6 +205,7 @@ export default {
         EPhoneNumber:row.tradeWork.employerAccount.phoneNumber,
         balance:row.tradeWork.works.worksPrice,
         creditTime: getDate(),
+        worksTitle: row.tradeWork.works.worksTitle,
       }
       updateTreatStatus(params).then(res=>{
         this.$message({
