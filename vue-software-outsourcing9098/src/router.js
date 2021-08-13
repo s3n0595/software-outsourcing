@@ -76,7 +76,12 @@ let softwareOutsourcing = new Router({
       component: () => import('./views/Employer/EmployerCenter.vue'),
       children: [
         {
-          path: '/employerCenter/information',
+          path: '/',
+          name: 'information',
+          component: () => import('./views/Employer/Children/Information.vue')
+        },
+        {
+          path: '/information',
           name: 'information',
           component: () => import('./views/Employer/Children/Information.vue')
         },
@@ -139,7 +144,12 @@ let softwareOutsourcing = new Router({
       component: () => import('./views/Provider/ProviderCenter.vue'),
       children: [
         {
-          path: '/providerCenter/information',
+          path: '/',
+          name: 'information',
+          component: () => import('./views/Provider/Information.vue')
+        },
+        {
+          path: '/information',
           name: 'information',
           component: () => import('./views/Provider/Information.vue')
         },

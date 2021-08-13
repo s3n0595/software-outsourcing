@@ -3,12 +3,12 @@
 
     <el-container>
       <el-aside width="240px">
-        <el-menu default-active="2" :default-openeds='["0"]' class="el-menu-vertical-demo" router>
+        <el-menu default-active="2" class="el-menu-vertical-demo" router>
           <el-card class="box-card">
             <div class="clearfix" style="font-size: 15px">
               <span>基本信息</span>
             </div>
-            <el-menu-item index="2" @click="empInfo" style="height: 50px;">
+            <el-menu-item index="/information" style="height: 50px;">
               <i class="el-icon-star-off"></i>
               <span slot="title">账户信息</span>
             </el-menu-item>
@@ -91,17 +91,6 @@
 
 export default {
   name: "EmployerCenter",
-  methods: {
-    empInfo(){
-      this.$router.push('/employerCenter/information')
-    },
-    getIndex(){
-      this.$router.push('/employerCenter/information')
-    }
-  },
-  mounted() {
-    this.getIndex()
-  }
 };
 </script>
 
