@@ -5,6 +5,7 @@ import com.cykj.bean.ProviderPwd;
 import com.cykj.bean.Works;
 import com.cykj.service.WorksService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
@@ -15,11 +16,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -43,20 +51,60 @@ public class WorksController {
         System.out.println(works);
         System.out.println(file.getOriginalFilename());
         if(worksService.publishWorks(file, works)) {
-            return "success";
+            return file.getOriginalFilename();
         } else {
             return "failed";
         }
+    }
+    @RequestMapping("/insert")
+    @ResponseBody
+    public int insertWork(Works works) {
+        System.out.println("==================================");
+        System.out.println("*********插入作品*********");
+        System.out.println("==================================");
+        System.out.println(works);
+        return worksService.insertWorks(works);
+    }
+    @RequestMapping("/update")
+    @ResponseBody
+    public String updateWork(Works works) {
+        System.out.println("==================================");
+        System.out.println("*********更新ImgUrl*********");
+        System.out.println("==================================");
+        System.out.println(works);
+       if(worksService.updateWorks(works)) {
+           return "success";
+       } else {
+           return "failed";
+       }
+//        if(worksService.publishWorks(file, works)) {
+//            return file.getOriginalFilename();
+//        } else {
+//            return "failed";
+//        }
+    }
+    @RequestMapping("/upload")
+    @ResponseBody
+    public Map<String, String> uploadFile(MultipartFile[] file) {
+        System.out.println("==================================");
+        System.out.println("*********文件上传*********");
+        System.out.println("==================================");
+        System.out.println(file.length);
+        for(int i = 0; i < file.length; i++) {
+            System.out.println(file[i].getOriginalFilename());
+        }
+        return worksService.uploadFile(file);
+//        return null;
     }
 
     @RequestMapping("/list")
     @ResponseBody
     @CrossOrigin
-    public List<Works> WorksList(){
+    public List<Works> WorksList(int providerId){
         System.out.println("==================================");
         System.out.println("*********作品集合*********");
         System.out.println("==================================");
-       return worksService.queryAllWorks();
+       return worksService.queryMyWorks(providerId);
     }
 
     @RequestMapping("/img")

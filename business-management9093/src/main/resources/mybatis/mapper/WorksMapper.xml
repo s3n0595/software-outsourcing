@@ -10,7 +10,9 @@
     <select id="queryAllWorks" resultType="com.cykj.bean.Works">
         select * from works;
     </select>
-
+    <select id="queryMyWorks" resultType="com.cykj.bean.Works" parameterType="int">
+        select * from works where providerId = #{providerId};
+    </select>
     <update id="updatePwd" parameterType="com.cykj.bean.ProviderPwd">
         update providerAccount set providerPassword = #{password} where providerPassword = #{providerPassword} and providerId = #{providerId}
     </update>
@@ -25,6 +27,16 @@
     </insert>
 
 
+    <insert id="insertWorks" parameterType="com.cykj.bean.Works">
+        insert into works (providerId,worksTitle,worksDescribe,annexPath,worksPrice,releaseTime,auditStatus,worksAddress, worksTypeId, imgUrl)
+        values (#{providerId},#{worksTitle},#{worksDescribe},#{annexPath},#{worksPrice},#{releaseTime},#{auditStatus},#{worksAddress},#{worksTypeId},#{imgUrl});
+    </insert>
+    <update id="updateImgUrl"  parameterType="com.cykj.bean.Works">
+        update works set imgUrl = #{imgUrl} where worksId = #{worksId};
+    </update>
+    <select id="selectLastWork" resultType="int" >
+       select max(worksId) from works;
+    </select>
 </mapper>
 
 
