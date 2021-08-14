@@ -33,29 +33,14 @@ import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 public class WeChatLogin {
 
 
-    /**
-     * author 李俊标
-     * <p>
-     * 2018-4-19
-     */
-
     private static final long serialVersionUID = 1L;
 
     private static final String APPID = "wx83c26a7617ffb32a";
 
     private static final String SECRET = "876bfff59878863d1b0508d63c66f724";
 
-//    private String code;
-//
-//    public String getCode() {
-//        return code;
-//    }
-//
-//    public void setCode(@RequestBody String code) {
-//        this.code = code;
-//    }
 
-//获取凭证校检接口
+    //获取凭证校检接口
     public ResponseEntity login(String code) {
 //微信的接口
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + APPID +
@@ -87,4 +72,3 @@ public class WeChatLogin {
     }
 
 }
-//}
