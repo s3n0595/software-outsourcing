@@ -74,6 +74,10 @@
     <update id="editproBalance">
         update providerInfo set balance=balance+#{balance} where providerId=#{providerId}
     </update>
+
+    <select id="findTransactionPwd" resultType="com.cykj.bean.EmployerInfo">
+        select * from employerInfo where employerId=#{employerId}
+    </select>
 </mapper>
 
 

@@ -109,4 +109,9 @@ public class EmpBuyServiceImpl implements EmpBuyService {
             return 0;
         }
     }
+
+    @Override
+    public EmployerInfo findTransactionPwd(int employerId) {
+        return empBuyMapper.findTransactionPwd(employerId);
+    }
 }

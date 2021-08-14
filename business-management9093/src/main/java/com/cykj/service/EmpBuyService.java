@@ -4,6 +4,7 @@ import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -24,4 +25,5 @@ public interface EmpBuyService {
     int editproState(TradeWork tradeWork);
     EmployerInfo selEmpPwd(EmployerInfo employerInfo);
     int adTradeRetreat(TradeRetreat tradeRetreat,int tradeStatus);
+    EmployerInfo findTransactionPwd(int employerId);
 }

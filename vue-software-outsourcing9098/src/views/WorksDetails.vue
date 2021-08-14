@@ -140,36 +140,18 @@ export default {
                 message: `您已经购买过该作品了`
               });
             }else{
-              this.flag = true;
-              // this.$axios.post('buy/buyBalance',this.$qs.stringify({
-              //   employerId:this.user.employerId
-              // })).then(res=>{
-              //   if(this.work.worksPrice<=res.data){
-              //     this.order= this.getProjectNum() + Math.floor(Math.random() * 100000000)
-              //     this.$axios.post('buy/works',this.$qs.stringify({
-              //       employerId:this.user.employerId,
-              //       worksId:this.work.worksId,
-              //       tradeStatus:1,
-              //       worksPrice:this.work.worksPrice,
-              //       tradeOrder:this.order,
-              //       providerId:this.work.providerId
-              //     })).then(resp=>{
-              //       this.$message({
-              //         message: "购买成功，请前往个人中心查看",
-              //         type: "success",
-              //         offset:150,
-              //         duration:3000,
-              //       });
-              //     })
-              //   }else{
-              //     this.$message({
-              //       message: "开发宝余额不足，请前往个人中心充值",
-              //       type: "warning",
-              //       offset:150,
-              //       duration:2000,
-              //     });
-              //   }
-              // })
+              this.$axios.post('buy/findPwd',this.$qs.stringify({
+                employerId:this.user.employerId,
+              })).then(res=>{
+                if(res.data.transactionPwd!=null && res.data.transactionPwd!=''){
+                  this.flag = true;
+                }else{
+                  this.$notify.error({
+                    title: '提示',
+                    message: `您还未设置交易密码，请前往个人中心设置`
+                  });
+                }
+              })
             }
         })
       }

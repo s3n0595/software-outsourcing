@@ -60,6 +60,11 @@ public class EmpBuyController {
         }
     }
 
+    @RequestMapping("findPwd")//购买之前查询是否设置了交易密码
+    public EmployerInfo findempPwd(int employerId){
+        return empBuyService.findTransactionPwd(employerId);
+    }
+
     @RequestMapping("whetherworks")//查询是否重复购买
     public int oldtradework(TradeWork tradeWork){
         TradeWork tw=empBuyService.oldtradeWork(tradeWork);
