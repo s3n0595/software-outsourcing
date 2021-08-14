@@ -15,7 +15,7 @@
           <el-menu-item @click="goodsList">找需求</el-menu-item>
           <el-menu-item @click="worksList">作品广场</el-menu-item>
           <el-menu-item @click="realList">行业资讯</el-menu-item>
-          <el-menu-item @click="caseList">经典案例</el-menu-item>
+          <el-menu-item @click="caseList">成功案例</el-menu-item>
         </el-menu>
 
 
@@ -77,41 +77,41 @@
       <el-main>
         <router-view/>
       </el-main>
-      <div class="footer" v-show="isShow">
-        <div class="footer-content">
-          <ul class="content-nav">
-            <li>
-              <p>走进科建</p>
-              <span>发展历程</span>
-              <span>企业文化</span>
-              <span>资质荣誉</span>
-              <span>合作伙伴</span>
-            </li>
-            <li>
-              <p>新闻资讯</p>
-              <span>公司新闻</span>
-              <span>行业动态</span>
-            </li>
-            <li>
-              <p>产品中心</p>
-              <span>介绍视频</span>
-              <span>管理模式</span>
-              <span>平台目标</span>
-              <span>功能模块</span>
-            </li>
-            <li>
-              <p>联系我们</p>
-              <span>邮箱：kejianlml@163.com</span>
-              <span>电话：021-55802368</span>
-              <span>地址：上海市杨浦区翔殷路128号12号楼101</span>
-            </li>
-          </ul>
-          <img src="./assets/img/ercode.png" alt/>
-        </div>
-        <div class="copyright">
-          <span>科建版权所有</span>
-        </div>
-      </div>
+<!--      <div class="footer" v-show="isShow">-->
+<!--        <div class="footer-content">-->
+<!--          <ul class="content-nav">-->
+<!--            <li>-->
+<!--              <p>走进科建</p>-->
+<!--              <span>发展历程</span>-->
+<!--              <span>企业文化</span>-->
+<!--              <span>资质荣誉</span>-->
+<!--              <span>合作伙伴</span>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <p>新闻资讯</p>-->
+<!--              <span>公司新闻</span>-->
+<!--              <span>行业动态</span>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <p>产品中心</p>-->
+<!--              <span>介绍视频</span>-->
+<!--              <span>管理模式</span>-->
+<!--              <span>平台目标</span>-->
+<!--              <span>功能模块</span>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <p>联系我们</p>-->
+<!--              <span>邮箱：kejianlml@163.com</span>-->
+<!--              <span>电话：021-55802368</span>-->
+<!--              <span>地址：上海市杨浦区翔殷路128号12号楼101</span>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--          <img src="./assets/img/ercode.png" alt/>-->
+<!--        </div>-->
+<!--        <div class="copyright">-->
+<!--          <span>科建版权所有</span>-->
+<!--        </div>-->
+<!--      </div>-->
     </el-container>
   </div>
 </template>
