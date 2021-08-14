@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
 import com.cykj.mapper.WorksMapper;
 import com.cykj.service.WorksService;
@@ -124,5 +125,10 @@ public class WorksServiceImpl implements WorksService {
         result.put("annexPath", allFileName.split("::")[0]);
         result.put("imgUrl", allFileName);
 		return result;
+	}
+
+	@Override
+	public List<TradeWork> queryCaseList() {
+		return worksMapper.queryCaseList();
 	}
 }

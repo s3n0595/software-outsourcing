@@ -44,7 +44,7 @@ let softwareOutsourcing = new Router({
     },
     {
       path: '/case',
-      name: 'case',
+      name: '/case',
       component: () => import('./views/Case.vue')
     },
     {

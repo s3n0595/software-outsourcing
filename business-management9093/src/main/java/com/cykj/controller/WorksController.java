@@ -2,6 +2,7 @@ package com.cykj.controller;
 
 import com.cykj.bean.CommonResult;
 import com.cykj.bean.ProviderPwd;
+import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
 import com.cykj.service.WorksService;
 import lombok.extern.slf4j.Slf4j;
@@ -195,6 +196,15 @@ public class WorksController {
            return "false";
        }
 
+    }
+
+    //成功案例作品展示
+    @RequestMapping("/success")
+    @ResponseBody
+    public CommonResult queryCaseList() {
+        List<TradeWork> caseList = worksService.queryCaseList();
+        log.warn("********成功案例**********"+caseList);
+        return new CommonResult(200,"成功案例查询",caseList);
     }
 
 

@@ -1,5 +1,6 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,5 @@ public interface WorksMapper {
 	int updateImgUrl(Works works);
 	int selectLastWork();
 
+	List<TradeWork> queryCaseList();//成功案例
 }
