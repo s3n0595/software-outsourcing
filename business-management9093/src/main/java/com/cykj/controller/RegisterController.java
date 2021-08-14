@@ -9,6 +9,7 @@ import com.cykj.service.ProviderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ public class RegisterController {
     //雇主注册
     @PostMapping ("/employer")
     @ResponseBody
+    @Transactional
     public CommonResult addEmployer(EmployerAccount employerAccount){
         log.info("***雇主注册结果***"+employerAccount);
         int i = employerService.queryEmployerAccByTel(employerAccount.getPhoneNumber());
@@ -70,6 +72,7 @@ public class RegisterController {
     //服务商注册
     @PostMapping("/provider")
     @ResponseBody
+    @Transactional
     public CommonResult addProvider(ProviderAccount providerAccount) {
         log.info("***服务商注册账号信息***"+providerAccount);
         int i = providerService.queryProviderAccByTel(providerAccount.getPhoneNumber());
