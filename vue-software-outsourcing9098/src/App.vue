@@ -15,6 +15,7 @@
           <el-menu-item @click="goodsList">找需求</el-menu-item>
           <el-menu-item @click="worksList">作品广场</el-menu-item>
           <el-menu-item @click="realList">行业资讯</el-menu-item>
+          <el-menu-item @click="SuccessCases">经典案例</el-menu-item>
         </el-menu>
 
 
@@ -162,6 +163,9 @@ export default {
     },
     realList(){
       this.$router.push('/realinfo')
+    },
+    SuccessCases(){
+      this.$router.push('/case')
     },
     employerRegister() {
       this.$router.push('/employerReg')

@@ -3,11 +3,12 @@
     <banner  title="精典案例" />
     <div class="case-section" v-loading="loading">
       <div class="case-section-content">
-        <div class="case-section-content-list" v-for="(cas,index) in caseList" :key="index">
+        v-for="(cas,index) in caseList" :key="index"
+        <div class="case-section-content-list" >
           <img v-lazy="imgserver+cas.Img" />
-          <div class="content-list-abstract" :class="{'abstract-active' : index%2!=1}">
-            <p class="abstract-title">{{cas.Title}}</p>
-            <p class="abstract-content">{{cas.Content}}</p>
+<!--          <div class="content-list-abstract" :class="{'abstract-active' : index%2!=1}">-->
+            <p class="abstract-title">一站式服务</p>
+            <p class="abstract-content">存图片名字到数据库</p>
             <div class="more">
               <router-link
                 class="text-decoration"
@@ -21,7 +22,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 import Banner from "../components/Banner";
