@@ -16,6 +16,11 @@ import java.util.List;
 public interface WorksMapper {
 	int addWorks(Works works);
 	List<Works> queryAllWorks();
+	List<Works> queryMyWorks(int providerId);
 	int updatePwd(@Param("providerId") int providerId, @Param("providerPassword") String providerPassword, @Param("password") String password);
 	int updateTraffic(int worksId);
+	int insertWorks(Works works);
+	int updateImgUrl(Works works);
+	int selectLastWork();
+
 }

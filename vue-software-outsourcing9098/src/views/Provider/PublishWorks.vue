@@ -48,12 +48,12 @@
         <el-form-item label="作品图片" :label-width="formLabelWidth">
           <el-upload
             ref="upload"
-            action="api/work/publish"
+            action="api/work/upload"
             accept="image/png,image/gif,image/jpg,image/jpeg"
             list-type="picture-card"
-            :limit=limitNum
             :auto-upload="false"
             :data="form"
+            :file-list="fileList"
             :on-exceed="handleExceed"
             :on-change="uploadChange"
             :on-success="uploadSuccess"
@@ -114,26 +114,31 @@ export default {
       fileList: [],
       limitNum: 1,
       checklist:[],
+      providerId:"",
       form: {
         worksTitle: "",
         worksDescribe:"",
         worksPrice:"",
         worksAddress:"",
         providerId:"",
-        workTypeId:""
+        workTypeId:"",
+        annexPath:"",
+        imgUrl:""
       },
       worksList: [],
       baseURL: "",
     };
   },
   mounted() {
-    this.$axios.get('work/list').then(res =>{
-        console.log(res.data);
-        this.worksList = res.data;
-    })
+    console.log("=========");
+    console.log(JSON.parse(sessionStorage.getItem("user")).providerId);
+    console.log("=========");
+
+
+
     this.selcheckList();
     let token = "Browser " + sessionStorage.getItem("token");
-    this.form.providerId = JSON.parse(sessionStorage.getItem("user")).providerId;
+    this.providerId = JSON.parse(sessionStorage.getItem("user")).providerId;
     //window.console.log(token);
     this.options = {
       headers: {
@@ -143,6 +148,7 @@ export default {
     this.headers = {
       Authorization: token
     };
+    this.loadWorkList();
     this.loadData();
     let params=this.$qs.stringify( {
       employerId:"1",
@@ -150,7 +156,12 @@ export default {
 
   },
   methods: {
-
+    loadWorkList(){
+       this.$axios.get('work/list',{params:{providerId:this.providerId}}).then(res =>{
+        console.log(res.data);
+        this.worksList = res.data;
+      });
+    },
       // 上传文件之前的钩子
     handleBeforeUpload(file){
       console.log('before')
@@ -169,8 +180,10 @@ export default {
       }
     },
      uploadChange(file, fileList) {
-      this.form.MultipartFile = fileList[0].raw;
-      console.log(this.form.MultipartFile);
+      this.fileList = fileList;
+      console.log(this.fileList);
+      // this.form.MultipartFile = fileList[0].raw;
+      // console.log(this.form.MultipartFile);
     },
     // 文件超出个数限制时的钩子
     handleExceed(files, fileList) {
@@ -186,7 +199,32 @@ export default {
       this.dialogVisible = true;
     },
     uploadFile() {
-      this.$refs.upload.submit();
+      // this.$refs.upload.submit();
+
+      let formData = new FormData();  //  用FormData存放上传文件
+
+        for(let i=0;i< this.fileList.length;i++){
+            let fileList = this.fileList[i].raw;
+            console.log(fileList);
+            formData.append('file', fileList);
+        }
+         let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.$axios.post('work/upload',formData,config).then(response => {
+            this.form.annexPath = response.data.annexPath;
+            this.form.imgUrl = response.data.imgUrl;
+            this.form.providerId = this.providerId;
+            this.$axios.get('work/insert',{params:this.form}).then(response => {
+              this.dialogFormVisible = false;
+              this.$refs.upload.clearFiles();
+              this.loadWorkList();
+            });
+        });
+
+
       // this.$refs['uploadFile'].validate(valid =>{
       //   if(valid) {
       //     let params = this.form;
@@ -197,15 +235,17 @@ export default {
       // })
     },
     // 上传文件成功后的回调
-    uploadSuccess() {
-      this.dialogFormVisible = false;
-      this.form = {};
-      this.$refs.upload.clearFiles();
-      this.form.providerId = JSON.parse(sessionStorage.getItem("user")).providerId;
-      this.$axios.get('work/list').then(res =>{
-        console.log(res.data);
-        this.worksList = res.data;
-      })
+    uploadSuccess(res, file) {
+      console.log("上传成功")
+      // console.log(res);
+
+      // this.form = {};
+      // this.$refs.upload.clearFiles();
+      // this.form.providerId = JSON.parse(sessionStorage.getItem("user")).providerId;
+      // this.$axios.get('work/list').then(res =>{
+      //   console.log(res.data);
+      //   this.worksList = res.data;
+      // })
     },
     getImg(path){
       // this.$axios.request({
@@ -264,6 +304,17 @@ export default {
       this.formData.CreateTime = new Date();
 
       this.dialogFormVisible = true;
+      this.form = {
+        worksTitle: "",
+        worksDescribe:"",
+        worksPrice:"",
+        worksAddress:"",
+        providerId:"",
+        workTypeId:"",
+        annexPath:"",
+        imgUrl:""
+      };
+
     },
     handleCreateOrModify() {
       if (!this.formData.Id) {
