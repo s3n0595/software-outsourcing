@@ -7,7 +7,7 @@
         update providerInfo set credit = credit-#{credit},balance = balance - #{balance} where providerId = #{providerId};
     </update>
     <update id="updateEBalance">
-        update employerInfo set balance = balance-#{balance} where employerId = #{employerId};
+        update employerInfo set balance = balance+#{balance} where employerId = #{employerId};
     </update>
     <insert id="addCreditDetails">
         insert into creditDetails(userId,remarks,creditTime,type,score)

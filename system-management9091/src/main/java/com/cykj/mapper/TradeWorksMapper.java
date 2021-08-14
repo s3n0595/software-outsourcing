@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.TradeWork;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.List;
 public interface TradeWorksMapper {
     // 获取作品交易列表
     List<TradeWork> getTradeWordList();
+    // 修改作品交易状态
+    int updateTradeStatus(@Param("tradeWorksId")int tradeWorksId,@Param("tradeStatus")int tradeStatus);
 }

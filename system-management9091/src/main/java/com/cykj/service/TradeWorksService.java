@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 import com.cykj.bean.TradeWork;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ import java.util.List;
 public interface TradeWorksService {
     // 获取作品交易列表
     List<TradeWork> getTradeWordList();
+    // 修改作品交易状态
+    int updateTradeStatus(int tradeWorksId, int tradeStatus);
 }

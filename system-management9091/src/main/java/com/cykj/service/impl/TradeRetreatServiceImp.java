@@ -27,4 +27,9 @@ public class TradeRetreatServiceImp implements TradeRetreatService {
     public int updateTreatStatus(int tradeRetreatId,int retreatStatus) {
         return tradeRetreatMapper.updateTreatStatus(tradeRetreatId,retreatStatus);
     }
+
+    @Override
+    public int deleteTradeRetreat(int tradeRetreatId) {
+        return tradeRetreatMapper.deleteTradeRetreat(tradeRetreatId);
+    }
 }

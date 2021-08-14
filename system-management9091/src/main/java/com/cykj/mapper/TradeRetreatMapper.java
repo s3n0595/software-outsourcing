@@ -18,4 +18,6 @@ public interface TradeRetreatMapper {
     List<TradeRetreat> getTradeRetreatList();
     // 修改申请状态
     int updateTreatStatus(@Param("tradeRetreatId") int tradeRetreatId,@Param("retreatStatus") int retreatStatus);
+    // 删除
+    int deleteTradeRetreat(@Param("tradeRetreatId") int tradeRetreatId);
 }

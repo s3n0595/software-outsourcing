@@ -56,7 +56,7 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column type="selection" width="55" align="center"></el-table-column>
+        <el-table-column type="selection" width="55" align="center" :selectable='checkboxT'></el-table-column>
         <el-table-column type="index" label="序号" sortable></el-table-column>
         <el-table-column prop="tradeWork.tradeOrder" label="订单编号" width="180"></el-table-column>
         <el-table-column prop="tradeWork.works.worksTitle" label="作品名称"></el-table-column>
@@ -109,6 +109,7 @@ import {
   getSearchDemand,
   getTradeRetreatList,
   updateTreatStatus,
+  deleteTradeRetreat,
 } from "../../../api/api";
 export default {
   data() {
@@ -139,6 +140,13 @@ export default {
     },
   },
   methods: {
+    checkboxT(row){
+      if (row.retreatStatus === 1){
+        return false;
+      }else {
+        return true;
+      }
+    },
     // 点击行关闭
     clickTable(row,index,e) {
       //调用,table的方法,展开/折叠 行
@@ -165,12 +173,12 @@ export default {
         type: "warning"
       }).then(() => {
         this.isShowloading = true;
-        let delIds = this.delData.map(item => item.demandId);
+        let delIds = this.delData.map(item => item.tradeRetreatId);
         // axios传递数组 在数组后加入''
         let params = {
-          demandIds: delIds + '',
+          tradeRetreatIds: delIds + '',
         };
-        deleteDemandList(params).then(res => {
+        deleteTradeRetreat(params).then(res => {
           this.isShowloading = false;
           this.$message({
             message: "删除成功",
@@ -206,6 +214,7 @@ export default {
         balance:row.tradeWork.works.worksPrice,
         creditTime: getDate(),
         worksTitle: row.tradeWork.works.worksTitle,
+        tradeWorksId: row.tradeWorksId,
       }
       updateTreatStatus(params).then(res=>{
         this.$message({

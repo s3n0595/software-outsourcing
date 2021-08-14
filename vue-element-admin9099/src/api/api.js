@@ -148,6 +148,10 @@ export const getTradeRetreatList = params =>{
 export const updateTreatStatus = params =>{
     return axios.get(`${baseUrl}/tradeManage/updateTreatStatus`,{params: params});
 }
+// 删除退款列表deleteTradeRetreat
+export const deleteTradeRetreat = params =>{
+    return axios.get(`${baseUrl}/tradeManage/deleteTradeRetreat`,{params: params});
+}
 //=====================================登录日志================================//
 // 获取日志列表
 export const getLogInfoList = params =>{
