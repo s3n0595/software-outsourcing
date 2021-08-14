@@ -16,4 +16,6 @@ public interface TradeRetreatService {
     List<TradeRetreat> getTradeRetreatList();
     // 修改申请状态
     int updateTreatStatus(int tradeRetreatId,int retreatStatus);
+    // 删除
+    int deleteTradeRetreat(@Param("tradeRetreatId") int tradeRetreatId);
 }

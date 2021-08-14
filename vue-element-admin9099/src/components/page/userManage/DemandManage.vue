@@ -28,7 +28,7 @@
           @selection-change="handleSelectionChange"
           v-loading="isShowloading"
       >
-        <el-table-column type="selection" width="55" align="center"></el-table-column>
+        <el-table-column type="selection" width="55" align="center" :selectable='checkboxT'></el-table-column>
         <el-table-column type="index" label="序号" sortable></el-table-column>
         <el-table-column prop="employerAccount.employerName" label="雇主名称" width="120"></el-table-column>
         <el-table-column prop="demandType.demandTypeName" label="需求类型"></el-table-column>
@@ -40,7 +40,7 @@
             <el-tag type="danger" v-if="scope.row.demandStatus === 3">招募中</el-tag>
             <el-tag type="danger" v-if="scope.row.demandStatus === 4">开发中</el-tag>
             <el-tag type="danger" v-if="scope.row.demandStatus === 5">交付中</el-tag>
-            <el-tag type="danger" v-if="scope.row.demandStatus === 6">已完成</el-tag>
+            <el-tag type="success" v-if="scope.row.demandStatus === 6">已完成</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="releaseTime" label="发布时间" width="180"></el-table-column>
@@ -118,6 +118,13 @@ export default {
     },
   },
   methods: {
+    checkboxT(row){
+      if (row.demandStatus === 0){
+        return false;
+      }else {
+        return true;
+      }
+    },
     formatterNumber(row,cloumn){
       return row.predictNumber == null ? "暂未设定" : row.predictNumber;
     },

@@ -57,7 +57,7 @@ public class TradeController {
     }
     // 修改申请状态updateTreatStatus
     @GetMapping("/updateTreatStatus")
-    public String updateTreatStatus(int tradeRetreatId,int retreatStatus,int providerId,int employerId,int balance,String creditTime,String PPhoneNumber,String EPhoneNumber,String worksTitle){
+    public String updateTreatStatus(int tradeRetreatId,int retreatStatus,int providerId,int employerId,int balance,String creditTime,String PPhoneNumber,String EPhoneNumber,String worksTitle,int tradeWorksId){
         // 判断申述情况 2：申述成功，卖家退款并且扣信誉，买家余额增加
         if (retreatStatus == 2){
             // 买家扣信誉 扣除余额
@@ -69,8 +69,20 @@ public class TradeController {
             providerInfoService.addCapitalFlow("开发宝",EPhoneNumber,"来自"+"项目《"+worksTitle+"》"+"的退款",balance,creditTime,"ACQ.TRADE_HAS_SUCCESS","雇主");
             // 添加信誉记录
             providerInfoService.addCreditDetails(providerId,"商品与描述不符",creditTime,"pro","-10");
+            // 把作品交易状态改为6
+            tradeWorksService.updateTradeStatus(tradeWorksId,6);
+        }else {
+            // 把作品交易状态改为2
+            tradeWorksService.updateTradeStatus(tradeWorksId,2);
         }
        tradeRetreatService.updateTreatStatus(tradeRetreatId,retreatStatus);
        return "修改成功";
+    }
+    @GetMapping("/deleteTradeRetreat")
+    public String deleteTradeRetreat(int[] tradeRetreatIds){
+        for (int tradeRetreatId : tradeRetreatIds) {
+            tradeRetreatService.deleteTradeRetreat(tradeRetreatId);
+        }
+        return "删除成功";
     }
 }
