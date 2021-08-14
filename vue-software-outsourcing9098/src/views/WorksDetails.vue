@@ -50,7 +50,7 @@
             <el-col :span="24">
               <div style="margin-left: 4%;margin-top: 10px;">
                 <span style="font-size: 30px;">&nbsp;项目描述</span>
-                <p style="margin-top: 10px;" class="content">
+                <p style="margin-top: 10px;font-size: 20px;margin-bottom: 5%;" class="content">
                   {{ work.worksDescribe }}
                 </p>
               </div>
@@ -61,13 +61,13 @@
                 <p>
 <!--                  <el-empty description="暂无作品展示"></el-empty>-->
                 </p>
-                                  <img  :src="'api/images/' + work.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">
+                  <img  :src="'api/images/' + work.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">
               </div>
             </el-col>
             <el-col :span="24">
               <div style="margin-left: 4%;margin-top: 10px;">
                 <span style="font-size: 30px;">&nbsp;参考网站或产品</span>
-                <p style="margin-top: 20px;">{{ work.worksAddress }}</p>
+                <p style="margin-top: 20px;font-size: 20px;margin-bottom: 5%;margin-left: 10px;">{{ work.worksAddress }}</p>
               </div>
             </el-col>
           </div>
