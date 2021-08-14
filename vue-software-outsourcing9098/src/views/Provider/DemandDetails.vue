@@ -87,7 +87,7 @@
 
           </el-form-item>
           <el-form-item label="投标身份" :label-width="formLabelWidth">
-            <el-radio-group v-model="radio" style="margin-left: 20px;" size="mini">
+            <el-radio-group v-model="form.unionStatus" style="margin-left: 20px;" size="mini">
               <el-radio label="个人"></el-radio>
               <el-radio label="联盟"></el-radio>
             </el-radio-group>
@@ -150,6 +150,7 @@ export default {
         price: "",
         projectTime: "",
         tenderId: "",
+          unionStatus:""
       },
     }
   },

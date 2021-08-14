@@ -4,10 +4,7 @@ import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.Demand;
 import com.cykj.bean.TenderRecord;
 import com.cykj.bean.TradeRecord;
-import com.cykj.mapper.DemandMapper;
-import com.cykj.mapper.EmpCenterMapper;
-import com.cykj.mapper.TenderRecodeMapper;
-import com.cykj.mapper.TradeRecordMapper;
+import com.cykj.mapper.*;
 import com.cykj.service.DemandService;
 import io.swagger.models.auth.In;
 import org.checkerframework.checker.units.qual.A;
@@ -41,6 +38,8 @@ public class DemandServiceImpl implements DemandService {
 	private TradeRecordMapper tradeRecordMapper;
 	@Autowired
 	private EmpCenterMapper empCenterMapper;
+	@Autowired
+	private EmpBuyMapper empBuyMapper;
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	@Override
@@ -130,8 +129,12 @@ public class DemandServiceImpl implements DemandService {
 		return demandMapper.queryDemandById(employerId);
 	}
 	@Override
-	public List<Map<String, Object>> queryTenderRecordById(int employerId) {
-		return tenderRecodeMapper.queryTenderRecordById(employerId);
+	public List<Map<String, Object>> queryTenderRecordById(int demandId) {
+		List<Map<String, Object>> result = tenderRecodeMapper.queryTenderUnion(demandId);
+		result.addAll(tenderRecodeMapper.queryTenderSingle(demandId));
+		System.out.println(result);
+		return result;
+//		return tenderRecodeMapper.queryTenderRecordById(demandId);
 	}
 
 	@Override
@@ -165,6 +168,7 @@ public class DemandServiceImpl implements DemandService {
 	}
 	@Override
 	public List<Map<String, Object>> queryTenderById(int providerId) {
+		System.out.println("===ssssss=========");
 		return tenderRecodeMapper.queryTenderById(providerId);
 	}
 	@Override
@@ -206,7 +210,7 @@ public class DemandServiceImpl implements DemandService {
 		capitalFlow.setTradeTime(sdf.format(new Date()));
 		capitalFlow.setTradeContent("支付需求《" + tradeRecord.get("demandTitle") + "》预付款");
 		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
-		empCenterMapper.addFlow(capitalFlow);
+		empBuyMapper.addFlow(capitalFlow);
 		// 交易流水 -- 服务商
 		capitalFlow.setPhoneNumber(tradeRecord.get("phoneNumber").toString());
 		capitalFlow.setTradeCapital(price * 0.3);
@@ -215,7 +219,7 @@ public class DemandServiceImpl implements DemandService {
 		capitalFlow.setTradeTime(sdf.format(new Date()));
 		capitalFlow.setTradeContent("收到需求《" + tradeRecord.get("demandTitle") + "》预付款");
 		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
-		empCenterMapper.addFlow(capitalFlow);
+		empBuyMapper.addFlow(capitalFlow);
 		return "success";
 	}
 
@@ -258,7 +262,7 @@ public class DemandServiceImpl implements DemandService {
 		capitalFlow.setTradeTime(sdf.format(new Date()));
 		capitalFlow.setTradeContent("支付需求《" + tradeRecord.get("demandTitle") + "》尾款");
 		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
-		empCenterMapper.addFlow(capitalFlow);
+		empBuyMapper.addFlow(capitalFlow);
 		// 交易流水 -- 服务商
 		capitalFlow.setPhoneNumber(tradeRecord.get("phoneNumber").toString());
 		capitalFlow.setTradeCapital(price * 0.7);
@@ -267,7 +271,7 @@ public class DemandServiceImpl implements DemandService {
 		capitalFlow.setTradeTime(sdf.format(new Date()));
 		capitalFlow.setTradeContent("收到需求《" + tradeRecord.get("demandTitle") + "》尾款");
 		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
-		empCenterMapper.addFlow(capitalFlow);
+		empBuyMapper.addFlow(capitalFlow);
 		return "success";
 	}
 

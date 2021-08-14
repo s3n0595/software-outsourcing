@@ -42,8 +42,8 @@
                     border
                     class="table"
                     ref="multipleTable">
-              <el-table-column prop="tenderId" label="服务商ID"></el-table-column>
-              <el-table-column prop="menuName" label="开发者类型"></el-table-column>
+              <el-table-column prop="tenderName" label="服务商名称"></el-table-column>
+              <el-table-column prop="unionStatus" label="开发者类型"></el-table-column>
               <el-table-column prop="existTime" label="申请时间"></el-table-column>
               <el-table-column prop="projectTime" label="完成工期"></el-table-column>
               <el-table-column prop="price" label="投标价格"></el-table-column>

@@ -16,9 +16,12 @@ import java.util.Map;
 @Repository
 public interface TenderRecodeMapper {
 	int insertRecode(TenderRecord tenderRecord);
-	List<Map<String, Object>> queryTenderRecordById(int employerId);
+	List<Map<String, Object>> queryTenderRecordById(int demandId);
 	int deleteRecode(TenderRecord tenderRecord);
 	List<Map<String, Object>> queryTenderById(int provider);
 	int updateRecode(TenderRecord tenderRecord);
 	Map<String, Object> queryTenderProviderById(int demandId);
+
+	List<Map<String, Object>> queryTenderUnion(int demandId);
+	List<Map<String, Object>> queryTenderSingle(int demandId);
 }
