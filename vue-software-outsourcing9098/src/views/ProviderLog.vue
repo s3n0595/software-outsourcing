@@ -23,7 +23,7 @@
         </el-checkbox>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('logForm')" style="width: 300px">登陆</el-button>
+        <el-button v-loading="loading" type="primary" @click="submitForm('logForm')" style="width: 300px">登陆</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -50,6 +50,7 @@ export default {
     };
     return {
       checked: '',
+      loading: false,
       data: {
         phoneNumber: '',
         password: '',
@@ -70,6 +71,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // alert('submit!');
+          this.loading = true;
           this.$axios.post("/login/provider",
               this.$qs.stringify({
                 "phoneNumber":this.data.phoneNumber,
@@ -88,6 +90,7 @@ export default {
               console.log(this.user)
               console.log(this.user.role)
               this.$message.success("登陆成功")
+              this.loading = false;
               this.$router.push("/home")
             }
           }).catch(error => {

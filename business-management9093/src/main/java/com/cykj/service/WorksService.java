@@ -1,5 +1,6 @@
 package com.cykj.service;
 
+import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,5 +22,6 @@ public interface WorksService {
 
 	//小程序添加作品
 	int wechatAddWorks(Works works);
+	List<TradeWork> queryCaseList();//成功案例
 
 }

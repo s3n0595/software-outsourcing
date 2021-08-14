@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
 import com.cykj.mapper.WorksMapper;
 import com.cykj.service.WorksService;
@@ -69,5 +70,10 @@ public class WorksServiceImpl implements WorksService {
 	public int wechatAddWorks(Works works) {
 		int i = worksMapper.wechatAddWorks(works);
 		return i;
+	}
+
+	@Override
+	public List<TradeWork> queryCaseList() {
+		return worksMapper.queryCaseList();
 	}
 }
