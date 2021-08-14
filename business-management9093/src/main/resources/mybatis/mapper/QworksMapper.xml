@@ -20,6 +20,7 @@
         <if test="sortType !=null">
             order by ${sortType}
         </if>
+        AND t1.auditStatus=1
         limit #{count}, 10;
     </select>
 
