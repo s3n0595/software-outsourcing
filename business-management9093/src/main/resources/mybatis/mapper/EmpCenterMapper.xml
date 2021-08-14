@@ -150,7 +150,7 @@
     </update>
 
     <select id="selempAllFlow" parameterType="com.cykj.bean.CapitalFlow" resultType="java.util.Map">
-        select * from capitalFlow where phoneNumber=#{phoneNumber} and type=#{type}
+        select * from capitalFlow where phoneNumber=#{phoneNumber} and type=#{type} and tradeState=#{tradeState}
     </select>
 </mapper>
 

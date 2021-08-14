@@ -37,7 +37,6 @@ public class WebSocket {
         WebSocket.chatService = chatService;
     }
 	private static Map<Integer, List<Session>> chatRooms = new HashMap<Integer, List<Session>>();
-
 	/**
      * 建立连接成功调用的方法
      */
@@ -49,14 +48,10 @@ public class WebSocket {
 			System.out.println("雇主已连接");
 		}
 		Map<String, Object> chatRoom = chatService.joinRoom(demandId);
-		System.out.println("===============");
-		System.out.println(chatRoom);
-		System.out.println("================");
 		if(!chatRooms.containsKey(chatRoom.get("chatRoomId"))) {
 			chatRooms.put((Integer) chatRoom.get("chatRoomId"), new ArrayList<Session>());
 		}
 		chatRooms.get(chatRoom.get("chatRoomId")).add(session);
-		System.out.println(chatRooms.get(chatRoom.get("chatRoomId")));
 		try {
 			session.getBasicRemote().sendText("room::" + chatRoom.get("chatRoomId") + "::" + chatRoom.get("demandTitle"));
 		} catch (IOException e) {
@@ -72,9 +67,6 @@ public class WebSocket {
 		System.out.println("客户端发来消息" + msg);
 		switch (msg.get("option")) {
 			case "sendMessage":
-//				chatService.sendMessage(msg);
-				System.out.println(msg.get("chatRoomId"));
-				System.out.println(chatRooms.get(Integer.valueOf(msg.get("chatRoomId"))));
 				updateHistory(chatRooms.get(Integer.valueOf(msg.get("chatRoomId"))), chatService.sendMessage(msg));
 				break;
 			case "history":

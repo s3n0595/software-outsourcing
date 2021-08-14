@@ -12,7 +12,7 @@ import java.util.Map;
  * @date: 2021/8/5 18:37
  */
 public interface QworksService {
-    List<Map<String, Object>> queryAllWork(int count, String  demandTypeName, int priceMin, int priceMax,String searchInfo);
+    List<Map<String, Object>> queryAllWork(int count, String  demandTypeName, int priceMin, int priceMax,String searchInfo,String sortType);
     int countProWork(int providerId);
     Map<String,Object> workProInfo(int providerId);
 }

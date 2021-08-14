@@ -59,9 +59,9 @@
               <div style="margin-left: 4%;margin-top: 10px;">
                 <span style="font-size: 30px;">&nbsp;作品展示</span>
                 <p>
-                  <el-empty description="暂无作品展示"></el-empty>
+<!--                  <el-empty description="暂无作品展示"></el-empty>-->
                 </p>
-                <!--                  <img  :src="'api/images/' + item.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">-->
+                                  <img  :src="'api/images/' + work.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">
               </div>
             </el-col>
             <el-col :span="24">
@@ -192,9 +192,7 @@ export default {
                   tradeStatus:1,
                   worksPrice:this.work.worksPrice,
                   tradeOrder:this.order,
-                  providerId:this.work.providerId,
-                  phoneNumber:this.user.phoneNumber,
-                  tradeContent:"购买作品《"+this.work.worksTitle+"》"
+                  providerId:this.work.providerId
                 })).then(resp=>{
                   this.$message({
                     message: "购买成功，请前往个人中心查看",
@@ -245,6 +243,8 @@ export default {
   mounted() {
     this.work = JSON.parse(sessionStorage.getItem("work"));
     this.selproInfo();
+    this.$axios.get('traffic/increase',{params:{id: this.work.worksId,type:"work"}}).then(res =>{
+    });
   },
 }
 </script>

@@ -22,5 +22,5 @@ public class Works {
   private int worksTypeId;
   private DemandType demandType;
   private ProviderAccount providerAccount;
-
+   private int trafficNumber;
 }

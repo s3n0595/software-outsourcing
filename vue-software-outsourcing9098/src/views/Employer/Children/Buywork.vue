@@ -104,7 +104,14 @@ export default {
       }).then(() => {
         this.$axios.post('buy/confirm',this.$qs.stringify({
           tradeWorksId:item.tradeWorksId,
-          employerId:this.user.employerId
+          employerId:this.user.employerId,
+          tradeContent:"作品《"+item.worksTitle+"》出售",
+          tradeType:"开发宝",
+          type:"服务商",
+          tradeState:"ACQ.TRADE_HAS_SUCCESS",
+          tradeCapital:item.worksPrice,
+          providerId:item.providerId,
+          phoneNumber:item.phoneNumber
         })).then(res=>{
             if(res.data==1){
               this.$message({

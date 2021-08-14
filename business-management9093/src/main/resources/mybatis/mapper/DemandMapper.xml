@@ -5,7 +5,7 @@
 <mapper namespace="com.cykj.mapper.DemandMapper">
 
     <select id="queryAllDemand" resultType="java.util.Map">
-        select * from demand t1 , demandType t2 where t1.demandTypeid = t2.demandTypeid
+        select * from demand t1 , demandType t2 where t1.demandTypeid = t2.demandTypeid and t1.demandStatus = 3
         <if test="type != '全部'">
               AND t2.demandTypeName = #{type}
         </if>
@@ -21,6 +21,12 @@
          <if test="rightTime != -1">
               AND t1.predictTime <![CDATA[ <= ]]> #{rightTime}
         </if>
+        <if test="searchInfo != null and searchInfo != '' ">
+            AND t1.demandTitle like concat('%', #{searchInfo}, '%')
+        </if>
+        <if test="sortType != null">
+            order by ${sortType}
+        </if>
         limit #{count}, 10;
     </select>
     <select id="queryDemandById" resultType="java.util.Map" parameterType="int">
@@ -35,6 +41,14 @@
     <select id="selectDemandById" parameterType="int" resultType="com.cykj.bean.Demand">
         select * from demand where demandId = #{demandId};
     </select>
+    <select id="queryEmployerByDemandId" resultType="java.util.Map" parameterType="int">
+        select t3.employerName, t2.credit, t2.headPath, (select count(*) from demand where employerId = t3.employerId) as demandCount
+        from demand t1, employerInfo t2, employerAccount t3
+        where t1.employerId = t2.employerId and t2.employerId = t3.employerId and t1.demandId = #{demandId}
+    </select>
+    <update id="updateTraffic">
+        update demand set trafficNumber = trafficNumber + 1 where demandId = #{demandId};
+    </update>
 </mapper>
 
 

@@ -26,4 +26,5 @@ public class Demand {
   private String predictNumber;
   private DemandType demandType;
   private EmployerAccount employerAccount;
+     private int trafficNumber;
 }

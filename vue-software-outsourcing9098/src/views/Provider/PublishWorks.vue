@@ -1,11 +1,14 @@
 <template>
   <div class="news">
     <el-button type="primary" @click="openDialog()">添加更多作品</el-button>
-    <div v-for="item in worksList" style="margin: 20px;" @click="editWorks()">
-      <img :src="'api/images/'+item.annexPath" alt="" style="width: 150px;height: 150px;border: 1px solid black;"/>
-      <p style="margin: 20px"> {{item.worksTitle}} </p>
-      <a :href="'api/images/'+item.annexPath" download="">{{item.annexPath}}</a>
+    <p style="margin-top: 10px;"> 作品列表：</p>
+    <div style="display:flex;flex-flow: wrap;">
+      <div v-for="item in worksList" style="margin: 20px;" @click="editWorks()">
+        <img :src="'api/images/'+item.annexPath" alt="" style="width: 150px;height: 150px;border: 1px solid black;"/>
+        <p style="margin: 20px"> {{item.worksTitle}} </p>
+      </div>
     </div>
+
 <!--    <el-table :data="tableData" border style="width: 100%" v-loading="loading">-->
 <!--      <el-table-column prop="Id" label="序号" width="180"></el-table-column>-->
 <!--      <el-table-column prop="Title" label="新闻标题" width="180"></el-table-column>-->
