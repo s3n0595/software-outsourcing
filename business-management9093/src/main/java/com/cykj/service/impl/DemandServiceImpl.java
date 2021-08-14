@@ -181,13 +181,20 @@ public class DemandServiceImpl implements DemandService {
 	}
 
 	@Override
-	public boolean advanceCharge(int employerId, int tradeRecordId) {
+	public String advanceCharge(int employerId, int tradeRecordId) {
 		Map<String, Object> tradeRecord = tradeRecordMapper.queryTradeRecordById(tradeRecordId);
-
 		double price = Double.valueOf(tradeRecord.get("price").toString());
 		System.out.println("承接价格为：" + price);
+		// 比较余额是否充足
+		double balance = demandMapper.selectEmployerBalance(employerId);
+		if(price * 0.3 > balance) {
+			return "failed";
+		}
+
 		System.out.println("雇主ID为 " + employerId + " 扣款：" + price + " 的30%");
+		empCenterMapper.editEmpBalance(employerId, price * 0.3 * -1);
 		System.out.println("服务商ID为 " + tradeRecord.get("tenderId") + " 收款：" + price + " 的30%（可能扣除一点手续费）");
+		empCenterMapper.editProBalance(Integer.valueOf(tradeRecord.get("providerId").toString()), price * 0.3);
 		System.out.println("交易记录ID 为 " + tradeRecordId +  " 的交易状态从 0 预付款 更改为 1 等待交付");
 		tradeRecordMapper.updateRecord(tradeRecordId, 1);
 		CapitalFlow capitalFlow = new CapitalFlow();
@@ -209,7 +216,7 @@ public class DemandServiceImpl implements DemandService {
 		capitalFlow.setTradeContent("收到需求《" + tradeRecord.get("demandTitle") + "》预付款");
 		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
 		empCenterMapper.addFlow(capitalFlow);
-		return false;
+		return "success";
 	}
 
 	@Override
@@ -225,12 +232,19 @@ public class DemandServiceImpl implements DemandService {
 		return false;
 	}
 	@Override
-	public boolean restCharge(int employerId, int tradeRecordId) {
+	public String restCharge(int employerId, int tradeRecordId) {
 		Map<String, Object> tradeRecord = tradeRecordMapper.queryTradeRecordById(tradeRecordId);
 		double price = Double.valueOf(tradeRecord.get("price").toString());
 		System.out.println("承接价格为：" + tradeRecord.get("price"));
+		// 比较余额是否充足
+		double balance = demandMapper.selectEmployerBalance(employerId);
+		if(price * 0.7 > balance) {
+			return "failed";
+		}
 		System.out.println("雇主ID为 " + employerId + " 扣款：" + tradeRecord.get("price") + " 的70%");
+		empCenterMapper.editEmpBalance(employerId, price * 0.7 * -1);
 		System.out.println("服务商ID为 " + tradeRecord.get("tenderId") + " 收款：" + tradeRecord.get("price") + " 的70%（可能扣除一点手续费）");
+		empCenterMapper.editProBalance(Integer.valueOf(tradeRecord.get("providerId").toString()), price * 0.7);
 		System.out.println("交易记录ID 为 " + tradeRecordId +  " 的交易状态从 3 付尾款 更改为 4 交易完成");
 		tradeRecordMapper.updateRecord(tradeRecordId, 4);
 		System.out.println("需求ID 为 " + tradeRecord.get("demandId") +  " 的状态从 5 交付中 更改为 6 已完成完成");
@@ -254,7 +268,7 @@ public class DemandServiceImpl implements DemandService {
 		capitalFlow.setTradeContent("收到需求《" + tradeRecord.get("demandTitle") + "》尾款");
 		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
 		empCenterMapper.addFlow(capitalFlow);
-		return false;
+		return "success";
 	}
 
 	@Override
@@ -273,5 +287,13 @@ public class DemandServiceImpl implements DemandService {
 	@Override
 	public void increaseTraffic(int demandId) {
 		demandMapper.updateTraffic(demandId);
+	}
+
+	public String comparePayPwd(int employerId){
+		if(demandMapper.selectEmployerPwd(employerId) == null) {
+			return "none";
+		} else {
+			return demandMapper.selectEmployerPwd(employerId);
+		}
 	}
 }

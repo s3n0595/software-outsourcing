@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Map;
 
@@ -106,11 +107,11 @@ public class DemandController {
 	}
 	@RequestMapping("/advanceCharge")
 	@ResponseBody
-	public void advanceCharge(int employerId, int tradeRecordId){
+	public String advanceCharge(int employerId, int tradeRecordId){
 		System.out.println("===============雇主预付款===========");
 		System.out.println(employerId);
 		System.out.println(tradeRecordId);
-		demandService.advanceCharge(employerId, tradeRecordId);
+		return demandService.advanceCharge(employerId, tradeRecordId);
 	}
 	@RequestMapping("/deliveryProject")
 	@ResponseBody
@@ -128,11 +129,11 @@ public class DemandController {
 	}
 	@RequestMapping("/restCharge")
 	@ResponseBody
-	public void restCharge(int employerId, int tradeRecordId){
+	public String restCharge(int employerId, int tradeRecordId){
 		System.out.println("===============雇主付尾款===========");
 		System.out.println(employerId);
 		System.out.println(tradeRecordId);
-		demandService.restCharge(employerId, tradeRecordId);
+		return demandService.restCharge(employerId, tradeRecordId);
 	}
 	@RequestMapping("/toEvaluate")
 	@ResponseBody
@@ -147,5 +148,13 @@ public class DemandController {
 		return demandService.findEmployerInfo(demandId);
 	}
 
+	@RequestMapping("/comparePayPwd")
+	@ResponseBody
+	public String comparePayPwd(int employerId){
+		System.out.println("===============比较支付密码===========");
+		System.out.println(employerId);
+		return demandService.comparePayPwd(employerId);
+//		return demandService.findEmployerInfo(demandId);
+	}
 
 }

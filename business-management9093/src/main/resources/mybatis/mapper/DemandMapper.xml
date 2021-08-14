@@ -49,6 +49,12 @@
     <update id="updateTraffic">
         update demand set trafficNumber = trafficNumber + 1 where demandId = #{demandId};
     </update>
+    <select id="selectEmployerPwd" parameterType="int" resultType="String">
+        select transactionPwd from employerInfo where employerId = #{employerId};
+    </select>
+    <select id="selectEmployerBalance" parameterType="int" resultType="double">
+        select balance from employerInfo where employerId = #{employerId};
+    </select>
 </mapper>
 
 
