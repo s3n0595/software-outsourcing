@@ -38,12 +38,17 @@
             <el-col :span="24">
               <div class="demo-basic--circle" style="margin-top: 25px;margin-left: 5%">
                 <div class="block">
-                  <el-avatar :size="70" :src="circleUrl"></el-avatar>
+<!--                  <el-avatar :size="70" :src="'api/images/'+this.workproInfo.headPath"></el-avatar>-->
+                  <el-image style="width: 70px;height:70px;border-radius: 50%;" :src="'api/images/' + workproInfo.headPath">
+                    <div slot="error" class="image-slot">
+                      <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="width: 70px;height:70px;border-radius: 50%;">
+                    </div>
+                  </el-image>
                 </div>
 
                 <div style="float: left;margin: -7% 0 1% 10%">
                   <span style="font-size: 20px;">{{ workproInfo.providerName }}</span>
-                  <span>( 发布作品总数：{{ workproInfo.workCount }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册时间： 2021/08/06 )</span>
+                  <span>( 发布作品总数：{{ workproInfo.workCount }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册时间： {{ (workproInfo.regTime).split(" ")[0]}} )</span>
                 </div>
               </div>
             </el-col>
@@ -58,10 +63,10 @@
             <el-col :span="24">
               <div style="margin-left: 4%;margin-top: 10px;">
                 <span style="font-size: 30px;">&nbsp;作品展示</span>
-                <p>
+                <p v-for="item in companyCut(work.imgUrl)">
 <!--                  <el-empty description="暂无作品展示"></el-empty>-->
+                  <img  :src="'api/images/' + item" alt="" style="width: 80%;height: 90%;margin-left: 7%;margin-top: 2%">
                 </p>
-                  <img  :src="'api/images/' + work.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">
               </div>
             </el-col>
             <el-col :span="24">
@@ -87,7 +92,7 @@ export default {
     return {
       flag: false,
       paypwd:false,
-      circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      circleUrl: "",
       searchInfo: "",
       radio1: '全部',
       radio2: '全部',
@@ -221,12 +226,24 @@ export default {
       }
       return CurrentDate
     },
+    companyCut(name){
+      let company=name.split("::")
+      return company
+    },
+    showHeadPath(){
+      if(this.workproInfo.headPath!=null && this.workproInfo.headPath!=""){
+        this.circleUrl='api/images/'+this.workproInfo.headPath;
+      }else{
+        this.circleUrl= "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+      }
+    }
   },
   mounted() {
     this.work = JSON.parse(sessionStorage.getItem("work"));
     this.selproInfo();
     this.$axios.get('traffic/increase',{params:{id: this.work.worksId,type:"work"}}).then(res =>{
     });
+    this.showHeadPath();
   },
 }
 </script>
