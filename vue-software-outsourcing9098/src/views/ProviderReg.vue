@@ -15,19 +15,19 @@
       <el-form-item prop="providerName" >
         <el-input clearable v-model="data.providerName" placeholder="用户名（即个性后缀，注册后无法修改）" type="text" ></el-input>
       </el-form-item>
-      <el-form-item prop="phoneNumber">
+      <el-form-item prop="phoneNumber" style="padding-top: 10px;">
         <el-input clearable v-model="data.phoneNumber" placeholder="手机号" type="text"></el-input>
       </el-form-item>
-      <el-form-item prop="code">
+      <el-form-item prop="code" style="padding-top: 10px;">
         <div class="code">
           <el-input clearable v-model="data.code" placeholder="请输入手机验证码" type="text"></el-input>
           <el-button class="btn-orange" :disabled="disabled" @click="getCode">{{valiBtn}}</el-button>
         </div>
       </el-form-item>
-      <el-form-item prop="providerPassword">
+      <el-form-item prop="providerPassword" style="padding-top: 10px;">
         <el-input clearable v-model="data.providerPassword" placeholder="请输入密码" type="password"></el-input>
       </el-form-item>
-      <el-form-item prop="re_password">
+      <el-form-item prop="re_password" style="padding-top: 10px;">
         <el-input clearable v-model="data.re_password" placeholder="请确认密码" type="password"></el-input>
       </el-form-item>
 <!--      <el-form-item style="text-align: left">-->
@@ -36,7 +36,7 @@
 <!--        </el-checkbox>-->
 <!--      </el-form-item>-->
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('registerForm')" style="width: 300px">注册</el-button>
+        <el-button type="primary" @click="onSubmit('registerForm')" style="width: 300px;padding-top: 10px;">注册</el-button>
       </el-form-item>
       <el-form-item prop="role">
         <el-input type="hidden" v-model="data.role"></el-input>

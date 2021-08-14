@@ -7,7 +7,7 @@
     </div>
     <div class="container" >
       <template>
-        <el-tabs  @tab-click="">
+        <el-tabs  @tab-click="" value="first">
           <el-tab-pane label="所有交易记录" name="first">
             <el-table
                 :data="tradeRecordDate"
@@ -54,21 +54,22 @@
               <el-table-column prop="tenderRecord.demand.demandTitle" label="投标项目"></el-table-column>
               <el-table-column prop="tenderRecord.demand.employerAccount.employerName" width="100" label="雇主名称"></el-table-column>
               <el-table-column prop="tenderRecord.unionStatus" align="center" label="承接信息">
-                <el-popover
-                    slot-scope="scopr"
-                    placement="top-start"
-                    :title="title"
-                    width="200"
-                    trigger="hover"
-                   >
-                  <el-table :data="providerDate">
-                    <el-table-column label="服务商名" prop="providerName"></el-table-column>
-                    <el-table-column label="信誉积分" prop="providerInfo.credit"></el-table-column>
-                  </el-table>
-                  <el-button slot="reference" type="info" v-if="scopr.row.tenderRecord.unionStatus === '0' " icon="el-icon-lx-people">个人</el-button>
-                  <el-button slot="reference" type="warning" v-if="scopr.row.tenderRecord.unionStatus !== '0'" icon="el-icon-lx-group">联盟</el-button>
-                </el-popover>
-
+                <template slot-scope="scope">
+                  <el-popover
+                      placement="top-start"
+                      :title="title"
+                      :ref="scope.row.tenderRecordId"
+                      width="200"
+                      trigger="hover"
+                  >
+                    <el-table :data="providerDate">
+                      <el-table-column label="服务商名" prop="providerName"></el-table-column>
+                      <el-table-column label="信誉积分" prop="providerInfo.credit"></el-table-column>
+                    </el-table>
+                    <el-button slot="reference" type="info" v-if="scope.row.tenderRecord.unionStatus === '0' " icon="el-icon-lx-people">个人</el-button>
+                    <el-button slot="reference" type="warning" v-if="scope.row.tenderRecord.unionStatus !== '0'" icon="el-icon-lx-group">联盟</el-button>
+                  </el-popover>
+                </template>
               </el-table-column>
               <el-table-column prop="tradeTime" label="承接时间"></el-table-column>
               <el-table-column prop="tenderRecord.price" label="承接价格"></el-table-column>
@@ -116,21 +117,6 @@ export default {
   computed:{
   },
   methods: {
-    // 判断联盟状态
-    isUnion(){
-      if (row.tenderRecord.unionStatus === '0'){
-        // let params = {
-        //   providerId: row.tenderRecord.tenderId
-        // }
-        // getProvider(params).then(res=>{
-        //   this.providerDate = res.data;
-        // })
-        console.log(1);
-        return "个体承接";
-      }else {
-        return "联盟承接";
-      }
-    },
     // 关闭提示
     confirmClose(done) {
       this.$confirm("确认关闭将丢失已编辑内容？", "提示", {

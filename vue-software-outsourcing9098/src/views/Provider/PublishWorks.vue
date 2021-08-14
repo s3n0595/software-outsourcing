@@ -48,7 +48,7 @@
         <el-form-item label="作品图片" :label-width="formLabelWidth">
           <el-upload
             ref="upload"
-            action="api/work/upload"
+            action="file/upload/file"
             accept="image/png,image/gif,image/jpg,image/jpeg"
             list-type="picture-card"
             :auto-upload="false"
@@ -199,7 +199,7 @@ export default {
       this.dialogVisible = true;
     },
     uploadFile() {
-      // this.$refs.upload.submit();
+      this.$refs.upload.submit();
 
       let formData = new FormData();  //  用FormData存放上传文件
 
