@@ -22,8 +22,8 @@
                     {{this.demand.predictTime}}
                 </span>
               <span class="detail-span">
-                    <span class="darker">招募人数</span>
-                    {{this.demand.predictNumber}}
+                    <span class="darker">发布时间</span>
+                    {{this.demand.releaseTime}}
                 </span>
               <el-button style="float: right;" type="primary" @click="joinDemand()">参与项目</el-button>
             </div>
@@ -46,7 +46,7 @@
             <div style="float: left;margin-left: 25px;">
               <div>
                 <span style="font-size: 21px;">{{employer.employerName}}</span>
-                <span style="font-size: 12px;color: #727F8F;margin-left: 10px;">(发布项目：{{employer.demandCount}} &nbsp;&nbsp;&nbsp;&nbsp; 信用分：{{employer.credit}})</span>
+                <span style="font-size: 12px;color: #727F8F;margin-left: 10px;">(发布项目：{{employer.demandCount}} &nbsp;&nbsp;&nbsp;&nbsp; 信用分：{{employer.credit}} 注册时间：{{employer.regTime}})</span>
               </div>
               <div style="height: 50px;line-height: 50px;">
                 <span>项目确认合作后可查看需求方联系方式</span>
@@ -63,8 +63,13 @@
             <div style="margin: 28px auto 0;">
               <span style="font-size: 2rem;margin-bottom: 1rem;padding-top: 2rem;">需求文档</span>
             </div>
-            <div class="description typo fold">
-              <a :href="'api/images/'+this.demand.annexPath" download="">{{this.demand.annexPath}}</a>
+            <div class="description typo fold" style="padding: 10px;">
+                <el-button type="primary" @click="viewWord">在线预览</el-button>
+
+                <a :href="'api/images/'+this.demand.annexPath" download="">
+                    <el-button type="primary" style="margin-left: 30px;">下载</el-button>
+                </a>
+<!--              <a :href="'api/images/'+this.demand.annexPath" download="">{{this.demand.annexPath}}</a>-->
             </div>
           </div>
         </div>
@@ -193,7 +198,11 @@ export default {
       this.form = {tenderId: JSON.parse(sessionStorage.getItem("user")).providerId, demandId: this.demand.demandId};
       this.$refs.upload.clearFiles();
     },
+      viewWord() {
+          window.open("http://view.officeapps.live.com/op/view.aspx?src=http://www.voeqmuh.icu:8080/file/日报.docx", '_blank');
+      },
   },
+
   mounted() {
     console.log(JSON.parse(sessionStorage.getItem("demand")));
     this.demand = JSON.parse(sessionStorage.getItem("demand"));
@@ -252,6 +261,7 @@ export default {
   color: #333;
   line-height: 23px;
   word-wrap: break-word;
+
 }
 .status{
   font-size: 16px;

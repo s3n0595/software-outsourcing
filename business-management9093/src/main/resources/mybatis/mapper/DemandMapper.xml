@@ -42,7 +42,7 @@
         select * from demand where demandId = #{demandId};
     </select>
     <select id="queryEmployerByDemandId" resultType="java.util.Map" parameterType="int">
-        select t3.employerName, t2.credit, t2.headPath, (select count(*) from demand where employerId = t3.employerId) as demandCount
+        select t3.employerName, t2.credit, t3.regTime, t2.headPath, (select count(*) from demand where employerId = t3.employerId) as demandCount
         from demand t1, employerInfo t2, employerAccount t3
         where t1.employerId = t2.employerId and t2.employerId = t3.employerId and t1.demandId = #{demandId}
     </select>

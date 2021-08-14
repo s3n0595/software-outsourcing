@@ -18,6 +18,15 @@ module.exports = {
                 pathRewrite: {
                     '^/api': ''
                 }
+            },
+            // 配置跨域
+            '/file': {
+                target: 'http://localhost:80/',  // 配置跨域接口
+                ws: true,  // 是否跨域。
+                changOrigin: true,// 是否跨域。
+                pathRewrite: {
+                    '^/file': ''
+                }
             }
         }
     }

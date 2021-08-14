@@ -49,7 +49,7 @@
               <el-table-column prop="price" label="投标价格"></el-table-column>
               <el-table-column label="申请材料" align="center">
                 <template slot-scope="scope">
-                  <el-button>预览</el-button>
+                  <el-button type="primary" @click="viewWord">在线预览</el-button>
                 </template>
               </el-table-column>
               <el-table-column label="操作" width="180" align="center">
@@ -244,6 +244,9 @@ export default {
           }
       });
     },
+    viewWord() {
+          window.open("http://view.officeapps.live.com/op/view.aspx?src=http://www.voeqmuh.icu:8080/file/日报.docx", '_blank');
+      },
     handleChange(activeName){
 
       if(activeName != null && activeName != '') {
