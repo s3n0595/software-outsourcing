@@ -8,8 +8,8 @@
         values ( #{tenderRecordId}, #{tradeTime}, #{tradeStatus});
     </insert>
     <select id="queryTradeRecordById" parameterType="int" resultType="java.util.Map">
-        select t1.tradeStatus, t3.providerId,t2.demandId, t2.price, t2.unionStatus from tradeRecord t1, tenderRecord t2, providerAccount t3
-        where t1.tenderRecordId = t2.tenderRecordId and t2.tenderId = t3.providerId and t1.tradeRecordId = #{tradeRecordId}
+        select t1.tradeStatus, t3.providerId,t2.demandId, t2.price, t2.unionStatus, t3.phoneNumber, t4.demandTitle from tradeRecord t1, tenderRecord t2, providerAccount t3, demand t4
+        where t1.tenderRecordId = t2.tenderRecordId and t2.tenderId = t3.providerId and t2.demandId = t4.demandId and t1.tradeRecordId = #{tradeRecordId}
     </select>
     <update id="updateRecord">
         update tradeRecord set tradeStatus = #{tradeStatus} where tradeRecordId = #{tradeRecordId};

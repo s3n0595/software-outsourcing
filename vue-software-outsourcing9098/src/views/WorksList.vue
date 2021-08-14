@@ -88,6 +88,7 @@
             </el-col>
             <el-col :span="3">
               <p style="padding-top: 20px;">￥{{item.worksPrice}}</p>
+              <span>热度：{{item.trafficNumber}}</span>
             </el-col>
           </div>
         </el-row>

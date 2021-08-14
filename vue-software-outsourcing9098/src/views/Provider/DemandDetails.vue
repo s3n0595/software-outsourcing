@@ -36,12 +36,18 @@
           </div>
           <div id="employerInfo">
             <div style="float:left">
-              <img src="api/images/bg_000.png" alt="头像" style="width: 70px;height:70px;border-radius: 50%;">
+<!--              <img src="api/images/bg_000.png" alt="头像" style="width: 70px;height:70px;border-radius: 50%;">-->
+              <el-image style="width: 70px;height:70px;border-radius: 50%;" :src="'api/images/' + employer.headPath">
+                <div slot="error" class="image-slot">
+                  <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="width: 70px;height:70px;border-radius: 50%;">
+                </div>
+              </el-image>
+
             </div>
             <div style="float: left;margin-left: 25px;">
               <div>
-                <span style="font-size: 21px;"> 雇主姓名 </span>
-                <span style="font-size: 12px;color: #727F8F;">(发布项目：{} &nbsp;&nbsp;&nbsp;&nbsp; 注册时间：{})</span>
+                <span style="font-size: 21px;">{{employer.employerName}}</span>
+                <span style="font-size: 12px;color: #727F8F;margin-left: 10px;">(发布项目：{{employer.demandCount}} &nbsp;&nbsp;&nbsp;&nbsp; 信用分：{{employer.credit}})</span>
               </div>
               <div style="height: 50px;line-height: 50px;">
                 <span>项目确认合作后可查看需求方联系方式</span>
@@ -128,7 +134,6 @@ export default {
   name: "GoodsList",
   data () {
     return {
-      websocket: null, // WebSocket对象
       count: 0,
       demand:{},
       searchInfo:"",
@@ -137,6 +142,7 @@ export default {
       fileList: [],
       dialogFormVisible: false,
       formLabelWidth: "120px",
+      employer:{},
       radio: "",
       form: {
         demandId:"",
@@ -147,44 +153,8 @@ export default {
     }
   },
   methods: {
-    test() {
-      console.log("建立连接");
-      //判断当前浏览器是否支持WebSocket
-      if ("WebSocket" in window) {
-        this.websocket = new WebSocket(
-                "ws://127.0.0.1:9093/webSocket/provider/" + JSON.parse(sessionStorage.getItem("user")).providerId
-        );
-      } else {
-        alert("不支持建立socket连接");
-      }
-      //连接发生错误的回调方法
-      this.websocket.onerror = function () {
 
-      };
-      //连接成功建立的回调方法
-      this.websocket.onopen = function (event) {
 
-      };
-      //接收到消息的回调方法
-      var that = this;
-      this.websocket.onmessage = function (event) {
-        console.log(event);
-
-      };
-      //连接关闭的回调方法
-      this.websocket.onclose = function () {
-      };
-      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-      window.onbeforeunload = function () {
-        this.websocket.close();
-      };
-
-    },
-    // 发送消息
-    sendMessage: function() {
-      let socketMsg = { option:"test", msg: "这是一条消息", senderRole: "provider" };
-      this.websocket.send(JSON.stringify(socketMsg));
-    },
     // 上传文件之前的钩子
     handleBeforeUpload(file){},
     handlePictureCardPreview(){},
@@ -226,6 +196,12 @@ export default {
   mounted() {
     console.log(JSON.parse(sessionStorage.getItem("demand")));
     this.demand = JSON.parse(sessionStorage.getItem("demand"));
+    this.$axios.get('demand/findEmployerInfo',{params:{demandId: this.demand.demandId}}).then(res =>{
+      console.log(res.data)
+        this.employer = res.data;
+    });
+    this.$axios.get('traffic/increase',{params:{id: this.demand.demandId,type:"demand"}}).then(res =>{
+    });
 
   }
 }

@@ -147,6 +147,7 @@ export default {
     },
     getMyTender(){
       this.$axios.get("/demand/myTender", {params: {providerId: this.provider.providerId}}).then(response => {
+        console.log(response.data)
         this.myTender = response.data;
       });
     },

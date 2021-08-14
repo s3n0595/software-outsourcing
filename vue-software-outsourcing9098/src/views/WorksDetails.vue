@@ -20,7 +20,7 @@
                   信用分<span style="margin-left: 10px;">{{ workproInfo.credit }}</span>
                   <span class="fenge"></span>
                   发布时间<span style="margin-left: 10px;">{{ work.releaseTime }}</span>
-                  <span style="margin-left: 85%;">
+                  <span style="margin-left: 85%">
                     <el-button v-show="this.user.role !='pro'" type="primary" @click="buying">立即购买</el-button>
                   </span>
                   <pay-box :dialogShow='flag' @closeDialog='close'></pay-box>
@@ -43,14 +43,14 @@
 
                 <div style="float: left;margin: -7% 0 1% 10%">
                   <span style="font-size: 20px;">{{ workproInfo.providerName }}</span>
-                  <span>( 发布作品总数：{{ workproInfo.workCount }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册时间： {{workproInfo.regTime}} )</span>
+                  <span>( 发布作品总数：{{ workproInfo.workCount }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册时间： 2021/08/06 )</span>
                 </div>
               </div>
             </el-col>
             <el-col :span="24">
               <div style="margin-left: 4%;margin-top: 10px;">
                 <span style="font-size: 30px;">&nbsp;项目描述</span>
-                <p style="margin-top: 10px;font-size: 20px;margin-left: 3%;margin-bottom: 5%" class="content">
+                <p style="margin-top: 10px;" class="content">
                   {{ work.worksDescribe }}
                 </p>
               </div>
@@ -58,16 +58,16 @@
             <el-col :span="24">
               <div style="margin-left: 4%;margin-top: 10px;">
                 <span style="font-size: 30px;">&nbsp;作品展示</span>
-<!--                <p>-->
+                <p>
 <!--                  <el-empty description="暂无作品展示"></el-empty>-->
-<!--                </p>-->
-             <img :src="'api/images/' + work.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">
+                </p>
+                                  <img  :src="'api/images/' + work.annexPath" alt="" style="width: 80%;height: 90%;margin: 5%">
               </div>
             </el-col>
             <el-col :span="24">
               <div style="margin-left: 4%;margin-top: 10px;">
                 <span style="font-size: 30px;">&nbsp;参考网站或产品</span>
-                <p style="margin-top: 20px;font-size: 20px;margin-bottom: 5%;margin-left: 10px;">{{ work.worksAddress }}</p>
+                <p style="margin-top: 20px;">{{ work.worksAddress }}</p>
               </div>
             </el-col>
           </div>
@@ -192,9 +192,7 @@ export default {
                   tradeStatus:1,
                   worksPrice:this.work.worksPrice,
                   tradeOrder:this.order,
-                  providerId:this.work.providerId,
-                  phoneNumber:this.user.phoneNumber,
-                  tradeContent:"购买作品《"+this.work.worksTitle+"》"
+                  providerId:this.work.providerId
                 })).then(resp=>{
                   this.$message({
                     message: "购买成功，请前往个人中心查看",
@@ -245,6 +243,8 @@ export default {
   mounted() {
     this.work = JSON.parse(sessionStorage.getItem("work"));
     this.selproInfo();
+    this.$axios.get('traffic/increase',{params:{id: this.work.worksId,type:"work"}}).then(res =>{
+    });
   },
 }
 </script>
