@@ -36,7 +36,6 @@ public class RegisterController {
     //雇主注册
     @PostMapping ("/employer")
     @ResponseBody
-    @Transactional
     public CommonResult addEmployer(EmployerAccount employerAccount){
         log.info("***雇主注册结果***"+employerAccount);
         int i = employerService.queryEmployerAccByTel(employerAccount.getPhoneNumber());
@@ -72,7 +71,6 @@ public class RegisterController {
     //服务商注册
     @PostMapping("/provider")
     @ResponseBody
-    @Transactional
     public CommonResult addProvider(ProviderAccount providerAccount) {
         log.info("***服务商注册账号信息***"+providerAccount);
         int i = providerService.queryProviderAccByTel(providerAccount.getPhoneNumber());
