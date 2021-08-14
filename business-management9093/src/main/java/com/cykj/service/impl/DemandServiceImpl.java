@@ -1,13 +1,17 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.Demand;
 import com.cykj.bean.TenderRecord;
 import com.cykj.bean.TradeRecord;
 import com.cykj.mapper.DemandMapper;
+import com.cykj.mapper.EmpCenterMapper;
 import com.cykj.mapper.TenderRecodeMapper;
 import com.cykj.mapper.TradeRecordMapper;
 import com.cykj.service.DemandService;
 import io.swagger.models.auth.In;
+import org.checkerframework.checker.units.qual.A;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -35,10 +39,14 @@ public class DemandServiceImpl implements DemandService {
 	private TenderRecodeMapper tenderRecodeMapper;
 	@Autowired
 	private TradeRecordMapper tradeRecordMapper;
+	@Autowired
+	private EmpCenterMapper empCenterMapper;
 
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	@Override
-	public List<Map<String, Object>> queryAllDemand(int count, String type, String price, String time) {
+	public List<Map<String, Object>> queryAllDemand(int count, String type, String price, String time, String sort, String searchInfo) {
 		int leftPrice = -1, rightPrice = -1, leftTime = -1 , rightTime = -1;
+		String sortType = null;
 		switch (price){
 			case "0-5K":
 				leftPrice = 0;
@@ -70,7 +78,24 @@ public class DemandServiceImpl implements DemandService {
 				leftTime = 30;
 				break;
 		}
-		return demandMapper.queryAllDemand(count, type, leftPrice, rightPrice, leftTime, rightTime);
+		switch (sort) {
+			case "综合排序":
+				sortType = "trafficNumber desc";
+				break;
+			case "时间降序":
+				sortType = "releaseTime desc";
+				break;
+			case "时间升序":
+				sortType = "releaseTime asc";
+				break;
+			case "价格降序":
+				sortType = "predictPrice desc";
+				break;
+			case "价格升序":
+				sortType = "predictPrice asc";
+				break;
+		}
+		return demandMapper.queryAllDemand(count, type, leftPrice, rightPrice, leftTime, rightTime, sortType, searchInfo);
 	}
 
 	@Override
@@ -158,11 +183,32 @@ public class DemandServiceImpl implements DemandService {
 	@Override
 	public boolean advanceCharge(int employerId, int tradeRecordId) {
 		Map<String, Object> tradeRecord = tradeRecordMapper.queryTradeRecordById(tradeRecordId);
-		System.out.println("承接价格为：" + tradeRecord.get("price"));
-		System.out.println("雇主ID为 " + employerId + " 扣款：" + tradeRecord.get("price") + " 的30%");
-		System.out.println("服务商ID为 " + tradeRecord.get("tenderId") + " 收款：" + tradeRecord.get("price") + " 的30%（可能扣除一点手续费）");
+
+		double price = Double.valueOf(tradeRecord.get("price").toString());
+		System.out.println("承接价格为：" + price);
+		System.out.println("雇主ID为 " + employerId + " 扣款：" + price + " 的30%");
+		System.out.println("服务商ID为 " + tradeRecord.get("tenderId") + " 收款：" + price + " 的30%（可能扣除一点手续费）");
 		System.out.println("交易记录ID 为 " + tradeRecordId +  " 的交易状态从 0 预付款 更改为 1 等待交付");
 		tradeRecordMapper.updateRecord(tradeRecordId, 1);
+		CapitalFlow capitalFlow = new CapitalFlow();
+		// 交易流水 -- 雇主
+		capitalFlow.setPhoneNumber(empCenterMapper.selempInfo(employerId).get("phoneNumber").toString());
+		capitalFlow.setTradeCapital(price * 0.3);
+		capitalFlow.setType("雇主");
+		capitalFlow.setTradeType("开发宝");
+		capitalFlow.setTradeTime(sdf.format(new Date()));
+		capitalFlow.setTradeContent("支付需求《" + tradeRecord.get("demandTitle") + "》预付款");
+		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
+		empCenterMapper.addFlow(capitalFlow);
+		// 交易流水 -- 服务商
+		capitalFlow.setPhoneNumber(tradeRecord.get("phoneNumber").toString());
+		capitalFlow.setTradeCapital(price * 0.3);
+		capitalFlow.setType("服务商");
+		capitalFlow.setTradeType("开发宝");
+		capitalFlow.setTradeTime(sdf.format(new Date()));
+		capitalFlow.setTradeContent("收到需求《" + tradeRecord.get("demandTitle") + "》预付款");
+		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
+		empCenterMapper.addFlow(capitalFlow);
 		return false;
 	}
 
@@ -181,6 +227,7 @@ public class DemandServiceImpl implements DemandService {
 	@Override
 	public boolean restCharge(int employerId, int tradeRecordId) {
 		Map<String, Object> tradeRecord = tradeRecordMapper.queryTradeRecordById(tradeRecordId);
+		double price = Double.valueOf(tradeRecord.get("price").toString());
 		System.out.println("承接价格为：" + tradeRecord.get("price"));
 		System.out.println("雇主ID为 " + employerId + " 扣款：" + tradeRecord.get("price") + " 的70%");
 		System.out.println("服务商ID为 " + tradeRecord.get("tenderId") + " 收款：" + tradeRecord.get("price") + " 的70%（可能扣除一点手续费）");
@@ -188,6 +235,25 @@ public class DemandServiceImpl implements DemandService {
 		tradeRecordMapper.updateRecord(tradeRecordId, 4);
 		System.out.println("需求ID 为 " + tradeRecord.get("demandId") +  " 的状态从 5 交付中 更改为 6 已完成完成");
 		demandMapper.updateDemandStatus(Integer.valueOf(tradeRecord.get("demandId").toString()), 6);
+		CapitalFlow capitalFlow = new CapitalFlow();
+		// 交易流水 -- 雇主
+		capitalFlow.setPhoneNumber(empCenterMapper.selempInfo(employerId).get("phoneNumber").toString());
+		capitalFlow.setTradeCapital(price * 0.7);
+		capitalFlow.setType("雇主");
+		capitalFlow.setTradeType("开发宝");
+		capitalFlow.setTradeTime(sdf.format(new Date()));
+		capitalFlow.setTradeContent("支付需求《" + tradeRecord.get("demandTitle") + "》尾款");
+		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
+		empCenterMapper.addFlow(capitalFlow);
+		// 交易流水 -- 服务商
+		capitalFlow.setPhoneNumber(tradeRecord.get("phoneNumber").toString());
+		capitalFlow.setTradeCapital(price * 0.7);
+		capitalFlow.setType("服务商");
+		capitalFlow.setTradeType("开发宝");
+		capitalFlow.setTradeTime(sdf.format(new Date()));
+		capitalFlow.setTradeContent("收到需求《" + tradeRecord.get("demandTitle") + "》尾款");
+		capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
+		empCenterMapper.addFlow(capitalFlow);
 		return false;
 	}
 
@@ -196,5 +262,16 @@ public class DemandServiceImpl implements DemandService {
 		// 需求状态更改为 6 已完成
 		demandMapper.updateDemandStatus(demandId, 6);
 		return false;
+	}
+
+	@Override
+	public Map<String, Object> findEmployerInfo(int demandId) {
+
+		return demandMapper.queryEmployerByDemandId(demandId);
+	}
+
+	@Override
+	public void increaseTraffic(int demandId) {
+		demandMapper.updateTraffic(demandId);
 	}
 }

@@ -140,6 +140,14 @@ export const getTradeRecord = params =>{
 export const getProvider = params =>{
     return axios.get(`${baseUrl}/tradeManage/getProvider`,{params: params});
 }
+// 获取退款列表getTradeRetreatList
+export const getTradeRetreatList = params =>{
+    return axios.get(`${baseUrl}/tradeManage/getTradeRetreatList`,{params: params});
+}
+// 修改退款列表状态
+export const updateTreatStatus = params =>{
+    return axios.get(`${baseUrl}/tradeManage/updateTreatStatus`,{params: params});
+}
 //=====================================登录日志================================//
 // 获取日志列表
 export const getLogInfoList = params =>{
@@ -201,5 +209,8 @@ export const getDate = ()=>{
         let m2 = m < 10 ? "0"+m : m;
         let d = date.getDate();
         let d2 = d < 10 ? "0"+d : d;
-        return y+"-"+m2+"-"+d2;
+        let hh = date.getHours() < 10 ? "0"+date.getHours() : date.getHours();
+        let mm = date.getMinutes() < 10 ? "0"+date.getMinutes() : date.getMinutes();
+        let ss = date.getSeconds() < 10 ? "0"+date.getSeconds() : date.getSeconds();
+        return y+"-"+m2+"-"+d2+" "+hh+":"+mm+":"+ss;
 }

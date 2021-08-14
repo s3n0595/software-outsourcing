@@ -1,5 +1,6 @@
 package com.cykj.service.impl;
 
+import com.cykj.bean.CapitalFlow;
 import com.cykj.bean.EmployerInfo;
 import com.cykj.bean.TradeRetreat;
 import com.cykj.bean.TradeWork;
@@ -29,11 +30,12 @@ public class EmpBuyServiceImpl implements EmpBuyService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int addTradeWork(TradeWork tradeWork, Integer balance) {
+    public int addTradeWork(TradeWork tradeWork, Integer balance, CapitalFlow capitalFlow) {
         try{
             int i=empBuyMapper.editBalance(tradeWork.getEmployerId(),balance);
             int j=empBuyMapper.addtradeWork(tradeWork);
-            if(i>0 && j>0){
+            int k=empBuyMapper.addFlow(capitalFlow);
+            if(i>0 && j>0 && k>0){
                 return i;
             }else{
                 return 0;
@@ -55,9 +57,24 @@ public class EmpBuyServiceImpl implements EmpBuyService {
         return empBuyMapper.selbuyList(employerId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public int editState(TradeWork tradeWork) {
-        return empBuyMapper.editState(tradeWork);
+    public int editState(TradeWork tradeWork,CapitalFlow capitalFlow,int providerId) {
+        try{
+            int i=empBuyMapper.editState(tradeWork);
+            int j=empBuyMapper.addproFlow(capitalFlow);
+            int k=empBuyMapper.editproBalance(providerId, (int) capitalFlow.getTradeCapital());
+            if(i>0 && j>0 && k>0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return 0;
+        }
+//        return empBuyMapper.editState(tradeWork);
     }
 
     @Override

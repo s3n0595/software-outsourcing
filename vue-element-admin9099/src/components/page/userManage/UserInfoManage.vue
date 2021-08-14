@@ -45,7 +45,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="loginNumber" label="登录次数"></el-table-column>
-        <el-table-column prop="loginDate" label="最近登录时间"></el-table-column>
+        <el-table-column prop="loginDate" label="最近登录时间" width="180"></el-table-column>
         <el-table-column prop="creator" label="创建者"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
 <!--      slot-scope="scope" 可以获取到父组件传递的参数，将这些参数使用到子组件插槽里-->

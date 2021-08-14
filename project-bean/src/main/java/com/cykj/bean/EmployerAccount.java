@@ -14,6 +14,7 @@ public class EmployerAccount {
   private String phoneNumber;
   private String employerPassword;
   private String role;
+  private String regTime;
   private EmployerInfo employerInfo;
 
 

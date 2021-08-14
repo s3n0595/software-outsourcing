@@ -193,6 +193,11 @@ export default new Router({
                     component: resolve => require(['../components/page/portalManage/SuccessfulCases'], resolve),
                     meta:{title: '成功案例配置'}
                 },
+                {
+                    path: '/tradeRetreatManage',
+                    component: resolve => require(['../components/page/userManage/TradeRetreatManage'],resolve),
+                    meta:{title: '作品退款'}
+                }
             ]
         },
         {

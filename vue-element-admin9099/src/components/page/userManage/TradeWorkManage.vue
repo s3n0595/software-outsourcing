@@ -39,6 +39,8 @@
                       <el-tag type="info" v-if="scope.row.tradeStatus === 2">确认作品</el-tag>
                       <el-tag type="warning" v-if="scope.row.tradeStatus === 3">交付作品</el-tag>
                       <el-tag type="success" v-if="scope.row.tradeStatus === 4">交易成功</el-tag>
+                      <el-tag type="danger" v-if="scope.row.tradeStatus === 5">申请退款</el-tag>
+                      <el-tag type="success" v-if="scope.row.tradeStatus === 6">退款成功</el-tag>
                     </el-form-item>
                     <el-form-item label="商品描述">
                       <span>{{ scope.row.works.worksDescribe }}</span>
@@ -64,6 +66,8 @@
                   <el-tag type="info" v-if="scope.row.tradeStatus === 2">确认作品</el-tag>
                   <el-tag type="warning" v-if="scope.row.tradeStatus === 3">交付作品</el-tag>
                   <el-tag type="success" v-if="scope.row.tradeStatus === 4">交易成功</el-tag>
+                  <el-tag type="danger" v-if="scope.row.tradeStatus === 5">申请退款</el-tag>
+                  <el-tag type="success" v-if="scope.row.tradeStatus === 6">退款成功</el-tag>
                 </template>
               </el-table-column>
             </el-table>
@@ -99,6 +103,8 @@
                       <el-tag type="info" v-if="scope.row.tradeStatus === 2">确认作品</el-tag>
                       <el-tag type="warning" v-if="scope.row.tradeStatus === 3">交付作品</el-tag>
                       <el-tag type="success" v-if="scope.row.tradeStatus === 4">交易成功</el-tag>
+                      <el-tag type="danger" v-if="scope.row.tradeStatus === 5">申请退款</el-tag>
+                      <el-tag type="success" v-if="scope.row.tradeStatus === 6">退款成功</el-tag>
                     </el-form-item>
                     <el-form-item label="商品描述">
                       <span>{{ scope.row.works.worksDescribe }}</span>
@@ -124,6 +130,8 @@
                   <el-tag type="info" v-if="scope.row.tradeStatus === 2">确认作品</el-tag>
                   <el-tag type="warning" v-if="scope.row.tradeStatus === 3">交付作品</el-tag>
                   <el-tag type="success" v-if="scope.row.tradeStatus === 4">交易成功</el-tag>
+                  <el-tag type="danger" v-if="scope.row.tradeStatus === 5">申请退款</el-tag>
+                  <el-tag type="success" v-if="scope.row.tradeStatus === 6">退款成功</el-tag>
                 </template>
               </el-table-column>
             </el-table>
@@ -279,6 +287,8 @@
                       <el-tag type="info" v-if="scope.row.tradeStatus === 2">确认作品</el-tag>
                       <el-tag type="warning" v-if="scope.row.tradeStatus === 3">交付作品</el-tag>
                       <el-tag type="success" v-if="scope.row.tradeStatus === 4">交易成功</el-tag>
+                      <el-tag type="danger" v-if="scope.row.tradeStatus === 5">申请退款</el-tag>
+                      <el-tag type="success" v-if="scope.row.tradeStatus === 6">退款成功</el-tag>
                     </el-form-item>
                     <el-form-item label="商品描述">
                       <span>{{ scope.row.works.worksDescribe }}</span>
@@ -304,6 +314,8 @@
                   <el-tag type="info" v-if="scope.row.tradeStatus === 2">确认作品</el-tag>
                   <el-tag type="warning" v-if="scope.row.tradeStatus === 3">交付作品</el-tag>
                   <el-tag type="success" v-if="scope.row.tradeStatus === 4">交易成功</el-tag>
+                  <el-tag type="danger" v-if="scope.row.tradeStatus === 5">申请退款</el-tag>
+                  <el-tag type="success" v-if="scope.row.tradeStatus === 6">退款成功</el-tag>
                 </template>
               </el-table-column>
             </el-table>

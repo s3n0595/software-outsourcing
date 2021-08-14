@@ -1,5 +1,6 @@
 package com.cykj.service;
 
+import com.cykj.bean.CreditDetails;
 import com.cykj.bean.ProviderAccount;
 
 import java.util.Map;
@@ -29,4 +30,7 @@ public interface ProviderService {
     int addProviderExpose(int providerId);
 
     Map<String, Object> queryAll();
+
+    //注册信用分
+    int addCreditByReg(CreditDetails creditDetails);
 }

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @Mapper
 public interface QworksMapper {
-    List<Map<String, Object>> queryAllWork(@Param("count") int count,@Param("demandTypeName") String  demandTypeName,@Param("priceMin") int priceMin,@Param("priceMax") int priceMax,@Param("searchInfo") String searchInfo);//获取所有作品列表
+    List<Map<String, Object>> queryAllWork(@Param("count") int count,@Param("demandTypeName") String  demandTypeName,@Param("priceMin") int priceMin,@Param("priceMax") int priceMax,@Param("searchInfo") String searchInfo,@Param("sortType")String sortType);//获取所有作品列表
     int countProWork(@Param("providerId")int providerId);//计算单个服务商发布的作品
     Map<String,Object> workProInfo(int providerId);//获取服务商信息
 }

@@ -28,13 +28,10 @@ public class DemandController {
 	private ChatService chatService;
 	@RequestMapping("/list")
 	@ResponseBody
-	public List<Map<String, Object>> queryDemandList(int count, String type, String price, String time){
+	public List<Map<String, Object>> queryDemandList(int count, String type, String price, String time, String sort, String searchInfo){
 		System.out.println("================需求列表===========");
 		System.out.println("count : " + count);
-		System.out.println("type:"+type);
-		System.out.println("price:"+price);
-		System.out.println("time:"+time);
-		return demandService.queryAllDemand(count, type, price, time);
+		return demandService.queryAllDemand(count, type, price, time, sort, searchInfo);
 	}
 	@RequestMapping("/join")
 	@ResponseBody
@@ -142,6 +139,12 @@ public class DemandController {
 	public void toEvaluate(int demandId){
 		System.out.println("===============雇主评价===========");
 		demandService.toEvaluate(demandId);
+	}
+	@RequestMapping("/findEmployerInfo")
+	@ResponseBody
+	public Map<String, Object> findEmployerInfo(int demandId){
+		System.out.println("===============需求雇主信息===========");
+		return demandService.findEmployerInfo(demandId);
 	}
 
 

@@ -14,6 +14,7 @@ public class ProviderAccount {
   private String phoneNumber;
   private String providerPassword;
   private String role;
+  private String regTime;
   private ProviderInfo providerInfo;
 
 

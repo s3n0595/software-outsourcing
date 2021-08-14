@@ -5,8 +5,8 @@
 <mapper namespace="com.cykj.mapper.ProviderMapper">
 
     <insert id="addProvider" parameterType="com.cykj.bean.ProviderAccount">
-        insert providerAccount(providerName,phoneNumber,providerPassword,role)
-            values(#{providerName},#{phoneNumber},#{providerPassword},#{role})
+        insert providerAccount(providerName,phoneNumber,providerPassword,role,regTime)
+            values(#{providerName},#{phoneNumber},#{providerPassword},#{role},#{regTime})
     </insert>
 
     <select id="queryProviderAccByTel" resultType="int">
@@ -31,6 +31,10 @@
 
     <insert id="addProviderExpose" parameterType="com.cykj.bean.ProviderAccount">
         insert exposeStory(providerId) values(#{providerId})
+    </insert>
+
+    <insert id="addCreditByReg" parameterType="com.cykj.bean.CreditDetails">
+        insert creditDetails(userId,remarks,score,creditTime,type) values (#{userId},#{remarks},#{score},#{creditTime},#{type})
     </insert>
 </mapper>
 

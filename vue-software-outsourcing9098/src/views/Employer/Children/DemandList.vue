@@ -353,6 +353,7 @@ export default {
     },
     getMyDemandList() {
       this.$axios.get("/demand/myDemand", {params: {employerId: this.employer.employerId}}).then(response => {
+        console.log(response.data)
         this.myDemand = response.data;
       });
     },

@@ -61,6 +61,19 @@
         update tradeWork set tradeStatus=#{tradeStatus} where tradeWorksId=#{tradeWorksId}
     </update>
 
+    <insert id="addFlow" parameterType="com.cykj.bean.CapitalFlow">
+        insert capitalFlow(tradeType,phoneNumber,tradeContent,tradeCapital,tradeTime,tradeState,type)
+        values (#{tradeType},#{phoneNumber},#{tradeContent},#{tradeCapital},#{tradeTime},#{tradeState},#{type})
+    </insert>
+
+    <insert id="addproFlow" parameterType="com.cykj.bean.CapitalFlow">
+        insert capitalFlow(tradeType,phoneNumber,tradeContent,tradeCapital,tradeTime,tradeState,type)
+        values (#{tradeType},#{phoneNumber},#{tradeContent},#{tradeCapital},#{tradeTime},#{tradeState},#{type})
+    </insert>
+
+    <update id="editproBalance">
+        update providerInfo set balance=balance+#{balance} where providerId=#{providerId}
+    </update>
 </mapper>
 
 

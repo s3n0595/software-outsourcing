@@ -5,8 +5,8 @@
 <mapper namespace="com.cykj.mapper.EmployerMapper">
 
     <insert id="addUser" parameterType="com.cykj.bean.EmployerAccount">
-        insert employerAccount(employerName,phoneNumber,employerPassword,role)
-            values(#{employerName},#{phoneNumber},#{employerPassword},#{role})
+        insert employerAccount(employerName,phoneNumber,employerPassword,role,regTime)
+            values(#{employerName},#{phoneNumber},#{employerPassword},#{role},#{regTime})
     </insert>
 
     <select id="queryEmployerAccByTel" resultType="int">
@@ -18,7 +18,7 @@
     </select>
 
     <select id="queryEmployerIdName" resultMap="employerInfo">
-        select eA.employerId,eA.employerName,eA.phoneNumber,eA.role,eI.headPath
+        select eA.employerId,eA.employerName,eA.phoneNumber,eA.role,eI.headPath,eI.credit,eI.email,eI.employerId,eI.employerProfile,eI.balance,eI.transactionPwd
         from employerAccount eA
             JOIN employerInfo eI
                 ON eA.employerId = eI.employerId
@@ -31,6 +31,12 @@
         <result column="role" property="role"/>
         <association property="employerInfo" javaType="com.cykj.bean.EmployerInfo">
             <result column="headPath" property="headPath"/>
+            <result column="credit" property="credit"/>
+            <result column="employerId" property="employerId"/>
+            <result column="employerProfile" property="employerProfile"/>
+            <result column="email" property="email"/>
+            <result column="balance" property="balance"/>
+            <result column="transactionPwd" property="transactionPwd"/>
         </association>
     </resultMap>
 
@@ -44,6 +50,14 @@
 
     <insert id="addEmployerExpose" parameterType="com.cykj.bean.ProviderAccount">
         insert exposeStory(employerId) values(#{employerId})
+    </insert>
+
+    <select id="queryEmployerInfo" resultType="com.cykj.bean.EmployerAccount">
+        select * from employerAccount where phoneNumber = #{phoneNumber}
+    </select>
+
+    <insert id="addCreditByReg" parameterType="com.cykj.bean.CreditDetails">
+        insert creditDetails(userId,remarks,score,creditTime,type) values (#{userId},#{remarks},#{score},#{creditTime},#{type})
     </insert>
 </mapper>
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.TradeRetreatMapper">
+    <select id="getTradeRetreatList" resultMap="getTradeRetreatLists">
+        select t1.tradeWorksId,t1.remarks,t1.retreatStatus,t1.tradeRetreatId,t1.tradeRetreatTime,
+               tW.providerId,tW.employerId,tW.tradeOrder,tW.tradeTime,
+               pA.providerName,pA.phoneNumber,eA.employerName,eA.phoneNumber,w.worksPrice,w.worksTitle
+        from tradeRetreat t1 join tradeWork tW on t1.tradeWorksId = tW.tradeWorksId
+                             join employerAccount eA on tW.employerId = eA.employerId
+                             join providerAccount pA on tW.providerId = pA.providerId
+                             join works w on tW.worksId = w.worksId
+    </select>
+    <resultMap id="getTradeRetreatLists" type="com.cykj.bean.TradeRetreat">
+        <id column="tradeRetreatId" property="tradeRetreatId"></id>
+        <result column="tradeWorksId" property="tradeWorksId"></result>
+        <result column="remarks" property="remarks"></result>
+        <result column="retreatStatus" property="retreatStatus"></result>
+        <result column="tradeRetreatTime" property="tradeRetreatTime"></result>
+        <collection property="tradeWork" javaType="com.cykj.bean.TradeWork">
+            <result column="providerId" property="providerId"></result>
+            <result column="employerId" property="employerId"></result>
+            <result column="tradeOrder" property="tradeOrder"></result>
+            <result column="tradeTime" property="tradeTime"></result>
+            <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+                <result column="employerName" property="employerName"></result>
+                <result column="phoneNumber" property="phoneNumber"></result>
+            </association>
+            <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+                <result column="providerName" property="providerName"></result>
+                <result column="phoneNumber" property="phoneNumber"></result>
+            </association>
+            <association property="works" javaType="com.cykj.bean.Works">
+                <result column="worksTitle" property="worksTitle"></result>
+                <result column="worksPrice" property="worksPrice"></result>
+            </association>
+        </collection>
+    </resultMap>
+    <update id="updateTreatStatus">
+        update tradeRetreat set retreatStatus = #{retreatStatus} where tradeRetreatId = #{tradeRetreatId}
+    </update>
+</mapper>
