@@ -1,6 +1,6 @@
 <template>
   <div class="case">
-    <banner img="../assets/img/bgtop.jpg" title="精典案例" />
+    <banner img="../assets/img/bgtop.jpg" title="成功案例" />
     <div class="case-section" >
       <div class="case-section-content">
         <div class="case-section-content-list" v-for="(cas,index) in caseList" :key="index">
@@ -9,15 +9,18 @@
           <div class="content-list-abstract" :class="{'abstract-active' : index%2!=1}">
             <p class="abstract-title">{{cas.works.worksTitle}}</p>
             <p class="abstract-content">{{cas.works.worksDescribe}}</p>
-            <div class="more">
-              <router-link
-                  class="text-decoration"
-                  :to="{ name: 'casedetails', params: { id: cas.Id }}"
-              >
-                <span>more</span>
-                <img src="../assets/img/sanjiao.png" />
-              </router-link>
-            </div>
+            <p style="font-size: 15px">服务商：{{str(cas.providerAccount.providerName)}}</p>
+            <p style="font-size: 15px">雇主：{{str(cas.employerAccount.employerName)}}</p>
+<!--            <p class="">金额：{{str(String.valueOf(cas.works.worksPrice))}}</p>-->
+<!--            <div class="more">-->
+<!--              <router-link-->
+<!--                  class="text-decoration"-->
+<!--                  :to="{ name: 'casedetails', params: { id: cas.Id }}"-->
+<!--              >-->
+<!--                <span>more</span>-->
+<!--                <img src="../assets/img/sanjiao.png" />-->
+<!--              </router-link>-->
+<!--            </div>-->
           </div>
         </div>
       </div>
@@ -35,6 +38,11 @@ export default {
       // loading: true,
       caseList: []
     };
+  },
+  methods: {
+    str(value) {
+      return value.replace(value.substring(2, value.length - 5), '*****')
+    }
   },
   mounted() {
     this.$axios.get("work/success").then(response => {
@@ -96,6 +104,7 @@ export default {
             height: 150px;
             color: #484848;
             font-size: 15px;
+
 
             overflow: hidden;
             text-overflow: ellipsis;
