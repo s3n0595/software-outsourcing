@@ -42,7 +42,6 @@
                   <img src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" style="width: 70px;height:70px;border-radius: 50%;">
                 </div>
               </el-image>
-
             </div>
             <div style="float: left;margin-left: 25px;">
               <div>
@@ -120,6 +119,7 @@
           <el-button type="primary" @click="uploadFile()">确 定</el-button>
         </div>
       </el-dialog>
+
     </el-main>
 
 
@@ -134,6 +134,7 @@ export default {
   name: "GoodsList",
   data () {
     return {
+      flag: false,
       count: 0,
       demand:{},
       searchInfo:"",

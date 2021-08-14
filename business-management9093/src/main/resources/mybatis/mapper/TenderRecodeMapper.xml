@@ -27,7 +27,7 @@
     </select>
     <select id="queryTenderProviderById" resultType="java.util.Map" parameterType="int">
         select *
-        from demand t1, providerAccount t2, tenderRecord t3, tradeRecord t4
-        where t1.demandId = t3.demandId and t3.tenderRecordId = t4.tenderRecordId and t3.tenderId = t2.providerId and t3.applyStatus = 1 and t1.demandId = #{demandId}
+        from demand t1, providerAccount t2, tenderRecord t3, tradeRecord t4, providerInfo t5
+        where t1.demandId = t3.demandId and t3.tenderRecordId = t4.tenderRecordId and t3.tenderId = t2.providerId and t2.providerId = t5.providerId and t3.applyStatus = 1 and t1.demandId = #{demandId}
     </select>
 </mapper>

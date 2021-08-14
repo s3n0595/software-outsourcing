@@ -81,12 +81,13 @@
                   <p>承接价格：{{tenderProvider.price}}</p>
                   <p>承接工期：{{tenderProvider.projectTime}}</p>
                   <p>开发商类型：个体</p>
-                  <p>开发商名称：{{}}</p>
+
 
                 </el-col>
                 <el-col :span="12">
-                 <p>开发商联系方式：{{}}</p>
-                 <p>开发商信用分：{{}}</p>
+                  <p>开发商名称：{{tenderProvider.providerName}}</p>
+                 <p>开发商联系方式：{{tenderProvider.phoneNumber}}</p>
+                 <p>开发商信用分：{{tenderProvider.credit}}</p>
 
                 </el-col>
                 <el-col :span="6">
@@ -94,13 +95,13 @@
                     <el-button @click="openChatRoom(item.demandId)">联系开发商</el-button>
                   </p>
                   <p v-show="tenderProvider.tradeStatus==0">
-                    <el-button @click="advanceCharge">预付款</el-button>
+                    <el-button @click="getPayPwd('advance')">预付款</el-button>
                   </p>
                   <p v-show="tenderProvider.tradeStatus==2">
                     <el-button @click="checkProject">核验项目</el-button>
                   </p>
                   <p v-show="tenderProvider.tradeStatus==3">
-                    <el-button @click="restCharge">付尾款</el-button>
+                    <el-button @click="getPayPwd('rest')">付尾款</el-button>
                   </p>
                 </el-col>
               </el-row>
@@ -137,7 +138,14 @@
           <el-button type="primary" style="float: right;" @click="sendMessage">发送</el-button>
         </div>
       </div>
-
+  <pay-box :dialogShow='flag' @closeDialog='comparePayPwd' style="z-index: 1000"></pay-box>
+   <el-dialog title="友情提示" :visible.sync="showHint" width="30%" z-index="100">
+  <span>即将支付预付款给服务商，请确认服务商信息以及项目信息无误。</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="showHint = false">取 消</el-button>
+    <el-button type="primary" @click="flag = true , showHint = false">确 定</el-button>
+  </span>
+</el-dialog>
 <!--    <div style="margin-top: 30px" v-show="showTable">-->
 <!--      <el-table-->
 <!--              :data="tenderList"-->
@@ -180,6 +188,8 @@ export default {
   name: "Accountpreview",
   data() {
     return{
+      flag:false,
+      showHint:false,
       user:'',
       balance:'',
       activeName:"",
@@ -203,6 +213,8 @@ export default {
       context:"",
       showChatRoom:false,
        historyList:{},
+      type:"",
+      payPwd:""
     };
   },
   methods:{
@@ -214,6 +226,23 @@ export default {
         if(status == 6) return status-1;
         else return status - 2;
       }
+    },
+    getPayPwd(typ) {
+      this.type = typ;
+      let param = {
+        employerId: this.employer.employerId,
+      };
+      this.$axios.get("/demand/comparePayPwd", {params: param}).then(response => {
+          if(response.data == 'none') {
+            this.$notify.error({
+              title:'提示',
+              message:`您还未设置交易密码，请前往个人中心设置`
+            })
+          } else {
+            this.payPwd = response.data;
+            this.showHint = true;
+          }
+      });
     },
     handleChange(activeName){
 
@@ -236,19 +265,78 @@ export default {
     advanceCharge(){
       let param = {
         tradeRecordId: this.tenderProvider.tradeRecordId,
-        employerId: this.employer.employerId
+        employerId: this.employer.employerId,
       };
       this.$axios.get("/demand/advanceCharge", {params: param}).then(response => {
+        if(response.data == "success") {
+          // this.getMyDemandList();
         this.getTenderProvider(this.currentDemand.demandId);
+          this.$message({
+            message: "付款成功",
+            type: "success",
+            offset: 150,
+            duration: 3000,
+          });
+        } else {
+          this.$message({
+            message: "开发宝余额不足，请前往个人中心充值",
+            type: "warning",
+            offset: 150,
+            duration: 2000,
+          });
+        }
       });
+    },
+    comparePayPwd() {
+      this.showHint = false;
+      this.flag = false;
+      let paypwd = sessionStorage.getItem("paypwd");
+      console.log(this.payPwd);
+      if(paypwd == this.payPwd) {
+        if (this.type == 'rest') {
+          this.restCharge();
+        } else {
+          this.advanceCharge();
+        }
+      } else {
+        this.$message({
+              message: "支付密码错误，付款失败",
+              type: "warning",
+              offset:150,
+              duration:2000,
+        });
+      }
+
+      // this.$message({
+      //         message: val,
+      //         type: "success",
+      //         offset:150,
+      //         duration:2000,
+      // });
     },
     restCharge(){
       let param = {
         tradeRecordId: this.tenderProvider.tradeRecordId,
-        employerId: this.employer.employerId
+        employerId: this.employer.employerId,
       };
       this.$axios.get("/demand/restCharge", {params: param}).then(response => {
-        this.getMyDemandList();
+        if(response.data == "success") {
+          this.getMyDemandList();
+          this.$message({
+            message: "付款成功",
+            type: "success",
+            offset: 150,
+            duration: 3000,
+          });
+        } else {
+          this.$message({
+            message: "开发宝余额不足，请前往个人中心充值",
+            type: "warning",
+            offset: 150,
+            duration: 2000,
+          });
+        }
+
       });
     },
     checkProject(){
@@ -327,6 +415,8 @@ export default {
     getTenderProvider(demandId) {
       this.$axios.get("/demand/tenderProvider", {params: {demandId: demandId}}).then(response => {
         this.tenderProvider = response.data;
+        console.log("*****************");
+        console.log(this.tenderProvider);
         if(this.tenderProvider.tradeStatus == 4) {
           this.succeed = true;
         }
