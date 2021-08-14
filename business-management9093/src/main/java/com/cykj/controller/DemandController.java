@@ -31,6 +31,9 @@ public class DemandController {
 	public List<Map<String, Object>> queryDemandList(int count, String type, String price, String time){
 		System.out.println("================需求列表===========");
 		System.out.println("count : " + count);
+		System.out.println("type:"+type);
+		System.out.println("price:"+price);
+		System.out.println("time:"+time);
 		return demandService.queryAllDemand(count, type, price, time);
 	}
 	@RequestMapping("/join")
