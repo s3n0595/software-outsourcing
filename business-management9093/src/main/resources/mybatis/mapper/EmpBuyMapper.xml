@@ -74,6 +74,12 @@
     <update id="editproBalance">
         update providerInfo set balance=balance+#{balance} where providerId=#{providerId}
     </update>
+
+    <insert id="wechatWork" parameterType="com.cykj.bean.TradeWork">
+        insert tradeWork(employerId,worksId,tradeTime,tradeStatus,tradeOrder,providerId)
+        values (#{employerId},#{worksId},#{tradeTime},#{tradeStatus},#{tradeOrder},#{providerId});
+    </insert>
+
 </mapper>
 
 

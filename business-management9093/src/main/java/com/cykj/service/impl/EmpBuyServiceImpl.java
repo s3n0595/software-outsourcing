@@ -109,4 +109,10 @@ public class EmpBuyServiceImpl implements EmpBuyService {
             return 0;
         }
     }
+
+    @Override
+    public int wechatWork(TradeWork tradeWork) {
+        int i = empBuyMapper.wechatWork(tradeWork);
+        return i;
+    }
 }

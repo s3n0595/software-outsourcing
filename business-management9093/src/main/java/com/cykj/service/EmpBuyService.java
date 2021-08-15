@@ -24,4 +24,6 @@ public interface EmpBuyService {
     int editproState(TradeWork tradeWork);
     EmployerInfo selEmpPwd(EmployerInfo employerInfo);
     int adTradeRetreat(TradeRetreat tradeRetreat,int tradeStatus);
+    int wechatWork(TradeWork tradeWork);
+
 }

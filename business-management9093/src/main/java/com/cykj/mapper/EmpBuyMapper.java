@@ -31,4 +31,5 @@ public interface EmpBuyMapper {
     EmployerInfo selEmpPwd(EmployerInfo employerInfo);//判断雇主交易密码是否正确
     int addtradeRetreat(TradeRetreat tradeRetreat);//雇主退货，新增退货表记录
     int editRetreat(@Param("tradeWorksId") int tradeWorksId,@Param("tradeStatus") int tradeStatus);//修改作品交易表状态为退货中
+    int wechatWork(TradeWork TradeWork);
 }
