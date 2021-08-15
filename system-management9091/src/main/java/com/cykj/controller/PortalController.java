@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,10 +92,10 @@ public class PortalController {
     @RequestMapping("/web")
     @ResponseBody
     public CommonResult queryWeb() {
-        int web = portalService.queryWeb();
-        int total = portalService.queryTotal();
-        double webPer = Double.valueOf(web)/Double.valueOf(total);
-        webPer = (double)Math.round(webPer * 100) / 100;
+        double web = portalService.queryWeb();
+        double total = portalService.queryTotal();
+        int webPer = (int) ((web/total)*100);
+        log.info("*******webPer"+webPer);
         return new CommonResult(200,"web网站数量",webPer);
     }
 
@@ -102,10 +103,10 @@ public class PortalController {
     @RequestMapping("/app")
     @ResponseBody
     public CommonResult queryApp() {
-        int app = portalService.queryApp();
-        int total = portalService.queryTotal();
-        double appPer = Double.valueOf(app)/Double.valueOf(total);
-        appPer = (double)Math.round(appPer * 100) / 100;
+        double app = portalService.queryApp();
+        double total = portalService.queryTotal();
+        int appPer = (int) ((app/total)*100);
+        log.info("*******appPer"+appPer);
         return new CommonResult(200,"app网站数量",appPer);
     }
 
@@ -113,10 +114,10 @@ public class PortalController {
     @RequestMapping("/weChat")
     @ResponseBody
     public CommonResult queryWeChat() {
-        int weChat = portalService.queryWeChat();
-        int total = portalService.queryTotal();
-        double weChatPer = Double.valueOf(weChat)/Double.valueOf(total);
-        weChatPer = (double)Math.round(weChatPer * 100) / 100;
+        double weChat = portalService.queryWeChat();
+        double total = portalService.queryTotal();
+        int weChatPer = (int) ((weChat/total)*100);
+        log.info("*******weChatPer"+weChatPer);
         return new CommonResult(200,"weChat网站数量",weChatPer);
     }
 
@@ -124,10 +125,10 @@ public class PortalController {
     @RequestMapping("/html")
     @ResponseBody
     public CommonResult queryHtml() {
-        int html = portalService.queryHtml();
-        int total = portalService.queryTotal();
-        double htmlPer = Double.valueOf(html)/Double.valueOf(total);
-        htmlPer = (double)Math.round(htmlPer * 100) / 100;
+        double html = portalService.queryHtml();
+        double total = portalService.queryTotal();
+        int htmlPer = (int) ((html/total)*100);
+        log.info("*******htmlPer"+htmlPer);
         return new CommonResult(200,"html网站数量",htmlPer);
     }
 
@@ -135,10 +136,10 @@ public class PortalController {
     @RequestMapping("/applet")
     @ResponseBody
     public CommonResult queryApplet() {
-        int applet = portalService.queryApplet();
-        int total = portalService.queryTotal();
-        double appletPer = Double.valueOf(applet)/Double.valueOf(total);
-        appletPer = (double)Math.round(appletPer * 100) / 100;
+        double applet = portalService.queryApplet();
+        double total = portalService.queryTotal();
+        int appletPer = (int) ((applet/total)*100);
+        log.info("*******applet"+applet);
         return new CommonResult(200,"applet网站数量",appletPer);
     }
 
@@ -146,10 +147,10 @@ public class PortalController {
     @RequestMapping("/other")
     @ResponseBody
     public CommonResult queryOther() {
-        int other = portalService.queryOther();
-        int total = portalService.queryTotal();
-        double otherPer = Double.valueOf(other)/Double.valueOf(total);
-        otherPer = (double)Math.round(otherPer * 100) / 100;
+        double other = portalService.queryOther();
+        double total = portalService.queryTotal();
+        int otherPer = (int) ((other/total)*100);
+        log.info("*******otherPer"+otherPer);
         return new CommonResult(200,"other网站数量",otherPer);
     }
 
@@ -161,24 +162,20 @@ public class PortalController {
         return new CommonResult(200,"other网站数量",total);
     }
 
+
     //获取网站作品数量
     @RequestMapping("/week")
     @ResponseBody
     public CommonResult queryWeekData() {
-        List<WeeksData> tradeRecords = portalService.queryWeekData();
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        log.info("*************************"+tradeRecords);
-        return new CommonResult(200,"other网站数量",tradeRecords);
+        List<WeeksData> weeksDataList = portalService.queryWeekData();
+        ArrayList<Object> weeksList = new ArrayList<>();
+        for (WeeksData weeksData : weeksDataList) {
+            log.warn("weekData"+weeksData.getCount());
+            weeksList.add(weeksData.getCount());
+        }
+        return new CommonResult(200,"weekData网站数量",weeksList);
     }
+
+
 
 }
