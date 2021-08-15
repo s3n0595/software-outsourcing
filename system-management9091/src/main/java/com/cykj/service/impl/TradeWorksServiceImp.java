@@ -22,4 +22,9 @@ public class TradeWorksServiceImp implements TradeWorksService {
     public List<TradeWork> getTradeWordList() {
         return tradeWorksMapper.getTradeWordList();
     }
+
+    @Override
+    public int updateTradeStatus(int tradeWorksId, int tradeStatus) {
+        return tradeWorksMapper.updateTradeStatus(tradeWorksId,tradeStatus);
+    }
 }

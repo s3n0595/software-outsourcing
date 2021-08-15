@@ -80,15 +80,14 @@
                 <span @click="details(item)">No.{{item.worksId}}&nbsp;</span>
                 <span @click="details(item)">&nbsp;{{item.worksTitle}}</span>
               </p>
-              <!--                  </a>-->
-              <p>
+              <p style="margin-top: 10px;">
                 <el-tag :type="miStatusColor(item.demandTypeName)">{{item.demandTypeName}}</el-tag>
               </p>
-              <p>发布时间：{{item.releaseTime}}</p>
+              <p style="margin-top: 5px;">发布时间：{{item.releaseTime}}</p>
+              <p style="margin-top: 10px;" class="el-icon-view"><span style="margin-left: 5px;">{{item.trafficNumber}}</span></p>
             </el-col>
             <el-col :span="3">
               <p style="padding-top: 20px;">￥{{item.worksPrice}}</p>
-              <span>热度：{{item.trafficNumber}}</span>
             </el-col>
           </div>
         </el-row>

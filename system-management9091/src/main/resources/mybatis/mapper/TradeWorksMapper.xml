@@ -32,5 +32,8 @@
             <result column="releaseTime" property="releaseTime"></result>
         </association>
     </resultMap>
+    <update id="updateTradeStatus">
+        update tradeWork set tradeStatus = #{tradeStatus} where tradeWorksId = #{tradeWorksId};
+    </update>
 
 </mapper>

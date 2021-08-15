@@ -10,7 +10,9 @@
     <select id="queryAllWorks" resultType="com.cykj.bean.Works">
         select * from works;
     </select>
-
+    <select id="queryMyWorks" resultType="com.cykj.bean.Works" parameterType="int">
+        select * from works where providerId = #{providerId};
+    </select>
     <update id="updatePwd" parameterType="com.cykj.bean.ProviderPwd">
         update providerAccount set providerPassword = #{password} where providerPassword = #{providerPassword} and providerId = #{providerId}
     </update>
@@ -24,7 +26,49 @@
         values (#{providerId},#{worksTitle},#{worksDescribe},#{annexPath},#{worksPrice},#{releaseTime},#{auditStatus},#{worksAddress},#{worksTypeId});
     </insert>
 
+    <select id="queryCaseList" resultMap="successCase">
+        SELECT tW.tradeWorksId,tW.tradeStatus,tW.tradeTime,tW.showCase,
+               eA.employerName,pA.providerName,w1.worksTitle,
+               w1.worksDescribe,w1.annexPath,w1.worksPrice
+        FROM tradeWork tW
+                 JOIN employerAccount eA
+                      ON tW.employerId = eA.employerId
+                 JOIN providerAccount pA
+                      ON pA.providerId = tW.providerId
+                 JOIN works w1
+                      ON w1.worksId = tW.worksId
+        WHERE showCase = 1
+    </select>
+    <resultMap id="successCase" type="com.cykj.bean.TradeWork">
+        <id column="tradeWorksId" property="tradeWorksId"/>
+        <result column="tradeTime" property="tradeTime"/>
+        <result column="tradeStatus" property="tradeStatus"/>
+        <result column="showCase" property="showCase"/>
+        <association property="employerAccount" javaType="com.cykj.bean.EmployerAccount">
+            <result column="employerName" property="employerName"/>
+        </association>
+        <association property="providerAccount" javaType="com.cykj.bean.ProviderAccount">
+            <result column="providerName" property="providerName"/>
+        </association>
+        <association property="works" javaType="com.cykj.bean.Works">
+            <result column="worksTitle" property="worksTitle"/>
+            <result column="worksDescribe" property="worksDescribe"/>
+            <result column="annexPath" property="annexPath"/>
+            <result column="worksPrice" property="worksPrice"/>
+        </association>
+    </resultMap>
 
+
+    <insert id="insertWorks" parameterType="com.cykj.bean.Works">
+        insert into works (providerId,worksTitle,worksDescribe,annexPath,worksPrice,releaseTime,auditStatus,worksAddress, worksTypeId, imgUrl)
+        values (#{providerId},#{worksTitle},#{worksDescribe},#{annexPath},#{worksPrice},#{releaseTime},#{auditStatus},#{worksAddress},#{worksTypeId},#{imgUrl});
+    </insert>
+    <update id="updateImgUrl"  parameterType="com.cykj.bean.Works">
+        update works set imgUrl = #{imgUrl} where worksId = #{worksId};
+    </update>
+    <select id="selectLastWork" resultType="int" >
+       select max(worksId) from works;
+    </select>
 </mapper>
 
 

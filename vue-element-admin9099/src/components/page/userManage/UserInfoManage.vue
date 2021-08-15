@@ -25,7 +25,7 @@
           @selection-change="handleSelectionChange"
           v-loading="isShowloading"
       >
-        <el-table-column type="selection" width="55" align="center"></el-table-column>
+          <el-table-column type="selection" width="55" align="center"  :selectable='checkboxT'></el-table-column>
         <el-table-column type="index" label="序号" sortable width="150"></el-table-column>
         <el-table-column prop="userName" label="用户名" width="120"></el-table-column>
         <el-table-column prop="role.roleName" label="角色名称"></el-table-column>
@@ -40,6 +40,7 @@
                   active-color="#13ce66"
                   inactive-color="#ff4949"
                   @change="editState(scope.row.userId,scope.row.state)"
+                  :disabled="isDisabled(scope.row)"
               >
               </el-switch>
           </template>
@@ -60,6 +61,7 @@
                 icon="el-icon-delete"
                 class="red"
                 @click="handleDelete(scope.$index, scope.row)"
+                :disabled="isDisabled(scope.row)"
             >删除</el-button>
           </template>
         </el-table-column>
@@ -236,6 +238,25 @@ export default {
     },
   },
   methods: {
+    //
+    checkboxT(row){
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      if (row.userId === user.userId){
+        return false;
+      }else {
+        return true;
+      }
+    },
+    // 判断是否隐藏删除按钮
+    isDisabled(row){
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      if (row.userId === user.userId){
+        return true;
+      }else {
+        return false;
+      }
+    },
+    // 修改状态
     editState(userId,state){
       let params = {
         userId: userId,

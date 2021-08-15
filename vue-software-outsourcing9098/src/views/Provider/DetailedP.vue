@@ -55,7 +55,8 @@ export default {
     selFlow(){
       this.$axios.post('empcenter/flow',this.$qs.stringify({
         phoneNumber:this.user.phoneNumber,
-        type:"服务商"
+        type:"服务商",
+        tradeState:"ACQ.TRADE_HAS_SUCCESS"
       })).then(res=>{
         this.tableData=res.data;
       })

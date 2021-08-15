@@ -1,22 +1,26 @@
 <template>
   <div class="case">
-    <banner  title="精典案例" />
-    <div class="case-section" v-loading="loading">
+    <banner img="../assets/img/bgtop.jpg" title="成功案例" />
+    <div class="case-section" >
       <div class="case-section-content">
         <div class="case-section-content-list" v-for="(cas,index) in caseList" :key="index">
-          <img v-lazy="imgserver+cas.Img" />
+<!--          <img v-lazy="imgserver+cas.Img" />-->
+          <img src="cas.works.annexPath">
           <div class="content-list-abstract" :class="{'abstract-active' : index%2!=1}">
-            <p class="abstract-title">{{cas.Title}}</p>
-            <p class="abstract-content">{{cas.Content}}</p>
-            <div class="more">
-              <router-link
-                class="text-decoration"
-                :to="{ name: 'casedetails', params: { id: cas.Id }}"
-              >
-                <span>more</span>
-                <img src="../assets/img/sanjiao.png" />
-              </router-link>
-            </div>
+            <p class="abstract-title">{{cas.works.worksTitle}}</p>
+            <p class="abstract-content">{{cas.works.worksDescribe}}</p>
+            <p style="font-size: 15px">服务商：{{str(cas.providerAccount.providerName)}}</p>
+            <p style="font-size: 15px">雇主：{{str(cas.employerAccount.employerName)}}</p>
+<!--            <p class="">金额：{{str(String.valueOf(cas.works.worksPrice))}}</p>-->
+<!--            <div class="more">-->
+<!--              <router-link-->
+<!--                  class="text-decoration"-->
+<!--                  :to="{ name: 'casedetails', params: { id: cas.Id }}"-->
+<!--              >-->
+<!--                <span>more</span>-->
+<!--                <img src="../assets/img/sanjiao.png" />-->
+<!--              </router-link>-->
+<!--            </div>-->
           </div>
         </div>
       </div>
@@ -31,23 +35,27 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      // loading: true,
       caseList: []
     };
   },
+  methods: {
+    str(value) {
+      return value.replace(value.substring(2, value.length - 5), '*****')
+    }
+  },
   mounted() {
-    window.console.log("case");
-    this.$axios
-      .get("Cases/GetCasesAll")
-      .then(response => {
-        //console.log(response);
-        this.caseList = response.data;
-        //window.console.log(this.caseList);
-        this.loading = false;
-      })
-      .catch(function(error) {
-        window.console.log(error);
-      });
+    this.$axios.get("work/success").then(response => {
+          //console.log(response);
+          console.log(response)
+          const code = response.data
+          this.caseList = code.data;
+          //window.console.log(this.caseList);
+          // this.loading = false;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
   }
 };
 </script>
@@ -96,6 +104,7 @@ export default {
             height: 150px;
             color: #484848;
             font-size: 15px;
+
 
             overflow: hidden;
             text-overflow: ellipsis;

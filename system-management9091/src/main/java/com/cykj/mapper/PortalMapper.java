@@ -1,7 +1,9 @@
 package com.cykj.mapper;
 
+import com.cykj.bean.TradeRecord;
 import com.cykj.bean.TradeWork;
 import com.cykj.bean.Works;
+import com.cykj.vo.WeeksData;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,6 +33,30 @@ public interface PortalMapper {
 
     //根据关键词搜索
     TradeWork querySearchById(@Param("worksId") int worksId);
+
+    //获取web网站数量
+    int queryWeb();
+
+    //获取app网站数量
+    int queryApp();
+
+    //获取weChat网站数量
+    int queryWeChat();
+
+    //获取html网站数量
+    int queryHtml();
+
+    //获取applet网站数量
+    int queryApplet();
+
+    //获取other网站数量
+    int queryOther();
+
+    //获取网站作品数量
+    int queryTotal();
+
+    //获取网站每周交易量
+    List<WeeksData> queryWeekData();
 
 
 

@@ -362,6 +362,7 @@ export default {
           }
         })
         this.$refs.editTree.setCheckedKeys(menuData);
+        this.addRoleMenes = menuData;
       })
       this.editUserVisible = true;
     },

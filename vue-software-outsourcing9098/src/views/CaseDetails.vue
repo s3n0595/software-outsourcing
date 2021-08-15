@@ -34,15 +34,15 @@ export default {
   methods: {
     loadData() {
       this.$http
-        .get(`Cases/GetCasesById/${this.pid}`)
-        .then(response => {
-          //console.log(response);
-          this.caseIdList = response.data;
-          window.console.log(this.caseIdList);
-        })
-        .catch(function(error) {
-          window.console.log(error);
-        });
+          .get(`Cases/GetCasesById/${this.pid}`)
+          .then(response => {
+            //console.log(response);
+            this.caseIdList = response.data;
+            window.console.log(this.caseIdList);
+          })
+          .catch(function(error) {
+            window.console.log(error);
+          });
     }
   }
 };

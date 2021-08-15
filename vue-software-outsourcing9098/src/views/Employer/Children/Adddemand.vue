@@ -60,7 +60,7 @@
           <el-input v-model="form.predictPrice" autocomplete="off" style="margin-left: 25px;width: 230px;"></el-input>&nbsp;&nbsp;&nbsp;元
         </el-form-item>
         <el-form-item label="期望交付周期" label-width="145px">
-          <el-input v-model="form.predictTime" autocomplete="off" style="width: 230px;"></el-input>&nbsp;&nbsp;&nbsp;天
+          <el-input v-model="form.predictTime" autocomplete="off" style="width: 230px;"></el-input>&nbsp;&nbsp;&nbsp;周
         </el-form-item>
 
 

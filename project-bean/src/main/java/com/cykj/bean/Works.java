@@ -23,4 +23,5 @@ public class Works {
   private DemandType demandType;
   private ProviderAccount providerAccount;
    private int trafficNumber;
+   private String imgUrl;
 }

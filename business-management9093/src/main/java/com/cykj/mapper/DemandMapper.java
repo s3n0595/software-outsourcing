@@ -21,4 +21,6 @@ public interface DemandMapper {
 	Demand selectDemandById(int demandId);
 	Map<String, Object> queryEmployerByDemandId(int demandId);
 	int updateTraffic(int demandId);
+	String selectEmployerPwd(int employerId);
+	double selectEmployerBalance(int employerId);
 }

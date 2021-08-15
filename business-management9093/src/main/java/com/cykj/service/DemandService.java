@@ -25,11 +25,12 @@ public interface DemandService {
 	Map<String, Object> queryTenderProviderById(int demandId);
 	boolean recruitProvider(int demandId);
 
-	boolean advanceCharge(int employerId, int tradeRecordId);
+	String advanceCharge(int employerId, int tradeRecordId);
 	boolean deliveryProject(int tradeRecordId, int demandId);
 	boolean checkProject(int tradeRecordId);
-	boolean restCharge(int employerId, int tradeRecordId);
+	String restCharge(int employerId, int tradeRecordId);
 	boolean toEvaluate(int demandId);
 	Map<String, Object> findEmployerInfo(int demandId);
 	void increaseTraffic(int demandId);
+	String comparePayPwd(int employerId);
 }

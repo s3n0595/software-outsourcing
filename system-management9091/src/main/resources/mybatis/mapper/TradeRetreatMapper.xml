@@ -40,4 +40,7 @@
     <update id="updateTreatStatus">
         update tradeRetreat set retreatStatus = #{retreatStatus} where tradeRetreatId = #{tradeRetreatId}
     </update>
+    <delete id="deleteTradeRetreat">
+        delete from tradeRetreat where tradeRetreatId = #{tradeRetreatId};
+    </delete>
 </mapper>

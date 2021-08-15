@@ -113,6 +113,59 @@
         </association>
     </resultMap>
 
+    <select id="queryWeb" resultType="int">
+        select count(*) from works where worksTypeId = 1
+    </select>
+
+    <select id="queryApp" resultType="int">
+        select count(*) from works where worksTypeId = 2
+    </select>
+
+    <select id="queryWeChat" resultType="int">
+        select count(*) from works where worksTypeId = 3
+    </select>
+
+    <select id="queryHtml" resultType="int">
+        select count(*) from works where worksTypeId = 4
+    </select>
+
+    <select id="queryApplet" resultType="int">
+        select count(*) from works where worksTypeId = 5
+    </select>
+
+    <select id="queryOther" resultType="int">
+        select count(*) from works where worksTypeId = 6
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from works
+    </select>
+
+<!--    <select id="queryWeekData" resultMap="WeeksData">-->
+<!--        select a.click_date,ifnull(b.count,0) as count-->
+<!--        from (-->
+<!--                 SELECT curdate() as click_date-->
+<!--                 union all-->
+<!--                 SELECT date_sub(curdate(), interval 1 day) as click_date-->
+<!--                 union all-->
+<!--                 SELECT date_sub(curdate(), interval 2 day) as click_date-->
+<!--                 union all-->
+<!--                 SELECT date_sub(curdate(), interval 3 day) as click_date-->
+<!--                 union all-->
+<!--                 SELECT date_sub(curdate(), interval 4 day) as click_date-->
+<!--                 union all-->
+<!--                 SELECT date_sub(curdate(), interval 5 day) as click_date-->
+<!--                 union all-->
+<!--                 SELECT date_sub(curdate(), interval 6 day) as click_date-->
+<!--             ) a left join (-->
+<!--            select date(DATE_FORMAT(tradeTime,'%Y%m%d')) as datetime, count(*) as count-->
+<!--            from tradeRecord-->
+<!--            group by date(DATE_FORMAT(tradeTime,'%Y%m%d'))-->
+<!--        ) b on a.click_date = b.datetime-->
+<!--    </select>-->
+
+
+
 
 </mapper>
 

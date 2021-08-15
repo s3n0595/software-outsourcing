@@ -93,7 +93,7 @@
                   </el-col>
                   <el-col :span="6">
                     <p style="padding: 30px;">
-                      <span>热度：{{item.trafficNumber}}</span>
+                      <span><i class="el-icon-view"></i><span style="margin-left: 10px">{{item.trafficNumber}}</span></span>
                     </p>
                   </el-col>
                 </div>

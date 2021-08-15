@@ -89,7 +89,6 @@ export default {
       this.$emit('closeDialog',false)
     },
     confirm() {
-      alert('输入的密码是：'+this.inputPass);
       sessionStorage.setItem("paypwd",this.inputPass);
       this.inputPass = '';
       this.$emit('closeDialog',false);

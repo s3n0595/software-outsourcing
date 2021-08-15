@@ -43,6 +43,11 @@ let softwareOutsourcing = new Router({
       component: () => import('./views/RealInfo.vue')
     },
     {
+      path: '/case',
+      name: '/case',
+      component: () => import('./views/Case.vue')
+    },
+    {
       //雇主注册
       path: '/EmployerReg',
       name: 'EmployerReg',

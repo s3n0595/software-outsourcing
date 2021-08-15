@@ -5,13 +5,14 @@
         <el-card shadow="hover">
           <div style="height: 300px;">
             <div slot="header" class="clearfix">
-              <span>语言详情</span>
-            </div>Vue
-            <el-progress :percentage="50" color="#42b983"></el-progress>JavaScript
-            <el-progress :percentage="10" color="#f1e05a"></el-progress>CSS
-            <el-progress :percentage="15"></el-progress>HTML
-            <el-progress :percentage="10" color="#f56c6c"></el-progress>Node
-            <el-progress :percentage="15" color="#f56c6c"></el-progress>
+              <span>作品总类</span>
+            </div>
+            Web 网站<el-progress :percentage="webPer*100" color="#42b983"></el-progress>
+            App 开发<el-progress :percentage="appPer*100" color="#f1e05a"></el-progress>
+            微信公众号<el-progress :percentage="weChatPer*100"></el-progress>
+            HTML5 应用<el-progress :percentage="html5Per*100" color="#f56c6c"></el-progress>
+            小程序<el-progress :percentage="appletPer*100" color="#f56c6c"></el-progress>
+            其他应用<el-progress :percentage="otherPer*100" ></el-progress>
           </div>
         </el-card>
       </el-col>
@@ -27,67 +28,6 @@
           ></schart>
         </el-card>
       </el-col>
-      <!-- <el-col :span="16">
-                <el-row :gutter="20" class="mgb20">
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-1">
-                                <i class="el-icon-lx-people grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">1234</div>
-                                    <div>用户访问量</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-2">
-                                <i class="el-icon-lx-notice grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">321</div>
-                                    <div>系统消息</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{padding: '0px'}">
-                            <div class="grid-content grid-con-3">
-                                <i class="el-icon-lx-goods grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">5000</div>
-                                    <div>数量</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                </el-row>
-                <el-card shadow="hover" style="height:403px;">
-                    <div slot="header" class="clearfix">
-                        <span>待办事项</span>
-                        <el-button style="float: right; padding: 3px 0" type="text">添加</el-button>
-                    </div>
-                    <el-table :data="todoList" :show-header="false" height="304" style="width: 100%;font-size:14px;">
-                        <el-table-column width="40">
-                            <template slot-scope="scope">
-                                <el-checkbox v-model="scope.row.status"></el-checkbox>
-                            </template>
-                        </el-table-column>
-                        <el-table-column>
-                            <template slot-scope="scope">
-                                <div class="todo-item" :class="{'todo-item-del': scope.row.status}">{{scope.row.title}}</div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column width="60">
-                            <template slot-scope="scope">
-                                <i class="el-icon-edit"></i>
-                                <i class="el-icon-delete"></i>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-card>
-      </el-col>-->
     </el-row>
     <el-row :gutter="20">
       <el-col :span="12">
@@ -114,69 +54,43 @@
 <script>
 import Schart from "vue-schart";
 import echarts from 'echarts';
-// import bus from "../common/bus";
 export default {
   name: "dashboard",
   data() {
     return {
-      // name: localStorage.getItem("ms_username"),
       Echarts:null,
-      /* todoList: [{
-                        title: '今天要修复100个bug',
-                        status: false,
-                    },
-                    {
-                        title: '今天要修复100个bug',
-                        status: false,
-                    },
-                    {
-                        title: '今天要写100行代码加几个bug吧',
-                        status: false,
-                    }, {
-                        title: '今天要修复100个bug',
-                        status: false,
-                    },
-                    {
-                        title: '今天要修复100个bug',
-                        status: true,
-                    },
-                    {
-                        title: '今天要写100行代码加几个bug吧',
-                        status: true,
-                    }
-                ], */
       data: [
         {
           name: "2018/09/04",
-          value: 1083
+          value: 0
         },
         {
           name: "2018/09/05",
-          value: 941
+          value: 0
         },
         {
           name: "2018/09/06",
-          value: 1139
+          value: 0
         },
         {
           name: "2018/09/07",
-          value: 816
+          value: 4
         },
         {
           name: "2018/09/08",
-          value: 327
+          value: 5
         },
         {
           name: "2018/09/09",
-          value: 228
+          value: 1
         },
         {
           name: "2018/09/10",
-          value: 1065
+          value: 2
         }
       ],
       options: {
-        title: "最近七天每天的用户访问量",
+        title: "最近七天每天的交易",
         showValue: false,
         fillColor: "rgb(45, 140, 240)",
         bottomPadding: 30,
@@ -296,17 +210,20 @@ export default {
             ]
           }
         ]
-      }
+      },
+      webPer:'',
+      appPer:'',
+      weChatPer:'',
+      html5Per:'',
+      appletPer:'',
+      otherPer:'',
+      total:'',
+      weeks:'',
     };
   },
   components: {
     Schart
   },
-  // computed: {
-  //   role() {
-  //     return this.name === "admin" ? "超级管理员" : "普通用户";
-  //   }
-  // },
   created() {
     this.handleListener();
     this.changeDate();
@@ -336,18 +253,102 @@ export default {
       // 调用renderChart方法对图表进行重新渲染
       window.addEventListener("resize", this.renderChart);
     },
-    // handleBus(msg) {
-    //   setTimeout(() => {
-    //     this.renderChart();
-    //   }, 300);
-    // },
     renderChart() {
       this.$refs.bar.renderChart();
       this.$refs.line.renderChart();
-    }
+    },
+    getWeb() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/web`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.webPer = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    getApp() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/app`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.appPer = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    getWechat() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/weChat`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.wetChatPer = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    getHtml() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/html`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.html5Per = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    getApplet() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/applet`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.appletPer = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    getOther() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/other`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.otherPer = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    getTotal() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/total`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.total = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
+    getWeekData() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/week`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.weeks = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
   },
   mounted(){
     this.showEcharts();
+    this.getWeb();
+    this.getApp();
+    this.getWechat();
+    this.getApplet();
+    this.getHtml();
+    this.getOther();
+    this.getTotal();
+    this.getWeekData();
+
   },
 };
 </script>

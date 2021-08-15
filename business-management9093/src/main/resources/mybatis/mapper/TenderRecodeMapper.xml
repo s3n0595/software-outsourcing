@@ -11,6 +11,12 @@
     <select id="queryTenderRecordById" resultType="java.util.Map" parameterType="int">
         select * from tenderRecord  where demandId=#{demandId};
     </select>
+     <select id="queryTenderUnion" resultType="java.util.Map" parameterType="int">
+        select t1.*, t2.unionName as tenderName from tenderRecord t1, unionInfo t2  where t1.tenderId = t2.unionId and t1.unionStatus = '联盟' and t1.demandId=#{demandId};
+    </select>
+     <select id="queryTenderSingle" resultType="java.util.Map" parameterType="int">
+        select t1.*, t2.providerName as tenderName from tenderRecord t1, providerAccount t2  where t1.tenderId = t2.providerId and t1.unionStatus = '个人' and t1.demandId=#{demandId};
+    </select>
     <delete id="deleteRecode" parameterType="com.cykj.bean.TenderRecord">
         delete from tenderRecord where tenderRecordId = #{tenderRecordId};
     </delete>
@@ -27,7 +33,7 @@
     </select>
     <select id="queryTenderProviderById" resultType="java.util.Map" parameterType="int">
         select *
-        from demand t1, providerAccount t2, tenderRecord t3, tradeRecord t4
-        where t1.demandId = t3.demandId and t3.tenderRecordId = t4.tenderRecordId and t3.tenderId = t2.providerId and t3.applyStatus = 1 and t1.demandId = #{demandId}
+        from demand t1, providerAccount t2, tenderRecord t3, tradeRecord t4, providerInfo t5
+        where t1.demandId = t3.demandId and t3.tenderRecordId = t4.tenderRecordId and t3.tenderId = t2.providerId and t2.providerId = t5.providerId and t3.applyStatus = 1 and t1.demandId = #{demandId}
     </select>
 </mapper>
