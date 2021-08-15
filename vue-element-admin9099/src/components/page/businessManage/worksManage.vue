@@ -35,7 +35,7 @@
         <el-table-column prop="worksTitle" label="标题" width="120"></el-table-column>
         <el-table-column prop="demandType.demandTypeName" label="类型"></el-table-column>
         <el-table-column prop="worksPrice" label="价格"></el-table-column>
-        <el-table-column prop="worksDescribe" label="描述"></el-table-column>
+        <el-table-column prop="worksDescribe" label="描述" show-overflow-tooltip></el-table-column>
         <el-table-column prop="releaseTime" label="时间"></el-table-column>
         <el-table-column prop="providerAccount.providerName" label="服务商"></el-table-column>
         <el-table-column prop="worksAddress" label="链接"></el-table-column>
@@ -58,7 +58,6 @@
             <el-button
                 type="text"
                 icon="el-icon-lx-roundclose"
-                :disabled="scope.row.auditStatus !== 0"
                 class="red"
                 @click="handleRefuse(scope.$index, scope.row)"
             >未通过</el-button>
