@@ -299,7 +299,9 @@ export default {
         employerId:this.user.employerId
       })).then(res=>{
           this.infoList=res.data;
-          this.imageUrl='api/images/'+res.data.headPath;
+          if(res.data.headPath!=null && res.data.headPath!=''){
+            this.imageUrl='api/images/'+res.data.headPath;
+          }
           this.ruleForm.email=res.data.email;
       })
     }

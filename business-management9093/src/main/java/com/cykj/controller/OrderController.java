@@ -1,23 +1,16 @@
 package com.cykj.controller;
 
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayConfig;
-import com.alipay.api.internal.util.AlipaySignature;
 import com.cykj.bean.AliPayBean;
 import com.cykj.bean.CapitalFlow;
 import com.cykj.service.EmpCenterService;
-import com.cykj.service.EmployerService;
 import com.cykj.service.impl.PayServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 @RestController
 @RequestMapping( "app")
@@ -47,7 +40,7 @@ public class OrderController {
     }
 
     @RequestMapping( "/success")
-    public void success(HttpServletRequest request)throws Exception{
+    public String success(HttpServletRequest request)throws Exception{
         String timestamp=new String(request.getParameter("timestamp").getBytes("ISO-8859-1"), "UTF-8");
         String out_trade_no=request.getParameter("out_trade_no");
         String total_amount=request.getParameter("total_amount");
@@ -64,7 +57,9 @@ public class OrderController {
         capitalFlow.setTradeTime(timestamp);
         capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
         empCenterService.updFlow(capitalFlow);
-        System.out.println("支付成功！");
+//        System.out.println("支付成功！");
+        return "一站式众包平台，充值成功！";
+
     }
 
     @RequestMapping( "/successa")
