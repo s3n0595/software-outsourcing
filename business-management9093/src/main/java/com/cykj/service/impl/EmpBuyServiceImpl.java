@@ -115,4 +115,9 @@ public class EmpBuyServiceImpl implements EmpBuyService {
         int i = empBuyMapper.wechatWork(tradeWork);
         return i;
     }
+    
+    @Override
+    public EmployerInfo findTransactionPwd(int employerId) {
+        return empBuyMapper.findTransactionPwd(employerId);
+    }
 }
