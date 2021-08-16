@@ -179,6 +179,8 @@ export default {
                   tradeStatus:1,
                   worksPrice:this.work.worksPrice,
                   tradeOrder:this.order,
+                  phoneNumber:this.user.phoneNumber,
+                  tradeContent:"购买作品《"+this.work.worksTitle+"》",
                   providerId:this.work.providerId
                 })).then(resp=>{
                   this.$message({
