@@ -22,8 +22,8 @@
 
 <!--    小程序添加作品-->
     <insert id="wechatAddWorks" parameterType="com.cykj.bean.Works">
-        insert into works (providerId,worksTitle,worksDescribe,annexPath,worksPrice,releaseTime,auditStatus,worksAddress, worksTypeId)
-        values (#{providerId},#{worksTitle},#{worksDescribe},#{annexPath},#{worksPrice},#{releaseTime},#{auditStatus},#{worksAddress},#{worksTypeId});
+        insert into works (providerId,worksTitle,worksDescribe,annexPath,worksPrice,releaseTime,auditStatus,worksAddress,worksTypeId,imgUrl)
+        values (#{providerId},#{worksTitle},#{worksDescribe},#{annexPath},#{worksPrice},#{releaseTime},#{auditStatus},#{worksAddress},#{worksTypeId},#{imgUrl});
     </insert>
 
     <select id="queryCaseList" resultMap="successCase">

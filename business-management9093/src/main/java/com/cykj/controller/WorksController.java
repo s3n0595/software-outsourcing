@@ -189,6 +189,7 @@ public class WorksController {
         works.setWorksAddress(worksAddress);
         System.out.println("文件名字"+filename);
         works.setAnnexPath(filename);
+        works.setImgUrl(filename);
         System.out.println(works);
         if(worksService.wechatAddWorks(works)>0){
             return "success";
