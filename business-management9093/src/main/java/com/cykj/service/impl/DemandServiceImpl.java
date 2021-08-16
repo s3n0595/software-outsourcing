@@ -10,6 +10,7 @@ import io.swagger.models.auth.In;
 import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +41,8 @@ public class DemandServiceImpl implements DemandService {
 	private EmpCenterMapper empCenterMapper;
 	@Autowired
 	private EmpBuyMapper empBuyMapper;
+	@Value("${file.uploadurl}")
+	private String uploadUrl;
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	@Override
@@ -99,12 +102,12 @@ public class DemandServiceImpl implements DemandService {
 
 	@Override
 	public boolean joinDemand(TenderRecord tenderRecord, MultipartFile file) {
-		String realPath = null;
-		try {
-			realPath = ResourceUtils.getURL("classpath:").getPath() + "file";
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		String realPath = uploadUrl;
+//		try {
+//			realPath = ResourceUtils.getURL("classpath:").getPath() + "file";
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
 		File uploadDir = new File(realPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();

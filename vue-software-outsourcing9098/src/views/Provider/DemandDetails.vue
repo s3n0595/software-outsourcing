@@ -64,7 +64,7 @@
               <span style="font-size: 2rem;margin-bottom: 1rem;padding-top: 2rem;">需求文档</span>
             </div>
             <div class="description typo fold" style="padding: 10px;">
-                <el-button type="primary" @click="viewWord">在线预览</el-button>
+                <el-button type="primary" @click="viewWord(this.demand.annexPath)">在线预览</el-button>
 
                 <a :href="'api/images/'+this.demand.annexPath" download="">
                     <el-button type="primary" style="margin-left: 30px;">下载</el-button>
@@ -199,8 +199,8 @@ export default {
       this.form = {tenderId: JSON.parse(sessionStorage.getItem("user")).providerId, demandId: this.demand.demandId};
       this.$refs.upload.clearFiles();
     },
-      viewWord() {
-          window.open("http://view.officeapps.live.com/op/view.aspx?src=http://www.voeqmuh.icu:8080/file/日报.docx", '_blank');
+      viewWord(annexPath) {
+          window.open("http://view.officeapps.live.com/op/view.aspx?src=http://www.voeqmuh.icu:9093/images/" + annexPath, '_blank');
       },
   },
 
