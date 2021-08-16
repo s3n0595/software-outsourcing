@@ -9,6 +9,7 @@ module.exports = {
         port: 9098,     // 默认端口号
         https: false,      // 如果开启就会以https开头。
         hotOnly: false,      //安装模块更好的兼容，不需要配置。
+        // disableHostCheck: true,
         proxy: {
             // 配置跨域
             '/api': {
