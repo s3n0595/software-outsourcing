@@ -79,6 +79,10 @@
         insert tradeWork(employerId,worksId,tradeTime,tradeStatus,tradeOrder,providerId)
         values (#{employerId},#{worksId},#{tradeTime},#{tradeStatus},#{tradeOrder},#{providerId});
     </insert>
+        
+    <select id="findTransactionPwd" resultType="com.cykj.bean.EmployerInfo">
+        select * from employerInfo where employerId=#{employerId}
+    </select>
 
 </mapper>
 
