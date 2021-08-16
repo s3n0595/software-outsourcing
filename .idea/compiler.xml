@@ -17,4 +17,9 @@
       <module name="system-configuration9092" target="8" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="business-management9093" options="-bootclasspath C:\Software\jdk1.8/jre/lib/rt.jar;C:\Software\jdk1.8/jre/lib/jce.jar" />
+    </option>
+  </component>
 </project>

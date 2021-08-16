@@ -8,6 +8,7 @@ import com.cykj.service.WorksService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,7 +43,8 @@ import java.util.Map;
 public class WorksController {
 	@Autowired
     private WorksService worksService;
-
+    @Value("${file.uploadurl}")
+	private String uploadUrl;
     @RequestMapping("/publish")
     @ResponseBody
     public String PublishWork(MultipartFile file, Works works) {
@@ -153,7 +155,8 @@ public class WorksController {
         System.out.println(file);
         System.out.println("上传图片");
         try {
-            String realPath= ResourceUtils.getURL("classpath:").getPath()+"provider";
+//            String realPath= ResourceUtils.getURL("classpath:").getPath()+"provider";
+            String realPath = uploadUrl;
             System.out.println(realPath);
             File fileDir = new File(realPath);
             if (!fileDir.exists() && !fileDir.isDirectory()) {

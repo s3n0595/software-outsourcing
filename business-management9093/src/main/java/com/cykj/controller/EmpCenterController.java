@@ -7,6 +7,7 @@ import com.cykj.service.EmpCenterService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,8 @@ import java.util.UUID;
 public class EmpCenterController {
     @Autowired
     private EmpCenterService empCenterService;
-
+    @Value("${file.uploadurl}")
+	private String uploadUrl;
     //获取需求类型列表
     @RequestMapping("ckList")
     public List<DemandType> selCkList() {
@@ -50,7 +52,8 @@ public class EmpCenterController {
     public String getDemandFile(MultipartFile file, Demand demand) {
         if (file != null) {
             try {
-                String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
+//                String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
+                String realPath = uploadUrl;
                 File fileDir = new File(realPath);
                 if (!fileDir.exists() && !fileDir.isDirectory()) {
                     fileDir.mkdirs();
@@ -177,7 +180,8 @@ public class EmpCenterController {
     @RequestMapping("uploadhead")
     public int editHead(MultipartFile file, @RequestParam("Id") int Id, @RequestParam("role") String role) {
         try {
-            String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
+//            String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
+            String realPath = uploadUrl;
             File fileDir = new File(realPath);
             if (!fileDir.exists() && !fileDir.isDirectory()) {
                 fileDir.mkdirs();
@@ -303,7 +307,8 @@ public class EmpCenterController {
     @PostMapping("upload")
     public String upload(MultipartFile file) {
         try {
-            String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
+//            String realPath = ResourceUtils.getURL("classpath:").getPath() + "EmpFolder";
+            String realPath = uploadUrl;
             File fileDir = new File(realPath);
             if (!fileDir.exists() && !fileDir.isDirectory()) {
                 fileDir.mkdirs();

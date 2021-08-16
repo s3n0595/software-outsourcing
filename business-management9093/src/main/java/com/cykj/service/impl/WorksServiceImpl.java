@@ -5,6 +5,7 @@ import com.cykj.bean.Works;
 import com.cykj.mapper.WorksMapper;
 import com.cykj.service.WorksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,14 +26,16 @@ import java.util.*;
 public class WorksServiceImpl implements WorksService {
 	@Autowired
 	private WorksMapper worksMapper;
+	@Value("${file.uploadurl}")
+	private String uploadUrl;
 	@Override
 	public boolean publishWorks(MultipartFile file, Works works) {
-		String realPath = null;
-		try {
-			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		String realPath = uploadUrl;
+//		try {
+//			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
 		File uploadDir = new File(realPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -99,12 +102,13 @@ public class WorksServiceImpl implements WorksService {
 
 	@Override
 	public Map<String, String> uploadFile(MultipartFile[] file) {
-		String realPath = null;
-		try {
-			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+
+		String realPath = uploadUrl;
+//		try {
+//			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
 		File uploadDir = new File(realPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -114,7 +118,7 @@ public class WorksServiceImpl implements WorksService {
 	        String uuid = UUID.randomUUID().toString();
 	        String fileName = uuid + file[i].getOriginalFilename();
 	        try {
-		        file[i].transferTo(new File(realPath, fileName));
+		        file[i].transferTo(new File(realPath, fileName).getAbsoluteFile());
 				if(i != 0) allFileName += "::";
 				allFileName += fileName;
 	        } catch (IOException e) {
