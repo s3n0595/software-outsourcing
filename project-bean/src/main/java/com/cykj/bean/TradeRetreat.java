@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TradeRetreat {
+public class TradeRetreat extends TradeWork {
     private int tradeRetreatId;
     private int tradeWorksId;
     // 1:退款 2：成功 3：失败

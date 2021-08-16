@@ -13,7 +13,6 @@
             icon="delete"
             class="handle-del mr10"
             @click="delAll"
-            :disabled="this.delData.length===0"
         >批量删除</el-button>
         <el-input v-model="searchInfo" placeholder="请输入顾问名称" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="search" @click="searchCase">搜索</el-button>

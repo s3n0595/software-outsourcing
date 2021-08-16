@@ -7,12 +7,12 @@
             <div slot="header" class="clearfix">
               <span>作品总类</span>
             </div>
-            Web 网站<el-progress :percentage="webPer*100" color="#42b983"></el-progress>
-            App 开发<el-progress :percentage="appPer*100" color="#f1e05a"></el-progress>
-            微信公众号<el-progress :percentage="weChatPer*100"></el-progress>
-            HTML5 应用<el-progress :percentage="html5Per*100" color="#f56c6c"></el-progress>
-            小程序<el-progress :percentage="appletPer*100" color="#f56c6c"></el-progress>
-            其他应用<el-progress :percentage="otherPer*100" ></el-progress>
+            Web 网站<el-progress :percentage=webPer color="#42b983"></el-progress>
+            App 开发<el-progress :percentage=appPer color="#f1e05a"></el-progress>
+            微信公众号<el-progress :percentage=weChatPer></el-progress>
+            HTML5 应用<el-progress :percentage=html5Per color="#f56c6c"></el-progress>
+            小程序<el-progress :percentage=appletPer color="#f56c6c"></el-progress>
+            其他应用<el-progress :percentage=otherPer ></el-progress>
           </div>
         </el-card>
       </el-col>
@@ -62,35 +62,35 @@ export default {
       data: [
         {
           name: "2018/09/04",
-          value: 0
+          value: ''
         },
         {
           name: "2018/09/05",
-          value: 0
+          value: ''
         },
         {
           name: "2018/09/06",
-          value: 0
+          value: ''
         },
         {
           name: "2018/09/07",
-          value: 4
+          value: ''
         },
         {
           name: "2018/09/08",
-          value: 5
+          value: ''
         },
         {
           name: "2018/09/09",
-          value: 1
+          value: ''
         },
         {
           name: "2018/09/10",
-          value: 2
+          value: ''
         }
       ],
       options: {
-        title: "最近七天每天的交易",
+        title: "最近七天交易数量",
         showValue: false,
         fillColor: "rgb(45, 140, 240)",
         bottomPadding: 30,
@@ -219,6 +219,13 @@ export default {
       otherPer:'',
       total:'',
       weeks:'',
+      tradeD0:'',
+      tradeD1:'',
+      tradeD2:'',
+      tradeD3:'',
+      tradeD4:'',
+      tradeD5:'',
+      tradeD6:'',
     };
   },
   components: {
@@ -259,9 +266,9 @@ export default {
     },
     getWeb() {
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/portal/web`,{params:{}}).then(res=>{
-        console.log(res)
-        const code = res.data
+      this.$axios.get(`${baseUrl}/portal/web`,{params:{}}).then(getWeb=>{
+        console.log(getWeb)
+        const code = getWeb.data
         this.webPer = code.data
       }).catch(err=>{
         console.log(err)
@@ -269,9 +276,9 @@ export default {
     },
     getApp() {
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/portal/app`,{params:{}}).then(res=>{
-        console.log(res)
-        const code = res.data
+      this.$axios.get(`${baseUrl}/portal/app`,{params:{}}).then(getApp=>{
+        console.log(getApp)
+        const code = getApp.data
         this.appPer = code.data
       }).catch(err=>{
         console.log(err)
@@ -279,19 +286,19 @@ export default {
     },
     getWechat() {
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/portal/weChat`,{params:{}}).then(res=>{
-        console.log(res)
-        const code = res.data
-        this.wetChatPer = code.data
+      this.$axios.get(`${baseUrl}/portal/weChat`,{params:{}}).then(getWechat=>{
+        console.log(getWechat)
+        const code = getWechat.data
+        this.weChatPer = code.data
       }).catch(err=>{
         console.log(err)
       })
     },
     getHtml() {
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/portal/html`,{params:{}}).then(res=>{
-        console.log(res)
-        const code = res.data
+      this.$axios.get(`${baseUrl}/portal/html`,{params:{}}).then(getHtml=>{
+        console.log(getHtml)
+        const code = getHtml.data
         this.html5Per = code.data
       }).catch(err=>{
         console.log(err)
@@ -299,9 +306,9 @@ export default {
     },
     getApplet() {
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/portal/applet`,{params:{}}).then(res=>{
-        console.log(res)
-        const code = res.data
+      this.$axios.get(`${baseUrl}/portal/applet`,{params:{}}).then(getApplet=>{
+        console.log(getApplet)
+        const code = getApplet.data
         this.appletPer = code.data
       }).catch(err=>{
         console.log(err)
@@ -309,9 +316,9 @@ export default {
     },
     getOther() {
       let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/portal/other`,{params:{}}).then(res=>{
-        console.log(res)
-        const code = res.data
+      this.$axios.get(`${baseUrl}/portal/other`,{params:{}}).then(getOther=>{
+        console.log(getOther)
+        const code = getOther.data
         this.otherPer = code.data
       }).catch(err=>{
         console.log(err)
@@ -332,11 +339,34 @@ export default {
       this.$axios.get(`${baseUrl}/portal/week`,{params:{}}).then(res=>{
         console.log(res)
         const code = res.data
-        this.weeks = code.data
+        const weeksList = code.data
+        // this.weeks = code.data
+        for (var i = 0; i < weeksList.length; i++) {
+          // this.tradeD0 = this.weeks.count;
+          this.tradeD0 = weeksList[6]
+          this.tradeD1 = weeksList[5]
+          this.tradeD2 = weeksList[4]
+          this.tradeD3 = weeksList[3]
+          this.tradeD4 = weeksList[2]
+          this.tradeD5 = weeksList[1]
+          this.tradeD6 = weeksList[0]
+          // eval('tradeD' + i + '=' + JSON.stringify(weeksList[i]));
+          // this.tradeD0 = eval('tradeD'+ i)
+        }
+        this.$set(this.data, 0, {name:'',value:this.tradeD0});
+        this.$set(this.data, 1, {name:'',value:this.tradeD1});
+        this.$set(this.data, 2, {name:'',value:this.tradeD2});
+        this.$set(this.data, 3, {name:'',value:this.tradeD3});
+        this.$set(this.data, 4, {name:'',value:this.tradeD4});
+        this.$set(this.data, 5, {name:'',value:this.tradeD5});
+        this.$set(this.data, 6, {name:'',value:this.tradeD6});
+        this.changeDate()
       }).catch(err=>{
         console.log(err)
       })
     },
+
+
   },
   mounted(){
     this.showEcharts();

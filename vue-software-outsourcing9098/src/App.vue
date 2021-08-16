@@ -184,11 +184,29 @@ export default {
       window.console.log(this.isShow);
     },
     logout() {
-      sessionStorage.removeItem('user');
-      sessionStorage.removeItem('token');
-      // sessionStorage.removeItem('username')
-      sessionStorage.removeItem('headPath')
-      this.$router.push("/");
+      this.$confirm('确定要退出登录吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '退出成功!'
+        });
+        //确认退出，清除token
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        // sessionStorage.removeItem('username')
+        sessionStorage.removeItem('headPath')
+        this.$router.push("/");
+
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消退出'
+        });
+      })
+
     },
     personCenter() {
       this.user = JSON.parse(sessionStorage.getItem('user'))

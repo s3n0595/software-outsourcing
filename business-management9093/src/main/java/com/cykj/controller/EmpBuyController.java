@@ -40,6 +40,7 @@ public class EmpBuyController {
 
     @RequestMapping("works")//添加购买记录
     public int addtradeWork(TradeWork tradeWork,int worksPrice,String phoneNumber,String tradeContent){
+        System.out.println(tradeWork+"==="+worksPrice+"==="+tradeContent+"==========================");
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String dateTime = df.format(date); // Formats a Date into a date/time string
@@ -52,7 +53,9 @@ public class EmpBuyController {
         capitalFlow.setTradeCapital(worksPrice);
         capitalFlow.setTradeState("ACQ.TRADE_HAS_SUCCESS");
         capitalFlow.setType("雇主");
+        System.out.println(tradeWork+"==="+worksPrice+"==="+capitalFlow);
         int i=empBuyService.addTradeWork(tradeWork,worksPrice,capitalFlow);
+        System.out.println(i);
         if(i>0){
             return 1;
         }else{

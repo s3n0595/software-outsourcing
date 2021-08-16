@@ -67,8 +67,25 @@ export default {
     // 用户名下拉菜单选择事件
     handleCommand(command) {
       if (command == "loginout") {
-        localStorage.removeItem("ms_username");
-        this.$router.push("/login");
+        this.$confirm('确定要退出登录吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
+          //确认退出，清除token
+          localStorage.removeItem("ms_username");
+          this.$router.push("/login");
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退出'
+          });
+        })
       }else if(command =="user"){
         this.$store.dispatch('dailog/showDailog')
       }
