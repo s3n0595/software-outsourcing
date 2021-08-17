@@ -199,7 +199,7 @@ export default {
       this.dialogVisible = true;
     },
     uploadFile() {
-      this.$refs.upload.submit();
+      // this.$refs.upload.submit();
 
       let formData = new FormData();  //  用FormData存放上传文件
 

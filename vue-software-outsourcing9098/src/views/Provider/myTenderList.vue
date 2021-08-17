@@ -77,6 +77,41 @@
           <el-button type="primary" style="float: right;" @click="sendMessage">发送</el-button>
         </div>
       </div>
+      <el-dialog title="交付项目" :visible.sync="showDelivery">
+        <el-form ref="workForm" :model="workForm">
+          <el-input v-model="workForm.demandId" type="hidden"></el-input>
+          <el-form-item label="在线演示地址" :label-width="formLabelWidth">
+            <el-input v-model="workForm.onlineAddress" placeholder="" autocomplete="off"
+                      style="margin-left: 25px;width: 550px;">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="项目" :label-width="formLabelWidth">
+            <el-upload
+                    ref="upload"
+                    action="api/demand/uploadProject"
+                    accept=".zip,.rar,.7z"
+                    list-type="text"
+                    drag
+                    :file-list="fileList"
+                    :auto-upload="false"
+                    :data="workForm"
+                    :on-success="uploadSuccess"
+                    :before-upload="handleBeforeUpload"
+                    :on-preview="handlePictureCardPreview"
+                    :on-remove="handleRemove"
+                    :on-exceed="handleExceed"
+                    :on-change="uploadChange">
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            </el-upload>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="uploadFile()">确 定</el-button>
+        </div>
+      </el-dialog>
 
     </el-main>
 
@@ -116,7 +151,13 @@ export default {
         roomName:"",
       },
       context:"",
-      showChatRoom:false
+      showChatRoom:false,
+      params:{tradeRecordId:"",demandId:""},
+      showDelivery:false,
+      workForm:{
+        demandId:"",
+        onlineAddress:""
+      }
     }
   },
   methods: {
@@ -135,14 +176,33 @@ export default {
         return 0;
       }
     },
+    uploadFile(){
+       this.$refs.upload.submit();
+    },
+     handleBeforeUpload(file){},
+    handlePictureCardPreview(){},
+    handleRemove(){},
+    handleExceed(){},
+    uploadChange(){},
+     uploadSuccess() {
+      this.$message({
+          message: "提交成功",
+          type: "success"
+        });
+      this.showDelivery = false;
+       this.$axios.get("/demand/deliveryProject", {params: this.params}).then(response => {
+         this.getMyTender();
+       });
+    },
     deliveryProject(tradeRecordId, demandId){
       let param = {
         tradeRecordId: tradeRecordId,
         demandId: demandId
       };
-       this.$axios.get("/demand/deliveryProject", {params: param}).then(response => {
-         this.getMyTender();
-      });
+      this.workForm.demandId = demandId;
+      this.params = param;
+      this.showDelivery = true;
+
 
     },
     getMyTender(){

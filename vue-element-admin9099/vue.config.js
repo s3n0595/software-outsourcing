@@ -1,5 +1,6 @@
  module.exports = {
     baseUrl: './',   // 根路径  ====》   baseUrl: '/',已废弃
+    outputDir: 'vue-element-admin9099', // 构建输出目录文件名打包时生成的名字。
     productionSourceMap: false,
     devServer: {
         port:9099,

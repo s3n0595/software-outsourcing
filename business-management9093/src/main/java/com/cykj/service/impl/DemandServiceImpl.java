@@ -1,9 +1,6 @@
 package com.cykj.service.impl;
 
-import com.cykj.bean.CapitalFlow;
-import com.cykj.bean.Demand;
-import com.cykj.bean.TenderRecord;
-import com.cykj.bean.TradeRecord;
+import com.cykj.bean.*;
 import com.cykj.mapper.*;
 import com.cykj.service.DemandService;
 import io.swagger.models.auth.In;
@@ -103,11 +100,11 @@ public class DemandServiceImpl implements DemandService {
 	@Override
 	public boolean joinDemand(TenderRecord tenderRecord, MultipartFile file) {
 		String realPath = uploadUrl;
-//		try {
-//			realPath = ResourceUtils.getURL("classpath:").getPath() + "file";
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			realPath = ResourceUtils.getURL("classpath:").getPath() + "file";
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		File uploadDir = new File(realPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -118,11 +115,12 @@ public class DemandServiceImpl implements DemandService {
 		tenderRecord.setExistTime(sdf.format(new Date()));
 		try {
 			file.transferTo(new File(realPath + '/' + tenderRecord.getAnnexPath()));
-			if(tenderRecodeMapper.insertRecode(tenderRecord) > 0) {
-				return true;
-			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		if (tenderRecodeMapper.insertRecode(tenderRecord) > 0) {
+			return true;
 		}
 		return false;
 	}
@@ -302,5 +300,32 @@ public class DemandServiceImpl implements DemandService {
 		} else {
 			return demandMapper.selectEmployerPwd(employerId);
 		}
+	}
+
+	@Override
+	public boolean uploadProject(MultipartFile file, DemandWork demandWork) {
+		String realPath = uploadUrl;
+		try {
+			realPath = ResourceUtils.getURL("classpath:").getPath() + "file";
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		File uploadDir = new File(realPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+		System.out.println(realPath);
+        demandWork.setAnnexPath(file.getOriginalFilename());
+		try {
+			file.transferTo(new File(realPath + '/' + demandWork.getAnnexPath()));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (demandMapper.uploadProject(demandWork) > 0) {
+			return true;
+		}
+
+		return false;
 	}
 }
