@@ -57,7 +57,7 @@ public class SendSmsController {
             // 将redisTemplate模板对象的key的序列化方式修改为new StringRedisSerializer
             redisTemplate.setKeySerializer(new StringRedisSerializer());
             // 将phone当做key，将code当做value存进redis中，时间为5分钟
-            redisTemplate.opsForValue().set(phoneNumber, code, 1440, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(phoneNumber, code, 5, TimeUnit.MINUTES);
             // 调用业务层接口 发送验证码
             List<Sms> smsList = smsService.querySms();
             boolean sendSmsFlag = sendSmsService.sendSms(phoneNumber, code, smsList);
