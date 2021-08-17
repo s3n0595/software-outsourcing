@@ -211,13 +211,13 @@ export default {
           }
         ]
       },
-      webPer:'',
-      appPer:'',
-      weChatPer:'',
-      html5Per:'',
-      appletPer:'',
-      otherPer:'',
-      total:'',
+      webPer:0,
+      appPer:0,
+      weChatPer:0,
+      html5Per:0,
+      appletPer:0,
+      otherPer:0,
+      total:0,
       weeks:'',
       tradeD0:'',
       tradeD1:'',
@@ -365,16 +365,16 @@ export default {
         console.log(err)
       })
     },
-    getSuccess() {
-      let baseUrl = 'baseUrl';
-      this.$axios.get(`${baseUrl}/portal/successs`,{params:{}}).then(res=>{
-        console.log(res)
-        const code = res.data
-        this.total = code.data
-      }).catch(err=>{
-        console.log(err)
-      })
-    },
+    // getSuccess() {
+    //   let baseUrl = 'baseUrl';
+    //   this.$axios.get(`${baseUrl}/portal/successs`,{params:{}}).then(res=>{
+    //     console.log(res)
+    //     const code = res.data
+    //     this.total = code.data
+    //   }).catch(err=>{
+    //     console.log(err)
+    //   })
+    // },
 
 
   },
@@ -388,7 +388,7 @@ export default {
     this.getOther();
     this.getTotal();
     this.getWeekData();
-    this.getSuccess();
+    // this.getSuccess();
 
   },
 };

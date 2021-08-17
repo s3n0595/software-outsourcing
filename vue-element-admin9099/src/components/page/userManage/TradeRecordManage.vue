@@ -66,8 +66,8 @@
                       <el-table-column label="服务商名" prop="providerName"></el-table-column>
                       <el-table-column label="信誉积分" prop="providerInfo.credit"></el-table-column>
                     </el-table>
-                    <el-button slot="reference" type="info" v-if="scope.row.tenderRecord.unionStatus === '0' " icon="el-icon-lx-people">个人</el-button>
-                    <el-button slot="reference" type="warning" v-if="scope.row.tenderRecord.unionStatus !== '0'" icon="el-icon-lx-group">联盟</el-button>
+                    <el-button slot="reference" type="info" v-if="scope.row.tenderRecord.unionStatus === '个人' " icon="el-icon-lx-people">个人</el-button>
+                    <el-button slot="reference" type="warning" v-if="scope.row.tenderRecord.unionStatus !== '个人'" icon="el-icon-lx-group">联盟</el-button>
                   </el-popover>
                 </template>
               </el-table-column>
