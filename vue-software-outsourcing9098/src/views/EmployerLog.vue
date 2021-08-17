@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <h3 style="margin: 3% auto;text-align: center">登陆雇主账号</h3>
+    <h3 style="margin: 3% auto;margin-top:5%;text-align: center">登陆雇主账号</h3>
     <el-form
         ref="logForm"
         :model="data"
@@ -18,10 +18,10 @@
       <el-form-item prop="password">
         <el-input clearable type="password" v-model="data.password" placeholder="请输入密码"></el-input>
       </el-form-item>
-      <el-form-item style="text-align: left">
-        <el-checkbox v-model="checked">记住我
-        </el-checkbox>
-      </el-form-item>
+<!--      <el-form-item style="text-align: left">-->
+<!--        <el-checkbox v-model="checked">记住我-->
+<!--        </el-checkbox>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" @click="submitForm('logForm')" style="width: 300px">登陆</el-button>
       </el-form-item>
@@ -51,7 +51,7 @@ export default {
       }
     };
     return {
-      checked: '',
+      // checked: '',
       data: {
         phoneNumber: '',
         password: '',
