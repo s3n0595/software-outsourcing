@@ -80,7 +80,7 @@
                 <el-col :span="6">
                   <p>承接价格：{{tenderProvider.price}}</p>
                   <p>承接工期：{{tenderProvider.projectTime}}</p>
-                  <p>开发商类型：个体</p>
+                  <p>开发商类型：个人</p>
 
 
                 </el-col>
@@ -138,6 +138,7 @@
           <el-button type="primary" style="float: right;" @click="sendMessage">发送</el-button>
         </div>
       </div>
+
   <pay-box :dialogShow='flag' @closeDialog='comparePayPwd' style="z-index: 1000"></pay-box>
    <el-dialog title="友情提示" :visible.sync="showHint" width="30%" z-index="100">
   <span>即将支付预付款给服务商，请确认服务商信息以及项目信息无误。</span>
@@ -608,7 +609,7 @@ export default {
   }
     #chatRoom {
       position: fixed;
-      z-index: 9;
+      z-index: 10000;
       background-color: #f1f1f1;
 
       border: 1px solid #d3d3d3;

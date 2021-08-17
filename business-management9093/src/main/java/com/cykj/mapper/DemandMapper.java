@@ -1,6 +1,7 @@
 package com.cykj.mapper;
 
 import com.cykj.bean.Demand;
+import com.cykj.bean.DemandWork;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,5 @@ public interface DemandMapper {
 	int updateTraffic(int demandId);
 	String selectEmployerPwd(int employerId);
 	double selectEmployerBalance(int employerId);
+	int uploadProject(DemandWork demandWork);
 }

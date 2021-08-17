@@ -10,6 +10,10 @@ mybatis:
 
 #spring配置
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
   application:
     name: SpringCloud-Provider-dept
   datasource:

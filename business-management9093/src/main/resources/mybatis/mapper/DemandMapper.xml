@@ -55,6 +55,9 @@
     <select id="selectEmployerBalance" parameterType="int" resultType="double">
         select balance from employerInfo where employerId = #{employerId};
     </select>
+    <insert id="uploadProject" parameterType="com.cykj.bean.DemandWork">
+        insert into demandWork(demandId,annexPath,onlineAddress) values(#{demandId},#{annexPath},#{onlineAddress})
+    </insert>
 </mapper>
 
 

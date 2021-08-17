@@ -1,6 +1,7 @@
 package com.cykj.controller;
 
 import com.cykj.bean.Demand;
+import com.cykj.bean.DemandWork;
 import com.cykj.bean.TenderRecord;
 import com.cykj.service.ChatService;
 import com.cykj.service.DemandService;
@@ -154,6 +155,14 @@ public class DemandController {
 		System.out.println("===============比较支付密码===========");
 		System.out.println(employerId);
 		return demandService.comparePayPwd(employerId);
+//		return demandService.findEmployerInfo(demandId);
+	}
+	@RequestMapping("/uploadProject")
+	@ResponseBody
+	public void uploadProject(MultipartFile file, DemandWork demandWork){
+		System.out.println("===============提交项目===========");
+		demandService.uploadProject(file, demandWork);
+
 //		return demandService.findEmployerInfo(demandId);
 	}
 

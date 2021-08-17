@@ -31,11 +31,11 @@ public class WorksServiceImpl implements WorksService {
 	@Override
 	public boolean publishWorks(MultipartFile file, Works works) {
 		String realPath = uploadUrl;
-//		try {
-//			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		File uploadDir = new File(realPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -104,11 +104,11 @@ public class WorksServiceImpl implements WorksService {
 	public Map<String, String> uploadFile(MultipartFile[] file) {
 
 		String realPath = uploadUrl;
-//		try {
-//			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			realPath = ResourceUtils.getURL("classpath:").getPath() + "Provider";
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		File uploadDir = new File(realPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();

@@ -1,6 +1,7 @@
 package com.cykj.service;
 
 import com.cykj.bean.Demand;
+import com.cykj.bean.DemandWork;
 import com.cykj.bean.TenderRecord;
 import com.cykj.bean.TradeRecord;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,4 +34,5 @@ public interface DemandService {
 	Map<String, Object> findEmployerInfo(int demandId);
 	void increaseTraffic(int demandId);
 	String comparePayPwd(int employerId);
+	boolean uploadProject(MultipartFile file, DemandWork demandWork);
 }
