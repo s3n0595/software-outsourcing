@@ -35,18 +35,18 @@
           <div id='pieChart' style="width:100%;height:300px;"></div>
         </el-card>
       </el-col>
-      <el-col :span="12">
-        <el-card shadow="hover">
-          <schart
-              ref="line"
-              class="schart"
-              canvasId="line"
-              :data="data"
-              type="line"
-              :options="options2"
-          ></schart>
-        </el-card>
-      </el-col>
+<!--      <el-col :span="12">-->
+<!--        <el-card shadow="hover">-->
+<!--          <schart-->
+<!--              ref="line"-->
+<!--              class="schart"-->
+<!--              canvasId="line"-->
+<!--              :data="data"-->
+<!--              type="line"-->
+<!--              :options="options2"-->
+<!--          ></schart>-->
+<!--        </el-card>-->
+<!--      </el-col>-->
     </el-row>
   </div>
 </template>
@@ -96,15 +96,15 @@ export default {
         bottomPadding: 30,
         topPadding: 30
       },
-      options2: {
-        title: "最近七天用户访问趋势",
-        fillColor: "#FC6FA1",
-        axisColor: "#008ACD",
-        contentColor: "#EEEEEE",
-        bgColor: "#F5F8FD",
-        bottomPadding: 30,
-        topPadding: 30
-      },
+      // options2: {
+      //   title: "最近七天用户访问趋势",
+      //   fillColor: "#FC6FA1",
+      //   axisColor: "#008ACD",
+      //   contentColor: "#EEEEEE",
+      //   bgColor: "#F5F8FD",
+      //   bottomPadding: 30,
+      //   topPadding: 30
+      // },
       option3: {
         tooltip: {
           trigger: "item",
@@ -365,6 +365,16 @@ export default {
         console.log(err)
       })
     },
+    getSuccess() {
+      let baseUrl = 'baseUrl';
+      this.$axios.get(`${baseUrl}/portal/successs`,{params:{}}).then(res=>{
+        console.log(res)
+        const code = res.data
+        this.total = code.data
+      }).catch(err=>{
+        console.log(err)
+      })
+    },
 
 
   },
@@ -378,6 +388,7 @@ export default {
     this.getOther();
     this.getTotal();
     this.getWeekData();
+    this.getSuccess();
 
   },
 };

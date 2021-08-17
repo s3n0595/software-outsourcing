@@ -62,7 +62,7 @@ export default {
       items: [
         {
           icon: "el-icon-menu",
-          index: "dashboard",
+          index: "report",
           title: "系统首页"
         },
         // {

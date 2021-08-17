@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <div class="logo">
-          <img src="./assets/img/chinamobile.png" alt/>
+          <img src="./assets/img/java.jpeg" alt/>
         </div>
         <el-menu
             :default-active="defaultActive"

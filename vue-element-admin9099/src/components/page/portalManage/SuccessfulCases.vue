@@ -33,7 +33,7 @@
         <el-table-column prop="providerAccount.providerName" label="服务商" width="120"></el-table-column>
         <el-table-column prop="employerAccount.employerName" label="雇主"></el-table-column>
         <el-table-column prop="works.worksTitle" label="标题"></el-table-column>
-        <el-table-column prop="works.worksDescribe" label="描述"></el-table-column>
+        <el-table-column prop="works.worksDescribe" label="描述" show-overflow-tooltip></el-table-column>
         <el-table-column prop="works.annexPath" label="图片"></el-table-column>
         <el-table-column prop="works.worksPrice" label="价格"></el-table-column>
         <el-table-column prop="showCase" label="显示状态">
@@ -49,13 +49,11 @@
             <el-button
                 type="text"
                 icon="el-icon-lx-roundcheck"
-                :disabled="scope.row.showCase !== 0"
                 @click="handleAccept(scope.$index, scope.row)"
             >显示</el-button>
             <el-button
                 type="text"
                 icon="el-icon-lx-roundclose"
-                :disabled="scope.row.showCase !== 0"
                 class="red"
                 @click="handleRefuse(scope.$index, scope.row)"
             >不显示</el-button>

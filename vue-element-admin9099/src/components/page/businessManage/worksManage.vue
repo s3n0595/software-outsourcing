@@ -52,7 +52,6 @@
             <el-button
                 type="text"
                 icon="el-icon-lx-roundcheck"
-                :disabled="scope.row.auditStatus !== 0"
                 @click="handleAccept(scope.$index, scope.row)"
             >通过</el-button>
             <el-button
